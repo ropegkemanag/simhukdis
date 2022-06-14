@@ -482,6 +482,92 @@ namespace SIMHUKDIS.Controllers
                 return Json(strMsg, JsonRequestBehavior.AllowGet);
             }
         }
+        public ActionResult GenerateWord2(int ID, string NIP,
+        string NAMA_LENGKAP, string GOL_RUANG, string LEVEL_JABATAN,
+        string SATUAN_KERJA, string TEMPAT_LAHIR, string TANGGAL_LAHIR,
+        string MASAKERJA_TAHUN, string TMT_Pensiun, string DasarBukti,
+        string PelanggaranDisiplin, string PasalPelanggaran, string RekomendasiHukdis,
+        string AnalisaPertimbangan, string KeputusanSidangDPK, string Tanggal_Telaah)
+        {
+            string filepath = HttpContext.Request.PhysicalApplicationPath;
+            string strTemplate = filepath + "Files/Template/Template_Telaah.docx";
+            string OutputPath = filepath + "Files/Result/Telaah/";
+            string GetDateTime = DateTime.Now.ToString("ddMMyyyy_hhmmss");
+            string strFileNameDoc = "Telaah_" + NIP + "_" + GetDateTime + ".docx";
+            string strFileNamePDF = "Telaah_" + NIP + "_" + GetDateTime + ".pdf";
+            string strMsg = "";
+            try
+            {
+                if (Session["Fullname"] == null)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+                string userlogin = Session["Fullname"].ToString();
+                string UserID = Session["UserID"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+                ViewBag.UserID = userlogin;
+                string UserLogin = Session["Fullname"].ToString();
+
+                clsTelaah telaah = new clsTelaah();
+                telaah.ID = ID;
+                telaah.NIP = NIP;
+                telaah.NAMA_LENGKAP = NAMA_LENGKAP;
+                telaah.GOL_RUANG = GOL_RUANG;
+                telaah.LEVEL_JABATAN = LEVEL_JABATAN;
+                telaah.SATUAN_KERJA = SATUAN_KERJA;
+                telaah.TEMPAT_LAHIR = TEMPAT_LAHIR;
+                telaah.TANGGAL_LAHIR = TANGGAL_LAHIR;
+                telaah.MASAKERJA_TAHUN = MASAKERJA_TAHUN;
+                telaah.TMT_Pensiun = TMT_Pensiun;
+                telaah.DasarBukti = DasarBukti;
+                telaah.PelanggaranDisiplin = PelanggaranDisiplin;
+                telaah.PasalPelanggaran = PasalPelanggaran;
+                telaah.RekomendasiHukdis = RekomendasiHukdis;
+                telaah.AnalisaPertimbangan = AnalisaPertimbangan;
+                telaah.KeputusanSidangDPK = KeputusanSidangDPK;
+                telaah.CreatedUser = UserLogin;
+                telaah.Tanggal_Telaah = Tanggal_Telaah;
+                clsTelaahDB i = new clsTelaahDB();
+                int Bulan = DateTime.Now.Month;
+                int Tahun = DateTime.Now.Year;
+                int intTelaahNo = i.GetLastTelaahNo(Bulan, Tahun);
+                string strTelaahNo = "";
+                strTelaahNo = string.Format(string.Format("{0:000}", intTelaahNo));
+                string strBulan = string.Format(string.Format("{0:00}", Bulan));
+                strTelaahNo = "R-" + strTelaahNo + "/B.II/2-b/KP.04.1/" + strBulan + "/" + Tahun;
+                telaah.TelaahNo = strTelaahNo;
+                Document doc = new Document();
+                doc.LoadFromFile(strTemplate);
+                //get strings to replace
+                Dictionary<string, string> dictReplace = GetReplaceDictionary(telaah);
+                //Replace text
+                foreach (KeyValuePair<string, string> kvp in dictReplace)
+                {
+                    doc.Replace(kvp.Key, kvp.Value, true, true);
+                }
+                //Save doc file.
+                doc.SaveToFile(OutputPath + strFileNameDoc, FileFormat.Docx);
+                //Convert to PDF
+                doc.SaveToFile(OutputPath + strFileNamePDF, FileFormat.PDF);
+                //Insert Table
+                clsTelaahDB a = new clsTelaahDB();
+                //a.Insert(telaah);
+                //a.InsertTelaahNo(intTelaahNo, Bulan, Tahun);
+                ToViewFile(OutputPath + strFileNameDoc);
+                strMsg = "Success";
+                return Json(strMsg, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                strMsg = ex.Message.ToString();
+                return Json(strMsg, JsonRequestBehavior.AllowGet);
+            }
+        }
         private void ToViewFile(string fileName)
         {
             try

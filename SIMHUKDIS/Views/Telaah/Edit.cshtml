@@ -149,7 +149,7 @@
                     </div>
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <label class="control-label ">NIP</label>
-                        @Html.TextBox("NIP", "", new { @id = "NIP", @class = "form-control form-control-user", required = "required", onchange = "getData()", onkeypress = "AllowOnlyNumbers()", @readonly = "True" })
+                        @Html.TextBox("NIP", "", new { @id = "NIP", @class = "form-control form-control-user", required = "required", onchange = "getData()", onkeypress = "AllowOnlyNumbers()" })
                         @Html.ValidationMessage("NIP", "", new { @class = "text-danger" })
                     </div>
                     <div class="col-sm-6">
@@ -171,12 +171,16 @@
                         @Html.ValidationMessage("LEVEL_JABATAN", "", new { @class = "text-danger" })
                     </div>
                 </div>
+
                 <div class="form-group row">
                     <div class="col">
-                        <label class="control-label ">Pangkat, Golongan Ruang</label>
-                        <textarea id="satker" class="form-control form-control-user" readonly></textarea>
+                        <label class="control-label">Unit Kerja</label>
+                        <textarea class="form-control" id="Satker" rows="3" name="Satker" readonly="readonly"></textarea>
+                        @*@Html.TextArea("Satker", new { htmlAttributes = new { @class = "form-control", @id = "Satker" } })*@
+                        @Html.ValidationMessage("Satker", "", new { @class = "text-danger" })
                     </div>
                 </div>
+
                 <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <label class="control-label ">Tempat Lahir</label>
@@ -185,7 +189,7 @@
                     </div>
                     <div class="col-sm-6">
                         <label>Tanggal Lahir</label>
-                        @Html.TextBox("TANGGAL_LAHIR", "", new { @type = "Date", @id = "TANGGAL_LAHIR", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.TextBox("TANGGAL_LAHIR", "", new { @type = "text", @id = "TANGGAL_LAHIR", @class = "form-control form-control-user", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("TANGGAL_LAHIR", "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -197,7 +201,7 @@
                     </div>
                     <div class="col-sm-6">
                         <label>TMT Pensiun</label>
-                        @Html.TextBox("TMT_PENSIUN", "", new { @type = "Date", @id = "TMT_PENSIUN", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.TextBox("TMT_PENSIUN", "", new { @type = "text", @id = "TMT_PENSIUN", @class = "form-control form-control-user", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("TMT_PENSIUN", "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -216,14 +220,14 @@
                 <div class="form-group row">
                     <div class="col">
                         <label class="control-label">TELAAH NO.</label>
-                        <input class="form-control" id="TelaahNo" rows="3" name="TelaahNo" type="text" disabled/>
+                        <input class="form-control" id="TelaahNo" rows="3" name="TelaahNo" type="text" disabled />
                         @Html.ValidationMessage("TelaahNo", "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col">
                         <label class="control-label">A. TANGGAL TELAAH </label>
-                        <input class="form-control" id="Tanggal_Telaah" rows="3" name="Tanggal_Telaah" readonly/>
+                        <input class="form-control" id="Tanggal_Telaah" rows="3" name="Tanggal_Telaah" readonly />
                         @Html.ValidationMessage("Tanggal_Telaah", "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -272,12 +276,12 @@
                     </div>
                 </div>
                 @*<div class="form-group row">
-                    <div class="col">
-                        <label class="control-label ">H. UPLOAD HASIL TELAAH *</label>
-                        @Html.TextBox("FileTelaah", "", new { @type = "file", @id = "FileTelaah", @class = "form-control form-control-user", accept = "application/pdf" })
-                        @Html.ValidationMessage("FileTelaah", "", new { @class = "text-danger" })
-                    </div>
-                </div>*@
+                        <div class="col">
+                            <label class="control-label ">H. UPLOAD HASIL TELAAH *</label>
+                            @Html.TextBox("FileTelaah", "", new { @type = "file", @id = "FileTelaah", @class = "form-control form-control-user", accept = "application/pdf" })
+                            @Html.ValidationMessage("FileTelaah", "", new { @class = "text-danger" })
+                        </div>
+                    </div>*@
                 <div class="form-group row">
                     <div class="col-md-offset-2 col-md-10">
                         <input type="submit" value="Simpan" class="btn btn-primary" onclick="Update()" /> | @Html.ActionLink("Back to List", "Index")
@@ -291,7 +295,7 @@
 <script src="~/Scripts/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        var NIP = @ViewBag.NIP;
+        var NIP = '@ViewBag.NIP';
         getData('@ViewBag.NIP');
         GetTelaah('@ViewBag.ID','@ViewBag.NIP');
     });
@@ -324,7 +328,7 @@
                 $('#PasalPelanggaran').val(result[0].PasalPelanggaran);
                 $('#RekomendasiHukdis').val(result[0].RekomendasiHukdis);
                 $('#AnalisaPertimbangan').val(result[0].AnalisaPertimbangan);
-               
+
             },
             error: function (errormessage) {
                 Swal.fire({
@@ -350,10 +354,10 @@
                 $('#NAMA_LENGKAP').val(result.NAMA_LENGKAP);
                 $('#GOL_RUANG').val(result.GOL_RUANG);
                 $('#LEVEL_JABATAN').val(result.LEVEL_JABATAN);
+                $('#Satker').val(result.SATUAN_KERJA);
                 $('#TEMPAT_LAHIR').val(result.TEMPAT_LAHIR);
                 $('#TANGGAL_LAHIR').val(result.TANGGAL_LAHIR);
                 $('#MASAKERJA_TAHUN').val(result.MASAKERJA_TAHUN);
-                $('#satker').val(result.SATUAN_KERJA);
                 $('#TMT_PENSIUN').val(result.TMT_PENSIUN);
             },
             error: function (errormessage) {
@@ -368,8 +372,8 @@
         return false;
     }
     function Update()
-    var InputID = $('#ID').val();
     {
+        var InputID = $('#ID').val();
         var dpObj = {
             ID: $('#ID').val(),
             NIP: $('#NIP').val(),
@@ -403,6 +407,7 @@
                         showConfirmButton: false,
                         timer: 3000
                     })
+                    GenerateWord(result);
                     window.location.href = '@Url.Action("Details2", "Telaah")?ID=' + InputID;
                 }
                 else {
@@ -429,23 +434,23 @@
         var fileUpload = $("#FileTelaah").get(0);
         var files = fileUpload.files;
 
-        // Create FormData object  
+        // Create FormData object
         var fileData = new FormData();
 
-        // Looping over all files and add it to FormData object  
+        // Looping over all files and add it to FormData object
         for (var i = 0; i < files.length; i++) {
             fileData.append(files[i].name, files[i]);
         }
-        
+
 
         $.ajax({
             url: '/Telaah/UploadFiles',
             type: "POST",
-            contentType: false, // Not to set any content header  
-            processData: false, // Not to process data  
+            contentType: false, // Not to set any content header
+            processData: false, // Not to process data
             data: fileData,
             success: function (result) {
-                //GenerateWord(result);
+                
                 var dpObj = {
                     ID: $('#ID').val(),
                     NIP: $('#NIP').val(),
@@ -511,21 +516,8 @@
             }
         });
     }
-    function GenerateWord(FileTelaah)
+    function GenerateWord()
     {
-        //UploadTelaah();
-        //var fileUpload = $("#FileTelaah").get(0);
-        //var files = fileUpload.files;
-
-        //// Create FormData object  
-        //var fileData = new FormData();
-        //var fileData = new FormData();
-
-        //// Looping over all files and add it to FormData object  
-        //for (var i = 0; i < files.length; i++) {
-        //    fileData.append(files[i].name, files[i]);
-        //}
-        //var filename = files[0].name;
         var dpObj = {
             ID: $('#ID').val(),
             NIP: $('#NIP').val(),
@@ -544,10 +536,10 @@
             RekomendasiHukdis: $('#RekomendasiHukdis').val(),
             AnalisaPertimbangan: $('#AnalisaPertimbangan').val(),
             KeputusanSidangDPK: $('#KeputusanSidangDPK').val(),
-            FileTelaah: FileTelaah
+            Tanggal_Telaah: $('#Tanggal_Telaah').val()
         };
         $.ajax({
-            url: "/Telaah/UpdateData",
+            url: "/Telaah/GenerateWord",
             data: JSON.stringify(dpObj),
             type: "POST",
             contentType: "application/json;charset=utf-8",
@@ -578,6 +570,7 @@
                     showConfirmButton: false,
                     timer: 3000
                 })
+                window.location.href = '@Url.Action("Index", "Telaah")'
             }
         });
     }

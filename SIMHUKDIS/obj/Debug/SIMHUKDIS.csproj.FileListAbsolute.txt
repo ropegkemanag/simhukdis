@@ -227,4 +227,4 @@ C:\Users\User\Documents\GitHub\simhukdis\SIMHUKDIS\obj\Debug\SIMHUKDIS.csproj.Co
 C:\Users\User\Documents\GitHub\simhukdis\SIMHUKDIS\obj\Debug\SIMHUKDIS.csproj.CopyComplete
 C:\Users\User\Documents\GitHub\simhukdis\SIMHUKDIS\obj\Debug\SIMHUKDIS.dll
 C:\Users\User\Documents\GitHub\simhukdis\SIMHUKDIS\obj\Debug\SIMHUKDIS.pdb
-C:\Users\User\Documents\GitHub\simhukdis\SIMHUKDIS\obj\Debug\SIMHUKDIS.csproj.AssemblyReference.cache
+C:\Users\User\Documents\GitHub\simhukdis\SIMHUKDIS\obj\Debug\SIMHUKDIS.csprojAssemblyReference.cache
