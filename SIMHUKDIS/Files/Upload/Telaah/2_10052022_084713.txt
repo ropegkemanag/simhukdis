@@ -1,0 +1,97 @@
+@model simhukdis.Models.clsUserLogin
+@{
+    ViewBag.Title = "CREATE USER";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <hr />
+    <div class="form-group">
+        @Html.LabelFor(model => model.NIP, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NIP, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.NIP, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    @*<div class="form-group">
+        @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+        </div>
+    </div>*@
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control password" } })
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.StatusAdmin, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("StatusAdmin", new List<SelectListItem>
+                                                                {
+                                                                    new SelectListItem{ Text = "No", Value = "0" },
+                                                                    new SelectListItem{ Text = "Yes", Value = "1" }
+                                                                }, htmlAttributes: new { @class = "form-control" }
+                                                            )
+            @*@Html.EditorFor(model => model.StatusAdmin, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.StatusAdmin, "", new { @class = "text-danger" })*@
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.GroupID, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownList("GroupID", (SelectList)ViewBag.GroupID, htmlAttributes: new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-success" /> | @Html.ActionLink("Back to List", "Index")
+        </div>
+    </div>
+</div>
+}
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script>
+    function statusAdminChanged(s) {
+        if (s == "Yes") {
+            document.getElementById("UserGroup").disabled = true;
+        } else {
+            document.getElementById("UserGroup").disabled = false;
+        }
+    }
+</script>
+
+<script type="text/javascript">
+     $(function(){
+     var msg = "@(TempData["Msg"] as string)";
+        if (msg !== "") {
+             toastr.success(msg, 'Success', { timeOut: 3000, "closeButton": true });
+         }
+     });
+
+    $(function(){
+     var msgErr = "@(TempData["MsgErr"] as string)";
+        if (msgErr !== "") {
+             toastr.warning(msgErr, 'Warning', { timeOut: 3000, "closeButton": true });
+         }
+    });
+</script>

@@ -1,0 +1,587 @@
+﻿@model dynamic
+@{
+    ViewBag.Title = "Telaah";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">LAMPIRAN SURAT</h6>
+    </div>
+    <div class="card-body">
+        <table class="table table-bordered text-wrap" style="width:100%;">
+            @foreach (dynamic a in Model.clsSuratMasuk)
+            {
+                @*<tr>
+                    <td width="25%">
+                        No Agenda
+                    </td>
+                    <td width="75%">
+                        @a.NoAgenda
+                    </td>
+                </tr>*@
+                <tr>
+                    <td>
+                        No Surat
+                    </td>
+                    <td>
+                        @a.NoSurat
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Asal Surat
+                    </td>
+                    <td>
+                        @a.AsalSurat
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        TanggalSurat
+                    </td>
+                    <td>
+                        @a.TanggalSurat
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Perihal
+                    </td>
+                    <td>
+                        @a.perihal
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Satuan Kerja
+                    </td>
+                    <td>
+                        @a.SATUAN_KERJA
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Lampiran Surat Pengantar
+                    </td>
+                    <td>
+                        @if (@a.LampiranSurat1 == "")
+                        {
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("DownloadFile1", "SuratMasuk", new { fileName = a.LampiranSurat1 })">@a.LampiranSurat1</a>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Lampiran BAP
+                    </td>
+                    <td>
+                        @if (@a.LampiranSurat2 == "")
+                        {
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("DownloadFile2", "SuratMasuk", new { fileName = a.LampiranSurat2 })">@a.LampiranSurat2</a>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Lampiran Surat Tugas Pemeriksaan
+                    </td>
+                    <td>
+                        @if (@a.LampiranSurat3 == "")
+                        {
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("DownloadFile3", "SuratMasuk", new { fileName = a.LampiranSurat3 })">@a.LampiranSurat3</a>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Lampiran Surat Panggilan
+                    </td>
+                    <td>
+                        @if (@a.LampiranSurat4 == "")
+                        {
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("DownloadFile4", "SuratMasuk", new { fileName = a.LampiranSurat4 })">@a.LampiranSurat4</a>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Lampiran Surat Dokumen Lainnya
+                    </td>
+                    <td>
+                        @if (@a.LampiranSurat5 == "")
+                        {
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("DownloadFile5", "SuratMasuk", new { fileName = a.LampiranSurat5 })">@a.LampiranSurat5</a>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Lampiran Putusan Pengadilan
+                    </td>
+                    <td>
+                        @if (@a.LampiranSurat6 == "")
+                        {
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("DownloadFile6", "SuratMasuk", new { fileName = a.LampiranSurat6 })">@a.LampiranSurat6</a>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Lampiran LHA
+                    </td>
+                    <td>
+                        @if (@a.LampiranSurat_LHA == "")
+                        {
+                        }
+                        else
+                        {
+                            <a href="@Url.Action("DownloadFile7", "SuratMasuk", new { fileName = a.LampiranSurat_LHA })">@a.LampiranSurat_LHA</a>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Disposisi Kepala Biro Oleh
+                    </td>
+                    <td>
+                        @a.DisposisiBy1
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Status Disposisi Kepala Biro
+                    </td>
+                    <td>
+                        @a.DisposisiStatus1
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Tanggal Disposisi Kepala Biro
+                    </td>
+                    <td>
+                        @a.DisposisiDate1
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Catatan Disposisi Kepala Biro
+                    </td>
+                    <td>
+                        @a.Catatan1
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Disposisi Koordinator Oleh
+                    </td>
+                    <td>
+                        @a.DisposisiBy2
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Status Disposisi Koordinator
+                    </td>
+                    <td>
+                        @a.DisposisiStatus2
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Tanggal Disposisi Koordinator
+                    </td>
+                    <td>
+                        @a.DisposisiDate2
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Catatan Disposisi Koordinator
+                    </td>
+                    <td>
+                        @a.Catatan2
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        Disposisi Sub Koordinator Oleh
+                    </td>
+                    <td>
+                        @a.DisposisiBy3
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Status Disposisi Sub Koordinator
+                    </td>
+                    <td>
+                        @a.DisposisiStatus3
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Tanggal Disposisi Sub Koordinator
+                    </td>
+                    <td>
+                        @a.DisposisiDate3
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Catatan Disposisi Sub Koordinator
+                    </td>
+                    <td>
+                        @a.Catatan3
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">DATA PEGAWAI</h6>
+    </div>
+    <div class="card-body">
+        <p style="text-align:right;">
+            @foreach (dynamic a in Model.clsSuratMasuk)
+            {
+                <button class="btn btn-primary" onclick="location.href = '@Url.Action("Create", "Telaah", new { ID = a.ID })'">
+                    <i class="glyphicon glyphicon-plus"></i>Tambah Pegawai
+                </button>
+                @*@Html.ActionLink("Buat Telaah", "Create", new { ID = a.ID })*@
+            }
+        </p>
+        <hr />
+        
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead class="table table-primary">
+                    <tr>
+                        <th>
+                            Aksi
+                        </th>
+                        <th>
+                            NIP
+                        </th>
+                        <th>
+                            Nama
+                        </th>
+                        <th>
+                            Satuan Kerja
+                        </th>
+                        <th>
+                            Status
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (dynamic b in Model.clsTelaah)
+                    {
+                        if (@b.StatusProses == "1")
+                        {
+
+                            <tr class="table-bordered table-hover my-3">
+                                <td>
+                                    <a href="@Url.Action("Edit", "Telaah", new { ID = b.ID, NIP = b.NIP })">Ubah</a>
+                                    <br />
+                                    <a href="#" onclick="Hapus('@b.ID','@b.NIP')">Hapus</a>
+                                    <br />
+                                    Proses Pra Sidang DPK
+                                </td>
+                                <td>
+                                    @b.NIP
+                                </td>
+                                <td>
+                                    @b.NAMA_LENGKAP
+                                </td>
+                                <td>
+                                    @b.SATUAN_KERJA
+                                </td>
+                                <td>
+                                    @b.Status
+                                </td>
+                            </tr>
+                        }
+                        else if (@b.StatusProses == "0")
+                        {
+
+                            <tr class="table-bordered table-hover my-3">
+                                <td>
+                                    <a href="@Url.Action("Edit", "Telaah", new { ID = b.ID, NIP = b.NIP })">Ubah</a>
+                                    <br />
+                                    <a href="#" onclick="Hapus('@b.ID','@b.NIP')">Hapus</a>
+                                    <br />
+                                    <a href="#" onclick="Proses('@b.ID','@b.NIP')">Proses Pra Sidang DPK</a>
+                                </td>
+                                <td>
+                                    @b.NIP
+                                </td>
+                                <td>
+                                    @b.NAMA_LENGKAP
+                                </td>
+                                <td>
+                                    @b.SATUAN_KERJA
+                                </td>
+                                <td>
+                                    @b.Status
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        @*<p style="font-size:15px;color:red;">*Proses Pra Sidang DPK hanya bisa dilakukan apabila File Telaah sudah di Upload</p>*@
+    </div>
+</div>
+
+<div class="modal fade" id="DeleteTelaah" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Apakah Anda yakin untuk menghapus data ini ?</div>
+            <div class="modal-footer">
+                <label id="ID" name="ID"></label>
+                <label id="NIP" name="NIP"></label>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <input class="btn btn-primary" onclick="HapusData()" value="Hapus" type="button" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ProsesPraDPK" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Proses Pra Sidang DPK</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+                @Html.AntiForgeryToken()
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="modal-body" style="margin-left:20px;">
+                    <form id="Form" >
+                        <div class="form-group row" style="display:none;">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">ID</label>
+                                @Html.TextBox("ID", "", new { @id = "ID", @class = "form-control form-control-user", required = "required" })
+                                @Html.ValidationMessage("ID", "", new { @class = "text-danger" })
+                            </div>
+                            <div class="col-sm-6">
+                                <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">NIP</label>
+                                @Html.TextBox("NIP", "", new {@id = "NIPx", @class = "form-control form-control-user", required = "required" })
+                                @Html.ValidationMessage("NIP", "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col">
+                                <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">File Telaah</label>
+                                @Html.TextBox("FileTelaah", "", new { @id = "FileTelaah", @class = "form-control form-control-user", required = "required" , accept = "application/pdf", Type="file" })
+                                @Html.ValidationMessage("FileTelaah", "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                    <input type="submit" value="Proses" class="btn btn-primary" style="width:100px;" onclick="UploadTelaah()"/>
+                </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function Proses(ID, NIP) {
+        $('#ID').val(ID);
+        $('#NIPx').val(NIP);
+        $('#ProsesPraDPK').modal('show');
+    }
+    function UploadTelaah() {
+        var fileUpload = $("#FileTelaah").get(0);
+        var files = fileUpload.files;
+
+        // Create FormData object  
+        var fileData = new FormData();
+
+        // Looping over all files and add it to FormData object  
+        for (var i = 0; i < files.length; i++) {
+            fileData.append(files[i].name, files[i]);
+        }
+        $.ajax({
+            url: '/Telaah/UploadFiles',
+            type: "POST",
+            contentType: false, // Not to set any content header  
+            processData: false, // Not to process data  
+            data: fileData,
+            success: function (result) {
+                alert('masuk');
+                var dpObj = {
+                    ID: $('#ID').val(),
+                    NIP: $('#NIPx').val(),
+                    FileTelaah: result
+                };
+                $.ajax({
+                    url: "/Telaah/Proses",
+                    data: JSON.stringify(dpObj),
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.toString() == "Success") {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Proses berhasil !',
+                                showConfirmButton: false,
+                                timer: 3000
+                            })
+                            window.location.href = '@Url.Action("Details2", "Telaah")?ID' + $("#ID").val();
+                        }
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: result.toString(),
+                                showConfirmButton: false,
+                                timer: 3000
+                            })
+                        }
+                    },
+                    error: function (errormessage) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: result.toString(),
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                    }
+                });
+            },
+            error: function (err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: result.toString(),
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        });
+    }
+    function PraDPK() {
+        var IDx = $('#ID').val();
+        var dpObj = {
+            ID: $('#ID').val(),
+            NIP: $('#NIP').val()
+            };
+        $.ajax({
+            url: "/Telaah/Proses",
+            data: JSON.stringify(dpObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.toString() == "Sukses") {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Proses Data berhasil !',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    window.location.href = '@Url.Action("Index", "Telaah")'
+                }
+                else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: result.toString(),
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
+            },
+            error: function (errormessage) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: errormessage.responseText,
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        });
+    }
+    function Hapus(ID, NIP) {
+        $('#ID').val(ID);
+        $('#NIP').val(NIP);
+        $('#DeleteTelaah').modal('show');
+    }
+    function HapusData() {
+        var dpObj = {
+            ID: $('#ID').val(),
+            NIP: $('#NIP').val()
+            };
+        $.ajax({
+            url: "/Telaah/Delete",
+            data: JSON.stringify(dpObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.toString() == "Success") {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Hapus Data berhasil !',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    window.location.href = '@Url.Action("Details2", "Telaah")'
+                }
+                else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: result.toString(),
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
+            },
+            error: function (errormessage) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: errormessage.responseText,
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        });
+    }
+</script>

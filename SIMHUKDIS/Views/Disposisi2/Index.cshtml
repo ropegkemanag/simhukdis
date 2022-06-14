@@ -1,0 +1,201 @@
+﻿@model IEnumerable<simhukdis.Models.clsDisposisi>
+@{
+    ViewBag.Title = "DISPOSISI";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-dark">Daftar Disposisi Koordinator Bagian</h6>
+    </div>
+
+    <div class="card-body">
+
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead class="table table-primary" style="white-space: nowrap; text-align: center;">
+                    <tr>
+                        <th>
+                            Aksi
+                        </th>
+                        @*<th>
+            ID
+        </th>*@
+                        <th>
+                            No Surat
+                        </th>
+                        <th>
+                            Asal Surat
+                        </th>
+                        <th>
+                            Tanggal Surat
+                        </th>
+                        <th>
+                            Perihal
+                        </th>
+                        <th>
+                            Satker
+                        </th>
+                        <th>
+                            Tanggal Disposisi Kepala Biro
+                        </th>
+                        <th>
+                            Status Disposisi Kepala Biro
+                        </th>
+                        <th>
+                            Catatan Disposisi Kepala Biro
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model == null)
+                    {
+                    }
+                    else
+                    {
+                        foreach (var r in Model)
+                        {
+                            <tr class="table-bordered table-hover my-3">
+                                <td>
+                                    <a href="#" onclick="getbyID2('@r.ID')">Proses</a>
+                                </td>
+                                <td>
+                                    @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
+                                    @*@r.NoSurat*@
+                                </td>
+                                <td>
+                                    @r.AsalSurat
+                                </td>
+                                <td>
+                                    @r.TanggalSurat
+                                </td>
+                                <td>
+                                    @r.perihal
+                                </td>
+                                <td>
+                                    @r.SATUAN_KERJA
+                                </td>
+                                <td>
+                                    @r.DisposisiDate1
+                                </td>
+                                <td>
+                                    @r.DisposisiStatus1
+                                </td>
+                                <td>
+                                    @r.Catatan1
+                                </td>
+                            </tr>
+                        }
+                    }
+                    </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ProsesDisposisi2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Proses Surat Masuk</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="Form">
+                    <fieldset id="SubmitForm">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <table style="border:0px solid black; width:100%">
+                            <tr style="display:none;">
+                                <td>
+                                    <label id="ID2" name="ID2"></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col">
+                                            <label for="Disposisi_Status">Proses</label>
+                                            @Html.DropDownList("DisposisiStatus2", new List<SelectListItem>
+                                                                                                {
+                                                                                                    new SelectListItem{ Text = "TL", Value = "01" },
+                                                                                                    new SelectListItem{ Text = "Lainnya", Value = "02" }
+                                                                                                }, htmlAttributes: new { @class = "form-control", @id = "DisposisiStatus2" }
+                                                                                            )
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col">
+                                            <label for="catatan">Catatan</label>
+                                            <textarea class="form-control" id="Catatan2" rows="3" name="Catatan2"></textarea>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" onclick="ProsesDisposisi2()">Proses</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function getbyID2(ID) {
+        $.ajax({
+            url: "/Disposisi2/getbyID/" + ID,
+            typr: "GET",
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (result) {
+                $('#ID2').val(result.ID);
+                $('#ProsesDisposisi2').modal('show');
+            },
+            error: function (errormessage) {
+                alert(errormessage.responseText);
+            }
+        });
+        return false;
+    }
+    function ProsesDisposisi2() {
+        var dpObj = {
+            ID: $('#ID2').val(),
+            Catatan2: $('#Catatan2').val(),
+            DisposisiStatus2: $('#DisposisiStatus2').val()
+        };
+        $.ajax({
+            url: "/Disposisi2/Add",
+            data: JSON.stringify(dpObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Disposisi berhasil !',
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+                window.location.href = '@Url.Action("Index", "Disposisi2")'
+            },
+            error: function (errormessage) {
+                Swal.fire({
+                    icon: 'error',
+                    title: errormessage.responseText,
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        });
+    }
+</script>
