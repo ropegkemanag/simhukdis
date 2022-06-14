@@ -25,7 +25,7 @@ namespace SIMHUKDIS.Controllers
         string strToken = "";
         string Username = "agus@kemenag.go.id";
         string Password = "12345678";
-        string baseAddress = "https://ropeg.kemenag.go.id/api/v1/";
+        string baseAddress = "https://api.kemenag.go.id/v1/";
         clsPraDPKDB db = new clsPraDPKDB();
         public ActionResult Index()
         {

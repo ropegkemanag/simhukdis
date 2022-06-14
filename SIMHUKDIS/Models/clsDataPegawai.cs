@@ -22,7 +22,7 @@ namespace SIMHUKDIS.Models
         public string AGAMA { get; set; }
         public string TEMPAT_LAHIR { get; set; }
         public string TANGGAL_LAHIR { get; set; }
-        public int JENIS_KELAMIN { get; set; }
+        public string JENIS_KELAMIN { get; set; }
         public string PENDIDIKAN { get; set; }
         public string KODE_LEVEL_JABATAN { get; set; }
         public string LEVEL_JABATAN { get; set; }
@@ -48,13 +48,22 @@ namespace SIMHUKDIS.Models
         public string SATKER_5 { get; set; }
         public string SATUAN_KERJA { get; set; }
         public string STATUS_KAWIN { get; set; }
-        public object ALAMAT_1 { get; set; }
-        public object ALAMAT_2 { get; set; }
-        public object TELEPON { get; set; }
-        public object KAB_KOTA { get; set; }
-        public object PROVINSI { get; set; }
-        public object KODE_POS { get; set; }
+        public string ALAMAT_1 { get; set; }
+        public string ALAMAT_2 { get; set; }
+        public string TELEPON { get; set; }
+        public string KAB_KOTA { get; set; }
+        public string PROVINSI { get; set; }
+        public string KODE_POS { get; set; }
         public string KODE_LOKASI { get; set; }
         public string KODE_PANGKAT { get; set; }
+        public string NO_HP { get; set; }
+        public string EMAIL { get; set; }
+        public string TMT_PANGKAT_YAD { get; set; }
+        public string TMT_KGB_YAD { get; set; }
+        public string TMT_PENSIUN { get; set; }
+        public string KODE_KUA { get; set; }
+        public string NSM { get; set; }
+        public string NPSN { get; set; }
+        public string STATUS_PEGAWAI { get; set; }
     }
 }

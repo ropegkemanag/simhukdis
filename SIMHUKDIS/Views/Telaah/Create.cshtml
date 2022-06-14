@@ -205,8 +205,8 @@
                     </div>
                     <div class="col-sm-6">
                         <label>TMT Pensiun</label>
-                        @Html.TextBox("TMT_Pensiun", "", new { @type = "text", @id = "TMT_Pensiun", @class = "form-control form-control-user", required = "required" })
-                        @Html.ValidationMessage("TMT_Pensiun", "", new { @class = "text-danger" })
+                        @Html.TextBox("TMT_PENSIUN", "", new { @type = "Date", @id = "TMT_PENSIUN", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.ValidationMessage("TMT_PENSIUN", "", new { @class = "text-danger" })
                     </div>
                 </div>
 
@@ -297,16 +297,16 @@
         //$("#PasalPelanggaran").val("Yang bersangkutan melanggar ketentuan ...");
         $("#RekomendasiHukdis").val("Yang bersangkutan direkomendasikan oleh ... untuk dijatuhi hukuman disiplin Tingkat ... berupa ... berdasarkan ...");
         
-        $(function () {
-            $("#TMT_Pensiun").datepicker({
-                setDate: new Date(),
-                format: 'dd-mm-yyyy',
-                autoclose: true,
-                calendarWeeks: true,
-                clearBtn: true,
-                disableTouchKeyboard: true
-            })
-        });     
+        //$(function () {
+        //    $("#TMT_PENSIUN").datepicker({
+        //        setDate: new Date(),
+        //        format: 'dd-mm-yyyy',
+        //        autoclose: true,
+        //        calendarWeeks: true,
+        //        clearBtn: true,
+        //        disableTouchKeyboard: true
+        //    })
+        //});     
         $(function () {
             $("#Tanggal_Telaah").datepicker({
                 setDate: new Date(),
@@ -344,6 +344,7 @@
                 $('#TEMPAT_LAHIR').val(result.TEMPAT_LAHIR);
                 $('#TANGGAL_LAHIR').val(result.TANGGAL_LAHIR);
                 $('#MASAKERJA_TAHUN').val(result.MASAKERJA_TAHUN);
+                $('#TMT_PENSIUN').val(result.TMT_PENSIUN);
             },
             error: function (errormessage) {
                 Swal.fire({
@@ -369,7 +370,7 @@
             TANGGAL_LAHIR: $('#TANGGAL_LAHIR').val(),
             MASAKERJA_TAHUN: $('#MASAKERJA_TAHUN').val(),
             TANGGAL_LAHIR: $('#TANGGAL_LAHIR').val(),
-            TMT_Pensiun: $('#TMT_Pensiun').val(),
+            TMT_PENSIUN: $('#TMT_PENSIUN').val(),
             DasarBukti: $('#DasarBukti').val(),
             PelanggaranDisiplin: $('#PelanggaranDisiplin').val(),
             PasalPelanggaran: $('#PasalPelanggaran').val(),

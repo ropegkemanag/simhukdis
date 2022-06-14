@@ -10,7 +10,7 @@ namespace SIMHUKDIS.Models
 {    
     public class clsToken
     {
-        string baseAddress = "https://ropeg.kemenag.go.id/api/v1/";
+        string baseAddress = "https://api.kemenag.go.id/v1/";
 
         public string GetAccessToken(string username, string password)
         {

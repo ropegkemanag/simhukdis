@@ -197,8 +197,8 @@
                     </div>
                     <div class="col-sm-6">
                         <label>TMT Pensiun</label>
-                        @Html.TextBox("TMT_Pensiun", "", new { @type = "Date", @id = "TMT_Pensiun", @class = "form-control form-control-user", required = "required", @readonly = "True" })
-                        @Html.ValidationMessage("TMT_Pensiun", "", new { @class = "text-danger" })
+                        @Html.TextBox("TMT_PENSIUN", "", new { @type = "Date", @id = "TMT_PENSIUN", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.ValidationMessage("TMT_PENSIUN", "", new { @class = "text-danger" })
                     </div>
                 </div>
 
@@ -324,6 +324,7 @@
                 $('#PasalPelanggaran').val(result[0].PasalPelanggaran);
                 $('#RekomendasiHukdis').val(result[0].RekomendasiHukdis);
                 $('#AnalisaPertimbangan').val(result[0].AnalisaPertimbangan);
+               
             },
             error: function (errormessage) {
                 Swal.fire({
@@ -353,6 +354,7 @@
                 $('#TANGGAL_LAHIR').val(result.TANGGAL_LAHIR);
                 $('#MASAKERJA_TAHUN').val(result.MASAKERJA_TAHUN);
                 $('#satker').val(result.SATUAN_KERJA);
+                $('#TMT_PENSIUN').val(result.TMT_PENSIUN);
             },
             error: function (errormessage) {
                 Swal.fire({
@@ -379,7 +381,7 @@
             TANGGAL_LAHIR: $('#TANGGAL_LAHIR').val(),
             MASAKERJA_TAHUN: $('#MASAKERJA_TAHUN').val(),
             TANGGAL_LAHIR: $('#TANGGAL_LAHIR').val(),
-            TMT_Pensiun: $('#TMT_Pensiun').val(),
+            TMT_PENSIUN: $('#TMT_PENSIUN').val(),
             DasarBukti: $('#DasarBukti').val(),
             PelanggaranDisiplin: $('#PelanggaranDisiplin').val(),
             PasalPelanggaran: $('#PasalPelanggaran').val(),
@@ -455,7 +457,7 @@
                     TANGGAL_LAHIR: $('#TANGGAL_LAHIR').val(),
                     MASAKERJA_TAHUN: $('#MASAKERJA_TAHUN').val(),
                     TANGGAL_LAHIR: $('#TANGGAL_LAHIR').val(),
-                    TMT_Pensiun: $('#TMT_Pensiun').val(),
+                    TMT_PENSIUN: $('#TMT_PENSIUN').val(),
                     DasarBukti: $('#DasarBukti').val(),
                     PelanggaranDisiplin: $('#PelanggaranDisiplin').val(),
                     PasalPelanggaran: $('#PasalPelanggaran').val(),
@@ -535,7 +537,7 @@
             TANGGAL_LAHIR: $('#TANGGAL_LAHIR').val(),
             MASAKERJA_TAHUN: $('#MASAKERJA_TAHUN').val(),
             TANGGAL_LAHIR: $('#TANGGAL_LAHIR').val(),
-            TMT_Pensiun: $('#TMT_Pensiun').val(),
+            TMT_PENSIUN: $('#TMT_PENSIUN').val(),
             DasarBukti: $('#DasarBukti').val(),
             PelanggaranDisiplin: $('#PelanggaranDisiplin').val(),
             PasalPelanggaran: $('#PasalPelanggaran').val(),

@@ -24,7 +24,7 @@ namespace SIMHUKDIS.Controllers
         string strToken = "";
         string Username = "agus@kemenag.go.id";
         string Password = "12345678";
-        string baseAddress = "https://ropeg.kemenag.go.id/api/v1/";
+        string baseAddress = "https://api.kemenag.go.id/v1/";
 
         public ActionResult Index()
         {
@@ -554,6 +554,7 @@ namespace SIMHUKDIS.Controllers
                     dtl.AGAMA = clsDataPegawai.data.AGAMA;
                     dtl.TEMPAT_LAHIR = clsDataPegawai.data.TEMPAT_LAHIR;
                     dtl.TANGGAL_LAHIR = clsDataPegawai.data.TANGGAL_LAHIR.Substring(0,10);
+                    dtl.TANGGAL_LAHIR = Convert.ToDateTime(dtl.TANGGAL_LAHIR).ToString("dd-MM-yyyy");
                     dtl.JENIS_KELAMIN = clsDataPegawai.data.JENIS_KELAMIN;
                     dtl.PENDIDIKAN = clsDataPegawai.data.PENDIDIKAN;
                     dtl.KODE_LEVEL_JABATAN = clsDataPegawai.data.KODE_LEVEL_JABATAN;
@@ -600,6 +601,8 @@ namespace SIMHUKDIS.Controllers
                     dtl.KODE_POS = clsDataPegawai.data.KODE_POS;
                     dtl.KODE_LOKASI = clsDataPegawai.data.KODE_LOKASI;
                     dtl.KODE_PANGKAT = clsDataPegawai.data.KODE_PANGKAT;
+                    dtl.TMT_PENSIUN = clsDataPegawai.data.TMT_PENSIUN.Substring(0, 10);
+                    dtl.TMT_PENSIUN = Convert.ToDateTime(dtl.TMT_PENSIUN).ToString("dd-MM-yyyy");
                     return Json(dtl, JsonRequestBehavior.AllowGet);
                 }
                 else

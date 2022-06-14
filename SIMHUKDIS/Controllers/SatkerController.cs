@@ -16,7 +16,7 @@ namespace SIMHUKDIS.Controllers
     {
         private static string Username = string.Empty;
         private static string Password = string.Empty;
-        private static string baseAddress = "https://ropeg.kemenag.go.id/api/v1/";
+        private static string baseAddress = "https://api.kemenag.go.id/v1/";
         clsDataAPI db = new clsDataAPI();
 
         // GET: DataAPI
