@@ -24,25 +24,37 @@ namespace SIMHUKDIS.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            UserLogin = Session["Fullname"].ToString();
-            SatuanKerja = Session["Satker"].ToString();
-            StatusAdmin = Session["StatusAdmin"].ToString();
-            UserGroup = Session["UserGroup"].ToString();
+            try
+            {
+                UserLogin = Session["Fullname"].ToString();
+                SatuanKerja = Session["Satker"].ToString();
+                StatusAdmin = Session["StatusAdmin"].ToString();
+                UserGroup = Session["UserGroup"].ToString();
 
-            ViewBag.StatusAdmin = StatusAdmin;
-            ViewBag.UserID = UserLogin;
-            ViewBag.SatuanKerja = SatuanKerja;
-            ViewBag.UserGroup = UserGroup;
+                ViewBag.StatusAdmin = StatusAdmin;
+                ViewBag.UserID = UserLogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
 
-            clsPejabatMst p = db.GetList();
-            ViewBag.karopeg = new SelectList(db.GetKaropegList(), "userid", "nama");
-            ViewBag.koordinator = new SelectList(db.GetKoordinatorList(), "userid", "nama");
-            ViewBag.subkoordinator = new SelectList(db.GeSubKoordinatorList(), "userid", "nama");
-            return View(p);
+                clsPejabatMst p = db.GetList();
+                ViewBag.karopeg = new SelectList(db.GetKaropegList(), "userid", "nama");
+                ViewBag.koordinator = new SelectList(db.GetKoordinatorList(), "userid", "nama");
+                ViewBag.subkoordinator = new SelectList(db.GeSubKoordinatorList(), "userid", "nama");
+                return View(p);
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
+            }           
         }
         public ActionResult InsertUpdate(string menag, string sekjend, string karopeg, string koordinator, string subkoordinator)
         {
             string strMsg = "";
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             try
             {
                 UserLogin = Session["Fullname"].ToString();

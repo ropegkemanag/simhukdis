@@ -33,18 +33,26 @@ namespace SIMHUKDIS.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            string userlogin = Session["Fullname"].ToString();
-            string SatuanKerja = Session["Satker"].ToString();
-            string StatusAdmin = Session["StatusAdmin"].ToString();
-            string UserGroup = Session["UserGroup"].ToString();
-            ViewBag.StatusAdmin = StatusAdmin;
-            ViewBag.UserID = userlogin;
-            ViewBag.SatuanKerja = SatuanKerja;
-            ViewBag.UserGroup = UserGroup;
-            
-            List<clsPraDPK> PD = db.ListAll().ToList();
-            clsDataPegawaiDtl a = new clsDataPegawaiDtl();
-            return View(PD);
+            try
+            {
+                string userlogin = Session["Fullname"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                ViewBag.StatusAdmin = StatusAdmin;
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+
+                List<clsPraDPK> PD = db.ListAll().ToList();
+                clsDataPegawaiDtl a = new clsDataPegawaiDtl();
+                return View(PD);
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
+            }            
         }
         public ActionResult DownloadToExcel()
         {
@@ -83,7 +91,8 @@ namespace SIMHUKDIS.Controllers
             }
             catch (Exception ex)
             {
-                return View(ex.Message, JsonRequestBehavior.AllowGet);
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
             }
         }
         public ActionResult Proses(string ID, string NIP, string Catatan, string Tanggal_Sidang)
@@ -111,10 +120,8 @@ namespace SIMHUKDIS.Controllers
             }
             catch (Exception ex)
             {
-                strMsg = ex.Message.ToString();
-                ModelState.AddModelError(string.Empty, strMsg);
-                ViewBag.Message = string.Format(strMsg, strMsg, DateTime.Now.ToString());
-                return Json(strMsg, JsonRequestBehavior.AllowGet);
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
             }
         }
         public ActionResult SendToDPK(string ID, string NIP)
@@ -135,10 +142,8 @@ namespace SIMHUKDIS.Controllers
             }
             catch (Exception ex)
             {
-                strMsg = ex.Message.ToString();
-                ModelState.AddModelError(string.Empty, strMsg);
-                ViewBag.Message = string.Format(strMsg, strMsg, DateTime.Now.ToString());
-                return Json(strMsg, JsonRequestBehavior.AllowGet);
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
             }
         }
     }

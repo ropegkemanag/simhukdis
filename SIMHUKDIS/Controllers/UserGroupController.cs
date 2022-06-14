@@ -18,15 +18,23 @@ namespace simhukdis.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            string userlogin = Session["Fullname"].ToString();
-            string SatuanKerja = Session["Satker"].ToString();
-            string StatusAdmin = Session["StatusAdmin"].ToString();
-            string UserGroup = Session["UserGroup"].ToString();
-            ViewBag.UserID = userlogin;
-            ViewBag.SatuanKerja = SatuanKerja;
-            ViewBag.UserGroup = UserGroup;
-            List<clsUserGroup> sm = db.UserGroupList.ToList();
-            return View(sm);
+            try
+            {
+                string userlogin = Session["Fullname"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+                List<clsUserGroup> sm = db.UserGroupList.ToList();
+                return View(sm);
+            }
+            catch(Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
+            }            
         }
         [HttpGet]
         public ActionResult Create()

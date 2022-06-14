@@ -44,9 +44,10 @@ namespace SIMHUKDIS.Controllers
                 List<Datum> sm = db.ListAll();
                 return View(sm);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return View();
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
             }
         }
         [HttpGet]
@@ -56,7 +57,15 @@ namespace SIMHUKDIS.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
+            }            
         }
         [HttpPost]
         public ActionResult Create(string SATUAN_KERJA)
@@ -92,9 +101,17 @@ namespace SIMHUKDIS.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            ClsSatkerDB db = new ClsSatkerDB();
-            ClsSatker Satker = db.SatkerList.SingleOrDefault(sub => sub.KODE_SATUAN_KERJA == ID);
-            return View(Satker);
+            try
+            {
+                ClsSatkerDB db = new ClsSatkerDB();
+                ClsSatker Satker = db.SatkerList.SingleOrDefault(sub => sub.KODE_SATUAN_KERJA == ID);
+                return View(Satker);
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
+            }
         }
 
         [HttpPost]
@@ -117,8 +134,8 @@ namespace SIMHUKDIS.Controllers
             }
             catch (Exception ex)
             {
-                strMsg = ex.Message.ToString();
-                return Json(strMsg, JsonRequestBehavior.AllowGet);
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
             }
         }
         public ActionResult Delete(string ID)
@@ -134,10 +151,8 @@ namespace SIMHUKDIS.Controllers
             }
             catch (Exception ex)
             {
-                strMsg = ex.Message.ToString();
-                ModelState.AddModelError(string.Empty, strMsg);
-                ViewBag.Message = string.Format(strMsg, strMsg, DateTime.Now.ToString());
-                return Json(strMsg, JsonRequestBehavior.AllowGet);
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
             }
         }
         public static Token GetAccessToken(string username, string password)

@@ -18,16 +18,24 @@ namespace simhukdis.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            string userlogin = Session["Fullname"].ToString();
-            string SatuanKerja = Session["Satker"].ToString();
-            string StatusAdmin = Session["StatusAdmin"].ToString();
-            string UserGroup = Session["UserGroup"].ToString();
-            ViewBag.StatusAdmin = StatusAdmin;
-            ViewBag.UserID = userlogin;
-            ViewBag.SatuanKerja = SatuanKerja;
-            ViewBag.UserGroup = UserGroup;
-            List<clsHukdis> sm = db.HukdisList.ToList();
-            return View(sm);
+            try
+            {
+                string userlogin = Session["Fullname"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                ViewBag.StatusAdmin = StatusAdmin;
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+                List<clsHukdis> sm = db.HukdisList.ToList();
+                return View(sm);
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
+            }            
         }
         [HttpGet]
         public ActionResult Create()
@@ -36,7 +44,15 @@ namespace simhukdis.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            return View();
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
+            }           
         }
 
         [HttpPost]
@@ -66,8 +82,8 @@ namespace simhukdis.Controllers
             }
             catch (Exception ex)
             {
-                strMsg = ex.Message.ToString();
-                return Json(strMsg, JsonRequestBehavior.AllowGet);
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
             }
         }
 
@@ -105,22 +121,12 @@ namespace simhukdis.Controllers
             }
             catch (Exception ex)
             {
-                strMsg = ex.Message.ToString();
-                return Json(strMsg, JsonRequestBehavior.AllowGet);
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
             }
         }
-        
-        //[HttpGet]
-        //public ActionResult Delete(int ID)
-        //{
-        //    clsHukdisDB db = new clsHukdisDB();
-        //    clsHukdis UHukdis = db.HukdisList.SingleOrDefault(sub => sub.ID == ID);
-        //    return View(UHukdis);
-        //}
 
         [HttpPost]
-        //[ActionName("Delete")]
-        //[ValidateAntiForgeryToken]
         public ActionResult Delete(string ID)
         {
             string strMsg = "";
@@ -134,10 +140,8 @@ namespace simhukdis.Controllers
             }
             catch (Exception ex)
             {
-                strMsg = ex.Message.ToString();
-                ModelState.AddModelError(string.Empty, strMsg);
-                ViewBag.Message = string.Format(strMsg, strMsg, DateTime.Now.ToString());
-                return Json(strMsg, JsonRequestBehavior.AllowGet);
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
             }
         }
     }

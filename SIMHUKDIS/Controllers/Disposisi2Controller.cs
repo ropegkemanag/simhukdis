@@ -93,13 +93,21 @@ namespace simhukdis.Controllers
             }
             catch (Exception ex)
             {
-                strMsg = ex.Message.ToString();
-                return Json(strMsg, JsonRequestBehavior.AllowGet);
+                return new JsonResult
+                {
+                    Data = new { ErrorMessage = ex.Message, Success = false },
+                    ContentEncoding = System.Text.Encoding.UTF8,
+                    JsonRequestBehavior = JsonRequestBehavior.DenyGet
+                };
             }
         }
         [HttpGet]
         public ActionResult Proses(string ID)
         {
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             try
             {
                 clsDisposisi UGroup = db.DP.SingleOrDefault(sub => sub.ID == ID);

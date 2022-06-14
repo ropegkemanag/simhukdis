@@ -193,7 +193,7 @@
                     </div>
                     <div class="col-sm-6">
                         <label>Tanggal Lahir</label>
-                        @Html.TextBox("TANGGAL_LAHIR", "", new { @type = "Date", @id = "TANGGAL_LAHIR", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.TextBox("TANGGAL_LAHIR", "", new { @type = "Text", @id = "TANGGAL_LAHIR", @class = "form-control form-control-user", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("TANGGAL_LAHIR", "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -205,7 +205,7 @@
                     </div>
                     <div class="col-sm-6">
                         <label>TMT Pensiun</label>
-                        @Html.TextBox("TMT_PENSIUN", "", new { @type = "Date", @id = "TMT_PENSIUN", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.TextBox("TMT_PENSIUN", "", new { @type = "Text", @id = "TMT_PENSIUN", @class = "form-control form-control-user", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("TMT_PENSIUN", "", new { @class = "text-danger" })
                     </div>
                 </div>

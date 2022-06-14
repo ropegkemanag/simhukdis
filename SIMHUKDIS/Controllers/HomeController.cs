@@ -12,15 +12,27 @@ namespace simhukdis.Controllers
         clsUserLoginDB UserLogin = new clsUserLoginDB();
         public ActionResult Index()
         {
-            string userlogin = Session["Fullname"].ToString();
-            string SatuanKerja = Session["Satker"].ToString();
-            string StatusAdmin = Session["StatusAdmin"].ToString();
-            string UserGroup = Session["UserGroup"].ToString();
-            ViewBag.StatusAdmin = StatusAdmin;
-            ViewBag.UserID = userlogin;
-            ViewBag.SatuanKerja = SatuanKerja;
-            ViewBag.UserGroup = UserGroup;
-            return View();
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            try
+            {
+                string userlogin = Session["Fullname"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                ViewBag.StatusAdmin = StatusAdmin;
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
+            }            
         }
         [HttpGet]
         public ActionResult Login()

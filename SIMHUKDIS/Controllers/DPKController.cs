@@ -21,23 +21,35 @@ namespace SIMHUKDIS.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            string userlogin = Session["Fullname"].ToString();
-            string SatuanKerja = Session["Satker"].ToString();
-            string StatusAdmin = Session["StatusAdmin"].ToString();
-            string UserGroup = Session["UserGroup"].ToString();
-            ViewBag.StatusAdmin = StatusAdmin;
-            ViewBag.UserID = userlogin;
-            ViewBag.SatuanKerja = SatuanKerja;
-            ViewBag.UserGroup = UserGroup;
-            clsHukdisDB x = new clsHukdisDB();
-            ViewBag.Hukdis = new SelectList(x.GetListHukdis(), "ID", "HukdisDesc");
-            List<clsDPK> PD = db.ListAll().ToList();
-            clsDataPegawaiDtl a = new clsDataPegawaiDtl();
-            return View(PD);
+            try
+            {
+                string userlogin = Session["Fullname"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                ViewBag.StatusAdmin = StatusAdmin;
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+                clsHukdisDB x = new clsHukdisDB();
+                ViewBag.Hukdis = new SelectList(x.GetListHukdis(), "ID", "HukdisDesc");
+                List<clsDPK> PD = db.ListAll().ToList();
+                clsDataPegawaiDtl a = new clsDataPegawaiDtl();
+                return View(PD);
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
+            }            
         }
         public ActionResult UbahData(string ID, string NIP, string KeputusanSidang, string Tanggal_Sidang, string Catatan_Sidang)
         {
             string strMsg = "";
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             try
             {
                 string UserLogin = Session["Fullname"].ToString();
@@ -74,6 +86,10 @@ namespace SIMHUKDIS.Controllers
         public ActionResult SK(string ID, string NIP)
         {
             string strMsg = "";
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             try
             {
                 string UserLogin = Session["Fullname"].ToString();
@@ -97,6 +113,10 @@ namespace SIMHUKDIS.Controllers
         }
         public ActionResult DownloadToExcel()
         {
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             try
             {
                 List<clsPraDPK> rpt = new List<clsPraDPK>();
@@ -123,11 +143,7 @@ namespace SIMHUKDIS.Controllers
 
                     //Save the workbook to disk in xlsx format
                     workbook.SaveAs(sFilename, ExcelSaveType.SaveAsXLS, HttpContext.ApplicationInstance.Response, ExcelDownloadType.Open);
-
-
-
                 }
-
                 return RedirectToAction("Index");
             }
             catch (Exception ex)
@@ -135,6 +151,5 @@ namespace SIMHUKDIS.Controllers
                 return View(ex.Message, JsonRequestBehavior.AllowGet);
             }
         }
-
     }
 }

@@ -261,7 +261,12 @@ namespace simhukdis.Controllers
             }
             catch (Exception ex)
             {
-                throw ex;
+                return new JsonResult
+                {
+                    Data = new { ErrorMessage = ex.Message, Success = false },
+                    ContentEncoding = System.Text.Encoding.UTF8,
+                    JsonRequestBehavior = JsonRequestBehavior.DenyGet
+                };
             }
         }
         public ActionResult DownloadToExcel()

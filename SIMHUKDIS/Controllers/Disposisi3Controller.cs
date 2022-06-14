@@ -124,6 +124,10 @@ namespace SIMHUKDIS.Controllers
         }
         public ActionResult Proses(string ID, string StatusDisposisi, string Catatan)
         {
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             string Msg = "";
             try
             {

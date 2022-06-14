@@ -71,7 +71,6 @@ namespace simhukdis.Controllers
             {
                 var Error_Message = "Error Catch ! (" + ex.Message + ")";
                 return RedirectToAction("Error500", "Home", new { Error_Message });
-                //return RedirectToAction("Error500", "Home");
             }            
         }
         //public ActionResult Filter(int Status, DateTime DateFrom, DateTime DateTo)

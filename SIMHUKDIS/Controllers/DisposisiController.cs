@@ -74,6 +74,10 @@ namespace simhukdis.Controllers
         [HttpGet]
         public ActionResult Proses(string ID)
         {
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             try
             {
                 clsDisposisi UGroup = db.DP.SingleOrDefault(sub => sub.ID == ID);

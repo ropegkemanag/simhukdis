@@ -55,9 +55,7 @@ namespace SIMHUKDIS.Controllers
             {
                 var Error_Message = "Error Catch ! (" + ex.Message + ")";
                 return RedirectToAction("Error500", "Home", new { Error_Message });
-                //return RedirectToAction("Error500", "Home");
-            }
-            
+            }            
         }
         [HttpGet]
         public ActionResult Create(int ID)
@@ -482,12 +480,13 @@ namespace SIMHUKDIS.Controllers
                 return Json(strMsg, JsonRequestBehavior.AllowGet);
             }
         }
+
         public ActionResult GenerateWord2(int ID, string NIP,
         string NAMA_LENGKAP, string GOL_RUANG, string LEVEL_JABATAN,
         string SATUAN_KERJA, string TEMPAT_LAHIR, string TANGGAL_LAHIR,
         string MASAKERJA_TAHUN, string TMT_Pensiun, string DasarBukti,
         string PelanggaranDisiplin, string PasalPelanggaran, string RekomendasiHukdis,
-        string AnalisaPertimbangan, string KeputusanSidangDPK, string Tanggal_Telaah)
+        string AnalisaPertimbangan, string KeputusanSidangDPK, string Tanggal_Telaah, string Telaah_No)
         {
             string filepath = HttpContext.Request.PhysicalApplicationPath;
             string strTemplate = filepath + "Files/Template/Template_Telaah.docx";
@@ -532,15 +531,7 @@ namespace SIMHUKDIS.Controllers
                 telaah.KeputusanSidangDPK = KeputusanSidangDPK;
                 telaah.CreatedUser = UserLogin;
                 telaah.Tanggal_Telaah = Tanggal_Telaah;
-                clsTelaahDB i = new clsTelaahDB();
-                int Bulan = DateTime.Now.Month;
-                int Tahun = DateTime.Now.Year;
-                int intTelaahNo = i.GetLastTelaahNo(Bulan, Tahun);
-                string strTelaahNo = "";
-                strTelaahNo = string.Format(string.Format("{0:000}", intTelaahNo));
-                string strBulan = string.Format(string.Format("{0:00}", Bulan));
-                strTelaahNo = "R-" + strTelaahNo + "/B.II/2-b/KP.04.1/" + strBulan + "/" + Tahun;
-                telaah.TelaahNo = strTelaahNo;
+                telaah.TelaahNo = Telaah_No;
                 Document doc = new Document();
                 doc.LoadFromFile(strTemplate);
                 //get strings to replace
@@ -554,11 +545,8 @@ namespace SIMHUKDIS.Controllers
                 doc.SaveToFile(OutputPath + strFileNameDoc, FileFormat.Docx);
                 //Convert to PDF
                 doc.SaveToFile(OutputPath + strFileNamePDF, FileFormat.PDF);
-                //Insert Table
-                clsTelaahDB a = new clsTelaahDB();
-                //a.Insert(telaah);
-                //a.InsertTelaahNo(intTelaahNo, Bulan, Tahun);
                 ToViewFile(OutputPath + strFileNameDoc);
+                ToViewFile(OutputPath + strFileNamePDF);
                 strMsg = "Success";
                 return Json(strMsg, JsonRequestBehavior.AllowGet);
             }
@@ -612,9 +600,14 @@ namespace SIMHUKDIS.Controllers
                 var m = b.ListByNIP(ID,NIP);
                 return Json(m, JsonRequestBehavior.AllowGet);
             }
-            catch
+            catch(Exception ex)
             {
-                return Json(null, JsonRequestBehavior.AllowGet);
+                return new JsonResult
+                {
+                    Data = new { ErrorMessage = ex.Message, Success = false },
+                    ContentEncoding = System.Text.Encoding.UTF8,
+                    JsonRequestBehavior = JsonRequestBehavior.DenyGet
+                };
             }
         }
         public JsonResult GetPegawai(string NIP)
@@ -698,7 +691,12 @@ namespace SIMHUKDIS.Controllers
             }
             catch (Exception ex)
             {
-                throw ex;
+                return new JsonResult
+                {
+                    Data = new { ErrorMessage = ex.Message, Success = false },
+                    ContentEncoding = System.Text.Encoding.UTF8,
+                    JsonRequestBehavior = JsonRequestBehavior.DenyGet
+                };
             }            
         }
     }

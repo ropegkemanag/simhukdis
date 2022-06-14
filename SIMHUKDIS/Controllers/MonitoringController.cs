@@ -25,17 +25,25 @@ namespace SIMHUKDIS.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            string userlogin = Session["Fullname"].ToString();
-            string UserGroup = Session["UserGroup"].ToString();
-            string SatuanKerja = Session["Satker"].ToString();
-            string StatusAdmin = Session["StatusAdmin"].ToString();
-            
-            ViewBag.StatusAdmin = StatusAdmin;
-            ViewBag.UserID = userlogin;
-            ViewBag.SatuanKerja = SatuanKerja;
-            ViewBag.UserGroup = UserGroup;
-            List<clsMonitoring> monitoring = db.MonitoringList(UserGroup, userlogin).ToList();
-            return View(monitoring);
+            try
+            {
+                string userlogin = Session["Fullname"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+
+                ViewBag.StatusAdmin = StatusAdmin;
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+                List<clsMonitoring> monitoring = db.MonitoringList(UserGroup, userlogin).ToList();
+                return View(monitoring);
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
+            }            
         }
         [HttpGet]
         public ActionResult Details(int ID)

@@ -20,21 +20,29 @@ namespace SIMHUKDIS.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            string userlogin = Session["Fullname"].ToString();
-            string SatuanKerja = Session["Satker"].ToString();
-            string StatusAdmin = Session["StatusAdmin"].ToString();
-            string UserGroup = Session["UserGroup"].ToString();
-            string UserID = Session["UserID"].ToString();
+            try
+            {
+                string userlogin = Session["Fullname"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                string UserID = Session["UserID"].ToString();
 
-            ViewBag.StatusAdmin = StatusAdmin;
-            ViewBag.UserID = userlogin;
-            ViewBag.SatuanKerja = SatuanKerja;
-            ViewBag.UserGroup = UserGroup;
-            //clsHukdisDB x = new clsHukdisDB();
-            //ViewBag.Hukdis = new SelectList(x.GetListHukdis(), "ID", "HukdisDesc");
-            List<clsHasilSidang> PD = db.ListAll(UserID).ToList();
-            clsDataPegawaiDtl a = new clsDataPegawaiDtl();
-            return View(PD);
+                ViewBag.StatusAdmin = StatusAdmin;
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+                //clsHukdisDB x = new clsHukdisDB();
+                //ViewBag.Hukdis = new SelectList(x.GetListHukdis(), "ID", "HukdisDesc");
+                List<clsHasilSidang> PD = db.ListAll(UserID).ToList();
+                clsDataPegawaiDtl a = new clsDataPegawaiDtl();
+                return View(PD);
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
+            }            
         }
         [HttpGet]
         public ActionResult Create(int ID, string NIP)
@@ -220,7 +228,12 @@ namespace SIMHUKDIS.Controllers
             }
             catch (Exception ex)
             {
-                throw ex;
+                return new JsonResult
+                {
+                    Data = new { ErrorMessage = ex.Message, Success = false },
+                    ContentEncoding = System.Text.Encoding.UTF8,
+                    JsonRequestBehavior = JsonRequestBehavior.DenyGet
+                };
             }
         }
         public JsonResult GetTembusan(string Satker, string Satker3)
@@ -232,7 +245,12 @@ namespace SIMHUKDIS.Controllers
             }
             catch (Exception ex)
             {
-                throw ex;
+                return new JsonResult
+                {
+                    Data = new { ErrorMessage = ex.Message, Success = false },
+                    ContentEncoding = System.Text.Encoding.UTF8,
+                    JsonRequestBehavior = JsonRequestBehavior.DenyGet
+                };
             }
         }
     }
