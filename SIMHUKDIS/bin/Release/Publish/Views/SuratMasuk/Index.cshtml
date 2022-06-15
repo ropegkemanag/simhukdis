@@ -1,0 +1,275 @@
+﻿@model IEnumerable<simhukdis.Models.clsSuratMasuk>
+
+@{
+    ViewBag.Title = "Surat Masuk";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Daftar Surat Masuk</h6>
+    </div>
+
+    <div class="card-body">
+        <p style="text-align:left;">
+            <div  class="form-group">
+                <table>
+                    <tr>
+                        <td>
+                            <label style="color:cornflowerblue;" class="control-label ">Status</label>
+                        </td>
+                        <td style="width:20px;"> </td>
+                        <td>
+                            @Html.DropDownList("StatusProses", new List<SelectListItem>
+                                                                    {
+                                                                        new SelectListItem{ Text = "Belum di Proses", Value = "0" },
+                                                                        new SelectListItem{ Text = "Sudah di Proses", Value = "1" }
+                                                                    }, htmlAttributes: new { @class = "form-control", @id = "StatusProses" }
+                                                                )
+                            @Html.ValidationMessage("StatusProses", "", new { @class = "text-danger" })
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label style="color:cornflowerblue;" class="control-label ">Tanggal Surat</label>
+                        </td>
+                        <td style="width:20px;"> </td>
+                        <td>
+                            <input id="TanggalSuratFrom" class="form-control" value="@string.Format("{0:dd-MM-yyyy}", ViewBag.DateFrom)" type="date"/>
+                        </td>
+                        <td style="color:cornflowerblue;" class="control-label ">s/d</td>
+                        <td>
+                            <input id="TanggalSuratTo" class="form-control" value="@string.Format("{0:dd-MM-yyyy}", ViewBag.DateTo)" type="date"/>
+                        </td>
+                        <td style="width:20px;"> </td>
+                        <td>
+                            <button class="btn btn-primary" type="button" id="GridLoad">
+                                Cari
+                            </button>                            
+                        </td>
+                    </tr>
+                </table>
+                <hr />
+            </div>
+        </p>
+        <p style="text-align:right;">
+            @if (@ViewBag.UserGroup == "03")
+            {
+            <button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("Create", "SuratMasuk")'">
+                Tambah Data
+            </button>
+            }
+            else
+            {
+            <button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("Create", "SuratMasuk")'" disabled>
+                Tambah Data
+            </button>
+            }
+
+        </p>
+
+        <div style="height:10px;">
+
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead class="table table-primary">
+                    <tr>
+                        <th>
+                            Aksi
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.NoSurat)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.perihal)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.SATUAN_KERJA)
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (Model == null)
+                    {
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
+                        {
+                    <tr class="table-bordered table-hover my-3">
+                        @if (@ViewBag.UserID == item.CreateUser && item.Status == 0)
+                        {
+                            <td>
+                                @Html.ActionLink("Ubah", "Edit", new { ID = item.ID, Satker = item.KODE_SATUAN_KERJA })
+                                <br />
+                                <a href="#" onclick="Hapus('@item.ID')">Hapus</a>
+                                <br />
+                                <a href="#" onclick="Proses('@item.ID')">Kirim</a>
+                            </td>
+                        }
+                        else
+                        {
+                            <td>
+                                Edit
+                                <br />
+                                Hapus
+                                <br />
+                                Kirim
+                            </td>
+                        }
+                        <td>
+                            @Html.ActionLink(item.NoSurat, "Details", new { ID = item.ID })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.perihal)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SATUAN_KERJA)
+                        </td>
+                    </tr>
+                        }
+                    }
+                    </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ProsesSM" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Apakah Anda yakin untuk mengirim data ini ?</div>
+            <div class="modal-footer">
+                <label id="ID" name="ID"></label>
+                <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                <input class="btn btn-success" onclick="KirimData()" value="Kirim" type="button" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="DeleteSM" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Apakah Anda yakin untuk menghapus data ini ?</div>
+            <div class="modal-footer">
+                <label id="ID" name="ID"></label>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <input class="btn btn-primary" onclick="HapusDataSM()" value="Hapus" type="button"/>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+    });
+     $("#GridLoad").click(function () {
+         window.location = '@Url.Action("Index", "SuratMasuk")?Status=' + $("#StatusProses").val() + '&DateFrom=' + $("#TanggalSuratFrom").val() + '&DateTo=' + $("#TanggalSuratTo").val();
+                setTimeout(function () {
+                    waitingDialog.hide();
+                }, 1000);
+        });
+    function Proses(ID) {
+        $('#ID').val(ID);
+        $('#ProsesSM').modal('show');
+    }
+    function Hapus(ID) {
+        $('#ID').val(ID);
+        $('#DeleteSM').modal('show');
+    }
+    function KirimData() {
+        var dpObj = {
+            ID: $('#ID').val()
+            };
+        $.ajax({
+            url: "/SuratMasuk/Proses",
+            data: JSON.stringify(dpObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.toString() == "Success") {
+                    swal.fire({
+                        title: "Kirim Data Surat Masuk Berhasil!",
+                        icon: "success",
+                        button: "Ok",
+                        timer: 3000,
+                    });
+                    window.location = '@Url.Action("Index", "SuratMasuk")?Status=' + $("#StatusProses").val() + '&DateFrom=' + $("#TanggalSuratFrom").val() + '&DateTo=' + $("#TanggalSuratTo").val();
+                }
+                else {
+                    swal.fire({
+                        title: result.toString(),
+                        icon: "error",
+                        button: "Ok",
+                        timer: 3000,
+                    });
+                }
+            },
+            error: function (errormessage) {
+                swal.fire({
+                    title: errormessage.responseText,
+                    icon: "error",
+                    button: "Ok",
+                    timer: 3000,
+                });
+            }
+        });
+    }
+
+    function HapusDataSM() {
+        var dpObj = {
+            ID: $('#ID').val()
+            };
+        $.ajax({
+            url: "/SuratMasuk/Delete",
+            data: JSON.stringify(dpObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.toString() == "Success") {
+                    swal.fire({
+                        title: "Hapus Data Surat Masuk Berhasil!",
+                        icon: "success",
+                        button: "Ok",
+                        timer: 3000,
+                    });
+                    window.location = '@Url.Action("Index", "SuratMasuk")?Status=' + $("#StatusProses").val() + '&DateFrom=' + $("#TanggalSuratFrom").val() + '&DateTo=' + $("#TanggalSuratTo").val();
+                }
+                else {
+                    swal.fire({
+                        title: result.toString(),
+                        icon: "error",
+                        button: "Ok",
+                        timer: 3000,
+                    });
+                }
+            },
+            error: function (errormessage) {
+                swal.fire({
+                    title: errormessage.responseText,
+                    icon: "error",
+                    button: "Ok",
+                    timer: 3000,
+                });
+            }
+        });
+    }
+</script>

@@ -1,0 +1,45 @@
+﻿@model simhukdis.Models.clsHukdis
+@{
+    ViewBag.Title = "Delete Hukuman Disiplin Master";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.HukdisID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HukdisID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HukdisDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HukdisDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Tingkat)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Tingkat)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-primary"  /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

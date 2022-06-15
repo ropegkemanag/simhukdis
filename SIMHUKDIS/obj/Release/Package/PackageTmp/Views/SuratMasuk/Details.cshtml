@@ -1,0 +1,351 @@
+﻿@model simhukdis.Models.clsSuratMasuk
+
+@{
+    ViewBag.Title = "Detail Surat Masuk";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Detail Surat Masuk</h6>
+    </div>
+    <div class="card-body">
+        <p style="text-align:right;">
+            <button id="DownloadWord" type="button" onclick="GenerateWord()" class="btn btn-primary">Download Detail Surat Masuk</button>
+        </p>
+        
+        <form>
+            <div class="form-group row" style="display:none;">
+                <div class="col-4">
+                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.ID)</label>
+                </div>
+                <div class="col">
+                    @Html.TextBoxFor(model => model.ID, "", new { @type = "text", @id = "ID", @class = "form-control form-control-user" })
+                    @*<text class="form-control" disabled id="NoSurat">@Html.DisplayFor(model => model.NoSurat)</text>*@
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.NoSurat)</label>
+                </div>
+                <div class="col">
+                    @Html.TextBoxFor(model => model.NoSurat, "", new { @type = "text", @id = "NoSurat", @class = "form-control form-control-user" })
+                    @*<text class="form-control" disabled id="NoSurat">@Html.DisplayFor(model => model.NoSurat)</text>*@
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.AsalSurat)</label>
+                </div>
+                <div class="col">
+                    @Html.TextBoxFor(model => model.AsalSurat, "", new { @type = "text", @id = "AsalSurat", @class = "form-control form-control-user" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.TanggalSurat)</label>
+                </div>
+                <div class="col">
+                    @Html.TextBoxFor(model => model.TanggalSurat, "", new { @type = "text", @id = "TanggalSurat", @class = "form-control form-control-user" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.perihal)</label>
+                </div>
+                <div class="col">
+                    @Html.TextBoxFor(model => model.perihal, "", new { @type = "text", @id = "perihal", @class = "form-control form-control-user" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.SATUAN_KERJA)</label>
+                </div>
+                <div class="col">
+                    @Html.TextBoxFor(model => model.SATUAN_KERJA, "", new { @type = "text", @id = "SATUAN_KERJA", @class = "form-control form-control-user" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat1)</label>
+                </div>
+                <div class="col">
+                    <text class="form-control" id="LampiranSurat1" disabled>
+                        @if (Model.LampiranSurat1 == "")
+                        {
+                        }
+                        else
+                        {
+                            @Html.ActionLink(Model.LampiranSurat1, "DownloadFile1", new { fileName = Model.LampiranSurat1 })
+                        }
+                    </text>
+                </div>
+            </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat2)</label>
+                    </div>
+                    <div class="col">
+                        <text class="form-control" id="LampiranSurat2" disabled>
+                            @if (Model.LampiranSurat2 == "")
+                            {
+                            }
+                            else
+                            {
+                                @Html.ActionLink(Model.LampiranSurat2, "DownloadFile2", new { fileName = Model.LampiranSurat2 })
+                            }
+                        </text>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat3)</label>
+                    </div>
+                    <div class="col">
+                        <text class="form-control" id="LampiranSurat3" disabled>
+                            @if (Model.LampiranSurat3 == "")
+                            {
+                            }
+                            else
+                            {
+                                @Html.ActionLink(Model.LampiranSurat3, "DownloadFile3", new { fileName = Model.LampiranSurat3 })
+                            }
+                        </text>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat4)</label>
+                    </div>
+                    <div class="col">
+                        <text class="form-control" id="LampiranSurat4" disabled>
+                            @if (Model.LampiranSurat4 == "")
+                            {
+                            }
+                            else
+                            {
+                                @Html.ActionLink(Model.LampiranSurat4, "DownloadFile4", new { fileName = Model.LampiranSurat4 })
+                            }
+                        </text>
+                    </div>
+                </div>
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat5)</label>
+                </div>
+                <div class="col">
+                    <text class="form-control" id="LampiranSurat5" disabled>
+                        @if (Model.LampiranSurat5 == "")
+                        {
+                        }
+                        else
+                        {
+                            @Html.ActionLink(Model.LampiranSurat5, "DownloadFile5", new { fileName = Model.LampiranSurat5 })
+                        }
+                    </text>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat6)</label>
+                </div>
+                <div class="col">
+                    <text class="form-control" id="LampiranSurat6" disabled>
+                        @if (Model.LampiranSurat6 == "")
+                        {
+                        }
+                        else
+                        {
+                            @Html.ActionLink(Model.LampiranSurat6, "DownloadFile6", new { fileName = Model.LampiranSurat6 })
+                        }
+                    </text>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat_LHA)</label>
+                </div>
+                <div class="col">
+                    <text class="form-control" id="LampiranSurat_LHA" disabled>
+                        @if (Model.LampiranSurat_LHA == "")
+                        {
+                        }
+                        else
+                        {
+                            @Html.ActionLink(Model.LampiranSurat_LHA, "DownloadFile7", new { fileName = Model.LampiranSurat_LHA })
+                        }
+                    </text>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.DisposisiBy1)</label>
+                </div>
+                <div class="col">
+                    @Html.TextBoxFor(model => model.DisposisiBy1, "", new { @type = "text", @id = "DisposisiBy1", @class = "form-control form-control-user" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.DisposisiDate1)</label>
+                </div>
+                <div class="col">
+                    @Html.TextBoxFor(model => model.DisposisiDate1, "", new { @type = "text", @id = "DisposisiDate1", @class = "form-control form-control-user" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.DisposisiStatus1)</label>
+                </div>
+                <div class="col">
+                    @Html.TextBoxFor(model => model.DisposisiStatus1, "", new { @type = "text", @id = "DisposisiStatus1", @class = "form-control form-control-user" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.Catatan1)</label>
+                </div>
+                <div class="col">
+                    @Html.TextBoxFor(model => model.Catatan1, "", new { @type = "text", @id = "Catatan1", @class = "form-control form-control-user" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-4">
+                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.DisposisiBy2)</label>
+                </div>
+                <div class="col">
+                    @Html.TextBoxFor(model => model.DisposisiBy2, "", new { @type = "text", @id = "DisposisiBy2", @class = "form-control form-control-user" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.DisposisiDate2)</label>
+                </div>
+                <div class="col">
+                    @Html.TextBoxFor(model => model.DisposisiDate2, "", new { @type = "text", @id = "DisposisiDate2", @class = "form-control form-control-user" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.DisposisiStatus2)</label>
+                </div>
+                <div class="col">
+                    @Html.TextBoxFor(model => model.DisposisiStatus2, "", new { @type = "text", @id = "DisposisiStatus2", @class = "form-control form-control-user" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.Catatan2)</label>
+                </div>
+                <div class="col">
+                    @Html.TextBoxFor(model => model.Catatan2, "", new { @type = "text", @id = "Catatan2", @class = "form-control form-control-user" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.DisposisiBy3)</label>
+                </div>
+                <div class="col">
+                    @Html.TextBoxFor(model => model.DisposisiBy3, "", new { @type = "text", @id = "DisposisiBy3", @class = "form-control form-control-user" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.DisposisiDate3)</label>
+                </div>
+                <div class="col">
+                    @Html.TextBoxFor(model => model.DisposisiDate3, "", new { @type = "text", @id = "DisposisiDate3", @class = "form-control form-control-user" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.DisposisiStatus3)</label>
+                </div>
+                <div class="col">
+                    @Html.TextBoxFor(model => model.DisposisiStatus3, "", new { @type = "text", @id = "DisposisiStatus3", @class = "form-control form-control-user" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-4">
+                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.Catatan3)</label>
+                </div>
+                <div class="col">
+                    @Html.TextBoxFor(model => model.Catatan3, "", new { @type = "text", @id = "Catatan3", @class = "form-control form-control-user" })
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+    });
+    $("#DownloadWord").click(function () {
+        var InputID = '@ViewBag.ID';
+        var dpObj = {
+            ID: $('#ID').val(),
+            NoSurat: $('#NoSurat').val(),
+            AsalSurat: $('#AsalSurat').val(),
+            TanggalSurat: $('#TanggalSurat').val(),
+            perihal: $('#perihal').val(),
+            SATUAN_KERJA: $('#SATUAN_KERJA').val(),
+            LampiranSurat1: $('#LampiranSurat1').val(),
+            LampiranSurat2: $('#LampiranSurat2').val(),
+            LampiranSurat3: $('#LampiranSurat3').val(),
+            LampiranSurat4: $('#LampiranSurat4').val(),
+            LampiranSurat5: $('#LampiranSurat5').val(),
+            LampiranSurat6: $('#LampiranSurat6').val(),
+            LampiranSurat_LHA: $('#LampiranSurat_LHA').val(),
+            DisposisiBy1: $('#DisposisiBy1').val(),
+            DisposisiBy2: $('#DisposisiBy2').val(),
+            DisposisiBy3: $('#DisposisiBy3').val(),
+            DisposisiDate1: $('#DisposisiDate1').val(),
+            DisposisiDate2: $('#DisposisiDate2').val(),
+            DisposisiDate3: $('#DisposisiDate3').val(),
+            DisposisiStatus1: $('#DisposisiStatus1').val(),
+            DisposisiStatus2: $('#DisposisiStatus2').val(),
+            DisposisiStatus3: $('#DisposisiStatus3').val(),
+            Catatan1: $('#Catatan1').val(),
+            Catatan2: $('#Catatan2').val(),
+            Catatan3: $('#Catatan3').val()
+        };
+        $.ajax({
+            url: "/SuratMasuk/GenerateWord",
+            data: JSON.stringify(dpObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.toString() == "Success") {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Generate berhasil !',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    window.location = '@Url.Action("Details", "SuratMasuk")?ID=' + InputID;
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: result.toString(),
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
+            },
+            error: function (errormessage) {
+                Swal.fire({
+                    icon: 'error',
+                    title: result.toString(),
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+                window.location = '@Url.Action("Details", "SuratMasuk")?ID=' + InputID;
+            }
+        });
+    });
+</script>

@@ -61,7 +61,7 @@ namespace SIMHUKDIS.Controllers
                 List<clsPraDPK> rpt = new List<clsPraDPK>();
                 using (ExcelEngine excelEngine = new ExcelEngine())
                 {
-                    string sFilename = "PraDPKResult_" + String.Format("{0:yyyyMMdd}", DateTime.Now) + "_" + String.Format("{0:HHmm}", DateTime.Now);
+                    string sFilename = "PraDPKResult_" + String.Format("{0:yyyyMMdd}", DateTime.Now) + "_" + String.Format("{0:HHmm}", DateTime.Now)+ ".xls";
 
                     //Initialize Application
                     IApplication application = excelEngine.Excel;
@@ -77,8 +77,14 @@ namespace SIMHUKDIS.Controllers
                     clsPraDPKDB db = new clsPraDPKDB();
                     //Export data to Excel
                     DataTable dataTable = db.GetDataTable();
-                    worksheet.ImportDataTable(dataTable, true, 1, 1);
-                    worksheet.UsedRange.AutofitColumns();
+                    worksheet.ImportDataTable(dataTable, true, 5, 1);
+                    //worksheet.UsedRange.AutofitColumns();
+                    worksheet.Range["A1"].Value = "DATA SIDANG DEWAN PERTIMBANGAN KEPEGAWAIAN TK.II";
+                    worksheet.Range["B1"].Value = "BIRO KEPEGAWAIAN SETJEN KEMENTERIAN AGAMA";
+                    worksheet.Range["C1"].Value = "TANGGAL";
+                    worksheet.Range["A1:A5"].Merge();
+                    worksheet.Range["A1:E5"].CellStyle.Font.Bold = true;
+
 
                     //Save the workbook to disk in xlsx format
                     workbook.SaveAs(sFilename, ExcelSaveType.SaveAsXLS, HttpContext.ApplicationInstance.Response, ExcelDownloadType.Open);

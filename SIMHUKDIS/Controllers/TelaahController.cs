@@ -138,7 +138,7 @@ namespace SIMHUKDIS.Controllers
                 ViewBag.UserID = userlogin;
                 ViewBag.SatuanKerja = SatuanKerja;
                 ViewBag.UserGroup = UserGroup;
-                ViewBag.UserID = userlogin;
+                ViewBag.ID = ID;
                 dynamic mymodel = new ExpandoObject();
                 clsTelaahDB b = new clsTelaahDB();
                 mymodel.clsSuratMasuk = b.GetSuratMasukByID(ID);
@@ -342,7 +342,7 @@ namespace SIMHUKDIS.Controllers
         string SATUAN_KERJA, string TEMPAT_LAHIR, string TANGGAL_LAHIR,
         string MASAKERJA_TAHUN, string TMT_Pensiun, string DasarBukti,
         string PelanggaranDisiplin, string PasalPelanggaran, string RekomendasiHukdis,
-        string AnalisaPertimbangan, string KeputusanSidangDPK)
+        string AnalisaPertimbangan, string KeputusanSidangDPK, string TelaahNo, string Tanggal_Telaah)
         {
             string strMsg = "";
             try
@@ -381,6 +381,8 @@ namespace SIMHUKDIS.Controllers
                 telaah.KeputusanSidangDPK = KeputusanSidangDPK;
                 telaah.CreatedUser = UserLogin;
                 telaah.FileTelaah = "";
+                telaah.TelaahNo = TelaahNo;
+                telaah.Tanggal_Telaah = Tanggal_Telaah;
                
                 clsTelaahDB a = new clsTelaahDB();
                 a.Update(telaah);

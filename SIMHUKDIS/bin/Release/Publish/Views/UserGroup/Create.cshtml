@@ -1,0 +1,96 @@
+﻿@model simhukdis.Models.clsUserGroup
+@{
+    ViewBag.Title = "CREATE USER GROUP";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()*@
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Tambah User Group</h6>
+    </div>
+    <div class="card-body">
+        <form>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.GroupID, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.GroupID, new { htmlAttributes = new { @id = "GroupID", required = "required", @class = "form-control", @maxlength = "10" } })
+                    @Html.ValidationMessageFor(model => model.GroupID, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.GroupDesc, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.GroupDesc, new { htmlAttributes = new { @id = "GroupDesc", required = "required", @class = "form-control", @maxlength = "50" } })
+                    @Html.ValidationMessageFor(model => model.GroupDesc, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-success" onclick="Insert()" /> | @Html.ActionLink("Back to List", "Index")
+                    @*<button type="button" id="InsertData" class="btn btn-success" style="background-color:teal;"></button> | @Html.ActionLink("Back to List", "Index")*@
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+    @*}*@
+    <script type="text/javascript">
+    function Insert() {
+        var dpObj = {
+            GroupID: $('#GroupID').val(),
+            GroupDesc: $('#GroupDesc').val()
+        };
+        $.ajax({
+            url: "/UserGroup/Create",
+            data: JSON.stringify(dpObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.toString() == "Success") {
+                    swal.fire({
+                        icon: 'success',
+                        title: 'Simpan Data berhasil !',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    window.location.href = '@Url.Action("Index", "UserGroup")'
+                }
+                else {
+                    if (result.toString() == "User Group sudah ada !") {
+                        $("#GroupID").val("");
+                        $("#GroupID").focus();
+                        Swal.fire({
+                            icon: 'warning',
+                            title: result.toString(),
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                    }
+                    else {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: result.toString(),
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                    }
+                }
+            },
+            error: function (errormessage) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: errormessage.responseText,
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        });
+    }
+    </script>
+
