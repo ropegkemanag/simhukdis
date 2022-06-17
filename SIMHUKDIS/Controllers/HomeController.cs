@@ -34,6 +34,7 @@ namespace simhukdis.Controllers
                 return RedirectToAction("Error500", "Home", new { Error_Message });
             }            
         }
+        
         [HttpGet]
         public ActionResult Login()
         {

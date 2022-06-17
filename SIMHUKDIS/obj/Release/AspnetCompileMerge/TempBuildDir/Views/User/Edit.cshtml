@@ -1,0 +1,127 @@
+﻿@model simhukdis.Models.clsUserLogin
+@{
+    ViewBag.Title = "EDIT USER";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+<div class="form-horizontal">
+    <div class="form-group" style="display:none;">
+        @Html.LabelFor(model => model.UserID, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.UserID, new { htmlAttributes = new { @class = "form-control", @readonly = "True", @id = "UserID", required = "required" } })
+            @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.NIP, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.NIP, new { htmlAttributes = new { @class = "form-control", @readonly = "True", @id = "NIP", required = "required" } })
+            @Html.ValidationMessageFor(model => model.NIP, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.FullName, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control", @id = "Fullname", required = "required" } })
+            @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control password", @id = "Password", required = "required" } })
+            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.StatusAdmin, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.StatusAdmin, new List<SelectListItem>
+                        {
+                            new SelectListItem{ Text = "No", Value = "0" },
+                            new SelectListItem{ Text = "Yes", Value = "1" }
+                        }, htmlAttributes: new { @class = "form-control", @id = "StatusAdmin", required = "required" }
+                    )
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.GroupID, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.GroupID, (SelectList)ViewBag.GroupID, htmlAttributes: new { @class = "form-control", @id = "GroupID", required = "required" })
+            @Html.ValidationMessageFor(model => model.GroupID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-primary" onclick="Ubah()" /> | @Html.ActionLink("Back to List", "Index")
+        </div>
+    </div>
+</div>
+}
+<script type="text/javascript">
+        function Ubah() {
+        var dpObj = {
+            UserID: $('#UserID').val(),
+            UserName: $('#UserName').val(),
+            Fullname: $('#Fullname').val(),
+            Password: $('#Password').val(),
+            StatusAdmin: $('#StatusAdmin').val(),
+            GroupID: $('#GroupID').val(),
+            NIP: $('#NIP').val()
+        };
+        $.ajax({
+            url: "/User/Ubah",
+            data: JSON.stringify(dpObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.toString() == "Success") {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Ubah Data berhasil !',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    window.location.href = '@Url.Action("Index", "User")'
+                }
+                else {
+                    if (result.toString() == "NIP sudah ada !") {
+                        $("#NIP").val("");
+                        $("#NIP").focus();
+                        Swal.fire({
+                            icon: 'warning',
+                            title: result.toString(),
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                    }
+                    else {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: result.toString(),
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                    }
+                }
+            },
+            error: function (errormessage) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: errormessage.responseText,
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        });
+    }
+</script>

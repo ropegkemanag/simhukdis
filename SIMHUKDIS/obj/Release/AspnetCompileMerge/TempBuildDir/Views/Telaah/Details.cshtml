@@ -1,0 +1,273 @@
+﻿@model simhukdis.Models.clsSuratMasuk
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Detail Surat Masuk</h6>
+    </div>
+
+    <div class="card-body">
+        <table class="table table-bordered text-wrap" style="width:100%;">
+            @*<tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.NoAgenda)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.NoAgenda)
+                </td>
+            </tr>*@
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.NoSurat)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.NoSurat)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.AsalSurat)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.AsalSurat)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.TanggalSurat)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.TanggalSurat)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.perihal)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.perihal)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.SATUAN_KERJA)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => model.SATUAN_KERJA)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.LampiranSurat1)
+                </td>
+                <td>
+                    @if (Model.LampiranSurat1 == "")
+                    {
+                    }
+                    else
+                    {
+                        @Html.ActionLink(Model.LampiranSurat1, "DownloadFile1", new { fileName = Model.LampiranSurat1 })
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.LampiranSurat2)
+                </td>
+                <td>
+                    @if (Model.LampiranSurat2 == "")
+                    {
+                    }
+                    else
+                    {
+                        @Html.ActionLink(Model.LampiranSurat2, "DownloadFile2", new { fileName = Model.LampiranSurat2 })
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.LampiranSurat3)
+                </td>
+                <td>
+                    @if (Model.LampiranSurat3 == "")
+                    {
+                    }
+                    else
+                    {
+                        @Html.ActionLink(Model.LampiranSurat3, "DownloadFile3", new { fileName = Model.LampiranSurat3 })
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.LampiranSurat4)
+                </td>
+                <td>
+                    @if (Model.LampiranSurat4 == "")
+                    {
+                    }
+                    else
+                    {
+                        @Html.ActionLink(Model.LampiranSurat4, "DownloadFile4", new { fileName = Model.LampiranSurat4 })
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.LampiranSurat5)
+                </td>
+                <td>
+                    @if (Model.LampiranSurat5 == "")
+                    {
+                    }
+                    else
+                    {
+                        @Html.ActionLink(Model.LampiranSurat5, "DownloadFile5", new { fileName = Model.LampiranSurat5 })
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.LampiranSurat6)
+                </td>
+                <td>
+                    @if (Model.LampiranSurat6 == "")
+                    {
+                    }
+                    else
+                    {
+                        @Html.ActionLink(Model.LampiranSurat6, "DownloadFile6", new { fileName = Model.LampiranSurat6 })
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.LampiranSurat_LHA)
+                </td>
+                <td>
+                    @if (Model.LampiranSurat_LHA == "")
+                    {
+                    }
+                    else
+                    {
+                        @Html.ActionLink(Model.LampiranSurat_LHA, "DownloadFile6", new { fileName = Model.LampiranSurat_LHA })
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.DisposisiBy1)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.DisposisiBy1)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.DisposisiStatus1)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.DisposisiStatus1)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.DisposisiDate1)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.DisposisiDate1)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Catatan1)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.Catatan1)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.DisposisiBy2)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.DisposisiBy2)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.DisposisiStatus2)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.DisposisiStatus2)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.DisposisiDate2)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.DisposisiDate2)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Catatan2)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.Catatan2)
+                </td>
+            </tr>
+
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.DisposisiBy3)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.DisposisiBy3)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.DisposisiStatus3)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.DisposisiStatus3)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.DisposisiDate3)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.DisposisiDate3)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.Catatan3)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(model => model.Catatan3)
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+

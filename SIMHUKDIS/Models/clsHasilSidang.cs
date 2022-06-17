@@ -54,7 +54,12 @@ namespace SIMHUKDIS.Models
         public string nip_subkoor { get; set; }
         public string konseptor { get; set; }
         public string nip_konseptor { get; set; }
-        public string tembusan { get; set; }
+        public string Tembusan { get; set; }
+        public string SATKER_1 { get; set; }
+        public string SATKER_2 { get; set; }
+        public string SATKER_3 { get; set; }
+        public string SATKER_4 { get; set; }
+        public string SATKER_5 { get; set; }
     }
     public class HasilSidangDtl
     {
@@ -154,7 +159,12 @@ namespace SIMHUKDIS.Models
         public string Keputusan_Menteri { get; set; }
         public string Tanggal_Telaah { get; set; }
         public string Mengingat { get; set; }
-        public string tembusan { get; set; }
+        public string Tembusan { get; set; }
+        public string SATKER_1 { get; set; }
+        public string SATKER_2 { get; set; }
+        public string SATKER_3 { get; set; }
+        public string SATKER_4 { get; set; }
+        public string SATKER_5 { get; set; }
     }
     public class clsHasilSidangDB
     {
@@ -193,6 +203,7 @@ namespace SIMHUKDIS.Models
                     data.KeputusanSidang = rd["KeputusanSidang"].ToString();
                     data.hukuman = rd["hukuman"].ToString();
                     data.Catatan_Sidang = rd["Catatan_Sidang"].ToString();
+                    data.Tembusan = rd["Tembusan"].ToString();
 
                     clsPraDPKDB x = new clsPraDPKDB();
                     List<clsDataPegawaiDtl> y = new List<clsDataPegawaiDtl>();
@@ -205,6 +216,11 @@ namespace SIMHUKDIS.Models
                             data.GOL_RUANG = item.GOL_RUANG;
                             data.LEVEL_JABATAN = item.LEVEL_JABATAN;
                             data.UnitKerja = item.SATUAN_KERJA;
+                            data.SATKER_1  = item.SATKER_1;
+                            data.SATKER_2  = item.SATKER_2;
+                            data.SATKER_3  = item.SATKER_3;
+                            data.SATKER_4  = item.SATKER_4;
+                            data.SATKER_5 = item.SATKER_5;
                         }
                         z = z + 1;
                     }
@@ -365,6 +381,7 @@ namespace SIMHUKDIS.Models
                         DP.konseptor = rd["konseptor"].ToString();
                         DP.nip_konseptor = rd["nip_konseptor"].ToString();
                         DP.Mengingat = rd["Mengingat"].ToString();
+                        DP.Tembusan = rd["Tembusan"].ToString();
                         clsPraDPKDB x = new clsPraDPKDB();
                         List<clsDataPegawaiDtl> y = new List<clsDataPegawaiDtl>();
                         y = x.GetPegawai(DP.NIP);
@@ -376,12 +393,17 @@ namespace SIMHUKDIS.Models
                                 DP.GOL_RUANG = item.PANGKAT + ", " + item.GOL_RUANG;
                                 DP.LEVEL_JABATAN = item.LEVEL_JABATAN;
                                 DP.UnitKerja = item.SATUAN_KERJA;
+                               DP.SATKER_1 = item.SATKER_1;
+                               DP.SATKER_2 = item.SATKER_2;
+                               DP.SATKER_3 = item.SATKER_3;
+                               DP.SATKER_4 = item.SATKER_4;
+                                DP.SATKER_5 = item.SATKER_5;
                                 k = item.SATKER_3;
                             }
                             z = z + 1;
                         }
                         clsHasilSidangDB p = new clsHasilSidangDB();
-                        DP.tembusan = p.GetTembusan(DP.SATUAN_KERJA, k);
+                        DP.Tembusan = p.GetTembusan(DP.SATUAN_KERJA, k);
                     }
                 }
                 return DP;
@@ -446,7 +468,8 @@ namespace SIMHUKDIS.Models
                     cmd.Parameters.AddWithValue("iDasar_Bukti", PD.DasarBukti);
                     cmd.Parameters.AddWithValue("iPelanggaran", PD.PelanggaranDisiplin);
                     cmd.Parameters.AddWithValue("iPasal_Pelanggaran", PD.PasalPelanggaran);
-                    cmd.Parameters.AddWithValue("iMengingat", PD.Mengingat);
+                    cmd.Parameters.AddWithValue("iMengingat", PD.Mengingat); 
+                    cmd.Parameters.AddWithValue("iTembusan", PD.Tembusan);
                     con.Open();
                     i = cmd.ExecuteNonQuery();
                 }
@@ -480,6 +503,7 @@ namespace SIMHUKDIS.Models
                     cmd.Parameters.AddWithValue("iPelanggaran", PD.PelanggaranDisiplin);
                     cmd.Parameters.AddWithValue("iPasal_Pelanggaran", PD.PasalPelanggaran);
                     cmd.Parameters.AddWithValue("iMengingat", PD.Mengingat);
+                    cmd.Parameters.AddWithValue("iTembusan", PD.Tembusan);
                     con.Open();
                     i = cmd.ExecuteNonQuery();
                 }

@@ -1,0 +1,138 @@
+﻿@model IEnumerable<simhukdis.Models.clsUserGroup>
+@{
+    ViewBag.Title = "USER GROUP";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">User</h6>
+    </div>
+
+    <div class="card-body">
+        <div class="form-group">
+            @if (@ViewBag.UserGroup == "01")
+            {
+            <input type="submit" value="Create" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "UserGroup")'" />
+            }
+            else
+            {
+            <input type="submit" value="Create" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "UserGroup")'" disabled/>
+            }
+            
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead class="table table-primary">
+                    <tr>
+                        <th>Aksi</th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.GroupID)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.GroupDesc)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LastUser)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LastUpdate)
+                        </th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="table-bordered table-hover my-3">
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { GroupID = item.GroupID }) |
+                                <a href="#" onclick="Hapus('@item.GroupID')">Hapus</a>
+                                @*@Html.ActionLink("Delete", "Delete", new { GroupID = item.GroupID })*@
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.GroupID)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.GroupDesc)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LastUser)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LastUpdate)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="DeleteGroup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Apakah Anda yakin untuk menghapus data ini ?</div>
+            <div class="modal-footer">
+                <label id="GroupID" name="GroupID"></label>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <input class="btn btn-primary" onclick="HapusData()" value="Hapus" type="button"/>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function Hapus(ID) {
+        $('#GroupID').val(ID);
+        $('#DeleteGroup').modal('show');
+    }
+    function HapusData() {
+        var dpObj = {
+            GroupID: $('#GroupID').val()
+            };
+        $.ajax({
+            url: "/UserGroup/Delete",
+            data: JSON.stringify(dpObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.toString() == "Success") {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Hapus Data berhasil !',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    window.location.href = '@Url.Action("Index", "UserGroup")'
+                }
+                else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: result.toString(),
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
+            },
+            error: function (errormessage) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: errormessage.responseText,
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        });
+    }
+</script>

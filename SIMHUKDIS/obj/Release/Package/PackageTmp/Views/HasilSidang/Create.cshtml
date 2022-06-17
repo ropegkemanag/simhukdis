@@ -21,7 +21,7 @@
                     </div>
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <label class="control-label ">NIP</label>
-                        @Html.TextBoxFor(model => model.NIP, "", new { @id = "NIP", @class = "form-control form-control-user", required = "required", onchange = "getData()", onkeypress = "AllowOnlyNumbers()" })
+                        @Html.TextBoxFor(model => model.NIP, "", new { @id = "NIP", @class = "form-control form-control-user", required = "required", onchange = "getData()", onkeypress = "AllowOnlyNumbers()", @readonly = "True" })
                         @Html.ValidationMessage("NIP", "", new { @class = "text-danger" })
                     </div>
                     <div class="col-sm-6">
@@ -71,11 +71,11 @@
                         @Html.TextBox("MASAKERJA_TAHUN", "", new { @id = "MASAKERJA_TAHUN", @class = "form-control form-control-user", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("MASAKERJA_TAHUN", "", new { @class = "text-danger" })
                     </div>
-                    @*<div class="col-sm-6" style="display:none;">
-                <label>TMT Pensiun</label>
-                @Html.TextBox("TMT_Pensiun", "", new { @type = "text", @id = "TMT_Pensiun", @class = "form-control form-control-user", required = "required" })
-                @Html.ValidationMessage("TMT_Pensiun", "", new { @class = "text-danger" })
-            </div>*@
+                    <div class="col-sm-6" style="display:none;">
+                        <label>TMT Pensiun</label>
+                        @Html.TextBox("TMT_Pensiun", "", new { @type = "text", @id = "TMT_Pensiun", @class = "form-control form-control-user", required = "required" })
+                        @Html.ValidationMessage("TMT_Pensiun", "", new { @class = "text-danger" })
+                    </div>
                 </div>
 
                 <div class="form-group row" style="display:none;">
@@ -83,6 +83,45 @@
                         <label class="control-label ">Unit Satker</label>
                         @Html.TextBox("satker3", "", new { @id = "satker3", @class = "form-control form-control-user", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("satker3", "", new { @class = "text-danger" })
+                        <label class="control-label ">Satuan Kerja 1</label>
+                        @Html.TextBox("SATKER_1", "", new { @id = "SATKER_1", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.ValidationMessage("SATKER_1", "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        <label class="control-label ">Satuan Kerja 2</label>
+                        @Html.TextBox("SATKER_2", "", new { @id = "SATKER_2", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.ValidationMessage("SATKER_2", "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row" style="display:none;">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        <label class="control-label ">Satuan Kerja 3</label>
+                        @Html.TextBox("SATKER_3", "", new { @id = "SATKER_3", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.ValidationMessage("SATKER_3", "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        <label class="control-label ">Satuan Kerja 4</label>
+                        @Html.TextBox("SATKER_4", "", new { @id = "SATKER_4", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.ValidationMessage("SATKER_4", "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row" style="display:none;">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        <label class="control-label ">Satuan Kerja 5</label>
+                        @Html.TextBox("SATKER_5", "", new { @id = "SATKER_5", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.ValidationMessage("SATKER_5", "", new { @class = "text-danger" })
+                    </div>
+                    @*<div class="col-sm-6 mb-3 mb-sm-0">
+                <label class="control-label ">Satuan Kerja</label>
+                @Html.TextBox("SATUAN_KERJA", "", new { @id = "SATUAN_KERJA", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                @Html.ValidationMessage("SATUAN_KERJA", "", new { @class = "text-danger" })
+            </div>*@
+                </div>
+                <div class="form-group row" style="display:none;">
+                    <div class="col">
+                        <label class="control-label ">Satuan Kerja</label>
+                        @Html.TextBox("SATUAN_KERJA", "", new { @id = "SATUAN_KERJA", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.ValidationMessage("SATUAN_KERJA", "", new { @class = "text-danger" })
                     </div>
                 </div>
             </form>

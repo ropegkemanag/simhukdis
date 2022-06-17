@@ -1,0 +1,114 @@
+﻿@model simhukdis.Models.clsHukdis
+@{
+    ViewBag.Title = "Edit Hukuman Disiplin Master";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@*@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()*@
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group" style="display:none;">
+            @Html.LabelFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ID, new { htmlAttributes = new { @class = "form-control", @readonly = "True", @id = "ID", required = "required" } })
+                @Html.ValidationMessageFor(model => model.ID, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.HukdisID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.HukdisID, new { htmlAttributes = new { @class = "form-control", @readonly = "True", @id = "HukdisID", required = "required" } })
+                @Html.ValidationMessageFor(model => model.HukdisID, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.HukdisDesc, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.HukdisDesc, new { htmlAttributes = new { @class = "form-control", @id = "HukdisDesc", required = "required" } })
+                @Html.ValidationMessageFor(model => model.HukdisDesc, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Tingkat, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.DropDownListFor(model => model.Tingkat, new List<SelectListItem>
+                                                                {
+                                                                    new SelectListItem{ Text = "Ringan", Value = "Ringan" },
+                                                                    new SelectListItem{ Text = "Sedang", Value = "Sedang" },
+                                                                    new SelectListItem{ Text = "Berat", Value = "Berat" }
+                                                                }, htmlAttributes: new { @class = "form-control", @id = "Tingkat" }
+                                                            )
+                @*@Html.EditorFor(model => model.Tingkat, new { htmlAttributes = new { @class = "form-control" } })
+        @Html.ValidationMessageFor(model => model.Tingkat, "", new { @class = "text-danger" })*@
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="button" value="Save" class="btn btn-primary" onclick="Ubah()"/> | @Html.ActionLink("Back to List", "Index")
+            </div>
+        </div>
+    </div>
+@*}*@
+    <script type="text/javascript">
+        function Ubah() {
+            var dpObj = {
+                ID: $('#ID').val(),
+            HukdisID: $('#HukdisID').val(),
+            HukdisDesc: $('#HukdisDesc').val(),
+            Tingkat: $('#Tingkat').val()
+        };
+        $.ajax({
+            url: "/Hukdis/Ubah",
+            data: JSON.stringify(dpObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.toString() == "Success") {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Tambah Data berhasil !',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    window.location.href = '@Url.Action("Index", "Hukdis")'
+                }
+                else {
+                    if (result.toString() == "Hukdis sudah ada !") {
+                        $("#HukdisID").val("");
+                        $("#HukdisID").focus();
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Gagal ubah data',
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                    }
+                    else {
+                        Swal.fire({
+                            icon: 'warning',
+                            title: result.toString(),
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                    }
+                }
+            },
+            error: function (errormessage) {
+                Swal.fire({
+                    icon: 'warning',
+                    title: errormessage.responseText,
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        });
+    }
+    </script>

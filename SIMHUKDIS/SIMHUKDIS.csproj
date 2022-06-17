@@ -48,6 +48,9 @@
     <Reference Include="BouncyCastle.Crypto, Version=1.8.5.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
       <HintPath>..\packages\BouncyCastle.1.8.5\lib\BouncyCastle.Crypto.dll</HintPath>
     </Reference>
+    <Reference Include="EPPlus, Version=4.0.3.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.0.3\lib\net20\EPPlus.dll</HintPath>
+    </Reference>
     <Reference Include="Google.Protobuf, Version=3.14.0.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Protobuf.3.14.0\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
@@ -2129,7 +2132,7 @@
     <Content Include="Content\vendor\jquery\jquery-3.6.0.min.map" />
     <Content Include="Content\vendor\jquery\jquery-3.6.0.slim.min.map" />
     <Content Include="Content\zebra_datepicker.scss" />
-    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\datatable-responsive\datatables.responsive.min.js" />
     <Content Include="Scripts\datatables\dataTables.bootstrap.min.js" />
@@ -2307,6 +2310,7 @@
     <Content Include="Views\HasilSidang\Index.cshtml" />
     <Content Include="Views\HasilSidang\Create.cshtml" />
     <Content Include="Views\PejabatMst\Index.cshtml" />
+    <Content Include="Views\User\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

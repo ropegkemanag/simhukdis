@@ -14,6 +14,9 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Mvc;
+using OfficeOpenXml;
+using OfficeOpenXml.Style;
+using System.Drawing;
 
 namespace simhukdis.Controllers
 {
@@ -58,6 +61,49 @@ namespace simhukdis.Controllers
             ViewBag.Satker = new SelectList(db.GetListSatker(), "KODE_SATUAN_KERJA", "SATUAN_KERJA");
             ViewBag.GroupID = new SelectList(db.GetListUserGroup(), "GroupID", "GroupDesc");
             return View();
+        }
+        [HttpGet]
+        public ActionResult ChangePassword()
+        {
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            string UserNIP = Session["LogUserID"].ToString();
+            string userlogin = Session["Fullname"].ToString();
+            string SatuanKerja = Session["Satker"].ToString();
+            string StatusAdmin = Session["StatusAdmin"].ToString();
+            string UserGroup = Session["UserGroup"].ToString();
+            string UserID = Session["UserID"].ToString();
+
+            ViewBag.UserIDx = UserID;
+            ViewBag.UserNIP = UserNIP;
+            ViewBag.UserID = userlogin;
+            ViewBag.SatuanKerja = SatuanKerja;
+            ViewBag.UserGroup = UserGroup;
+            return View();
+        }
+        [HttpPost]
+        public ActionResult ChangePassword(string UserID, string Password, string NIP)
+        {
+            string strMsg = "";
+            try
+            {
+                string UserLogin = Session["Fullname"].ToString();
+                clsUserLogin users = new clsUserLogin();
+                users.UserID = UserID;
+                users.NIP = NIP;
+                users.Password = Password;
+                users.LastUser = UserLogin;
+                db.ChangePassword(users);
+                strMsg = "Success";
+                return Json(strMsg, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
+            }
         }
         [HttpPost]
         public ActionResult Create(string UserName, string Fullname, string Password, string StatusAdmin, string GroupID, string NIP, string satker)
@@ -305,6 +351,109 @@ namespace simhukdis.Controllers
             catch (Exception ex)
             {
                 throw (ex);
+            }
+        }
+        public ActionResult DownloadToExcel2()
+        {
+            try
+            {
+                string strMsg = "";
+                using (ExcelPackage exl = new ExcelPackage())
+                {
+                    string sFilename = "KAPSJCCResult_" + String.Format("{0:yyyyMMdd}", DateTime.Now) + "_" + String.Format("{0:HHmm}", DateTime.Now);
+                    List<clsUserLogin> rpt = new List<clsUserLogin>();
+                    rpt = db.Users.ToList();
+                    ExcelWorksheet ws = exl.Workbook.Worksheets.Add("Sheet1");
+                    if (rpt.Count == 0)
+                    {
+                        strMsg = "Data not Found";
+                    }
+                    else
+                    {
+                        Color colFromHex = System.Drawing.ColorTranslator.FromHtml("#C0C0C0");
+
+                        //HEADER REPORT
+                        //HEADER REPORT
+                        ws.Cells["A1"].Value = "DATA USER SIMHUKDIS";
+                        ws.Cells["A1:F1"].Merge = true;
+                        ws.Cells["A1"].Style.Font.Bold = true;
+                        ws.Cells["A1"].Style.Font.Size = 18;
+                        ExcelRange rg1 = ws.Cells[1, 1, 1, 6];
+                        rg1.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                        rg1.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                        rg1.Style.Font.Bold = true;
+
+                        ws.Cells["A3"].Value = "Nama Lengkap";
+                        ws.Cells["A3"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        ws.Cells["A3"].Style.Fill.BackgroundColor.SetColor(colFromHex);
+                        ws.Cells["B3"].Value = "NIP";
+                        ws.Cells["B3"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        ws.Cells["B3"].Style.Fill.BackgroundColor.SetColor(colFromHex);
+                        ws.Cells["C3"].Value = "Password";
+                        ws.Cells["C3"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        ws.Cells["C3"].Style.Fill.BackgroundColor.SetColor(colFromHex);
+                        ws.Cells["D3"].Value = "Status Admin";
+                        ws.Cells["D3"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        ws.Cells["D3"].Style.Fill.BackgroundColor.SetColor(colFromHex);
+                        ws.Cells["E3"].Value = "Last Login";
+                        ws.Cells["E3"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        ws.Cells["E3"].Style.Fill.BackgroundColor.SetColor(colFromHex);
+                        ws.Cells["F3"].Value = "Last User";
+                        ws.Cells["F3"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        ws.Cells["F3"].Style.Fill.BackgroundColor.SetColor(colFromHex);
+                        
+                        ExcelRange rg2 = ws.Cells[3, 1, 3, 6];
+                        rg2.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                        rg2.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                        rg2.Style.Font.Bold = true;
+                        rg2.Style.WrapText = true;
+
+                        int i = 4;
+                        foreach (clsUserLogin model in rpt)
+                        {
+                            ws.Cells[i, 1].Value = model.FullName;
+                            ws.Cells[i, 2].Value = model.NIP;
+                            ws.Cells[i, 3].Value = model.Password;
+                            ws.Cells[i, 4].Value = model.StatusAdmin;
+                            ws.Cells[i, 5].Value = model.LastLogin;
+                            ws.Cells[i, 6].Value = model.LastUser;
+                            i = i + 1;
+                        }
+                        ExcelRange rg = ws.Cells[3, 1, i - 1, 6];
+                        rg.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
+                        rg.Style.Border.Left.Style = ExcelBorderStyle.Thin;
+                        rg.Style.Border.Right.Style = ExcelBorderStyle.Thin;
+                        rg.Style.Border.Top.Style = ExcelBorderStyle.Thin;
+
+                        ExcelRange rg3 = ws.Cells[3, 1, i - 1, 5];
+                        rg3.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                        rg3.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+
+                        ws.Row(3).Height = 50;
+                        ws.Column(1).Width = 50;
+                        ws.Column(2).Width = 20;
+                        ws.Column(3).Width = 20;
+                        ws.Column(4).Width = 20;
+                        ws.Column(5).Width = 25;
+                        ws.Column(6).Width = 25;
+
+                        string fileName = sFilename;
+                        Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+                        Response.AddHeader("content-disposition", "attachment; filename=" + fileName + ".xlsx");
+
+                        MemoryStream stream = new MemoryStream(exl.GetAsByteArray());
+                        Response.OutputStream.Write(stream.ToArray(), 0, stream.ToArray().Length);
+                        Response.Flush();
+                        Response.Close();
+                    }
+
+                }
+
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                return View(ex.Message, JsonRequestBehavior.AllowGet);
             }
         }
     }

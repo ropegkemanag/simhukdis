@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="simhukdis.local" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^D:\\Backup\ Simhukdis\\simhukdis\\SIMHUKDIS\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^D:\\Backup\ Simhukdis\\simhukdis\\SIMHUKDIS\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="DBCS-Web.config Connection String" description="" value="Data Source=localhost;Initial Catalog=simhukdis;User ID=root;Password=;Convert Zero Datetime=True;" tags="">
+    <parameterEntry kind="XmlFile" scope="D:\\Backup\ Simhukdis\\simhukdis\\SIMHUKDIS\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DBCS']/@connectionString" />
+  </parameter>
+</parameters>

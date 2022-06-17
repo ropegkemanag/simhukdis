@@ -311,6 +311,32 @@ namespace simhukdis.Models
                 throw ex;
             }
         }
+        public int ChangePassword(clsUserLogin User)
+        {
+            try
+            {
+                int i = 0;
+                Encryption encrypt = new Encryption();
+                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                using (MySqlConnection con = new MySqlConnection(constr))
+                {
+                    string MySql = "sp_User_ChangePassword";
+                    MySqlCommand cmd = new MySqlCommand(MySql, con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("iUserID", User.UserID);
+                    cmd.Parameters.AddWithValue("iPassword", encrypt.Encrypt(User.Password, User.NIP));
+                    cmd.Parameters.AddWithValue("iLastUser", User.LastUser);
+                    cmd.Parameters.AddWithValue("iNIP", User.NIP);
+                    con.Open();
+                    i = cmd.ExecuteNonQuery();
+                }
+                return i;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public int UpdateLastLogin(string NIP)
         {
             try
