@@ -1,0 +1,46 @@
+﻿<!-- Sidebar -->
+<ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <!-- Sidebar - Brand -->
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="@Url.Action("Index", "Home")">
+        <div class="sidebar-brand-icon">
+            <i class="fas fa-balance-scale"></i>
+        </div>
+        <div class="sidebar-brand-text mx-3">Simhukdis</div>
+    </a>
+    <!-- Divider -->
+    <hr class="sidebar-divider my-0">
+    <!-- Nav Item - Dashboard -->
+    <li class="nav-item active">
+        <a class="nav-link" href="@Url.Action("Index", "Home")">
+            <i class="fas fa-fw fa-tachometer-alt"></i>
+            <span>Dashboard</span>
+        </a>
+    </li>
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        Pertimbangan Hukdis
+    </div>
+    <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link" href="@Url.Action("Index", "UsulHukdis", new { Status = 0, DateFrom = "", DateTo = ""})">
+            <i class="fas fa-fw fa-inbox"></i>
+            <span>Usul Hukuman Disiplin</span>
+        </a>
+    </li>
+        <!-- Nav Item - Pages Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link" href="@Url.Action("Index", "Monitoring")">
+            <i class="fas fa-fw fa-chart-area"></i>
+            <span>Monitoring</span>
+        </a>
+    </li>
+    
+    <!-- Sidebar Toggler (Sidebar) -->
+    <div class="text-center d-none d-md-inline">
+        <button class="rounded-circle border-0" id="sidebarToggle"></button>
+    </div>
+
+</ul>
+<!-- End of Sidebar -->

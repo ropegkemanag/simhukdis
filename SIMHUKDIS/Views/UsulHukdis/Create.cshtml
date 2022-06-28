@@ -1,0 +1,265 @@
+﻿@model simhukdis.Models.clsSuratMasuk
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Tambah Usulan Hukuman Disiplin</h6>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("Create", "UsulHukdis", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <form>
+            <div class="form-group row">
+                @*<div class="col-sm-6 mb-3 mb-sm-0">
+                <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">No. Agenda *</label>
+                @Html.TextBox("NoAgenda", "", new { @id = "NoAgenda", @class = "form-control form-control-user", required = "required" })
+                @Html.ValidationMessage("NoAgenda", "", new { @class = "text-danger" })
+            </div>*@
+                <div class="col">
+                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">No. Surat *</label>
+                    @Html.TextBox("NoSurat", "", new { @id = "NoSurat", @class = "form-control form-control-user", required = "required" })
+                    @Html.ValidationMessage("NoSurat", "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">Asal Surat *</label>
+                    @Html.TextBox("AsalSurat", "", new { @id = "AsalSurat", @class = "form-control form-control-user", required = "required" })
+                    @Html.ValidationMessage("AsalSurat", "", new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-6">
+                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">Tanggal Surat *</label>
+                    @Html.TextBoxFor(model => model.TanggalSurat, "", new { @type = "text", @id = "TanggalSurat", @class = "form-control form-control-user", required = "required" })
+                    @Html.ValidationMessageFor(model => model.TanggalSurat, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">Perihal *</label>
+                    @Html.TextArea("perihal", "", new { @id = "perihal", @class = "form-control form-control-user", required = "required" })
+                    @Html.ValidationMessageFor(model => model.perihal, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">Satuan Kerja *</label>
+                    @Html.DropDownListFor(model => model.KODE_SATUAN_KERJA, ViewBag.Satker as SelectList, new { @class = "fstdropdown-select form-control", required = "required", @id = "KODE_SATUAN_KERJA", @onchange = "GetUnit()" })
+                    
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">Unit Kerja *</label>
+                    @Html.DropDownList("Unit_Kerja", new SelectList(string.Empty, "Value", "Text"), "", new { @id = "Unit_Kerja", @class = "form-control input-md" })
+                    @*@Html.DropDownListFor(model => model.Unit_Kerja, ViewBag.Unit_Kerja as SelectList, new { @class = "fstdropdown-select form-control", required = "required", @id = "Unit_Kerja" })*@
+                    @*@Html.DropDownList("Unit_Kerja", new SelectList(string.Empty, "Value", "Text"), "", new { @id = "Unit_Kerja", @class = "fstdropdown-select form-control", @style = "height:15px; width:200px; font-family:'Segoe UI'" })
+        @Html.ValidationMessage("Unit_Kerja", "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+            
+            <div class="form-group row" id="LHA">
+                <div class="col">
+                    <label class="control-label " style="font-weight: bold;color:cornflowerblue;">Lampiran LHA/STL *</label>
+                    @Html.TextBox("LampiranSurat_LHA", "", new { @type = "file", @id = "LampiranSurat_LHA", @class = "form-control form-control-user", accept = "application/pdf" })
+                    @Html.ValidationMessageFor(model => model.LampiranSurat_LHA, "Max : 5MB & Format File : PDF", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row" id="LampiranBAP">
+                <div class="col">
+                    <label class="control-label" id="DokBAP" style="font-weight: bold;color:cornflowerblue;">Lampiran BAP</label>
+                    @Html.TextBoxFor(model => model.LampiranSurat2, "", new { @type = "file", @id = "LampiranSurat2", @class = "form-control", accept = "application/pdf" })
+                    @Html.ValidationMessageFor(model => model.LampiranSurat2, "Max : 5MB & Format File : PDF", new { @class = "text-danger" })
+                </div>
+            </div>
+            
+            <div class="form-group row" id="Lainnya">
+                <div class="col">
+                    <label class="control-label " style="font-weight: bold;color:cornflowerblue;"id="DokLainnya">Lampiran Surat Tugas/Dokumen Pendukung Lainnya</label>
+                    @Html.TextBox("LampiranSurat5", "", new { @type = "file", @id = "LampiranSurat5", @class = "form-control form-control-user", accept = "application/pdf" })
+                    @Html.ValidationMessageFor(model => model.LampiranSurat5, "Max : 5MB & Format File : PDF", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Simpan" class="btn btn-primary" style="width:100px;" />
+                    @*<button type="button" id="InsertData" class="btn btn-success" style="background-color:teal;"></button> | @Html.ActionLink("Back to List", "Index")*@
+                </div>
+            </div>
+        </form>
+        }
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/css/bootstrap.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta.2/js/bootstrap.bundle.min.js"></script>
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        var SatuanKerja = '@ViewBag.SatuanKerja';
+        var SatkerName = '@ViewBag.SatuanKerjaName';
+        $('#AsalSurat').val(SatkerName);
+        $('#Unit_Kerja').val(@ViewBag.SatuanKerja);
+        GetUnit();
+        $(function () {
+            $("#TanggalSurat").datepicker({
+                setDate: new Date(),
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                calendarWeeks: true,
+                clearBtn: true,
+                disableTouchKeyboard: true
+            })
+        });
+        
+    });
+    $('#LampiranSurat1').on('change', function () {
+        for (var i = 0; i < $(this).get(0).files.length; ++i) {
+            var file1 = $(this).get(0).files[i].size;
+            if (file1) {
+                var file_size = $(this).get(0).files[i].size;
+                if (file_size > 1000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "File lebih dari 1MB!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $('#LampiranSurat1').val('');
+                } else {
+
+                }
+            }
+        }
+    });
+    $('#LampiranSurat2').on('change', function () {
+        for (var i = 0; i < $(this).get(0).files.length; ++i) {
+            var file1 = $(this).get(0).files[i].size;
+            if (file1) {
+                var file_size = $(this).get(0).files[i].size;
+                if (file_size > 5000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "File upload size is larger than 5MB!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $('#LampiranSurat2').val('');
+                } else {
+
+                }
+            }
+        }
+    });
+    $('#LampiranSurat3').on('change', function () {
+        for (var i = 0; i < $(this).get(0).files.length; ++i) {
+            var file1 = $(this).get(0).files[i].size;
+            if (file1) {
+                var file_size = $(this).get(0).files[i].size;
+                if (file_size > 5000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "File upload size is larger than 5MB!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $('#LampiranSurat3').val('');
+                } else {
+
+                }
+            }
+        }
+    });
+    $('#LampiranSurat4').on('change', function () {
+        for (var i = 0; i < $(this).get(0).files.length; ++i) {
+            var file1 = $(this).get(0).files[i].size;
+            if (file1) {
+                var file_size = $(this).get(0).files[i].size;
+                if (file_size > 5000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "File upload size is larger than 5MB!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $('#LampiranSurat4').val('');
+                } else {
+
+                }
+            }
+        }
+    });
+    $('#LampiranSurat5').on('change', function () {
+        for (var i = 0; i < $(this).get(0).files.length; ++i) {
+            var file1 = $(this).get(0).files[i].size;
+            if (file1) {
+                var file_size = $(this).get(0).files[i].size;
+                if (file_size > 5000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "File upload size is larger than 5MB!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $('#LampiranSurat5').val('');
+                } else {
+
+                }
+            }
+        }
+    });
+    $('#LampiranSurat_LHA').on('change', function () {
+        for (var i = 0; i < $(this).get(0).files.length; ++i) {
+            var file1 = $(this).get(0).files[i].size;
+            if (file1) {
+                var file_size = $(this).get(0).files[i].size;
+                if (file_size > 5000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "File upload size is larger than 5MB!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $('#LampiranSurat_LHA').val('');
+                } else {
+
+                }
+            }
+        }
+    });
+    function GetUnit() {
+        var SatuanKerja = $('#KODE_SATUAN_KERJA').val();
+        $.ajax({
+            type: "GET",
+            url: "/UsulHukdis/GetUnitKerja?",
+            dataType: "json",
+            data: { KodeSatker: SatuanKerja },
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.length > 0) {
+                    $('#Unit_Kerja').empty();
+                    //$("#Unit_Kerja").append('<option value="-1">Pilih Unit Kerja</option>');
+                    for (var i = 0; i < result.length; i++) {
+                        $("#Unit_Kerja").append('<option value="' + result[i].Kode_Unit_Kerja + '" >' + result[i].Unit_Kerja + '</option>');
+                        //options += '<option value="' + result[i].Kode_Unit_Kerja + '">' + result[i].Unit_Kerja + '</option>';
+                    }
+                }
+            },
+            error: function (errormessage) {
+                Swal.fire({
+                    icon: 'error',
+                    title: "Tidak ditemukan",
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        });  
+    }
+</script>
