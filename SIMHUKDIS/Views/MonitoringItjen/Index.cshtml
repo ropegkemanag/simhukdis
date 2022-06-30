@@ -1,0 +1,543 @@
+﻿@model IEnumerable<simhukdis.Models.clsMonitoring>
+
+@{
+    ViewBag.Title = "Monitoring";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Monitoring</h6>
+    </div>
+    @Html.ValidationSummary(true)
+    <div class="card-body">
+
+        <div style="height: 15px"></div>
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead class="table table-primary">
+                    <tr>
+
+                        <th style="white-space: nowrap; text-align: center;">
+                            No Surat
+                        </th>
+                        <th style="white-space: nowrap; text-align: center;">
+                            Perihal
+                        </th>
+                        <th style="white-space: nowrap; text-align: center;">
+                            Surat Masuk
+                        </th>
+                        @*<th style="white-space: nowrap; text-align: center;">
+                            Disposisi Kepala Biro
+                        </th>
+                        <th style="white-space: nowrap; text-align: center;">
+                            Disposisi Koordinator
+                        </th>
+                        <th style="white-space: nowrap; text-align: center;">
+                            Disposisi Sub Koordinator
+                        </th>*@
+                        <th style="white-space: nowrap; text-align: center;">
+                            Telaah
+                        </th>
+                        <th style="white-space: nowrap; text-align: center;">
+                            Pra DPK
+                        </th>
+                        <th style="white-space: nowrap; text-align: center;">
+                            Sidang DPK
+                        </th>
+                        <th style="white-space: nowrap; text-align: center;">
+                            Hasil Sidang DPK
+                        </th>
+                        <th style="white-space: nowrap; text-align: center;">
+                            Penyampaian Hasil Sidang
+                        </th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var r in Model)
+                    {
+                        if (@r.Status == "0")
+                        {
+                            <tr class="table-bordered table-hover my-3">
+                                <td>
+                                    @r.NoSurat
+                                </td>
+                                <td>
+                                    @r.Perihal
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+
+                                @*<td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>*@
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                            </tr>
+                        }
+                        else if (@r.Status == "1")
+                        {
+                            <tr class="table-bordered table-hover my-3">
+                                <td>
+                                    @r.NoSurat
+                                </td>
+                                <td>
+                                    @r.Perihal
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.TanggalSurat
+                                </td>
+
+                                @*<td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.DisposisiDate1
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>*@
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                            </tr>
+                        }
+                        else if (@r.Status == "2")
+                        {
+                            <tr class="table-bordered table-hover my-3">
+                                <td>
+                                    @r.NoSurat
+                                </td>
+                                <td>
+                                    @r.Perihal
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.TanggalSurat
+                                </td>
+
+                                @*<td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.DisposisiDate1
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>*@
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                            </tr>
+                        }
+                        else if (@r.Status == "3")
+                        {
+                            <tr class="table-bordered table-hover my-3">
+                                <td>
+                                    @r.NoSurat
+                                </td>
+                                <td>
+                                    @r.Perihal
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.TanggalSurat
+                                </td>
+
+                                @*<td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.DisposisiDate1
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.DisposisiDate2
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>*@
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                            </tr>
+                        }
+                        else if (@r.Status == "4")
+                        {
+                            <tr class="table-bordered table-hover my-3">
+                                <td>
+                                    @r.NoSurat
+                                </td>
+                                <td>
+                                    @r.Perihal
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.TanggalSurat
+                                </td>
+
+                                @*<td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.DisposisiDate1
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.DisposisiDate2
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.DisposisiDate3
+                                </td>*@
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                            </tr>
+                        }
+                        else if (@r.Status == "5")
+                        {
+                            <tr class="table-bordered table-hover my-3">
+                                <td>
+                                    @r.NoSurat
+                                </td>
+                                <td>
+                                    @r.Perihal
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.TanggalSurat
+                                </td>
+
+                                @*<td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.DisposisiDate1
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.DisposisiDate2
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.DisposisiDate3
+                                </td>*@
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.Tanggal_Telaah
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                            </tr>
+                        }
+                        else if (@r.Status == "6")
+                        {
+                            <tr class="table-bordered table-hover my-3">
+                                <td>
+                                    @r.NoSurat
+                                </td>
+                                <td>
+                                    @r.Perihal
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.TanggalSurat
+                                </td>
+
+                                @*<td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.DisposisiDate1
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.DisposisiDate2
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.DisposisiDate3
+                                </td>*@
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.Tanggal_Telaah
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.Tanggal_PraDPK
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                            </tr>
+                        }
+                        else if (@r.Status == "7")
+                        {
+                            <tr class="table-bordered table-hover my-3">
+                                <td>
+                                    @r.NoSurat
+                                </td>
+                                <td>
+                                    @r.Perihal
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.TanggalSurat
+                                </td>
+
+                                @*<td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.DisposisiDate1
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.DisposisiDate2
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.DisposisiDate3
+                                </td>*@
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.Tanggal_Telaah
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.Tanggal_PraDPK
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.Tanggal_DPK
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                            </tr>
+                        }
+                        else if (@r.Status == "8")
+                        {
+                            <tr class="table-bordered table-hover my-3">
+                                <td>
+                                    @r.NoSurat
+                                </td>
+                                <td>
+                                    @r.Perihal
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.TanggalSurat
+                                </td>
+
+                                @*<td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.DisposisiDate1
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.DisposisiDate2
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.DisposisiDate3
+                                </td>*@
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.Tanggal_Telaah
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.Tanggal_PraDPK
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.Tanggal_DPK
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="fas fa-minus-circle"></i>
+                                </td>
+                            </tr>
+                        }
+                        else if (@r.Status == "9")
+                        {
+                            <tr class="table-bordered table-hover my-3">
+                                <td>
+                                    @r.NoSurat
+                                </td>
+                                <td>
+                                    @r.Perihal
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.TanggalSurat
+                                </td>
+
+                                @*<td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.DisposisiDate1
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.DisposisiDate2
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.DisposisiDate3
+                                </td>*@
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.Tanggal_Telaah
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.Tanggal_PraDPK
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                    <br /><label style="margin-top:100PX;"></label>
+                                    @r.Tanggal_DPK
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="fas fa-check-circle"></i>
+                                </td>
+                            </tr>
+                        }
+
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

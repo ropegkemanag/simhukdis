@@ -8,37 +8,39 @@
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">User</h6>
     </div>
-
+    
     <div class="card-body">
         <div class="form-group">
             @if (@ViewBag.UserGroup == "01")
             {
                 <input type="submit" value="Create" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "User")'" />
+                <input type="button" value="Download Excel" class="btn btn-primary" id="downloadtoexcel" />
             }
             else
             {
                 <input type="submit" value="Create" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "User")'" disabled />
+                <input type="button" value="Download Excel" class="btn btn-primary" id="downloadtoexcel" disabled />
             }
             @*<button id="downloadtoexcel" class="btn btn-primary btn-sm" style="width:135px;" type="button" name="action:DownloadToExcel">
-                <span style="font-size:12px"> Download to Excel </span>
-            </button>*@
+            <span style="font-size:12px"> Download to Excel </span>
+        </button>*@
         </div>
         <div class="table-responsive">
             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                 <thead class="table table-primary">
                     <tr>
                         <th>
-                            Action
+                            Aksi
                         </th>
                         @*<th>
-                                @Html.DisplayNameFor(model => model.UserID)
-                            </th>*@
+                            @Html.DisplayNameFor(model => model.UserID)
+                        </th>*@
                         <th>
                             @Html.DisplayNameFor(model => model.NIP)
                         </th>
                         @*<th>
-                                @Html.DisplayNameFor(model => model.UserName)
-                            </th>*@
+                            @Html.DisplayNameFor(model => model.UserName)
+                        </th>*@
                         <th>
                             Nama Lengkap
                         </th>
@@ -67,18 +69,18 @@
                         <tr class="table-bordered table-hover my-3">
                             <td>
 
-                                @Html.ActionLink("Edit", "Edit", new { UserID = item.UserID, StatusAdmin = item.StatusAdmin, GroupID = item.GroupID }) |
+                                @Html.ActionLink("Edit", "Edit", new { UserID = item.UserID, StatusAdmin = item.StatusAdmin, GroupID = item.GroupID, Satker = item.Satker }) |
                                 <a href="#" onclick="Hapus('@item.UserID','@item.NIP')">Hapus</a>
                             </td>
                             @*<td>
-                                    @Html.DisplayFor(modelItem => item.UserID)
-                                </td>*@
+                                @Html.DisplayFor(modelItem => item.UserID)
+                            </td>*@
                             <td>
                                 @Html.DisplayFor(modelItem => item.NIP)
                             </td>
                             @*<td>
-                                    @Html.DisplayFor(modelItem => item.UserName)
-                                </td>*@
+                                @Html.DisplayFor(modelItem => item.UserName)
+                            </td>*@
                             <td>
                                 @Html.DisplayFor(modelItem => item.FullName)
                             </td>
@@ -127,10 +129,8 @@
 <script src="~/Scripts/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
      $("#downloadtoexcel").click(function () {
-             window.location = '@Url.Action("DownloadToExcel", "User")';
-                setTimeout(function () {
-                    waitingDialog.hide();
-                }, 1000);
+             window.location = '@Url.Action("DownloadToExcel2", "User")';
+               
          });
     function Hapus(ID, NIP) {
         $('#UserID').val(ID);

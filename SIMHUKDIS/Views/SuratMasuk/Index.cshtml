@@ -1,19 +1,19 @@
 ﻿@model IEnumerable<simhukdis.Models.clsSuratMasuk>
 
 @{
-    ViewBag.Title = "Surat Masuk";
+    ViewBag.Title = "Usul Hukuman Disiplin";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Daftar Surat Masuk</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Daftar Usul Hukuman Disiplin</h6>
     </div>
 
     <div class="card-body">
         <p style="text-align:left;">
-            <div  class="form-group">
+            <div class="form-group">
                 <table>
                     <tr>
                         <td>
@@ -36,17 +36,17 @@
                         </td>
                         <td style="width:20px;"> </td>
                         <td>
-                            <input id="TanggalSuratFrom" class="form-control" value="@string.Format("{0:dd-MM-yyyy}", ViewBag.DateFrom)" type="date"/>
+                            <input id="TanggalSuratFrom" class="form-control" value="@string.Format("{0:dd-MM-yyyy}", ViewBag.DateFrom)" type="date" />
                         </td>
                         <td style="color:cornflowerblue;" class="control-label ">s/d</td>
                         <td>
-                            <input id="TanggalSuratTo" class="form-control" value="@string.Format("{0:dd-MM-yyyy}", ViewBag.DateTo)" type="date"/>
+                            <input id="TanggalSuratTo" class="form-control" value="@string.Format("{0:dd-MM-yyyy}", ViewBag.DateTo)" type="date" />
                         </td>
                         <td style="width:20px;"> </td>
                         <td>
                             <button class="btn btn-primary" type="button" id="GridLoad">
                                 Cari
-                            </button>                            
+                            </button>
                         </td>
                     </tr>
                 </table>
@@ -54,21 +54,30 @@
             </div>
         </p>
         <p style="text-align:right;">
-            @if (@ViewBag.UserGroup == "03")
+            @*@if (@ViewBag.UserGroup == "03")
             {
-            <button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("Create", "SuratMasuk")'">
-                Tambah Data
-            </button>
+                <button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("Create", "SuratMasuk")'">
+                    Tambah Data
+                </button>
             }
             else
             {
-            <button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("Create", "SuratMasuk")'" disabled>
-                Tambah Data
-            </button>
-            }
-
+                <button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("Create", "SuratMasuk")'" disabled>
+                    Tambah Data
+                </button>
+            }*@
+            <!-- Example single danger button -->
+                <div class="dropdown">
+                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Tambah Data
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="@Url.Action("Create", "SuratMasuk")">Indisipliner</a>
+                        <a class="dropdown-item" href="@Url.Action("CreateTindakPidana", "SuratMasuk")">Tindak Pidana</a>
+                    </div>
+                </div>
         </p>
-
+        
         <div style="height:10px;">
 
         </div>
@@ -99,40 +108,40 @@
                     {
                         foreach (var item in Model)
                         {
-                    <tr class="table-bordered table-hover my-3">
-                        @if (@ViewBag.UserID == item.CreateUser && item.Status == 0)
-                        {
-                            <td>
-                                @Html.ActionLink("Ubah", "Edit", new { ID = item.ID, Satker = item.KODE_SATUAN_KERJA })
-                                <br />
-                                <a href="#" onclick="Hapus('@item.ID')">Hapus</a>
-                                <br />
-                                <a href="#" onclick="Proses('@item.ID')">Kirim</a>
-                            </td>
-                        }
-                        else
-                        {
-                            <td>
-                                Edit
-                                <br />
-                                Hapus
-                                <br />
-                                Kirim
-                            </td>
-                        }
-                        <td>
-                            @Html.ActionLink(item.NoSurat, "Details", new { ID = item.ID })
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.perihal)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.SATUAN_KERJA)
-                        </td>
-                    </tr>
+                            <tr class="table-bordered table-hover my-3">
+                                @if (@ViewBag.UserID == item.CreateUser && item.Status == 0)
+                                {
+                                    <td>
+                                        @Html.ActionLink("Ubah", "Edit", new { ID = item.ID, Satker = item.KODE_SATUAN_KERJA })
+                                        <br />
+                                        <a href="#" onclick="Hapus('@item.ID')">Hapus</a>
+                                        <br />
+                                        <a href="#" onclick="Proses('@item.ID')">Kirim</a>
+                                    </td>
+                                }
+                                else
+                                {
+                                    <td>
+                                        Edit
+                                        <br />
+                                        Hapus
+                                        <br />
+                                        Kirim
+                                    </td>
+                                }
+                                <td>
+                                    @Html.ActionLink(item.NoSurat, "Details", new { ID = item.ID })
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.perihal)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SATUAN_KERJA)
+                                </td>
+                            </tr>
                         }
                     }
-                    </tbody>
+                </tbody>
             </table>
         </div>
     </div>

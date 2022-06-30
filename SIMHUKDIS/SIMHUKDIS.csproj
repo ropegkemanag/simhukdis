@@ -192,6 +192,8 @@
     <Compile Include="Controllers\Disposisi3Controller.cs" />
     <Compile Include="Controllers\DPKController.cs" />
     <Compile Include="Controllers\HasilSidangController.cs" />
+    <Compile Include="Controllers\Itjen\MonitoringItjenController.cs" />
+    <Compile Include="Controllers\Itjen\UsulHukdisController.cs" />
     <Compile Include="Controllers\MonitoringController.cs" />
     <Compile Include="Controllers\PejabatMstController.cs" />
     <Compile Include="Controllers\PraDPKController.cs" />
@@ -201,7 +203,8 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HukdisController.cs" />
     <Compile Include="Controllers\SatkerKonseptorController.cs" />
-    <Compile Include="Controllers\SuratMasukController.cs" />
+    <Compile Include="Controllers\Satker\MonitoringSatkerController.cs" />
+    <Compile Include="Controllers\Satker\SuratMasukController.cs" />
     <Compile Include="Controllers\TelaahController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\UserGroupController.cs" />
@@ -2311,9 +2314,18 @@
     <Content Include="Views\HasilSidang\Create.cshtml" />
     <Content Include="Views\PejabatMst\Index.cshtml" />
     <Content Include="Views\User\ChangePassword.cshtml" />
+    <Content Include="Views\MonitoringItjen\Index.cshtml" />
+    <Content Include="Views\MonitoringSatker\Index.cshtml" />
+    <Content Include="Views\Shared\_SidebarAdmin.cshtml" />
+    <Content Include="Views\Shared\_SidebarItjen.cshtml" />
+    <Content Include="Views\Shared\_SidebarKonseptor.cshtml" />
+    <Content Include="Views\Shared\_SidebarSatker.cshtml" />
+    <Content Include="Views\SuratMasuk\CreateTindakPidana.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Controllers\Admin\" />
+    <Folder Include="Controllers\Konseptor\" />
     <Folder Include="Files\Result\Telaah\" />
     <Folder Include="Files\Template\" />
     <Folder Include="Files\Upload\Surat Masuk\1.Surat Pengantar\" />

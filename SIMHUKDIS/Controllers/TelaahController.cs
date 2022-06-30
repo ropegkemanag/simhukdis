@@ -337,6 +337,7 @@ namespace SIMHUKDIS.Controllers
                 return Json("No files selected.");
             }
         }
+
         public ActionResult UpdateData(int ID, string NIP,
         string NAMA_LENGKAP, string GOL_RUANG, string LEVEL_JABATAN,
         string SATUAN_KERJA, string TEMPAT_LAHIR, string TANGGAL_LAHIR,
@@ -547,16 +548,35 @@ namespace SIMHUKDIS.Controllers
                 doc.SaveToFile(OutputPath + strFileNameDoc, FileFormat.Docx);
                 //Convert to PDF
                 doc.SaveToFile(OutputPath + strFileNamePDF, FileFormat.PDF);
-                ToViewFile(OutputPath + strFileNameDoc);
-                ToViewFile(OutputPath + strFileNamePDF);
+                //ToViewFile(OutputPath + strFileNameDoc);
+                //ToViewFile(OutputPath + strFileNamePDF);
                 strMsg = "Success";
-                return Json(strMsg, JsonRequestBehavior.AllowGet);
+
+
+                string FilePath = OutputPath + strFileNamePDF;
+                WebClient User = new WebClient();
+                Byte[] FileBuffer = User.DownloadData(FilePath);
+                if (FileBuffer != null)
+                {
+                    Response.ContentType = "application/pdf";
+                    Response.AddHeader("content-length", FileBuffer.Length.ToString());
+                    Response.BinaryWrite(FileBuffer);
+                }
+
+                    return Json(strMsg, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
                 strMsg = ex.Message.ToString();
                 return Json(strMsg, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        public FileResult GetReport(string fileName)
+        {
+            //string ReportURL = "{Your File Path}";
+            byte[] FileBytes = System.IO.File.ReadAllBytes(fileName);
+            return File(FileBytes, "application/pdf");
         }
         private void ToViewFile(string fileName)
         {

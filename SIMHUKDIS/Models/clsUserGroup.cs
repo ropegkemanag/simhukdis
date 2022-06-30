@@ -47,7 +47,7 @@ namespace simhukdis.Models
                         data.GroupID = rd["GroupID"].ToString();
                         data.GroupDesc = rd["GroupDesc"].ToString();
                         data.LastUser = rd["LastUser"].ToString();
-                        data.LastUser = rd["LastUpdate"].ToString();
+                        data.LastUpdate = rd["LastUpdate"].ToString();
                         ug.Add(data);
                     }
                     return ug;

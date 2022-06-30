@@ -78,16 +78,18 @@ namespace simhukdis.Models
         [DisplayName("Disposisi Status Koordinator Sub Bagian")]
         public string DisposisiStatus3 { get; set; }
 
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString ="{0:dd/MMM/yyyy}")]
         [DisplayName("Tanggal Disposisi Kepala Biro")]
         public string DisposisiDate1 { get; set; }
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString ="{0:dd/MMM/yyyy}")]
         [DisplayName("Tanggal Disposisi Koordinator Bagian")]
         public string DisposisiDate2 { get; set; }
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString ="{0:dd/MMM/yyyy}")]
         [DisplayName("Tanggal Disposisi Koordinator Sub Bagian")]
         public string DisposisiDate3 { get; set; }
         public int Status { get; set; }
+        public string Unit_Kerja { get; set; }
+        public string Kode_Unit_Kerja { get; set; }
     }
     public class clsLampiranSurat
     {
@@ -117,6 +119,11 @@ namespace simhukdis.Models
         public string DateTo { get; set; }
         public string Status { get; set; }
     }
+    public class clsUnitKerja
+    {
+        public string Unit_Kerja { get; set; }
+        public string Kode_Unit_Kerja { get; set; }
+    }
     public class clsSuratMasukDB
     {
         public List<clsSuratMasuk> SM
@@ -128,7 +135,7 @@ namespace simhukdis.Models
                 using (MySqlConnection con = new MySqlConnection(constr))
                 {
                     Int32 pNom = 0;
-                    string q = "sp_SuratMasuk_Display";
+                    string q ="sp_SuratMasuk_Display";
                     MySqlCommand cmd = new MySqlCommand(q, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
@@ -181,6 +188,8 @@ namespace simhukdis.Models
                         data.DisposisiDate1 = rd["Disposisi1_Date"].ToString();
                         data.DisposisiDate2 = rd["Disposisi2_Date"].ToString();
                         data.DisposisiDate3 = rd["Disposisi3_Date"].ToString();
+                        data.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
+                        data.Unit_Kerja = rd["Unit_Kerja"].ToString();
                         SuratMasuks.Add(data);
                     }
                     return SuratMasuks;
@@ -194,7 +203,7 @@ namespace simhukdis.Models
             using (MySqlConnection con = new MySqlConnection(constr))
             {
                 Int32 pNom = 0;
-                string q = "sp_SuratMasuk_Filter_Sel";
+                string q ="sp_SuratMasuk_Filter_Sel";
                 MySqlCommand cmd = new MySqlCommand(q, con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iStatus", filter.Status);
@@ -253,6 +262,8 @@ namespace simhukdis.Models
                     data.DisposisiDate1 = rd["Disposisi1_Date"].ToString();
                     data.DisposisiDate2 = rd["Disposisi2_Date"].ToString();
                     data.DisposisiDate3 = rd["Disposisi3_Date"].ToString();
+                    data.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
+                    data.Unit_Kerja = rd["Unit_Kerja"].ToString();
                     SuratMasuks.Add(data);
                 }
                 return SuratMasuks;
@@ -265,7 +276,7 @@ namespace simhukdis.Models
             using (MySqlConnection con = new MySqlConnection(constr))
             {
                 Int32 pNom = 0;
-                string q = "sp_SuratMasuk_Sel";
+                string q ="sp_SuratMasuk_Sel";
                 MySqlCommand cmd = new MySqlCommand(q, con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iid", ID);
@@ -318,6 +329,8 @@ namespace simhukdis.Models
                     data.DisposisiDate1 = rd["Disposisi1_Date"].ToString();
                     data.DisposisiDate2 = rd["Disposisi2_Date"].ToString();
                     data.DisposisiDate3 = rd["Disposisi3_Date"].ToString();
+                    data.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
+                    data.Unit_Kerja = rd["Unit_Kerja"].ToString();
                 }
                 return data;
                 }
@@ -330,7 +343,7 @@ namespace simhukdis.Models
             {
                 MySqlCommand cmd = new MySqlCommand("sp_SuratMasuk_Ins", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                //DateTime dy = DateTime.ParseExact(suratMasuk.TanggalSurat, "dd-MM-yyyy",
+                //DateTime dy = DateTime.ParseExact(suratMasuk.TanggalSurat,"dd-MM-yyyy",
                 //                       System.Globalization.CultureInfo.InvariantCulture);
                 cmd.Parameters.AddWithValue("inomor_agenda", suratMasuk.NoAgenda);
                 cmd.Parameters.AddWithValue("inomor_surat", suratMasuk.NoSurat);
@@ -346,6 +359,7 @@ namespace simhukdis.Models
                 cmd.Parameters.AddWithValue("iSatuanKerja", suratMasuk.SATUAN_KERJA);
                 cmd.Parameters.AddWithValue("icreate_user", suratMasuk.CreateUser);
                 cmd.Parameters.AddWithValue("iLampiran_LHA", suratMasuk.LampiranSurat_LHA);
+                cmd.Parameters.AddWithValue("iUnit_Kerja", suratMasuk.Kode_Unit_Kerja);
                 con.Open();
                 i = cmd.ExecuteNonQuery();
             }
@@ -360,7 +374,7 @@ namespace simhukdis.Models
                 MySqlCommand cmd = new MySqlCommand("sp_SuratMasuk_Upd", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                //DateTime dy = DateTime.ParseExact(suratMasuk.TanggalSurat, "dd-MM-yyyy",
+                //DateTime dy = DateTime.ParseExact(suratMasuk.TanggalSurat,"dd-MM-yyyy",
                 //                       System.Globalization.CultureInfo.InvariantCulture);
                 cmd.Parameters.AddWithValue("iid", suratMasuk.ID);
                 cmd.Parameters.AddWithValue("inomor_agenda", suratMasuk.NoAgenda);
@@ -377,6 +391,7 @@ namespace simhukdis.Models
                 cmd.Parameters.AddWithValue("iSatuanKerja", suratMasuk.SATUAN_KERJA);
                 cmd.Parameters.AddWithValue("iupdate_user", suratMasuk.UpdatUser);
                 cmd.Parameters.AddWithValue("iLampiran_LHA", suratMasuk.LampiranSurat_LHA);
+                cmd.Parameters.AddWithValue("iUnit_Kerja", suratMasuk.Kode_Unit_Kerja);
                 con.Open();
                 i = cmd.ExecuteNonQuery();
             }
@@ -391,7 +406,7 @@ namespace simhukdis.Models
                 MySqlCommand cmd = new MySqlCommand("sp_SuratMasuk_Upd", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
-                //DateTime dy = DateTime.ParseExact(suratMasuk.TanggalSurat, "dd-MM-yyyy",
+                //DateTime dy = DateTime.ParseExact(suratMasuk.TanggalSurat,"dd-MM-yyyy",
                 //                       System.Globalization.CultureInfo.InvariantCulture);
 
                 cmd.Parameters.AddWithValue("iid", suratMasuk.ID);
@@ -409,6 +424,7 @@ namespace simhukdis.Models
                 cmd.Parameters.AddWithValue("iSatuanKerja", suratMasuk.SATUAN_KERJA);
                 cmd.Parameters.AddWithValue("iupdate_user", suratMasuk.UpdatUser);
                 cmd.Parameters.AddWithValue("iLampiran_LHA", suratMasuk.LampiranSurat_LHA);
+                cmd.Parameters.AddWithValue("iUnit_Kerja", suratMasuk.Kode_Unit_Kerja);
                 con.Open();
                 i = cmd.ExecuteNonQuery();
             }
@@ -464,6 +480,49 @@ namespace simhukdis.Models
                 rd.Close();
             }
             return User;
+        }
+        public List<clsUnitKerja> GetUnit(string KodeSatker)
+        {
+            clsSuratMasukDB db = new clsSuratMasukDB();
+            List<clsUnitKerja> User = new List<clsUnitKerja>();
+            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            using (MySqlConnection con = new MySqlConnection(constr))
+            {
+                MySqlCommand cmd = new MySqlCommand("sp_UnitKerja_Sel", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("iKodeSatker", KodeSatker);
+                con.Open();
+                MySqlDataReader rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    clsUnitKerja s = new clsUnitKerja();
+                    s.Unit_Kerja = rd["Unit_Kerja"].ToString();
+                    s.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
+                    User.Add(s);
+                }
+                rd.Close();
+            }
+            return User;
+        }
+        public clsUnitKerja GetListUnitker(string KodeSatker)
+        {
+            clsUnitKerja s = new clsUnitKerja();
+            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            using (MySqlConnection con = new MySqlConnection(constr))
+            {
+                MySqlCommand cmd = new MySqlCommand("sp_UnitKerja_Sel", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("iKodeSatker", KodeSatker);
+                con.Open();
+                MySqlDataReader rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    s.Unit_Kerja = rd["Unit_Kerja"].ToString();
+                    s.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
+                }
+                rd.Close();
+            }
+            return s;
         }
     }
 }

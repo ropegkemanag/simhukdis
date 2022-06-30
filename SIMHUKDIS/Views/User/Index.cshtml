@@ -30,7 +30,7 @@
                 <thead class="table table-primary">
                     <tr>
                         <th>
-                            Action
+                            Aksi
                         </th>
                         @*<th>
                             @Html.DisplayNameFor(model => model.UserID)
@@ -69,7 +69,7 @@
                         <tr class="table-bordered table-hover my-3">
                             <td>
 
-                                @Html.ActionLink("Edit", "Edit", new { UserID = item.UserID, StatusAdmin = item.StatusAdmin, GroupID = item.GroupID }) |
+                                @Html.ActionLink("Edit", "Edit", new { UserID = item.UserID, StatusAdmin = item.StatusAdmin, GroupID = item.GroupID, Satker = item.Satker }) |
                                 <a href="#" onclick="Hapus('@item.UserID','@item.NIP')">Hapus</a>
                             </td>
                             @*<td>

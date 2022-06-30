@@ -14,7 +14,7 @@
             <div class="form-group row">
                 <div class="col">
                     <label style="font-weight: bold;color:red;" class="control-label ">Satuan Kerja *</label>
-                    @Html.DropDownList("KODE_SATUAN_KERJA", ViewBag.Satker as SelectList, new { @class = "form-control", required = "required", @id = "KODE_SATUAN_KERJA", @readonly = "True", @disabled = "True" })
+                    @Html.DropDownList("KODE_SATUAN_KERJA", ViewBag.Satker as SelectList, new { @class = "fstdropdown-select form-control", required = "required", @id = "KODE_SATUAN_KERJA", @readonly = "True", @disabled = "True" })
                     @*@Html.ValidationMessage("Satker", "", new { @class = "text-danger" })*@
                 </div>
             </div>

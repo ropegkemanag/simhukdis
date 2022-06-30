@@ -170,7 +170,7 @@
     $(document).ready(function () {
     });
      $("#GridLoad").click(function () {
-         window.location = '@Url.Action("Index", "SuratMasuk")?Status=' + $("#StatusProses").val() + '&DateFrom=' + $("#TanggalSuratFrom").val() + '&DateTo=' + $("#TanggalSuratTo").val();
+         window.location = '@Url.Action("Index", "UsulHukdis")?Status=' + $("#StatusProses").val() + '&DateFrom=' + $("#TanggalSuratFrom").val() + '&DateTo=' + $("#TanggalSuratTo").val();
                 setTimeout(function () {
                     waitingDialog.hide();
                 }, 1000);
@@ -201,7 +201,7 @@
                         button: "Ok",
                         timer: 3000,
                     });
-                    window.location = '@Url.Action("Index", "SuratMasuk")?Status=' + $("#StatusProses").val() + '&DateFrom=' + $("#TanggalSuratFrom").val() + '&DateTo=' + $("#TanggalSuratTo").val();
+                    window.location = '@Url.Action("Index", "UsulHukdis")?Status=' + $("#StatusProses").val() + '&DateFrom=' + $("#TanggalSuratFrom").val() + '&DateTo=' + $("#TanggalSuratTo").val();
                 }
                 else {
                     swal.fire({
@@ -241,7 +241,7 @@
                         button: "Ok",
                         timer: 3000,
                     });
-                    window.location = '@Url.Action("Index", "SuratMasuk")?Status=' + $("#StatusProses").val() + '&DateFrom=' + $("#TanggalSuratFrom").val() + '&DateTo=' + $("#TanggalSuratTo").val();
+                    window.location = '@Url.Action("Index", "UsulHukdis")?Status=' + $("#StatusProses").val() + '&DateFrom=' + $("#TanggalSuratFrom").val() + '&DateTo=' + $("#TanggalSuratTo").val();
                 }
                 else {
                     swal.fire({

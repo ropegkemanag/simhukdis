@@ -53,16 +53,23 @@
                 @Html.ValidationMessage("Satker", "", new { @class = "text-danger" })*@
                 </div>
             </div>
+            <div class="form-group row">
+                <div class="col">
+                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">Unit Kerja *</label>
+                    @Html.DropDownListFor(model => model.Unit_Kerja, new SelectList(string.Empty, "Value", "Text"), "", new { @id = "Unit_Kerja", @class = "form-control input-md" })
+                    @* @Html.DropDownListFor(model => model.Unit_Kerja, ViewBag.Unit_Kerja as SelectList, new { @class = "fstdropdown-select form-control", required = "required", @id = "Unit_Kerja" })*@
+                </div>
+            </div>
             <div class="form-group row" id="LampiranSP">
                 <div class="col">
                     <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">Lampiran Surat Pengantar *</label>
-                    @Html.TextBoxFor(model => model.LampiranSurat1, "", new { @type = "file", @id = "LampiranSurat1", @class = "form-control", accept = "application/pdf"})
+                    @Html.TextBoxFor(model => model.LampiranSurat1, "", new { @type = "file", @id = "LampiranSurat1", @class = "form-control", accept = "application/pdf" })
                     @Html.ValidationMessageFor(model => model.LampiranSurat1, "Max : 1MB & Format File : PDF", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group row" id="LampiranSuratPP" name="LampiranSuratPP">
                 <div class="col">
-                    <label class="control-label "style="font-weight: bold;color:cornflowerblue;">Lampiran Putusan Pengadilan</label>
+                    <label class="control-label " style="font-weight: bold;color:cornflowerblue;">Lampiran Putusan Pengadilan</label>
                     @Html.TextBox("LampiranSurat6", "", new { @type = "file", @id = "LampiranSurat6", @class = "form-control form-control-user", accept = "application/pdf" })
                     @Html.ValidationMessageFor(model => model.LampiranSurat6, "Max : 5MB & Format File : PDF", new { @class = "text-danger" })
                 </div>
@@ -81,11 +88,11 @@
 <script src="~/Scripts/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        HideBox();
         var SatuanKerja = '@ViewBag.SatuanKerja';
         var SatkerName = '@ViewBag.SatuanKerjaName';
         $('#AsalSurat').val(SatkerName);
-        Satker(SatuanKerja);
+        $('#KODE_SATUAN_KERJA').val(SatuanKerja);
+        GetUnit(SatuanKerja);
         $(function () {
             $("#TanggalSurat").datepicker({
                 setDate: new Date(),
@@ -96,9 +103,9 @@
                 disableTouchKeyboard: true
             })
         });
-        
+
     });
-    $('#LampiranSurat1').on('change', function () {        
+    $('#LampiranSurat1').on('change', function () {
         for (var i = 0; i < $(this).get(0).files.length; ++i) {
             var file1 = $(this).get(0).files[i].size;
             if (file1) {
@@ -117,7 +124,7 @@
             }
         }
     });
-    $('#LampiranSurat6').on('change', function () {
+    $('#LampiranSurat2').on('change', function () {
         for (var i = 0; i < $(this).get(0).files.length; ++i) {
             var file1 = $(this).get(0).files[i].size;
             if (file1) {
@@ -129,150 +136,118 @@
                         showConfirmButton: false,
                         timer: 3000
                     })
-                    $('#LampiranSurat6').val('');
+                    $('#LampiranSurat2').val('');
                 } else {
 
                 }
             }
         }
     });
-    //function HideBox()
-    //{        
-    //    $("#DokumenisLampiranSurat6").hide();
-    //    $("#LampiranSP").hide();
-    //    $("#LampiranBAP").hide();
-    //    $("#LampiranSTP").hide();
-    //    $("#LampiranSPanggilan").hide();
-    //    $("#Lainnya").hide();
-    //    $("#LampiranSuratPP").hide();
-    //    $("#LampiranSurat6").prop('disabled', true);
-    //    $("#LHA").hide();
-    //}
-    //function Satker(SatuanKerja)
-    //{        
-    //    if (SatuanKerja == 143) {
-    //        $("#KODE_SATUAN_KERJA").prop('disabled', false);
-    //        $("#LampiranBAP").show();
-    //        $("#LHA").show();
-    //        $("#Lainnya").show();
-    //        $("#LampiranSurat_LHA").prop('required', true);
-    //        $("#LampiranSurat2").prop('required', true);
-    //        $("#LampiranSurat5").prop('required', true);
-    //        $("#DokumenisLampiranSurat6").hide();
-    //        $("#LampiranSuratPP").hide();
-    //        var x = document.getElementById('DokLainnya');
-    //        x.style.color = "cornflowerblue";
-    //        x.style.fontWeight  = "Bold";
-    //        document.getElementById('DokLainnya').innerHTML = 'Lampiran Surat Tugas/Dokumen Pendukung Lainnya';
-    //        var y = document.getElementById('DokBAP');
-    //        y.style.color = "cornflowerblue";
-    //        y.style.fontWeight = "Bold";
-    //    }
-    //    else
-    //    {            
-    //        $("#KODE_SATUAN_KERJA").prop('disabled', true);
-    //        $("#DokumenisLampiranSurat6").show();
-    //        $("#LampiranSP").show();
-    //        $("#LampiranBAP").show();
-    //        $("#LampiranSTP").show();
-    //        $("#LampiranSPanggilan").show();
-    //        $("#Lainnya").show();
-    //        $("#LampiranSuratPP").show();
-    //        $("#LampiranSurat6").prop('disabled', true);
-    //        $("#LHA").hide();
-    //        $("#LampiranSurat_LHA").prop('required', false);
-    //        var x = document.getElementById('DokLainnya');
-    //        document.getElementById('DokLainnya').innerHTML = 'Lampiran Dokumen Pendukung Lainnya';
-    //        var y = document.getElementById('DokBAP');
-    //        y.style.color = "cornflowerblue";
-    //        y.style.fontWeight = "Bold";
-    //    }
-    //}
-    //function LampiranPP()
-    //{
-    //    if ($(isLampiranSurat6).val() == 1) {
-    //        $("#LampiranSurat6").prop('disabled', false);
-    //        $("#LampiranSurat6").prop('required', true);
-    //    }
-    //    else
-    //    {
-    //        $("#LampiranSurat6").prop('disabled', true);
-    //        $("#LampiranSurat6").prop('required', false);
-    //    }
-    //}
-</script>
-@*<script type="text/javascript">
-    //string NoAgenda, string NoSurat, string AsalSurat, DateTime TanggalSurat,
-    //    string perihal, string Satker, HttpPostedFileBase LampiranSurat1,
-    //        HttpPostedFileBase LampiranSurat2, HttpPostedFileBase LampiranSurat3,
-    //            HttpPostedFileBase LampiranSurat4, HttpPostedFileBase LampiranSurat5, HttpPostedFileBase LampiranSurat6
-    function TambahSM() {
-        var dpObj = {
-            NoAgenda: $('#NoAgenda').val(),
-            NoSurat: $('#NoSurat').val(),
-            AsalSurat: $('#AsalSurat').val(),
-            TanggalSurat: $('#TanggalSurat').val(),
-            perihal: $('#perihal').val(),
-            Satker: $('#Satker').val(),
-            LampiranSurat1: $('#LampiranSurat1').val(),
-            LampiranSurat2: $('#LampiranSurat2').val(),
-            LampiranSurat3: $('#LampiranSurat3').val(),
-            LampiranSurat4: $('#LampiranSurat4').val(),
-            LampiranSurat5: $('#LampiranSurat5').val(),
-            LampiranSurat6: $('#LampiranSurat6').val()
-            };
-            $.ajax({
-                url: "/SuratMasuk/Create",
-                data: JSON.stringify(dpObj),
-                type: "POST",
-                contentType: "application/json;charset=utf-8",
-                dataType: "json",
-                success: function (result) {
-                    if (result.toString() == "Success") {
-                        swal({
-                            title: "Login Berhasil!",
-                            icon: "success",
-                            button: "Ok",
-                            timer: 3000,
-                        });
-                        window.location.href = '@Url.Action("Index", "Home")'
-                    }
-                    else {
-                        if (result.toString() == "Please input NIP!") {
-                            $("#NIP").val("");
-                            $("#NIP").focus();
-                            swal({
-                                title: "Please input NIP!",
-                                icon: "error",
-                                button: "Ok",
-                                timer: 3000,
-                            });
-                        }
-                        else if (result.toString() == "Please input Password!") {
-                            $("#Password").val("");
-                            $("#Password").focus();
-                            swal({
-                                title: "Please input Password!",
-                                icon: "error",
-                                button: "Ok",
-                                timer: 3000,
-                            });
-                        }
-                        else {
-                            swal({
-                                title: result.toString(),
-                                icon: "error",
-                                button: "Ok",
-                                timer: 3000,
-                            });
-                        }
+    $('#LampiranSurat3').on('change', function () {
+        for (var i = 0; i < $(this).get(0).files.length; ++i) {
+            var file1 = $(this).get(0).files[i].size;
+            if (file1) {
+                var file_size = $(this).get(0).files[i].size;
+                if (file_size > 5000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "File upload size is larger than 5MB!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $('#LampiranSurat3').val('');
+                } else {
 
-                    }
-
-                },
-                error: function (errormessage) {
-                    alert(errormessage.responseText);
                 }
-            });
+            }
+        }
+    });
+    $('#LampiranSurat4').on('change', function () {
+        for (var i = 0; i < $(this).get(0).files.length; ++i) {
+            var file1 = $(this).get(0).files[i].size;
+            if (file1) {
+                var file_size = $(this).get(0).files[i].size;
+                if (file_size > 5000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "File upload size is larger than 5MB!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $('#LampiranSurat4').val('');
+                } else {
+
+                }
+            }
+        }
+    });
+    $('#LampiranSurat5').on('change', function () {
+        for (var i = 0; i < $(this).get(0).files.length; ++i) {
+            var file1 = $(this).get(0).files[i].size;
+            if (file1) {
+                var file_size = $(this).get(0).files[i].size;
+                if (file_size > 5000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "File upload size is larger than 5MB!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $('#LampiranSurat5').val('');
+                } else {
+
+                }
+            }
+        }
+    });
+    $('#LampiranSurat_LHA').on('change', function () {
+        for (var i = 0; i < $(this).get(0).files.length; ++i) {
+            var file1 = $(this).get(0).files[i].size;
+            if (file1) {
+                var file_size = $(this).get(0).files[i].size;
+                if (file_size > 5000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "File upload size is larger than 5MB!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $('#LampiranSurat_LHA').val('');
+                } else {
+
+                }
+            }
+        }
+    });
+
+    function GetUnit() {
+        var SatuanKerja = $('#KODE_SATUAN_KERJA').val();
+        $.ajax({
+            type: "GET",
+            url: "/UsulHukdis/GetUnitKerja?",
+            dataType: "json",
+            data: { KodeSatker: SatuanKerja },
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.length > 0) {
+                    $('#Unit_Kerja').empty();
+                    //$("#Unit_Kerja").append('<option value="-1">Pilih Unit Kerja</option>');
+                    for (var i = 0; i < result.length; i++) {
+                        $("#Unit_Kerja").append('<option value="' + result[i].Kode_Unit_Kerja + '" >' + result[i].Unit_Kerja + '</option>');
+                        //options += '<option value="' + result[i].Kode_Unit_Kerja + '">' + result[i].Unit_Kerja + '</option>';
+                    }
+                }
+            },
+            error: function (errormessage) {
+                Swal.fire({
+                    icon: 'error',
+                    title: "Tidak ditemukan",
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        });
     }
-</script>*@
+
+</script>

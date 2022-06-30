@@ -61,7 +61,7 @@
                     </div>
                     <div class="col-sm-6">
                         <label>Tanggal Lahir</label>
-                        @Html.TextBox("TANGGAL_LAHIR", "", new { @type = "Date", @id = "TANGGAL_LAHIR", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.TextBox("TANGGAL_LAHIR", "", new { @id = "TANGGAL_LAHIR", @class = "form-control form-control-user", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("TANGGAL_LAHIR", "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -174,18 +174,24 @@
                     <div class="col">
                         <label class="control-label">F. CATATAN SIDANG</label>
                         @*<textarea class="form-control" id="Catatan_Sidang" rows="5" name="Catatan_Sidang"></textarea>*@
-                        @Html.TextAreaFor(model => model.Catatan_Sidang, new { @type = "text", @id = "Catatan_Sidang", @class = "form-control form-control-user", @readonly = true,rows = 5 })
+                        @Html.TextAreaFor(model => model.Catatan_Sidang, new { @type = "text", @id = "Catatan_Sidang", @class = "form-control form-control-user", @readonly = true, rows = 5 })
                         @Html.ValidationMessageFor(model => model.Catatan_Sidang, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col">
                         <label class="control-label">G. MENGINGAT</label>
-                        @Html.TextAreaFor(model => model.Mengingat, new { @class = "mdb-select form-control", required = "required", @id = "Mengingat", rows = 5 })
+                        @Html.TextAreaFor(model => model.Mengingat, new { @class = "mdb-select form-control", required = "required", @id = "Mengingat", rows = 10 })
                         @Html.ValidationMessageFor(model => model.Mengingat, "", new { @class = "text-danger" })
                     </div>
                 </div>
-
+                <div class="form-group row">
+                    <div class="col">
+                        <label class="control-label">H. TEMBUSAN</label>
+                        @Html.TextAreaFor(model => model.Tembusan, new { @class = "mdb-select form-control", required = "required", @id = "Tembusan", rows = 10 })
+                        @Html.ValidationMessageFor(model => model.Tembusan, "", new { @class = "text-danger" })
+                    </div>
+                </div>
             </form>
             <div class="form-group row">
                 <div class="col">
@@ -204,7 +210,8 @@
             $(document).ready(function () {
                 var NIP = @ViewBag.NIP;
                 var satkerx = '@ViewBag.SatuanKerja';
-                 getData('@ViewBag.NIP');
+                getData('@ViewBag.NIP');
+                getTembusan();
                 $(function () {
                     $("#TMT_Pensiun").datepicker({
                         setDate: new Date(),
@@ -248,6 +255,30 @@
             }
         function getTembusan()
         {
+            var satkerx = '@ViewBag.SatuanKerja';
+            var satker3 = $("#SATKER_3").val();
+            alert(satker3);
+            $.ajax({
+                type: "GET",
+                url: "/HasilSidang/GetTembusan?",
+                cache: false,
+                data: ({ Satker: satkerx, Satker3 : satker3 }),
+                contentType: "application/json;charset=UTF-8",
+                dataType: "json",
+                success: function (result) {
+                    $('#Tembusan').val(result.Tembusan);
+                },
+                error: function (errormessage) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "Tembusan tidak ditemukan",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
+            });
+            return false;
+        }
         }
         function getData() {
             var NIP = $('#NIP').val();

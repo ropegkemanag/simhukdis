@@ -105,7 +105,7 @@
         var SatuanKerja = '@ViewBag.SatuanKerja';
         var SatkerName = '@ViewBag.SatuanKerjaName';
         $('#AsalSurat').val(SatkerName);
-        $('#Unit_Kerja').val(@ViewBag.SatuanKerja);
+        $('#KODE_SATUAN_KERJA').val(SatuanKerja);
         GetUnit();
         $(function () {
             $("#TanggalSurat").datepicker({
@@ -117,7 +117,7 @@
                 disableTouchKeyboard: true
             })
         });
-        
+
     });
     $('#LampiranSurat1').on('change', function () {
         for (var i = 0; i < $(this).get(0).files.length; ++i) {
@@ -260,6 +260,6 @@
                     timer: 3000
                 })
             }
-        });  
+        });
     }
 </script>

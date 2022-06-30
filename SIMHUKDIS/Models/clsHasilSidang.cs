@@ -263,6 +263,7 @@ namespace SIMHUKDIS.Models
             using (MySqlConnection con = new MySqlConnection(constr))
             {
                 Int32 pNom = 0;
+                string k = "";
                 string q = "sp_HasilSidang_Create";
                 MySqlCommand cmd = new MySqlCommand(q, con);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -329,6 +330,28 @@ namespace SIMHUKDIS.Models
                     data.RekomendasiHukdis = rd["Rekomendasi_Hukuman"].ToString();
                     data.AnalisaPertimbangan = rd["Analisa_dan_Pertimbangan"].ToString();
                     data.Mengingat = rd["Mengingat"].ToString();
+                    clsPraDPKDB x = new clsPraDPKDB();
+                    List<clsDataPegawaiDtl> y = new List<clsDataPegawaiDtl>();
+                    y = x.GetPegawai(data.NIP);
+                    int z = 1;
+                    foreach (var item in y)
+                    {
+                        if (z == 1)
+                        {
+                            data.GOL_RUANG = item.PANGKAT + ", " + item.GOL_RUANG;
+                            data.LEVEL_JABATAN = item.LEVEL_JABATAN;
+                            data.UnitKerja = item.SATUAN_KERJA;
+                            data.SATKER_1 = item.SATKER_1;
+                            data.SATKER_2 = item.SATKER_2;
+                            data.SATKER_3 = item.SATKER_3;
+                            data.SATKER_4 = item.SATKER_4;
+                            data.SATKER_5 = item.SATKER_5;
+                            k = item.SATKER_3;
+                        }
+                        z = z + 1;
+                    }
+                    clsHasilSidangDB p = new clsHasilSidangDB();
+                    data.Tembusan = p.GetTembusan(data.KODE_SATUAN_KERJA, k);
                 }
                 return data;
             }
@@ -381,7 +404,7 @@ namespace SIMHUKDIS.Models
                         DP.konseptor = rd["konseptor"].ToString();
                         DP.nip_konseptor = rd["nip_konseptor"].ToString();
                         DP.Mengingat = rd["Mengingat"].ToString();
-                        DP.Tembusan = rd["Tembusan"].ToString();
+                        //DP.Tembusan = rd["Tembusan"].ToString();
                         clsPraDPKDB x = new clsPraDPKDB();
                         List<clsDataPegawaiDtl> y = new List<clsDataPegawaiDtl>();
                         y = x.GetPegawai(DP.NIP);
@@ -427,23 +450,31 @@ namespace SIMHUKDIS.Models
                 MySqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
-                    if (pNom == 1)
+                    a = rd["Tembusan"].ToString();
+                    if (a == null || a == "")
                     {
-                        a = rd["Tembusan"].ToString();
-                        if (a == null || a == "")
+                        if (Tembusan == "")
                         {
-                            if (Tembusan == "")
-                            {
-                                Tembusan = a;
-                            }
-                            else
-                            {
-                                Tembusan = Tembusan + " /n " + a;
-                            }
+                            Tembusan = a;
+                        }
+                        else
+                        {
+                            Tembusan = Tembusan + " \n " + a;
+                        }
+                    }
+                    else
+                    {
+                        if (Tembusan == "")
+                        {
+                            Tembusan = a;
+                        }
+                        else
+                        {
+                            Tembusan = Tembusan + " \n " + a;
                         }
                     }
                 }
-                return a;
+                return Tembusan;
             }
         }
         public int Insert(clsHasilSidang PD)

@@ -5,9 +5,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.css" rel="stylesheet">
-<link href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css" rel="stylesheet">
-
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -18,8 +15,8 @@
 
         <div style="height: 15px"></div>
         <div class="table-responsive">
-            <table id="example" class="display" style="width:100%">
-                <thead class="table table-primary" style="text-align: center;">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead class="table table-primary">
                     <tr>
 
                         <th style="white-space: nowrap; text-align: center;">
@@ -544,46 +541,3 @@
         </div>
     </div>
 </div>
-
-<script src="~/Scripts/jquery-1.10.2.min.js"></script>
-<script src="~/Scripts/datatable-responsive/datatables.responsive.min.js"></script>
-<script src="~/Scripts/datatables/jquery.dataTables.min.js"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        $('#example').DataTable({
-            pagingType: 'full_numbers',
-        });
-        var responsiveHelper_dt_basic = undefined;
-
-        var breakpointDefinition = {
-            tablet: 1024,
-            phone: 480
-        };
-        $('#dt_basic').DataTable().destroy();
-        $('#dt_basic').dataTable({
-            "sDom": "<'dt-toolbar'<'col'f><'col'l>r>" +
-                "t" +
-                "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-6'p>>",
-            "autoWidth": true,
-            "scrollY": "100%",
-            "scrollX": "100%",
-            "scrollCollapse": true,
-            "paging": true,
-            "lengthMenu": [[10, 25, 50, 100, 200, 500, -1], [10, 25, 50, 100, 200, 500, "All"]],
-            "preDrawCallback": function () {
-                // Initialize the responsive datatables helper once.
-                if (!responsiveHelper_dt_basic) {
-                    responsiveHelper_dt_basic = new ResponsiveDatatablesHelper($('#dt_basic'), breakpointDefinition);
-                }
-            },
-            "rowCallback": function (nRow) {
-                responsiveHelper_dt_basic.createExpandIcon(nRow);
-            },
-            "drawCallback": function (oSettings) {
-                responsiveHelper_dt_basic.respond();
-            }
-        });
-
-        /* END BASIC */
-    });
-</script>

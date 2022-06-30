@@ -407,7 +407,7 @@
                         icon: 'success',
                         title: 'Telaah berhasil !',
                         showConfirmButton: false,
-                        timer: 3000
+                        timer: 30000
                     })
                     GenerateWord();
                     window.location.href = '@Url.Action("Details2", "Telaah")?ID=' + InputID;
@@ -417,7 +417,7 @@
                         icon: 'error',
                         title: result.toString(),
                         showConfirmButton: false,
-                        timer: 3000
+                        timer: 30000
                     })
                 }
             },
@@ -549,22 +549,23 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (result) {
-                if (result.toString() == "Success") {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Telaah berhasil !',
-                        showConfirmButton: false,
-                        timer: 3000
-                    })
-                }
-                else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: result.toString(),
-                        showConfirmButton: false,
-                        timer: 3000
-                    })
-                }
+                alert(result);
+                //if (result.toString() == "Success") {
+                //    Swal.fire({
+                //        icon: 'success',
+                //        title: 'Telaah berhasil !',
+                //        showConfirmButton: false,
+                //        timer: 3000
+                //    })
+                //}
+                //else {
+                //    Swal.fire({
+                //        icon: 'error',
+                //        title: result.toString(),
+                //        showConfirmButton: false,
+                //        timer: 3000
+                //    })
+                //}
             },
             error: function (errormessage) {
                 Swal.fire({
