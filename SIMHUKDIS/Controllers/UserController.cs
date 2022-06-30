@@ -360,7 +360,7 @@ namespace simhukdis.Controllers
                 string strMsg = "";
                 using (ExcelPackage exl = new ExcelPackage())
                 {
-                    string sFilename = "KAPSJCCResult_" + String.Format("{0:yyyyMMdd}", DateTime.Now) + "_" + String.Format("{0:HHmm}", DateTime.Now);
+                    string sFilename = "DataUser_" + String.Format("{0:yyyyMMdd}", DateTime.Now) + "_" + String.Format("{0:HHmm}", DateTime.Now);
                     List<clsUserLogin> rpt = new List<clsUserLogin>();
                     rpt = db.Users.ToList();
                     ExcelWorksheet ws = exl.Workbook.Worksheets.Add("Sheet1");

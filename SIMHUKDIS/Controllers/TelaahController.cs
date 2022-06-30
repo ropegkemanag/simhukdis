@@ -550,20 +550,9 @@ namespace SIMHUKDIS.Controllers
                 doc.SaveToFile(OutputPath + strFileNamePDF, FileFormat.PDF);
                 //ToViewFile(OutputPath + strFileNameDoc);
                 //ToViewFile(OutputPath + strFileNamePDF);
-                strMsg = "Success";
-
-
-                string FilePath = OutputPath + strFileNamePDF;
-                WebClient User = new WebClient();
-                Byte[] FileBuffer = User.DownloadData(FilePath);
-                if (FileBuffer != null)
-                {
-                    Response.ContentType = "application/pdf";
-                    Response.AddHeader("content-length", FileBuffer.Length.ToString());
-                    Response.BinaryWrite(FileBuffer);
-                }
-
-                    return Json(strMsg, JsonRequestBehavior.AllowGet);
+                ViewBag.strFileNameDoc = strFileNameDoc;
+                strMsg = strFileNamePDF;
+                return Json(strMsg, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -572,11 +561,25 @@ namespace SIMHUKDIS.Controllers
             }
         }
 
-        public FileResult GetReport(string fileName)
+        public FileResult DownloadFile(string fileName)
         {
-            //string ReportURL = "{Your File Path}";
-            byte[] FileBytes = System.IO.File.ReadAllBytes(fileName);
-            return File(FileBytes, "application/pdf");
+            try
+            {
+                //Build the File Path.
+                string path = Server.MapPath("~/Files/Result/Telaah/") + fileName;
+
+                //Read the File data into Byte Array.
+                byte[] bytes = System.IO.File.ReadAllBytes(path);
+
+                //Send the File to Download.
+                return File(bytes, "application/octet-stream", fileName);
+            }
+            catch (Exception ex)
+            {
+                string strMsg = ex.Message.ToString();
+                return null;
+            }
+
         }
         private void ToViewFile(string fileName)
         {

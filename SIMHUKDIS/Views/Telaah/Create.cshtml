@@ -377,22 +377,27 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (result) {
+
+                DownloadPDF(result);
+                @*var FileDoc = '@ViewBag.strFileNameDoc';
+                DownloadPDF(FileDoc);*@
+
                 if (result.toString() == "Success") {
-                    Swal.fire({
+                    @*Swal.fire({
                         icon: 'success',
                         title: 'Telaah berhasil !',
                         showConfirmButton: false,
                         timer: 3000
                     })
-                    window.location.href = '@Url.Action("Details2", "Telaah")?ID=' + InputID;
+                    window.location.href = '@Url.Action("Details2", "Telaah")?ID=' + InputID;*@
                 }
                 else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: result.toString(),
-                        showConfirmButton: false,
-                        timer: 3000
-                    })
+                    //Swal.fire({
+                    //    icon: 'error',
+                    //    title: result.toString(),
+                    //    showConfirmButton: false,
+                    //    timer: 3000
+                    //})
                 }
             },
             error: function (errormessage) {
@@ -405,5 +410,8 @@
                 window.location.href = '@Url.Action("Details2", "Telaah")?ID=' + InputID;
             }
         });
+    }
+     function DownloadPDF(fileName) {
+        window.location = '@Url.Action("DownloadFile", "Telaah")?fileName=' + fileName;
     }
 </script>
