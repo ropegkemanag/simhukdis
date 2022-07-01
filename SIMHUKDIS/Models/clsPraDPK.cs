@@ -43,6 +43,12 @@ namespace SIMHUKDIS.Models
         public string Catatan { get; set; }
         public string UserLogin { get; set; }
         public string Tanggal_Sidang { get; set; }
+        public string JenisPelanggaran { get; set; }
+    }
+    public class clsJenisPelanggaran
+    {
+        public string Kode_Jenis_Pelanggaran { get; set; }
+        public string JenisPelanggaran { get; set; }
     }
     public class clsPraDPKDB
     {
@@ -104,7 +110,7 @@ namespace SIMHUKDIS.Models
                     data.RekomendasiHukdis = rd["Rekomendasi_Hukuman"].ToString();
                     data.Catatan = rd["Catatan"].ToString();
                     data.Tanggal_Sidang = rd["Tanggal_Sidang"].ToString();
-
+                    data.JenisPelanggaran = rd["Jenis_Pelanggaran "].ToString();
                     clsPraDPKDB x = new clsPraDPKDB();
                     List<clsDataPegawaiDtl> y = new List<clsDataPegawaiDtl>();
                     y = x.GetPegawai(data.NIP);
@@ -341,6 +347,27 @@ namespace SIMHUKDIS.Models
                     return true;
                 }
             }
+        }
+        public List<clsJenisPelanggaran> GetListJenisPelanggaran()
+        {
+            List<clsJenisPelanggaran> JP = new List<clsJenisPelanggaran>();
+            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            using (MySqlConnection con = new MySqlConnection(constr))
+            {
+                MySqlCommand cmd = new MySqlCommand("sp_JenisPelanggaran_Sel", con);
+                cmd.CommandType = CommandType.Text;
+                con.Open();
+                MySqlDataReader rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    clsJenisPelanggaran s = new clsJenisPelanggaran();
+                    s.Kode_Jenis_Pelanggaran = rd["id"].ToString();
+                    s.JenisPelanggaran = rd["Jenis_Pelanggaran"].ToString();
+                    JP.Add(s);
+                }
+                rd.Close();
+            }
+            return JP;
         }
     }
 }

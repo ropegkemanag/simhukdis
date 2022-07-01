@@ -66,6 +66,8 @@ namespace simhukdis.Models
         public string DisposisiDate3 { get; set; }
         [DisplayName("Update User")]
         public string UpdateUser { get; set; }
+        public string Kode_Unit_Kerja { get; set; }
+        public string Unit_Kerja { get; set; }
     }
     public class clsDisposisiDB
     {
@@ -112,6 +114,8 @@ namespace simhukdis.Models
                     data.DisposisiDate2 = rd["Disposisi2_Date"].ToString();
                     data.DisposisiDate3 = rd["Disposisi3_Date"].ToString();
                     data.Dokumen_Yang_Akan_Dibuat = rd["Dokumen_Yang_Akan_Dibuat"].ToString();
+                    data.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
+                    data.Unit_Kerja = rd["Unit_Kerja"].ToString();
                     //if (!Convert.IsDBNull(rd["Disposisi1_Date"]))
                     //{
                     //    data.DisposisiDate1 = Convert.ToDateTime(rd["Disposisi1_Date"].ToString());
@@ -162,6 +166,8 @@ namespace simhukdis.Models
                         data.UserID = rd["UserID"].ToString();
                         data.KODE_SATUAN_KERJA = rd["KODE_SATUAN_KERJA"].ToString();
                         data.SATUAN_KERJA = rd["SatuanKerja"].ToString();
+                        data.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
+                        data.Unit_Kerja = rd["Unit_Kerja"].ToString();
                         DP.Add(data);
                     }
                     return DP;
@@ -262,6 +268,8 @@ namespace simhukdis.Models
                     data.DisposisiDate2 = rd["Disposisi2_Date"].ToString();
                     data.DisposisiDate3 = rd["Disposisi3_Date"].ToString();
                     data.Dokumen_Yang_Akan_Dibuat = rd["Dokumen_Yang_Akan_Dibuat"].ToString();
+                    data.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
+                    data.Unit_Kerja = rd["Unit_Kerja"].ToString();
                     DP.Add(data);
                 }
                 return DP;
@@ -313,6 +321,8 @@ namespace simhukdis.Models
                         data.DisposisiDate2 = rd["Disposisi2_Date"].ToString();
                         data.DisposisiDate3 = rd["Disposisi3_Date"].ToString();
                         data.Dokumen_Yang_Akan_Dibuat = rd["Dokumen_Yang_Akan_Dibuat"].ToString();
+                        data.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
+                        data.Unit_Kerja = rd["Unit_Kerja"].ToString();
                         //if (!Convert.IsDBNull(rd["Disposisi1_Date"]))
                         //{
                         //    data.DisposisiDate1 = Convert.ToDateTime(rd["Disposisi1_Date"].ToString());
@@ -457,6 +467,8 @@ namespace simhukdis.Models
                     //{
                     //    data.DisposisiDate3 = Convert.ToDateTime(rd["Disposisi3_Date"].ToString());
                     //}
+                    data.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
+                    data.Unit_Kerja = rd["Unit_Kerja"].ToString();
                     DP.Add(data);
                 }
                 return DP;
@@ -508,6 +520,8 @@ namespace simhukdis.Models
                         data.DisposisiDate2 = rd["Disposisi2_Date"].ToString();
                         data.DisposisiDate3 = rd["Disposisi3_Date"].ToString();
                         data.Dokumen_Yang_Akan_Dibuat = rd["Dokumen_Yang_Akan_Dibuat"].ToString();
+                        data.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
+                        data.Unit_Kerja = rd["Unit_Kerja"].ToString();
                         DP.Add(data);
                     }
                     return DP;

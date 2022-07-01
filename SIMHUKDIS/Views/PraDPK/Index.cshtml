@@ -34,6 +34,9 @@
                             Pasal Pelanggaran
                         </th>
                         <th>
+                            Jenis Pelanggaran
+                        </th>
+                        <th>
                             Uraian Pelanggaran
                         </th>
                         <th>
@@ -75,49 +78,52 @@
                     @foreach (var item in Model)
                     {
 
-                        <tr>
-                            <td>
-                                <a href="#" onclick="Update('@item.ID','@item.NIP','@item.Catatan','@item.Tanggal_Sidang')">Ubah</a>
-                                <br />
-                                <a href="#" onclick="SendData('@item.ID','@item.NIP')">Proses Sidang DPK</a>
-                                
-                            </td>
-                            @*<td>
-                                @Html.DisplayFor(modelItem => item.No)
-                            </td>*@
-                            <td>
-                                @Html.DisplayFor(modelItem => item.FullName)
-                                <br />
-                                @Html.DisplayFor(modelItem => item.NIP)
-                                <br />
-                                @Html.DisplayFor(modelItem => item.GOL_RUANG)
-                                <br />
-                                @Html.DisplayFor(modelItem => item.LEVEL_JABATAN)
-                                <br />
-                                @Html.DisplayFor(modelItem => item.AsalSurat)
-                                <br />
-                                @Html.DisplayFor(modelItem => item.DasarBukti)
-                                <br />
-                                @Html.DisplayFor(modelItem => item.perihal)
-                                <br />
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.PasalPelanggaran)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.PelanggaranDisiplin)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.RekomendasiHukdis)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Tanggal_Sidang)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Catatan)
-                            </td>
+                    <tr>
+                        <td>
+                            <a href="#" onclick="Update('@item.ID','@item.NIP','@item.Catatan','@item.Tanggal_Sidang')">Ubah</a>
+                            <br />
+                            <a href="#" onclick="SendData('@item.ID','@item.NIP')">Proses Sidang DPK</a>
 
-                        </tr>
+                        </td>
+                        @*<td>
+            @Html.DisplayFor(modelItem => item.No)
+        </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                            <br />
+                            @Html.DisplayFor(modelItem => item.NIP)
+                            <br />
+                            @Html.DisplayFor(modelItem => item.GOL_RUANG)
+                            <br />
+                            @Html.DisplayFor(modelItem => item.LEVEL_JABATAN)
+                            <br />
+                            @Html.DisplayFor(modelItem => item.AsalSurat)
+                            <br />
+                            @Html.DisplayFor(modelItem => item.DasarBukti)
+                            <br />
+                            @Html.DisplayFor(modelItem => item.perihal)
+                            <br />
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PasalPelanggaran)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.JenisPelanggaran)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PelanggaranDisiplin)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RekomendasiHukdis)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tanggal_Sidang)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Catatan)
+                        </td>
+
+                    </tr>
                     }
                 </tbody>
             </table>
@@ -166,6 +172,16 @@
                                             <label for="catatan">Tanggal Sidang</label>
                                             <input type="text" class="form-control" id="Tanggal_Sidang" name="Tanggal_Sidang" />
                                             @*@Html.TextBox("Tanggal_Sidang", "Tanggal_Sidang", new { @id = "Tanggal_Sidang", @class = "form-control input-md col-md-1", placeholder = "dd-mm-yyyy" })*@
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col">
+                                            <label>Jenis Pelanggaran *</label>
+                                            @Html.DropDownList("JenisPelanggaran", ViewBag.JenisPelanggaran as SelectList, new { @class = "form-control", required = "required", @id = "JenisPelanggaran"})
                                         </div>
                                     </div>
                                 </td>
@@ -295,7 +311,8 @@
             ID: $('#ID').val(),
             NIP: $('#NIP').val(),
             Catatan: $('#Catatan').val(),
-            Tanggal_Sidang: $('#Tanggal_Sidang').val()
+            Tanggal_Sidang: $('#Tanggal_Sidang').val(),
+            JenisPelanggaran: $('#JenisPelanggaran').val()
         };
         $.ajax({
             url: "/PraDPK/Proses",

@@ -2335,6 +2335,12 @@
     <Content Include="Views\Shared\_SidebarKonseptor.cshtml" />
     <Content Include="Views\Shared\_SidebarSatker.cshtml" />
     <Content Include="Views\SuratMasuk\CreateTindakPidana.cshtml" />
+    <Content Include="Views\UsulHukdis\Create.cshtml" />
+    <Content Include="Views\UsulHukdis\Delete.cshtml" />
+    <Content Include="Views\UsulHukdis\Details.cshtml" />
+    <Content Include="Views\UsulHukdis\Edit.cshtml" />
+    <Content Include="Views\UsulHukdis\Index.cshtml" />
+    <Content Include="Views\SuratMasuk\EditTindakPidana.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

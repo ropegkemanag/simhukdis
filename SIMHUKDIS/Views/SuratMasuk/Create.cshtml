@@ -49,14 +49,21 @@
                 <div class="col">
                     <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">Satuan Kerja *</label>
                     @Html.DropDownListFor(model => model.KODE_SATUAN_KERJA, ViewBag.Satker as SelectList, new { @class = "fstdropdown-select form-control", required = "required", @id = "KODE_SATUAN_KERJA", @onchange = "GetUnit()" })
-                    
+
+                </div>
+            </div>
+            <div class="form-group row" style="display:none;">
+                <div class="col">
+                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">Status *</label>
+                    @Html.TextArea("UsulStatus", "1", new { @id = "UsulStatus", @class = "form-control form-control-user", required = "required" })
+                   
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col">
                     <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">Unit Kerja *</label>
-                    @Html.DropDownListFor(model => model.Unit_Kerja, new SelectList(string.Empty, "Value", "Text"), "", new { @id = "Unit_Kerja", @class = "form-control input-md" })
-                   @* @Html.DropDownListFor(model => model.Unit_Kerja, ViewBag.Unit_Kerja as SelectList, new { @class = "fstdropdown-select form-control", required = "required", @id = "Unit_Kerja" })*@
+                    @Html.DropDownListFor(model => model.Unit_Kerja, new SelectList(string.Empty, "Value", "Text"), "", new { @id = "Kode_Unit_Kerja", @class = "form-control input-md" })
+                    @* @Html.DropDownListFor(model => model.Unit_Kerja, ViewBag.Unit_Kerja as SelectList, new { @class = "fstdropdown-select form-control", required = "required", @id = "Unit_Kerja" })*@
                 </div>
             </div>
             <div class="form-group row" id="LampiranSP">
@@ -94,7 +101,7 @@
                     @Html.TextBox("LampiranSurat5", "", new { @type = "file", @id = "LampiranSurat5", @class = "form-control form-control-user", accept = "application/pdf" })
                     @Html.ValidationMessageFor(model => model.LampiranSurat5, "Max : 5MB & Format File : PDF", new { @class = "text-danger" })
                 </div>
-            </div>            
+            </div>
             <div class="form-group row">
                 <div class="col-md-offset-2 col-md-10">
                     <input type="submit" value="Simpan" class="btn btn-primary" style="width:100px;" />
@@ -255,10 +262,10 @@
             dataType: "json",
             success: function (result) {
                 if (result.length > 0) {
-                    $('#Unit_Kerja').empty();
-                    //$("#Unit_Kerja").append('<option value="-1">Pilih Unit Kerja</option>');
+                    $('#Kode_Unit_Kerja').empty();
+                    //$("#Kode_Unit_Kerja").append('<option value="-1">Pilih Unit Kerja</option>');
                     for (var i = 0; i < result.length; i++) {
-                        $("#Unit_Kerja").append('<option value="' + result[i].Kode_Unit_Kerja + '" >' + result[i].Unit_Kerja + '</option>');
+                        $("#Kode_Unit_Kerja").append('<option value="' + result[i].Kode_Unit_Kerja + '" >' + result[i].Unit_Kerja + '</option>');
                         //options += '<option value="' + result[i].Kode_Unit_Kerja + '">' + result[i].Unit_Kerja + '</option>';
                     }
                 }

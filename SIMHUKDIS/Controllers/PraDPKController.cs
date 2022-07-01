@@ -45,6 +45,7 @@ namespace SIMHUKDIS.Controllers
                 ViewBag.UserID = userlogin;
                 ViewBag.SatuanKerja = SatuanKerja;
                 ViewBag.UserGroup = UserGroup;
+                ViewBag.JenisPelanggaran = new SelectList(db.GetListJenisPelanggaran(), "Kode_Jenis_Pelanggaran", "JenisPelanggaran");
 
                 List<clsPraDPK> PD = db.ListAll().ToList();
                 clsDataPegawaiDtl a = new clsDataPegawaiDtl();
@@ -127,7 +128,7 @@ namespace SIMHUKDIS.Controllers
                             ws.Cells[i, 1].Value = k;
                             ws.Cells[i, 2].Value = identitas;
                             ws.Cells[i, 3].Value = model.PasalPelanggaran;
-                            ws.Cells[i, 4].Value = model.PelanggaranDisiplin;
+                            ws.Cells[i, 4].Value = model.JenisPelanggaran;
                             ws.Cells[i, 5].Value = model.PelanggaranDisiplin;
                             ws.Cells[i, 6].Value = model.RekomendasiHukdis;
                             ws.Cells[i, 7].Value = "";
@@ -225,7 +226,7 @@ namespace SIMHUKDIS.Controllers
                 return RedirectToAction("Error500", "Home", new { Error_Message });
             }
         }
-        public ActionResult Proses(string ID, string NIP, string Catatan, string Tanggal_Sidang)
+        public ActionResult Proses(string ID, string NIP, string Catatan, string Tanggal_Sidang, string JenisPelanggaran)
         {
             string strMsg = "";
             try
@@ -237,6 +238,7 @@ namespace SIMHUKDIS.Controllers
                 PD.Catatan = Catatan;
                 PD.UserLogin = UserLogin;
                 PD.Tanggal_Sidang = Tanggal_Sidang;
+                PD.JenisPelanggaran = JenisPelanggaran;
                 if (db.GetDataExist(ID,NIP) == true)
                 {
                     db.Update(PD);

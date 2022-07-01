@@ -90,6 +90,7 @@ namespace simhukdis.Models
         public int Status { get; set; }
         public string Unit_Kerja { get; set; }
         public string Kode_Unit_Kerja { get; set; }
+        public string UsulStatus { get; set; }
     }
     public class clsLampiranSurat
     {
@@ -190,6 +191,7 @@ namespace simhukdis.Models
                         data.DisposisiDate3 = rd["Disposisi3_Date"].ToString();
                         data.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
                         data.Unit_Kerja = rd["Unit_Kerja"].ToString();
+                        data.UsulStatus = rd["UsulStatus"].ToString();
                         SuratMasuks.Add(data);
                     }
                     return SuratMasuks;
@@ -264,6 +266,7 @@ namespace simhukdis.Models
                     data.DisposisiDate3 = rd["Disposisi3_Date"].ToString();
                     data.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
                     data.Unit_Kerja = rd["Unit_Kerja"].ToString();
+                    data.UsulStatus = rd["UsulStatus"].ToString();
                     SuratMasuks.Add(data);
                 }
                 return SuratMasuks;
@@ -331,6 +334,7 @@ namespace simhukdis.Models
                     data.DisposisiDate3 = rd["Disposisi3_Date"].ToString();
                     data.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
                     data.Unit_Kerja = rd["Unit_Kerja"].ToString();
+                    data.UsulStatus = rd["UsulStatus"].ToString();
                 }
                 return data;
                 }
@@ -360,6 +364,7 @@ namespace simhukdis.Models
                 cmd.Parameters.AddWithValue("icreate_user", suratMasuk.CreateUser);
                 cmd.Parameters.AddWithValue("iLampiran_LHA", suratMasuk.LampiranSurat_LHA);
                 cmd.Parameters.AddWithValue("iUnit_Kerja", suratMasuk.Kode_Unit_Kerja);
+                cmd.Parameters.AddWithValue("iUsulStatus", suratMasuk.UsulStatus);
                 con.Open();
                 i = cmd.ExecuteNonQuery();
             }

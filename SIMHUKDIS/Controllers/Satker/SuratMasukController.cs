@@ -73,25 +73,7 @@ namespace simhukdis.Controllers
                 return RedirectToAction("Error500", "Home", new { Error_Message });
             }            
         }
-        //public ActionResult Filter(int Status, DateTime DateFrom, DateTime DateTo)
-        //{
-        //    if (Session["Fullname"] == null)
-        //    {
-        //        return RedirectToAction("Login", "Home");
-        //    }
-        //    string userlogin = Session["Fullname"].ToString();
-        //    string SatuanKerja = Session["Satker"].ToString();
-        //    ViewBag.UserID = userlogin;
-        //    ViewBag.SatuanKerja = SatuanKerja;
-
-        //    clsSuratMasukFilter a = new clsSuratMasukFilter();
-        //    a.Status = Status;
-        //    a.DateFrom = DateFrom;
-        //    a.DateTo = DateTo;
-
-        //    List<clsSuratMasuk> sm = db.SuratMasukFilter(a).ToList();
-        //    return View(sm);
-        //}[HttpGet]
+        
         public ActionResult CreateTindakPidana()
         {
             if (Session["Fullname"] == null)
@@ -183,9 +165,13 @@ namespace simhukdis.Controllers
         }
         [HttpPost]
         public ActionResult Create(string NoAgenda, string NoSurat, string AsalSurat, string TanggalSurat, 
-            string perihal, string KODE_SATUAN_KERJA, string Unit_Kerja, HttpPostedFileBase LampiranSurat1,
+            string perihal, string KODE_SATUAN_KERJA, string Kode_Unit_Kerja, HttpPostedFileBase LampiranSurat1,
             HttpPostedFileBase LampiranSurat2, HttpPostedFileBase LampiranSurat3, 
-            HttpPostedFileBase LampiranSurat4, HttpPostedFileBase LampiranSurat5,HttpPostedFileBase LampiranSurat6, HttpPostedFileBase LampiranSurat_LHA)
+            HttpPostedFileBase LampiranSurat4, 
+            HttpPostedFileBase LampiranSurat5,
+            HttpPostedFileBase LampiranSurat6, 
+            HttpPostedFileBase LampiranSurat_LHA,
+            string UsulStatus)
         {
             if (Session["Fullname"] == null)
             {
@@ -215,7 +201,8 @@ namespace simhukdis.Controllers
                 sm.AsalSurat = AsalSurat;
                 sm.TanggalSurat = TanggalSurat;
                 sm.perihal = perihal;
-                sm.Kode_Unit_Kerja = Unit_Kerja;
+                sm.Kode_Unit_Kerja = Kode_Unit_Kerja;
+                sm.UsulStatus = UsulStatus;
                 if (KODE_SATUAN_KERJA == null && UserGroup == "03")
                 {
                     sm.SATUAN_KERJA = SatuanKerja;
@@ -338,9 +325,40 @@ namespace simhukdis.Controllers
                 
             }
         }
-        
         [HttpGet]
-        public ActionResult Edit(int ID, string KODE_SATUAN_KERJA)
+        public ActionResult Edit(int ID, string KODE_SATUAN_KERJA, string Kode_Unit_Kerja)
+        {
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            try
+            {
+                clsSuratMasukDB db = new clsSuratMasukDB();
+                clsSuratMasuk sm = db.GetList(ID);
+
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                string userlogin = Session["Fullname"].ToString();
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+                ViewBag.Unit_Kerja = new SelectList(db.GetUnit(SatuanKerja), "Kode_Unit_Kerja", "Unit_Kerja", Kode_Unit_Kerja);
+                ViewBag.Satker = new SelectList(db.GetListSatker(), "KODE_SATUAN_KERJA", "SATUAN_KERJA", KODE_SATUAN_KERJA);
+                return View(sm);
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
+
+            }
+
+        }
+
+        [HttpGet]
+        public ActionResult EditTindakPidana(int ID, string KODE_SATUAN_KERJA, string Kode_Unit_Kerja)
         {
             if (Session["Fullname"] == null)
             {
@@ -358,6 +376,7 @@ namespace simhukdis.Controllers
                 ViewBag.UserID = userlogin;
                 ViewBag.SatuanKerja = SatuanKerja;
                 ViewBag.UserGroup = UserGroup;
+                ViewBag.Unit_Kerja = new SelectList(db.GetUnit(SatuanKerja), "Kode_Unit_Kerja", "Unit_Kerja", Kode_Unit_Kerja);
                 ViewBag.Satker = new SelectList(db.GetListSatker(), "KODE_SATUAN_KERJA", "SATUAN_KERJA", KODE_SATUAN_KERJA);
                 return View(sm);
             }
@@ -372,7 +391,7 @@ namespace simhukdis.Controllers
 
         [HttpPost]
         public ActionResult Edit(int ID, string NoAgenda, string NoSurat, string AsalSurat, string TanggalSurat, 
-            string perihal, string KODE_SATUAN_KERJA, string Unit_Kerja, HttpPostedFileBase LampiranSurat1,
+            string perihal, string KODE_SATUAN_KERJA, string Kode_Unit_Kerja, HttpPostedFileBase LampiranSurat1,
             HttpPostedFileBase LampiranSurat2, HttpPostedFileBase LampiranSurat3,
             HttpPostedFileBase LampiranSurat4, HttpPostedFileBase LampiranSurat5, HttpPostedFileBase LampiranSurat6, HttpPostedFileBase LampiranSurat_LHA)
         {
@@ -400,7 +419,7 @@ namespace simhukdis.Controllers
                 sm.TanggalSurat = TanggalSurat;
                 sm.perihal = perihal;
                 sm.SATUAN_KERJA = KODE_SATUAN_KERJA;
-                sm.Kode_Unit_Kerja = Unit_Kerja;
+                sm.Kode_Unit_Kerja = Kode_Unit_Kerja;
                 if (LampiranSurat1 != null)
                 {
                     a = LampiranSurat1.FileName;
