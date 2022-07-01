@@ -44,11 +44,17 @@ namespace SIMHUKDIS.Models
         public string UserLogin { get; set; }
         public string Tanggal_Sidang { get; set; }
         public string JenisPelanggaran { get; set; }
+        public string Kode_JenisPelanggaran { get; set; }
     }
     public class clsJenisPelanggaran
     {
         public string Kode_Jenis_Pelanggaran { get; set; }
         public string JenisPelanggaran { get; set; }
+    }
+    public class clsPejabat
+    {
+        public string NamaLengkap { get; set; }
+        public string NIP { get; set; }
     }
     public class clsPraDPKDB
     {
@@ -110,7 +116,9 @@ namespace SIMHUKDIS.Models
                     data.RekomendasiHukdis = rd["Rekomendasi_Hukuman"].ToString();
                     data.Catatan = rd["Catatan"].ToString();
                     data.Tanggal_Sidang = rd["Tanggal_Sidang"].ToString();
-                    data.JenisPelanggaran = rd["Jenis_Pelanggaran "].ToString();
+                    data.JenisPelanggaran = rd["Jenis_Pelanggaran"].ToString();
+                    data.Kode_JenisPelanggaran = rd["Kode_JenisPelanggaran"].ToString();
+                    
                     clsPraDPKDB x = new clsPraDPKDB();
                     List<clsDataPegawaiDtl> y = new List<clsDataPegawaiDtl>();
                     y = x.GetPegawai(data.NIP);
@@ -128,6 +136,84 @@ namespace SIMHUKDIS.Models
                     DP.Add(data);
                 }
                 return DP;
+            }
+        }
+        public clsPraDPK ListByID(string id, string nip)
+        {
+            int a = 0;
+            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            clsPraDPK DP = new clsPraDPK();
+            using (MySqlConnection con = new MySqlConnection(constr))
+            {
+                string q = "sp_PraDPK_Sel_ByID";
+                MySqlCommand cmd = new MySqlCommand(q, con);
+                cmd.Parameters.AddWithValue("iid", id);
+                cmd.Parameters.AddWithValue("inip", nip);
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+                MySqlDataReader rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    a = a + 1;
+                    DP.No = a;
+                    DP.ID = rd["id"].ToString();
+                    DP.NoSurat = rd["nomor_surat"].ToString();
+                    DP.AsalSurat = rd["asal_surat"].ToString();
+                    DP.perihal = rd["perihal"].ToString();
+                    DP.NIP = rd["NIP"].ToString();
+                    DP.FullName = rd["Fullname"].ToString();
+                    DP.DasarBukti = rd["Dasar_dan_Bukti_Penunjang"].ToString();
+                    DP.PelanggaranDisiplin = rd["Pelanggaran"].ToString();
+                    DP.SATUAN_KERJA = rd["SatuanKerja"].ToString();
+                    DP.PasalPelanggaran = rd["Pasal_Pelanggaran"].ToString();
+                    DP.RekomendasiHukdis = rd["Rekomendasi_Hukuman"].ToString();
+                    DP.Catatan = rd["Catatan"].ToString();
+                    DP.Tanggal_Sidang = rd["Tanggal_Sidang"].ToString();
+                    DP.JenisPelanggaran = rd["Jenis_Pelanggaran"].ToString();
+                    DP.Kode_JenisPelanggaran = rd["Kode_JenisPelanggaran"].ToString();
+                }
+                return DP;
+            }
+        }
+        public string GetPejabatPenandatangan()
+        {
+            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            HasilSidangDtl data = new HasilSidangDtl();
+            using (MySqlConnection con = new MySqlConnection(constr))
+            {
+                string a = "";
+                string q = "sp_PejabatMst_Sel";
+                MySqlCommand cmd = new MySqlCommand(q, con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+                MySqlDataReader rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    a = rd["Karopeg"].ToString();                    
+                }
+                return a;
+            }
+        }
+        public clsPejabat GetKaropegSel(string ID)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            clsPejabat x = new clsPejabat();
+            HasilSidangDtl data = new HasilSidangDtl();
+            using (MySqlConnection con = new MySqlConnection(constr))
+            {
+                string a = "";
+                string q = "sp_GetKaropegSel";
+                MySqlCommand cmd = new MySqlCommand(q, con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("iid", ID);
+                con.Open();
+                MySqlDataReader rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    x.NamaLengkap = rd["fullname"].ToString();
+                    x.NIP = rd["nip"].ToString();
+                }
+                return x;
             }
         }
         public List<clsDataPegawaiDtl> GetPegawai(string NIP)
@@ -237,7 +323,7 @@ namespace SIMHUKDIS.Models
                     cmd.Parameters.AddWithValue("iCatatan", PD.Catatan);
                     cmd.Parameters.AddWithValue("iCreate_User", PD.UserLogin);
                     cmd.Parameters.AddWithValue("iTanggal_Sidang", TanggalSidang);
-                    
+                    cmd.Parameters.AddWithValue("iJenisPelanggaran", PD.JenisPelanggaran);
                     con.Open();
                     i = cmd.ExecuteNonQuery();
                 }
@@ -266,6 +352,7 @@ namespace SIMHUKDIS.Models
                     cmd.Parameters.AddWithValue("iCatatan", PD.Catatan);
                     cmd.Parameters.AddWithValue("iCreate_User", PD.UserLogin);
                     cmd.Parameters.AddWithValue("iTanggal_Sidang", TanggalSidang);
+                    cmd.Parameters.AddWithValue("iJenisPelanggaran", PD.JenisPelanggaran);
                     con.Open();
                     i = cmd.ExecuteNonQuery();
                 }
@@ -331,7 +418,7 @@ namespace SIMHUKDIS.Models
             using (MySqlConnection con = new MySqlConnection(constr))
             {
                 con.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_DPK_Already_Sel", con);
+                MySqlCommand cmd = new MySqlCommand("sp_PraDPK_Already_Sel", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iid", ID);
                 cmd.Parameters.AddWithValue("iNIP", NIP);

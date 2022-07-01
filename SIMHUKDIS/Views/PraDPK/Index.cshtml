@@ -80,7 +80,8 @@
 
                     <tr>
                         <td>
-                            <a href="#" onclick="Update('@item.ID','@item.NIP','@item.Catatan','@item.Tanggal_Sidang')">Ubah</a>
+                            @Html.ActionLink("Ubah", "Edit", new { ID = item.ID, NIP = item.NIP })
+                            @*<a href="#" onclick="Update('@item.ID','@item.NIP','@item.Catatan','@item.Tanggal_Sidang','@item.Kode_JenisPelanggaran')">Ubah</a>*@
                             <br />
                             <a href="#" onclick="SendData('@item.ID','@item.NIP')">Proses Sidang DPK</a>
 
@@ -100,9 +101,6 @@
                             @Html.DisplayFor(modelItem => item.AsalSurat)
                             <br />
                             @Html.DisplayFor(modelItem => item.DasarBukti)
-                            <br />
-                            @Html.DisplayFor(modelItem => item.perihal)
-                            <br />
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.PasalPelanggaran)
@@ -130,83 +128,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="ProsesPraDPK" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Catatan Pra DPK</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="Form">
-                    <fieldset id="SubmitForm">
-                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                        <table style="border:0px solid black; width:100%">
-                            <tr style="display:none;">
-                                <td>
-                                    <div class="form-group">
-                                        <div class="col">
-                                            <label for="ID">ID</label>
-                                            <input type="text" class="form-control" id="ID" name="ID" placeholder="ID" disabled="disabled" />
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr style="display:none;">
-                                <td>
-                                    <div class="form-group">
-                                        <div class="col">
-                                            <label for="ID">NIP</label>
-                                            <input type="text" class="form-control" id="NIP" name="NIP" placeholder="NIP" disabled="disabled" />
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="form-group">
-                                        <div class="col">
-                                            <label for="catatan">Tanggal Sidang</label>
-                                            <input type="text" class="form-control" id="Tanggal_Sidang" name="Tanggal_Sidang" />
-                                            @*@Html.TextBox("Tanggal_Sidang", "Tanggal_Sidang", new { @id = "Tanggal_Sidang", @class = "form-control input-md col-md-1", placeholder = "dd-mm-yyyy" })*@
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="form-group">
-                                        <div class="col">
-                                            <label>Jenis Pelanggaran *</label>
-                                            @Html.DropDownList("JenisPelanggaran", ViewBag.JenisPelanggaran as SelectList, new { @class = "form-control", required = "required", @id = "JenisPelanggaran"})
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="form-group">
-                                        <div class="col">
-                                            <label for="catatan">Catatan</label>
-                                            <textarea class="form-control" id="Catatan" rows="5" name="Catatan"></textarea>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        </table>
-                    </fieldset>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
-                <button class="btn btn-primary" onclick="Proses()">Proses</button>
-            </div>
-        </div>
-    </div>
-</div>
+
 <div class="modal fade" id="ProsesSidangDPK" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -252,11 +174,12 @@
             })
         });
     });
-    function Update(ID, NIP, Catatan, Tanggal_Sidang) {
+    function Update(ID, NIP, Catatan, Tanggal_Sidang, Kode_JenisPelanggaran) {
         $('#ID').val(ID);
         $('#NIP').val(NIP);
         $('#Catatan').val(Catatan);
         $('#Tanggal_Sidang').val(Tanggal_Sidang);
+        $('#JenisPelanggaran').val(Kode_JenisPelanggaran);
         $('#ProsesPraDPK').modal('show');
     }
     function SendData(ID, NIP) {

@@ -57,6 +57,34 @@ namespace SIMHUKDIS.Controllers
                 return RedirectToAction("Error500", "Home", new { Error_Message });
             }            
         }
+        public ActionResult Edit(string ID, string NIP)
+        {
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            try
+            {
+                clsPraDPKDB db = new clsPraDPKDB();
+                clsPraDPK sm = db.ListByID(ID, NIP);
+
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                string userlogin = Session["Fullname"].ToString();
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+                ViewBag.JenisPelanggaran = new SelectList(db.GetListJenisPelanggaran(), "Kode_Jenis_Pelanggaran", "JenisPelanggaran");
+                ViewBag.Catatan = sm.Catatan;
+                return View(sm);
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
+            }
+        }
         public ActionResult DownloadToExcel2()
         {
             try
@@ -149,6 +177,16 @@ namespace SIMHUKDIS.Controllers
                         rg3.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Top;
                         rg3.Style.Font.Size = 8;
 
+                        string Karopeg = db.GetPejabatPenandatangan();
+                        clsPejabat x = new clsPejabat();
+                        x = db.GetKaropegSel(Karopeg);
+
+                        ws.Cells[i+1, 6].Value = "Jakarta,";
+                        ws.Cells[i+2, 6].Value = "Kepala Biro Kepegawaian";
+                        ws.Cells[i+3, 6].Value = "Ketua Sidang,";
+                        ws.Cells[i+6, 6].Value = x.NamaLengkap;
+                        ws.Cells[i+7, 6].Value = x.NIP;
+
                         ws.Row(5).Height = 30;
                         ws.Column(1).Width = 5;
                         ws.Column(2).Width = 20;
@@ -226,7 +264,8 @@ namespace SIMHUKDIS.Controllers
                 return RedirectToAction("Error500", "Home", new { Error_Message });
             }
         }
-        public ActionResult Proses(string ID, string NIP, string Catatan, string Tanggal_Sidang, string JenisPelanggaran)
+        [HttpPost]
+        public ActionResult Proses(string ID, string NIP, string Catatan, string Tanggal_Sidang, string Kode_JenisPelanggaran)
         {
             string strMsg = "";
             try
@@ -238,7 +277,7 @@ namespace SIMHUKDIS.Controllers
                 PD.Catatan = Catatan;
                 PD.UserLogin = UserLogin;
                 PD.Tanggal_Sidang = Tanggal_Sidang;
-                PD.JenisPelanggaran = JenisPelanggaran;
+                PD.JenisPelanggaran = Kode_JenisPelanggaran;
                 if (db.GetDataExist(ID,NIP) == true)
                 {
                     db.Update(PD);
