@@ -190,7 +190,7 @@ namespace SIMHUKDIS.Controllers
 
                         string fileName = sFilename;
                         Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                        Response.AddHeader("content-disposition", "attachment; filename=" + fileName + ".pdf");
+                        Response.AddHeader("content-disposition", "attachment; filename=" + fileName + ".xlsx");
                         //Response.ContentType = "application/pdf";
                         //Response.AddHeader("content-disposition", "attachment; filename=" + fileName + ".pdf");
                         MemoryStream stream = new MemoryStream(exl.GetAsByteArray());

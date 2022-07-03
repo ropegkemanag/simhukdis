@@ -473,9 +473,15 @@ namespace SIMHUKDIS.Controllers
                 clsTelaahDB a = new clsTelaahDB();
                 a.Insert(telaah);
                 a.InsertTelaahNo(intTelaahNo,Bulan,Tahun);
-                ToViewFile(OutputPath+ strFileNameDoc);
-                strMsg = "Success";
-                return Json(strMsg, JsonRequestBehavior.AllowGet);
+                //ToViewFile(OutputPath+ strFileNameDoc);
+                //strMsg = "Success";
+
+                clsDocument b = new clsDocument();
+                b.DocPDF = strFileNamePDF;
+                b.DocWord = strFileNameDoc;
+                b.Msg = "Success";
+
+                return Json(b, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
@@ -513,6 +519,7 @@ namespace SIMHUKDIS.Controllers
                 ViewBag.SatuanKerja = SatuanKerja;
                 ViewBag.UserGroup = UserGroup;
                 ViewBag.UserID = userlogin;
+                ViewBag.NIP = NIP;
                 string UserLogin = Session["Fullname"].ToString();
 
                 clsTelaah telaah = new clsTelaah();
@@ -550,9 +557,14 @@ namespace SIMHUKDIS.Controllers
                 doc.SaveToFile(OutputPath + strFileNamePDF, FileFormat.PDF);
                 //ToViewFile(OutputPath + strFileNameDoc);
                 //ToViewFile(OutputPath + strFileNamePDF);
-                ViewBag.strFileNameDoc = strFileNameDoc;
-                strMsg = strFileNamePDF;
-                return Json(strMsg, JsonRequestBehavior.AllowGet);
+                //ViewBag.strFileNameDoc = strFileNameDoc;
+                //strMsg = strFileNamePDF;
+                clsDocument a = new clsDocument();
+                a.DocPDF = strFileNamePDF;
+                a.DocWord = strFileNameDoc;
+                a.Msg = "Success";
+
+                return Json(a, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {

@@ -41,7 +41,7 @@
             <div class="form-group row">
                 <div class="col-sm-6 mb-3 mb-sm-0">
                     <label class="control-label ">Lampiran Surat Pengantar</label>
-                    <label class="form-control form-control-user">
+                    <label class="form-control form-control-user" style="height:65px;">
                         @if (Model.LampiranSurat1 == "")
                         {
                         }
@@ -54,7 +54,7 @@
                 </div>
                 <div class="col-sm-6">
                     <label>Lampiran BAP</label>
-                    <label class="form-control form-control-user">
+                    <label class="form-control form-control-user" style="height:65px;">
                         @if (Model.LampiranSurat2 == "")
                         {
                         }
@@ -68,7 +68,7 @@
             <div class="form-group row">
                 <div class="col-sm-6 mb-3 mb-sm-0">
                     <label class="control-label ">Lampiran Surat Tugas Pemeriksaan</label>
-                    <label class="form-control form-control-user">
+                    <label class="form-control form-control-user" style="height:65px;">
                         @if (Model.LampiranSurat3 == "")
                         {
                         }
@@ -81,7 +81,7 @@
                 </div>
                 <div class="col-sm-6">
                     <label>Lampiran Surat Panggilan</label>
-                    <label class="form-control form-control-user">
+                    <label class="form-control form-control-user" style="height:65px;">
                         @if (Model.LampiranSurat4 == "")
                         {
                         }
@@ -95,7 +95,7 @@
             <div class="form-group row">
                 <div class="col-sm-6 mb-3 mb-sm-0">
                     <label class="control-label ">Lampiran Surat Dokumen Lainnya</label>
-                    <label class="form-control form-control-user">
+                    <label class="form-control form-control-user" style="height:65px;">
                         @if (Model.LampiranSurat5 == "")
                         {
                         }
@@ -108,7 +108,7 @@
                 </div>
                 <div class="col-sm-6">
                     <label>Lampiran Putusan Pengadilan</label>
-                    <label class="form-control form-control-user">
+                    <label class="form-control form-control-user" style="height:65px;">
                         @if (Model.LampiranSurat6 == "")
                         {
                         }
@@ -122,7 +122,7 @@
             <div class="form-group row">
                 <div class="col-sm-6 mb-3 mb-sm-0">
                     <label class="control-label ">Lampiran LHA</label>
-                    <label class="form-control form-control-user">
+                    <label class="form-control form-control-user" style="height:65px;">
                         @if (Model.LampiranSurat_LHA == "")
                         {
                         }
@@ -409,8 +409,9 @@
                     //    showConfirmButton: false,
                     //    timer: 30000
                     //})
+                    
                     GenerateWord();
-                    window.location.href = '@Url.Action("Details2", "Telaah")?ID=' + InputID;
+                   
                 }
                 else {
                     Swal.fire({
@@ -518,11 +519,14 @@
             }
         });
     }
-    function DownloadPDF(fileName) {
-        window.location = '@Url.Action("DownloadFile", "Telaah")?fileName=' + fileName;
+    function DownloadPDF(fileName1, fileName2) {
+        window.location = '@Url.Action("DownloadFile", "Telaah")?fileName=' + fileName1;
+        window.location = '@Url.Action("DownloadFile", "Telaah")?fileName=' + fileName2;
+
     }
     function GenerateWord()
     {
+       
         var dpObj = {
             ID: $('#ID').val(),
             NIP: $('#NIP').val(),
@@ -543,7 +547,6 @@
             KeputusanSidangDPK: $('#KeputusanSidangDPK').val(),
             Tanggal_Telaah: $('#Tanggal_Telaah').val(),
             Telaah_No: $('#TelaahNo').val()
-
         };
         $.ajax({
             url: "/Telaah/GenerateWord2",
@@ -552,22 +555,25 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (result) {
-                DownloadPDF(result);
-                if (result.toString() == "Success") {
-                    //Swal.fire({
-                    //    icon: 'success',
-                    //    title: 'Telaah berhasil !',
-                    //    showConfirmButton: false,
-                    //    timer: 3000
-                    //})
+                
+                DownloadPDF(result.DocPDF, result.DocWord);
+                //DownloadPDF(result.DocWord);
+                if (result.Msg.toString() == "Success") {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Telaah berhasil !',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
                 }
+                
                 else {
-                    //Swal.fire({
-                    //    icon: 'error',
-                    //    title: result.toString(),
-                    //    showConfirmButton: false,
-                    //    timer: 3000
-                    //})
+                    Swal.fire({
+                        icon: 'error',
+                        title: result.toString(),
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
                 }
             },
             error: function (errormessage) {

@@ -195,7 +195,7 @@ namespace SIMHUKDIS.Controllers
                         ws.Column(5).Width = 35;
                         ws.Column(6).Width = 20;
                         ws.Column(7).Width = 10;
-
+                        exl.Workbook.
                         string fileName = sFilename;
                         Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                         Response.AddHeader("content-disposition", "attachment; filename=" + fileName + ".xlsx");
@@ -287,7 +287,7 @@ namespace SIMHUKDIS.Controllers
                     db.Insert(PD);
                 }
                 strMsg = "Success";
-                return Json(strMsg, JsonRequestBehavior.AllowGet);
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {

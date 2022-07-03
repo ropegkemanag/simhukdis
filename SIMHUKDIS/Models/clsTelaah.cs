@@ -14,20 +14,20 @@ namespace SIMHUKDIS.Models
     public class clsTelaah
     {
         public Int32 ID { get; set; }
-        public string NIP{ get; set; }
-        public string NAMA_LENGKAP{ get; set; }
-        public string GOL_RUANG{ get; set; }
-        public string LEVEL_JABATAN{ get; set; }
-        public string SATUAN_KERJA{ get; set; }
-        public string TEMPAT_LAHIR{ get; set; }
-        public string TANGGAL_LAHIR{ get; set; }
-        public string MASAKERJA_TAHUN{ get; set; }
-        public string TMT_Pensiun{ get; set; }
-        public string DasarBukti{ get; set; }
-        public string PelanggaranDisiplin{ get; set; }
-        public string PasalPelanggaran{ get; set; }
-        public string RekomendasiHukdis{ get; set; }
-        public string AnalisaPertimbangan{ get; set; }
+        public string NIP { get; set; }
+        public string NAMA_LENGKAP { get; set; }
+        public string GOL_RUANG { get; set; }
+        public string LEVEL_JABATAN { get; set; }
+        public string SATUAN_KERJA { get; set; }
+        public string TEMPAT_LAHIR { get; set; }
+        public string TANGGAL_LAHIR { get; set; }
+        public string MASAKERJA_TAHUN { get; set; }
+        public string TMT_Pensiun { get; set; }
+        public string DasarBukti { get; set; }
+        public string PelanggaranDisiplin { get; set; }
+        public string PasalPelanggaran { get; set; }
+        public string RekomendasiHukdis { get; set; }
+        public string AnalisaPertimbangan { get; set; }
         public string KeputusanSidangDPK { get; set; }
         public string FileTelaah { get; set; }
         public string CreatedUser { get; set; }
@@ -115,7 +115,12 @@ namespace SIMHUKDIS.Models
         public string DisposisiDate3 { get; set; }
         public int Status { get; set; }
     }
-
+    public class clsDocument
+    {
+        public string DocWord { get; set; }
+        public string DocPDF { get; set; }
+        public string Msg { get; set; }
+    }
     public class clsTelaahDB
     {
         public List<clsSuratMasuk> TelaahList(string UserID)
