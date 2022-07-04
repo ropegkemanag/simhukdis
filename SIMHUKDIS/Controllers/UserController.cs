@@ -106,7 +106,7 @@ namespace simhukdis.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Create(string UserName, string Fullname, string Password, string StatusAdmin, string GroupID, string NIP, string satker)
+        public ActionResult Create(string UserName, string Fullname, string Password, string StatusAdmin, string GroupID, string NIP, string satker, string LEVEL_JABATAN)
         {
             string strMsg = "";
             try
@@ -120,6 +120,7 @@ namespace simhukdis.Controllers
                 users.NIP = NIP;
                 users.StatusAdmin = StatusAdmin;
                 users.Satker = satker;
+                users.LEVEL_JABATAN = LEVEL_JABATAN;
                 if (db.GetDataExist(NIP) == true)
                 {
                     strMsg = "NIP sudah ada !";
@@ -139,13 +140,32 @@ namespace simhukdis.Controllers
             }
         }
         [HttpGet]
-        public ActionResult Edit(string UserID, string StatusAdmin, string GroupID)
+        public ActionResult Edit(string UserID, string StatusAdmin, string GroupID, string Satker)
         {
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
             try
             {
+                
+                string UserNIP = Session["LogUserID"].ToString();
+                string userlogin = Session["Fullname"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                string UserIDx = Session["UserID"].ToString();
+
+                ViewBag.UserIDx = UserIDx;
+                ViewBag.UserNIP = UserNIP;
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+
                 clsUserLogin users = db.Users.SingleOrDefault(sub => sub.UserID == UserID);
-                users.StatusAdmin = StatusAdmin;
                 ViewBag.GroupID = new SelectList(db.GetListUserGroup(), "GroupID", "GroupDesc", GroupID);
+                users.StatusAdmin = StatusAdmin;
+                ViewBag.Satker = new SelectList(db.GetListSatker(), "KODE_SATUAN_KERJA", "SATUAN_KERJA", Satker);
+
                 return View(users);
             }
             catch (Exception ex)
@@ -156,7 +176,7 @@ namespace simhukdis.Controllers
         }
 
         [HttpPost]
-        public ActionResult Ubah(string UserID, string UserName, string Fullname, string Password, string StatusAdmin, string GroupID, string NIP)
+        public ActionResult Ubah(string UserID, string UserName, string Fullname, string Password, string StatusAdmin, string GroupID, string NIP, string LEVEL_JABATAN)
         {
             string strMsg = "";
             string UserLogin = "";
@@ -172,6 +192,7 @@ namespace simhukdis.Controllers
                 users.StatusAdmin = StatusAdmin;
                 users.GroupID = GroupID;
                 users.LastUser = UserLogin;
+                users.LEVEL_JABATAN = LEVEL_JABATAN;
                 db.Edit(users);
                 strMsg = "Success";
                 return Json(strMsg, JsonRequestBehavior.AllowGet);

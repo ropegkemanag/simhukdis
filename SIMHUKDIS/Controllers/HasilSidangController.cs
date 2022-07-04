@@ -70,7 +70,10 @@ namespace SIMHUKDIS.Controllers
                 {
                     hasil.Mengingat = db.GetPasalPelanggaran();
                 }
-                
+                if (hasil.Tembusan == null || hasil.Tembusan == "")
+                {
+                    hasil.Tembusan = db.GetTembusan(hasil.KODE_SATUAN_KERJA, hasil.UnitKerja);
+                }
                 ViewBag.ID = ID;
                 ViewBag.NIP = NIP;
                 string statusAdmin = Session["StatusAdmin"] + "";
@@ -85,7 +88,7 @@ namespace SIMHUKDIS.Controllers
             }
         }
         public ActionResult UbahData(string ID, string NIP, string KeputusanSidang, string Tanggal_Sidang, string Catatan_Sidang,
-            string DasarBukti, string Pelanggaran, string PasalPelanggaran, string Mengingat)
+            string DasarBukti, string Pelanggaran, string PasalPelanggaran, string Mengingat, string Tembusan)
         {
             string strMsg = "";
             try
@@ -116,6 +119,7 @@ namespace SIMHUKDIS.Controllers
                 PD.PelanggaranDisiplin = Pelanggaran;
                 PD.PasalPelanggaran = PasalPelanggaran;
                 PD.Mengingat = Mengingat;
+                PD.Tembusan = Tembusan;
                 if (db.GetDataExist(ID, NIP) == true)
                 {
                     db.Update(PD);
@@ -178,15 +182,41 @@ namespace SIMHUKDIS.Controllers
                 //Convert to PDF
                 doc.SaveToFile(OutputPath + strFileNamePDF, FileFormat.PDF);
                 //Insert Table
-                ToViewFile(OutputPath + strFileNameDoc);
-                strMsg = "Success";
-                return Json(strMsg, JsonRequestBehavior.AllowGet);
+                //ToViewFile(OutputPath + strFileNameDoc);
+                //strMsg = "Success";
+                //return Json(strMsg, JsonRequestBehavior.AllowGet);
+                clsDocument b = new clsDocument();
+                b.DocPDF = strFileNamePDF;
+                b.DocWord = strFileNameDoc;
+                b.Msg = "Success";
+
+                return Json(b, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
             {
                 strMsg = ex.Message.ToString();
                 return Json(strMsg, JsonRequestBehavior.AllowGet);
             }
+        }
+        public FileResult DownloadFile(string fileName)
+        {
+            try
+            {
+                //Build the File Path.
+                string path = Server.MapPath("~/Files/Result/SK/") + fileName;
+
+                //Read the File data into Byte Array.
+                byte[] bytes = System.IO.File.ReadAllBytes(path);
+
+                //Send the File to Download.
+                return File(bytes, "application/octet-stream", fileName);
+            }
+            catch (Exception ex)
+            {
+                string strMsg = ex.Message.ToString();
+                return null;
+            }
+
         }
         private void ToViewFile(string fileName)
         {
@@ -217,6 +247,8 @@ namespace SIMHUKDIS.Controllers
             replaceDict.Add("*Koordinator*", a.koor);
             replaceDict.Add("*Nama_Menteri*", a.menag);
             replaceDict.Add("*Mengingat*", a.Mengingat);
+            replaceDict.Add("*Tembusan*", a.Tembusan);
+            replaceDict.Add("*Jabatan_Konseptor*", a.Jabatan_Konseptor);
             return replaceDict;
         }
         public JsonResult GetPasalPelanggaran(string NIP)

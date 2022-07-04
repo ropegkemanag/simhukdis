@@ -33,19 +33,22 @@
                             Aksi
                         </th>
                         @*<th>
-                            @Html.DisplayNameFor(model => model.UserID)
-                        </th>*@
+            @Html.DisplayNameFor(model => model.UserID)
+        </th>*@
                         <th>
                             @Html.DisplayNameFor(model => model.NIP)
                         </th>
                         @*<th>
-                            @Html.DisplayNameFor(model => model.UserName)
-                        </th>*@
+            @Html.DisplayNameFor(model => model.UserName)
+        </th>*@
                         <th>
                             Nama Lengkap
                         </th>
                         <th>
                             Unit Kerja
+                        </th>
+                        <th>
+                            Jabatan
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.StatusAdmin)
@@ -66,40 +69,43 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr class="table-bordered table-hover my-3">
-                            <td>
+                    <tr class="table-bordered table-hover my-3">
+                        <td>
 
-                                @Html.ActionLink("Edit", "Edit", new { UserID = item.UserID, StatusAdmin = item.StatusAdmin, GroupID = item.GroupID, Satker = item.Satker }) |
-                                <a href="#" onclick="Hapus('@item.UserID','@item.NIP')">Hapus</a>
-                            </td>
-                            @*<td>
-                                @Html.DisplayFor(modelItem => item.UserID)
-                            </td>*@
-                            <td>
-                                @Html.DisplayFor(modelItem => item.NIP)
-                            </td>
-                            @*<td>
-                                @Html.DisplayFor(modelItem => item.UserName)
-                            </td>*@
-                            <td>
-                                @Html.DisplayFor(modelItem => item.FullName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Satuan_Kerja)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.StatusAdmin)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.LastLogin)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.GroupDesc)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.LastUser)
-                            </td>
-                        </tr>
+                            @Html.ActionLink("Edit", "Edit", new { UserID = item.UserID, StatusAdmin = item.StatusAdmin, GroupID = item.GroupID, Satker = item.Satker }) |
+                            <a href="#" onclick="Hapus('@item.UserID','@item.NIP')">Hapus</a>
+                        </td>
+                        @*<td>
+            @Html.DisplayFor(modelItem => item.UserID)
+        </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NIP)
+                        </td>
+                        @*<td>
+            @Html.DisplayFor(modelItem => item.UserName)
+        </td>*@
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Satuan_Kerja)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LEVEL_JABATAN)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.StatusAdmin)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastLogin)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GroupDesc)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.LastUser)
+                        </td>
+                    </tr>
                     }
                 </tbody>
             </table>

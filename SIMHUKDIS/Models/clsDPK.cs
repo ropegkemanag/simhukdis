@@ -51,6 +51,8 @@ namespace SIMHUKDIS.Models
         public string nip_subkoor { get; set; }
         public string konseptor { get; set; }
         public string nip_konseptor { get; set; }
+        public string Mengingat { get; set; }
+        public string Tembusan { get; set; }
     }
     public class clsDPKDB
     {
@@ -64,6 +66,61 @@ namespace SIMHUKDIS.Models
                 string q ="sp_DPK_Sel";
                 MySqlCommand cmd = new MySqlCommand(q, con);
                 cmd.CommandType = CommandType.StoredProcedure;
+                con.Open();
+                MySqlDataReader rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    clsDPK data = new clsDPK();
+                    a = a + 1;
+                    data.No = a;
+                    data.ID = rd["id"].ToString();
+                    data.NoSurat = rd["nomor_surat"].ToString();
+                    data.AsalSurat = rd["asal_surat"].ToString();
+                    data.perihal = rd["perihal"].ToString();
+                    data.NIP = rd["NIP"].ToString();
+                    data.FullName = rd["Fullname"].ToString();
+                    data.DasarBukti = rd["Dasar_dan_Bukti_Penunjang"].ToString();
+                    data.PelanggaranDisiplin = rd["Pelanggaran"].ToString();
+                    data.SATUAN_KERJA = rd["SatuanKerja"].ToString();
+                    data.PasalPelanggaran = rd["Pasal_Pelanggaran"].ToString();
+                    data.RekomendasiHukdis = rd["Rekomendasi_Hukuman"].ToString();
+                    data.Catatan = rd["Catatan"].ToString();
+                    data.Tanggal_Sidang_DPK = rd["tanggal_sidang_dpk"].ToString();
+                    data.Tanggal_Sidang_Pra_DPK = rd["tanggal_sidang_pra_dpk"].ToString();
+                    data.KeputusanSidang = rd["KeputusanSidang"].ToString();
+                    data.hukuman = rd["hukuman"].ToString();
+                    data.Catatan_Sidang = rd["Catatan_Sidang"].ToString();
+
+                    clsPraDPKDB x = new clsPraDPKDB();
+                    List<clsDataPegawaiDtl> y = new List<clsDataPegawaiDtl>();
+                    y = x.GetPegawai(data.NIP);
+                    int z = 1;
+                    foreach (var item in y)
+                    {
+                        if (z == 1)
+                        {
+                            data.GOL_RUANG = item.GOL_RUANG;
+                            data.LEVEL_JABATAN = item.LEVEL_JABATAN;
+                            data.UnitKerja = item.SATUAN_KERJA;
+                        }
+                        z = z + 1;
+                    }
+                    DP.Add(data);
+                }
+                return DP;
+            }
+        }
+        public List<clsDPK> ListFilter(string TanggalSidang)
+        {
+            int a = 0;
+            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            List<clsDPK> DP = new List<clsDPK>();
+            using (MySqlConnection con = new MySqlConnection(constr))
+            {
+                string q = "sp_DPK_Sel";
+                MySqlCommand cmd = new MySqlCommand(q, con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("iTanggalSidang", TanggalSidang);
                 con.Open();
                 MySqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
@@ -198,6 +255,11 @@ namespace SIMHUKDIS.Models
                     cmd.Parameters.AddWithValue("iCreate_User", PD.UserLogin);
                     cmd.Parameters.AddWithValue("iTanggal_Sidang", TanggalSidang);
                     cmd.Parameters.AddWithValue("iKeputusanSidang", PD.KeputusanSidang);
+                    cmd.Parameters.AddWithValue("iDasar_Bukti", "");
+                    cmd.Parameters.AddWithValue("iPelanggaran", "");
+                    cmd.Parameters.AddWithValue("iPasal_Pelanggaran", "");
+                    cmd.Parameters.AddWithValue("iMengingat", "");
+                    cmd.Parameters.AddWithValue("iTembusan", "");
 
                     con.Open();
                     i = cmd.ExecuteNonQuery();
@@ -228,7 +290,11 @@ namespace SIMHUKDIS.Models
                     cmd.Parameters.AddWithValue("iCreate_User", PD.UserLogin);
                     cmd.Parameters.AddWithValue("iTanggal_Sidang", TanggalSidang);
                     cmd.Parameters.AddWithValue("iKeputusanSidang", PD.KeputusanSidang);
-                    cmd.Parameters.AddWithValue("iMengingat", "");
+                    cmd.Parameters.AddWithValue("iDasar_Bukti", PD.DasarBukti);
+                    cmd.Parameters.AddWithValue("iPelanggaran", PD.PelanggaranDisiplin);
+                    cmd.Parameters.AddWithValue("iPasal_Pelanggaran", PD.PasalPelanggaran);
+                    cmd.Parameters.AddWithValue("iMengingat", PD.Mengingat);
+                    cmd.Parameters.AddWithValue("iTembusan", PD.Tembusan);
                     con.Open();
                     i = cmd.ExecuteNonQuery();
                 }

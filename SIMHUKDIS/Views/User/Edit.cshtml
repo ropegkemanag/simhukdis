@@ -31,6 +31,13 @@
         </div>
     </div>
     <div class="form-group">
+        <label style="font-weight: bold;color:red;" class="control-label col">Jabatan *</label>
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.LEVEL_JABATAN, new { htmlAttributes = new { @class = "form-control", @id = "LEVEL_JABATAN", required = "required", @readonly = "True" } })
+            @Html.ValidationMessage("LEVEL_JABATAN", "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
         <label style="font-weight: bold;color:cornflowerblue;" class="control-label col">Satuan Kerja *</label>
         <div class="col-md-10">
             @Html.DropDownList("KODE_SATUAN_KERJA", ViewBag.Satker as SelectList, new { @class = "fstdropdown-select  form-control", required = "required", @id = "KODE_SATUAN_KERJA" })
@@ -93,7 +100,8 @@
             StatusAdmin: $('#StatusAdmin').val(),
             GroupID: $('#GroupID').val(),
             NIP: $('#NIP').val(),
-            satker: $('#KODE_SATUAN_KERJA').val()
+            satker: $('#KODE_SATUAN_KERJA').val(),
+            LEVEL_JABATAN: $('#LEVEL_JABATAN').val()
         };
         $.ajax({
             url: "/User/Ubah",

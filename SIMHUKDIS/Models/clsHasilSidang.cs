@@ -60,6 +60,13 @@ namespace SIMHUKDIS.Models
         public string SATKER_3 { get; set; }
         public string SATKER_4 { get; set; }
         public string SATKER_5 { get; set; }
+        public string Unit_Kerja { get; set; }
+        public string Kode_Unit_Kerja { get; set; }
+        public string TEMPAT_LAHIR { get; set; }
+        public string TANGGAL_LAHIR { get; set; }
+        public string MASAKERJA_TAHUN { get; set; }
+        public string TMT_PENSIUN { get; set; }
+        public string Jabatan_Konseptor { get; set; }
     }
     public class HasilSidangDtl
     {
@@ -165,6 +172,13 @@ namespace SIMHUKDIS.Models
         public string SATKER_3 { get; set; }
         public string SATKER_4 { get; set; }
         public string SATKER_5 { get; set; }
+        public string Unit_Kerja { get; set; }
+        public string Kode_Unit_Kerja { get; set; }
+        public string TEMPAT_LAHIR { get; set; }
+        public string TANGGAL_LAHIR { get; set; }
+        public string MASAKERJA_TAHUN { get; set; }
+        public string TMT_PENSIUN { get; set; }
+        public string Jabatan_Konseptor { get; set; }
     }
     public class clsHasilSidangDB
     {
@@ -204,7 +218,10 @@ namespace SIMHUKDIS.Models
                     data.hukuman = rd["hukuman"].ToString();
                     data.Catatan_Sidang = rd["Catatan_Sidang"].ToString();
                     data.Tembusan = rd["Tembusan"].ToString();
-
+                    data.Catatan_Sidang = rd["Catatan_Sidang"].ToString();
+                    data.Tembusan = rd["Tembusan"].ToString();
+                    data.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
+                    data.Unit_Kerja = rd["Unit_Kerja"].ToString();
                     clsPraDPKDB x = new clsPraDPKDB();
                     List<clsDataPegawaiDtl> y = new List<clsDataPegawaiDtl>();
                     y = x.GetPegawai(data.NIP);
@@ -216,6 +233,10 @@ namespace SIMHUKDIS.Models
                             data.GOL_RUANG = item.GOL_RUANG;
                             data.LEVEL_JABATAN = item.LEVEL_JABATAN;
                             data.UnitKerja = item.SATUAN_KERJA;
+                            data.TEMPAT_LAHIR = item.TEMPAT_LAHIR;
+                            data.TANGGAL_LAHIR = item.TANGGAL_LAHIR;
+                            data.MASAKERJA_TAHUN = item.MASAKERJA_TAHUN;
+                            data.TMT_PENSIUN = item.TMT_PENSIUN;
                             data.SATKER_1  = item.SATKER_1;
                             data.SATKER_2  = item.SATKER_2;
                             data.SATKER_3  = item.SATKER_3;
@@ -324,12 +345,17 @@ namespace SIMHUKDIS.Models
                     data.Tanggal_Telaah = rd["Tanggal_Telaah"].ToString();
                     data.KeputusanSidang = rd["KeputusanSidang"].ToString();
                     data.Catatan_Sidang = rd["Catatan_Sidang"].ToString();
-                    data.DasarBukti = rd["Dasar_dan_Bukti_Penunjang"].ToString();
+                    string DasarBukti = rd["Dasar_dan_Bukti_Penunjang"].ToString();
+                    DasarBukti = DasarBukti.Replace("\n"," ");
+                    data.DasarBukti = DasarBukti;
                     data.PelanggaranDisiplin = rd["Pelanggaran"].ToString();
                     data.PasalPelanggaran = rd["Pasal_Pelanggaran"].ToString();
                     data.RekomendasiHukdis = rd["Rekomendasi_Hukuman"].ToString();
                     data.AnalisaPertimbangan = rd["Analisa_dan_Pertimbangan"].ToString();
                     data.Mengingat = rd["Mengingat"].ToString();
+                    data.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
+                    data.Unit_Kerja = rd["Unit_Kerja"].ToString();
+                    data.Jabatan_Konseptor = rd["Jabatan_Konseptor"].ToString();
                     clsPraDPKDB x = new clsPraDPKDB();
                     List<clsDataPegawaiDtl> y = new List<clsDataPegawaiDtl>();
                     y = x.GetPegawai(data.NIP);
@@ -338,20 +364,26 @@ namespace SIMHUKDIS.Models
                     {
                         if (z == 1)
                         {
+                            data.FullName = item.NAMA_LENGKAP;
                             data.GOL_RUANG = item.PANGKAT + ", " + item.GOL_RUANG;
                             data.LEVEL_JABATAN = item.LEVEL_JABATAN;
                             data.UnitKerja = item.SATUAN_KERJA;
+                            data.TEMPAT_LAHIR = item.TEMPAT_LAHIR;
+                            data.TANGGAL_LAHIR = item.TANGGAL_LAHIR;
+                            data.MASAKERJA_TAHUN = item.MASAKERJA_TAHUN;
+                            data.TMT_PENSIUN = item.TMT_PENSIUN;
                             data.SATKER_1 = item.SATKER_1;
                             data.SATKER_2 = item.SATKER_2;
                             data.SATKER_3 = item.SATKER_3;
                             data.SATKER_4 = item.SATKER_4;
                             data.SATKER_5 = item.SATKER_5;
+
                             k = item.SATKER_3;
                         }
                         z = z + 1;
                     }
                     clsHasilSidangDB p = new clsHasilSidangDB();
-                    data.Tembusan = p.GetTembusan(data.KODE_SATUAN_KERJA, k);
+                    data.Tembusan = p.GetTembusan(data.KODE_SATUAN_KERJA, data.Kode_Unit_Kerja);
                 }
                 return data;
             }
@@ -404,7 +436,10 @@ namespace SIMHUKDIS.Models
                         DP.konseptor = rd["konseptor"].ToString();
                         DP.nip_konseptor = rd["nip_konseptor"].ToString();
                         DP.Mengingat = rd["Mengingat"].ToString();
-                        //DP.Tembusan = rd["Tembusan"].ToString();
+                        DP.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
+                        DP.Unit_Kerja = rd["Unit_Kerja"].ToString();
+                        DP.Tembusan = rd["Tembusan"].ToString();
+                        DP.Jabatan_Konseptor = rd["Jabatan_Konseptor"].ToString();
                         clsPraDPKDB x = new clsPraDPKDB();
                         List<clsDataPegawaiDtl> y = new List<clsDataPegawaiDtl>();
                         y = x.GetPegawai(DP.NIP);
@@ -413,20 +448,24 @@ namespace SIMHUKDIS.Models
                         {
                             if (z == 1)
                             {
+                                DP.FullName = item.NAMA_LENGKAP;
                                 DP.GOL_RUANG = item.PANGKAT + ", " + item.GOL_RUANG;
                                 DP.LEVEL_JABATAN = item.LEVEL_JABATAN;
                                 DP.UnitKerja = item.SATUAN_KERJA;
-                               DP.SATKER_1 = item.SATKER_1;
-                               DP.SATKER_2 = item.SATKER_2;
-                               DP.SATKER_3 = item.SATKER_3;
-                               DP.SATKER_4 = item.SATKER_4;
+                                DP.TEMPAT_LAHIR = item.TEMPAT_LAHIR;
+                                DP.TANGGAL_LAHIR = item.TANGGAL_LAHIR;
+                                DP.MASAKERJA_TAHUN = item.MASAKERJA_TAHUN;
+                                DP.TMT_PENSIUN = item.TMT_PENSIUN;
+                                DP.SATKER_1 = item.SATKER_1;
+                                DP.SATKER_2 = item.SATKER_2;
+                                DP.SATKER_3 = item.SATKER_3;
+                                DP.SATKER_4 = item.SATKER_4;
                                 DP.SATKER_5 = item.SATKER_5;
-                                k = item.SATKER_3;
                             }
                             z = z + 1;
                         }
-                        clsHasilSidangDB p = new clsHasilSidangDB();
-                        DP.Tembusan = p.GetTembusan(DP.SATUAN_KERJA, k);
+                        //clsHasilSidangDB p = new clsHasilSidangDB();
+                        //DP.Tembusan = p.GetTembusan(DP.SATUAN_KERJA, k);
                     }
                 }
                 return DP;
@@ -439,19 +478,29 @@ namespace SIMHUKDIS.Models
             using (MySqlConnection con = new MySqlConnection(constr))
             {
                 Int32 pNom = 1;
-                string a = "";
+                string a,b,c,d,e,f,g,h,i,j = "";
                 string Tembusan = "";
                 string q = "sp_Tembusan_sel";
                 MySqlCommand cmd = new MySqlCommand(q, con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iKODE_SATUAN_KERJA", KodeSatker);
-                cmd.Parameters.AddWithValue("iSATUAN_KERJA", Satker3);
+                cmd.Parameters.AddWithValue("iKode_Unit_Kerja", Satker3);
                 con.Open();
                 MySqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
-                    a = rd["Tembusan"].ToString();
-                    if (a == null || a == "")
+                    a = rd["Tembusan_1"].ToString();
+                    b = rd["Tembusan_2"].ToString();
+                    c = rd["Tembusan_3"].ToString();
+                    d = rd["Tembusan_4"].ToString();
+                    e = rd["Tembusan_5"].ToString();
+                    f = rd["Tembusan_6"].ToString();
+                    g = rd["Tembusan_7"].ToString();
+                    h = rd["Tembusan_8"].ToString();
+                    i = rd["Tembusan_9"].ToString();
+                    j = rd["Tembusan_10"].ToString();
+
+                    if (a != null || a != "")
                     {
                         if (Tembusan == "")
                         {
@@ -459,18 +508,106 @@ namespace SIMHUKDIS.Models
                         }
                         else
                         {
-                            Tembusan = Tembusan + " \n " + a;
+                            Tembusan = Tembusan + "\n" + a;
                         }
                     }
-                    else
+                    if (b != null || b != "")
                     {
                         if (Tembusan == "")
                         {
-                            Tembusan = a;
+                            Tembusan = b;
                         }
                         else
                         {
-                            Tembusan = Tembusan + " \n " + a;
+                            Tembusan = Tembusan + "\n" + b;
+                        }
+                    }
+                    if (c != null || c != "")
+                    {
+                        if (Tembusan == "")
+                        {
+                            Tembusan = c;
+                        }
+                        else
+                        {
+                            Tembusan = Tembusan + "\n" + c;
+                        }
+                    }
+                    if (d != null || d != "")
+                    {
+                        if (Tembusan == "")
+                        {
+                            Tembusan = d;
+                        }
+                        else
+                        {
+                            Tembusan = Tembusan + "\n" + d;
+                        }
+                    }
+                    if (e != null || e != "")
+                    {
+                        if (Tembusan == "")
+                        {
+                            Tembusan = e;
+                        }
+                        else
+                        {
+                            Tembusan = Tembusan + "\n" + e;
+                        }
+                    }
+                    if (f != null || f != "")
+                    {
+                        if (Tembusan == "")
+                        {
+                            Tembusan = f;
+                        }
+                        else
+                        {
+                            Tembusan = Tembusan + "\n" + f;
+                        }
+                    }
+                    if (g != null || g != "")
+                    {
+                        if (Tembusan == "")
+                        {
+                            Tembusan = g;
+                        }
+                        else
+                        {
+                            Tembusan = Tembusan + "\n" + g;
+                        }
+                    }
+                    if (h != null || h != "")
+                    {
+                        if (Tembusan == "")
+                        {
+                            Tembusan = h;
+                        }
+                        else
+                        {
+                            Tembusan = Tembusan + "\n" + h;
+                        }
+                    }
+                    if (i != null || i != "")
+                    {
+                        if (Tembusan == "")
+                        {
+                            Tembusan = i;
+                        }
+                        else
+                        {
+                            Tembusan = Tembusan + "\n" + i;
+                        }
+                    }
+                    if (j != null || j != "")
+                    {
+                        if (Tembusan == "")
+                        {
+                            Tembusan = j;
+                        }
+                        else
+                        {
+                            Tembusan = Tembusan + "\n" + j;
                         }
                     }
                 }

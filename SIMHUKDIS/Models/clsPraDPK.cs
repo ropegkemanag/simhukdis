@@ -138,6 +138,59 @@ namespace SIMHUKDIS.Models
                 return DP;
             }
         }
+        public List<clsPraDPK> ListFilter(string TanggalSidang)
+        {
+            int a = 0;
+            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            List<clsPraDPK> DP = new List<clsPraDPK>();
+            using (MySqlConnection con = new MySqlConnection(constr))
+            {
+                string q = "sp_PraDPK_Sel";
+                MySqlCommand cmd = new MySqlCommand(q, con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("iTanggalSidang", TanggalSidang);
+                con.Open();
+                MySqlDataReader rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    clsPraDPK data = new clsPraDPK();
+                    a = a + 1;
+                    data.No = a;
+                    data.ID = rd["id"].ToString();
+                    data.NoSurat = rd["nomor_surat"].ToString();
+                    data.AsalSurat = rd["asal_surat"].ToString();
+                    data.perihal = rd["perihal"].ToString();
+                    data.NIP = rd["NIP"].ToString();
+                    data.FullName = rd["Fullname"].ToString();
+                    data.DasarBukti = rd["Dasar_dan_Bukti_Penunjang"].ToString();
+                    data.PelanggaranDisiplin = rd["Pelanggaran"].ToString();
+                    data.SATUAN_KERJA = rd["SatuanKerja"].ToString();
+                    data.PasalPelanggaran = rd["Pasal_Pelanggaran"].ToString();
+                    data.RekomendasiHukdis = rd["Rekomendasi_Hukuman"].ToString();
+                    data.Catatan = rd["Catatan"].ToString();
+                    data.Tanggal_Sidang = rd["Tanggal_Sidang"].ToString();
+                    data.JenisPelanggaran = rd["Jenis_Pelanggaran"].ToString();
+                    data.Kode_JenisPelanggaran = rd["Kode_JenisPelanggaran"].ToString();
+
+                    clsPraDPKDB x = new clsPraDPKDB();
+                    List<clsDataPegawaiDtl> y = new List<clsDataPegawaiDtl>();
+                    y = x.GetPegawai(data.NIP);
+                    int z = 1;
+                    foreach (var item in y)
+                    {
+                        if (z == 1)
+                        {
+                            data.GOL_RUANG = item.GOL_RUANG;
+                            data.LEVEL_JABATAN = item.LEVEL_JABATAN;
+                            data.UnitKerja = item.SATUAN_KERJA;
+                        }
+                        z = z + 1;
+                    }
+                    DP.Add(data);
+                }
+                return DP;
+            }
+        }
         public clsPraDPK ListByID(string id, string nip)
         {
             int a = 0;

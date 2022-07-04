@@ -29,7 +29,7 @@ namespace SIMHUKDIS.Controllers
         string Password = "12345678";
         string baseAddress = "https://api.kemenag.go.id/v1/";
         clsPraDPKDB db = new clsPraDPKDB();
-        public ActionResult Index()
+        public ActionResult Index(string TanggalSidang)
         {
             if (Session["Fullname"] == null)
             {
@@ -41,13 +41,26 @@ namespace SIMHUKDIS.Controllers
                 string SatuanKerja = Session["Satker"].ToString();
                 string StatusAdmin = Session["StatusAdmin"].ToString();
                 string UserGroup = Session["UserGroup"].ToString();
+                string SidangDate;
                 ViewBag.StatusAdmin = StatusAdmin;
                 ViewBag.UserID = userlogin;
                 ViewBag.SatuanKerja = SatuanKerja;
                 ViewBag.UserGroup = UserGroup;
                 ViewBag.JenisPelanggaran = new SelectList(db.GetListJenisPelanggaran(), "Kode_Jenis_Pelanggaran", "JenisPelanggaran");
-
-                List<clsPraDPK> PD = db.ListAll().ToList();
+                List<clsPraDPK> PD = new List<clsPraDPK>();
+                if (TanggalSidang == null)
+                {
+                    ViewBag.TanggalSidang = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
+                    SidangDate = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
+                    PD = db.ListAll().ToList();
+                }
+                else
+                {
+                    ViewBag.TanggalSidang = Convert.ToDateTime(TanggalSidang).ToString("yyyy-MM-dd");
+                    SidangDate = Convert.ToDateTime(TanggalSidang).ToString("yyyy-MM-dd");
+                    PD = db.ListFilter(SidangDate).ToList();
+                }
+                //List<clsPraDPK> PD = db.ListAll().ToList();
                 clsDataPegawaiDtl a = new clsDataPegawaiDtl();
                 return View(PD);
             }
@@ -195,7 +208,7 @@ namespace SIMHUKDIS.Controllers
                         ws.Column(5).Width = 35;
                         ws.Column(6).Width = 20;
                         ws.Column(7).Width = 10;
-                        exl.Workbook.
+
                         string fileName = sFilename;
                         Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
                         Response.AddHeader("content-disposition", "attachment; filename=" + fileName + ".xlsx");

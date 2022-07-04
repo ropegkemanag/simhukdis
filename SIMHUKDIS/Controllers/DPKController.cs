@@ -19,7 +19,7 @@ namespace SIMHUKDIS.Controllers
     {
         // GET: DPK
         clsDPKDB db = new clsDPKDB();
-        public ActionResult Index()
+        public ActionResult Index(string TanggalSidang)
         {
             if (Session["Fullname"] == null)
             {
@@ -31,13 +31,28 @@ namespace SIMHUKDIS.Controllers
                 string SatuanKerja = Session["Satker"].ToString();
                 string StatusAdmin = Session["StatusAdmin"].ToString();
                 string UserGroup = Session["UserGroup"].ToString();
+                string SidangDate;
                 ViewBag.StatusAdmin = StatusAdmin;
                 ViewBag.UserID = userlogin;
                 ViewBag.SatuanKerja = SatuanKerja;
                 ViewBag.UserGroup = UserGroup;
+                List<clsDPK> PD = new List<clsDPK>();
+                if (TanggalSidang == null)
+                {
+                    ViewBag.TanggalSidang = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
+                    SidangDate = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
+                    PD = db.ListAll().ToList();
+                }
+                else
+                {
+                    ViewBag.TanggalSidang = Convert.ToDateTime(TanggalSidang).ToString("yyyy-MM-dd");
+                    SidangDate = Convert.ToDateTime(TanggalSidang).ToString("yyyy-MM-dd");
+                    PD = db.ListFilter(SidangDate).ToList();
+                }
+
                 clsHukdisDB x = new clsHukdisDB();
                 ViewBag.Hukdis = new SelectList(x.GetListHukdis(), "ID", "HukdisDesc");
-                List<clsDPK> PD = db.ListAll().ToList();
+                //List<clsDPK> PD = db.ListAll().ToList();
                 clsDataPegawaiDtl a = new clsDataPegawaiDtl();
                 return View(PD);
             }
@@ -87,7 +102,7 @@ namespace SIMHUKDIS.Controllers
                 return Json(strMsg, JsonRequestBehavior.AllowGet);
             }
         }
-        public ActionResult DownloadToExcel2()
+        public ActionResult DownloadToExcel2(string TanggalSidang)
         {
             try
             {
@@ -96,7 +111,7 @@ namespace SIMHUKDIS.Controllers
                 {
                     string sFilename = "DataSidangDPK_" + String.Format("{0:yyyyMMdd}", DateTime.Now) + "_" + String.Format("{0:HHmm}", DateTime.Now);
                     List<clsDPK> rpt = new List<clsDPK>();
-                    rpt = db.ListAll().ToList();
+                    rpt = db.ListFilter(TanggalSidang).ToList();
                     ExcelWorksheet ws = exl.Workbook.Worksheets.Add("Sheet1");
                     if (rpt.Count == 0)
                     {
@@ -111,13 +126,13 @@ namespace SIMHUKDIS.Controllers
                         ws.PrinterSettings.Orientation = eOrientation.Landscape;
                         ws.Cells["A1"].Value = "DATA SIDANG DEWAN PERTIMBANGAN KEPEGAWAIAN";
                         ws.Cells["A2"].Value = "BIRO KEPEGAWAIAN SETJEN KEMENTERIAN AGAMA";
-                        ws.Cells["A3"].Value = "TANGGAL";
-                        ws.Cells["A1:G1"].Merge = true;
-                        ws.Cells["A2:G2"].Merge = true;
-                        ws.Cells["A3:G3"].Merge = true;
-                        ws.Cells["A1:F3"].Style.Font.Bold = true;
-                        ws.Cells["A1:F3"].Style.Font.Size = 12;
-                        ExcelRange rg1 = ws.Cells[1, 1, 3, 7];
+                        ws.Cells["A3"].Value = "TANGGAL " + Convert.ToDateTime(TanggalSidang).ToString("dd MMM yyyy");
+                        ws.Cells["A1:H1"].Merge = true;
+                        ws.Cells["A2:H2"].Merge = true;
+                        ws.Cells["A3:H3"].Merge = true;
+                        ws.Cells["A1:H3"].Style.Font.Bold = true;
+                        ws.Cells["A1:H3"].Style.Font.Size = 12;
+                        ExcelRange rg1 = ws.Cells[1, 1, 3, 8];
                         rg1.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
                         rg1.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
                         rg1.Style.Font.Bold = true;
@@ -125,31 +140,54 @@ namespace SIMHUKDIS.Controllers
                         ws.Cells["A5"].Value = "NO";
                         ws.Cells["A5"].Style.Fill.PatternType = ExcelFillStyle.Solid;
                         ws.Cells["A5"].Style.Fill.BackgroundColor.SetColor(colFromHex);
+                        ws.Cells["A5"].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                        ws.Cells["A5"].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
                         ws.Cells["B5"].Value = "IDENTITAS";
                         ws.Cells["B5"].Style.Fill.PatternType = ExcelFillStyle.Solid;
                         ws.Cells["B5"].Style.Fill.BackgroundColor.SetColor(colFromHex);
+                        ws.Cells["B5"].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                        ws.Cells["B5"].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
                         ws.Cells["C5"].Value = "PASAL PELANGGARAN";
                         ws.Cells["C5"].Style.Fill.PatternType = ExcelFillStyle.Solid;
                         ws.Cells["C5"].Style.Fill.BackgroundColor.SetColor(colFromHex);
+                        ws.Cells["C5"].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                        ws.Cells["C5"].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
                         ws.Cells["D5"].Value = "JENIS PELANGGARAN";
                         ws.Cells["D5"].Style.Fill.PatternType = ExcelFillStyle.Solid;
                         ws.Cells["D5"].Style.Fill.BackgroundColor.SetColor(colFromHex);
+                        ws.Cells["D5"].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                        ws.Cells["D5"].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
                         ws.Cells["E5"].Value = "URAIAN PELANGGARAN";
                         ws.Cells["E5"].Style.Fill.PatternType = ExcelFillStyle.Solid;
                         ws.Cells["E5"].Style.Fill.BackgroundColor.SetColor(colFromHex);
+                        ws.Cells["E5"].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                        ws.Cells["E5"].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
                         ws.Cells["F5"].Value = "REKOMENDASI IRJEN/PIMPINAN SATKER";
                         ws.Cells["F5"].Style.Fill.PatternType = ExcelFillStyle.Solid;
                         ws.Cells["F5"].Style.Fill.BackgroundColor.SetColor(colFromHex);
-                        ws.Cells["G5"].Value = "KEPUTUSAN SIDANG";
+                        ws.Cells["F5"].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                        ws.Cells["F5"].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                        ws.Cells["G5"].Value = "NOTULASI PRA DPK";
                         ws.Cells["G5"].Style.Fill.PatternType = ExcelFillStyle.Solid;
                         ws.Cells["G5"].Style.Fill.BackgroundColor.SetColor(colFromHex);
+                        ws.Cells["G5"].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                        ws.Cells["G5"].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                        ws.Cells["H5"].Value = "KEPUTUSAN SIDANG";
+                        ws.Cells["H5"].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        ws.Cells["H5"].Style.Fill.BackgroundColor.SetColor(colFromHex);
+                        ws.Cells["H5"].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+                        ws.Cells["H5"].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
 
-                        ExcelRange rg2 = ws.Cells[5, 1, 5, 7];
-                        rg2.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
-                        rg2.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
-                        rg2.Style.Font.Bold = true;
-                        rg2.Style.WrapText = true;
-                        rg2.Style.Font.Size = 8;
+                        ws.Cells["A5:H5"].Style.WrapText = true;
+                        ws.Cells["A5:H5"].Style.Font.Size = 8;
+                        ws.Cells["A5:H5"].Style.Font.Bold = true;
+                        ws.Cells["A5:H5"].Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Center;
+                        ws.Cells["A5:H5"].Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Center;
+
+                        //ExcelRange rg2 = ws.Cells[5, 1, 5, 8];
+                        //rg2.Style.Font.Bold = true;
+                        //rg2.Style.WrapText = true;
+                        //rg2.Style.Font.Size = 8;
                         int k = 1;
                         int i = 6;
                         foreach (clsDPK model in rpt)
@@ -161,32 +199,34 @@ namespace SIMHUKDIS.Controllers
                             ws.Cells[i, 4].Value = model.PelanggaranDisiplin;
                             ws.Cells[i, 5].Value = model.PelanggaranDisiplin;
                             ws.Cells[i, 6].Value = model.RekomendasiHukdis;
-                            ws.Cells[i, 7].Value = "";
-                            ws.Row(i).Height = 200;
+                            ws.Cells[i, 7].Value = model.Catatan;
+                            ws.Cells[i, 8].Value = "";
+                            ws.Row(i).Height = 300;
                             i = i + 1;
                             k = k + 1;
 
                         }
-                        ExcelRange rg = ws.Cells[5, 1, i - 1, 7];
+                        ExcelRange rg = ws.Cells[5, 1, i - 1, 8];
                         rg.Style.Border.Bottom.Style = ExcelBorderStyle.Thin;
                         rg.Style.Border.Left.Style = ExcelBorderStyle.Thin;
                         rg.Style.Border.Right.Style = ExcelBorderStyle.Thin;
                         rg.Style.Border.Top.Style = ExcelBorderStyle.Thin;
 
-                        ExcelRange rg3 = ws.Cells[5, 1, i - 1, 7];
+                        ExcelRange rg3 = ws.Cells[5, 1, i - 1, 8];
                         rg3.Style.WrapText = true;
                         rg3.Style.HorizontalAlignment = OfficeOpenXml.Style.ExcelHorizontalAlignment.Left;
                         rg3.Style.VerticalAlignment = OfficeOpenXml.Style.ExcelVerticalAlignment.Top;
                         rg3.Style.Font.Size = 8;
 
-                        ws.Row(5).Height = 30;
+                        ws.Row(5).Height = 36;
                         ws.Column(1).Width = 5;
                         ws.Column(2).Width = 20;
-                        ws.Column(3).Width = 15;
+                        ws.Column(3).Width = 10.8;
                         ws.Column(4).Width = 15;
-                        ws.Column(5).Width = 35;
-                        ws.Column(6).Width = 20;
-                        ws.Column(7).Width = 10;
+                        ws.Column(5).Width = 24;
+                        ws.Column(6).Width = 15;
+                        ws.Column(7).Width = 20;
+                        ws.Column(8).Width = 10;
 
                         string fileName = sFilename;
                         Response.ContentType = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";

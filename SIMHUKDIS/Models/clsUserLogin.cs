@@ -41,6 +41,7 @@ namespace simhukdis.Models
         [Display(Name = "Satuan Kerja")]
         public string Satker { get; set; }
         public string Satuan_Kerja { get; set; }
+        public string LEVEL_JABATAN { get; set; }
     }
     public class clsUserLoginDB
     {
@@ -72,6 +73,7 @@ namespace simhukdis.Models
                         User.NIP = rd["NIP"].ToString();
                         User.Satker = rd["Satker"].ToString();
                         User.Satuan_Kerja = rd["SATUAN_KERJA"].ToString();
+                        User.LEVEL_JABATAN = rd["LEVEL_JABATAN"].ToString();
                         if (rd["LastLogin"].ToString() == "")
                         {
                             User.LastLogin = "";
@@ -270,6 +272,8 @@ namespace simhukdis.Models
                     cmd.Parameters.AddWithValue("iLastUser", User.LastUser);
                     cmd.Parameters.AddWithValue("iNIP", User.NIP);
                     cmd.Parameters.AddWithValue("iSatker", User.Satker);
+                    cmd.Parameters.AddWithValue("iLevelJabatan", User.LEVEL_JABATAN);
+                    
                     con.Open();
                     i = cmd.ExecuteNonQuery();
                 }
@@ -301,6 +305,7 @@ namespace simhukdis.Models
                     cmd.Parameters.AddWithValue("iLastUser", User.LastUser);
                     cmd.Parameters.AddWithValue("iNIP", User.NIP);
                     cmd.Parameters.AddWithValue("iSatker", User.Satker);
+                    cmd.Parameters.AddWithValue("iLevelJabatan", User.LEVEL_JABATAN);
                     con.Open();
                     i = cmd.ExecuteNonQuery();
                 }
