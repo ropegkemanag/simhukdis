@@ -5,6 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+
+
+
+
+
+
 <!-- DataTales Example -->
 <div class="card shadow mb-4">
     <div class="card-header py-3">
@@ -55,29 +61,29 @@
         </p>
         <p style="text-align:right;">
             @*@if (@ViewBag.UserGroup == "03")
-            {
-                <button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("Create", "SuratMasuk")'">
-                    Tambah Data
-                </button>
-            }
-            else
-            {
-                <button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("Create", "SuratMasuk")'" disabled>
-                    Tambah Data
-                </button>
-            }*@
-            <!-- Example single danger button -->
-                <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {
+                    <button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("Create", "SuratMasuk")'">
                         Tambah Data
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="@Url.Action("Create", "SuratMasuk")">Indisipliner</a>
-                        <a class="dropdown-item" href="@Url.Action("CreateTindakPidana", "SuratMasuk")">Tindak Pidana</a>
-                    </div>
+                }
+                else
+                {
+                    <button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("Create", "SuratMasuk")'" disabled>
+                        Tambah Data
+                    </button>
+                }*@
+            <!-- Example single danger button -->
+            <div class="dropdown">
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Tambah Data
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="@Url.Action("Create", "SuratMasuk")">Indisipliner</a>
+                    <a class="dropdown-item" href="@Url.Action("CreateTindakPidana", "SuratMasuk")">Tindak Pidana</a>
                 </div>
+            </div>
         </p>
-        
+
         <div style="height:10px;">
 
         </div>
@@ -111,20 +117,20 @@
                             <tr class="table-bordered table-hover my-3">
                                 @if (@ViewBag.UserID == item.CreateUser && item.Status == 0)
                                 {
-                                <td>
-                                    @if (item.UsulStatus == "1")
-                                    {
-                                        @Html.ActionLink("Ubah", "Edit", new { ID = item.ID, Satker = item.KODE_SATUAN_KERJA, Kode_Unit_Kerja = item.Kode_Unit_Kerja })
-                                    }
-                                    @if (item.UsulStatus == "2")
-                                    {
-                                        @Html.ActionLink("Ubah", "EditTindakPidana", new { ID = item.ID, Satker = item.KODE_SATUAN_KERJA, Kode_Unit_Kerja = item.Kode_Unit_Kerja })
-                                    }
-                                    <br />
-                                    <a href="#" onclick="Hapus('@item.ID')">Hapus</a>
-                                    <br />
-                                    <a href="#" onclick="Proses('@item.ID')">Kirim</a>
-                                </td>
+                                    <td>
+                                        @if (item.UsulStatus == "1")
+                                        {
+                                            @Html.ActionLink("Ubah", "Edit", new { ID = item.ID, Satker = item.KODE_SATUAN_KERJA, Kode_Unit_Kerja = item.Kode_Unit_Kerja })
+                                        }
+                                        @if (item.UsulStatus == "2")
+                                        {
+                                            @Html.ActionLink("Ubah", "EditTindakPidana", new { ID = item.ID, Satker = item.KODE_SATUAN_KERJA, Kode_Unit_Kerja = item.Kode_Unit_Kerja })
+                                        }
+                                        <br />
+                                        <a href="#" onclick="Hapus('@item.ID')">Hapus</a>
+                                        <br />
+                                        <a href="#" onclick="Proses('@item.ID')">Kirim</a>
+                                    </td>
                                 }
                                 else
                                 {
@@ -186,7 +192,7 @@
             <div class="modal-footer">
                 <label id="ID" name="ID"></label>
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <input class="btn btn-primary" onclick="HapusDataSM()" value="Hapus" type="button"/>
+                <input class="btn btn-primary" onclick="HapusDataSM()" value="Hapus" type="button" />
             </div>
         </div>
     </div>

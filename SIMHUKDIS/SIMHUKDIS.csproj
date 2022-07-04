@@ -189,6 +189,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\Admin\MonitoringAdminController.cs" />
     <Compile Include="Controllers\Disposisi3Controller.cs" />
     <Compile Include="Controllers\DPKController.cs" />
     <Compile Include="Controllers\HasilSidangController.cs" />
@@ -2342,10 +2343,10 @@
     <Content Include="Views\UsulHukdis\Index.cshtml" />
     <Content Include="Views\SuratMasuk\EditTindakPidana.cshtml" />
     <Content Include="Views\PraDPK\Edit.cshtml" />
+    <Content Include="Views\MonitoringAdmin\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Controllers\Admin\" />
     <Folder Include="Controllers\Konseptor\" />
     <Folder Include="Files\Result\Telaah\" />
     <Folder Include="Files\Template\" />

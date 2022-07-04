@@ -15,7 +15,7 @@
 
         <div style="height: 15px"></div>
         <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <table class="table table-bordered " id="dataTable"  cellspacing="0" style="font-size:12px;width:100%;">
                 <thead class="table table-primary">
                     <tr>
 
@@ -541,3 +541,9 @@
         </div>
     </div>
 </div>
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $('#dataTable').dataTable({
+        "scrollX": true
+    });
+</script>

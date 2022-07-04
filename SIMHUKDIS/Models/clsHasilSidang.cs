@@ -356,6 +356,7 @@ namespace SIMHUKDIS.Models
                     data.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
                     data.Unit_Kerja = rd["Unit_Kerja"].ToString();
                     data.Jabatan_Konseptor = rd["Jabatan_Konseptor"].ToString();
+                    data.Tembusan = rd["Tembusan"].ToString();
                     clsPraDPKDB x = new clsPraDPKDB();
                     List<clsDataPegawaiDtl> y = new List<clsDataPegawaiDtl>();
                     y = x.GetPegawai(data.NIP);
@@ -383,7 +384,10 @@ namespace SIMHUKDIS.Models
                         z = z + 1;
                     }
                     clsHasilSidangDB p = new clsHasilSidangDB();
-                    data.Tembusan = p.GetTembusan(data.KODE_SATUAN_KERJA, data.Kode_Unit_Kerja);
+                    if (data.Tembusan == "" || data.Tembusan == null)
+                    {
+                        data.Tembusan = p.GetTembusan(data.KODE_SATUAN_KERJA, data.Kode_Unit_Kerja);
+                    }                    
                 }
                 return data;
             }
