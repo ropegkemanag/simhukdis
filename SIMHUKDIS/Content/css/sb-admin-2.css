@@ -4750,10 +4750,11 @@ input[type="button"].btn-block {
 }
 
 .pagination {
-  display: flex;
-  padding-left: 0;
-  list-style: none;
-  border-radius: 0.35rem;
+    display: flex;
+    padding-left: 0;
+    list-style: none;
+    border-radius: 0.35rem;
+    align-content: flex-end;
 }
 
 .page-link {

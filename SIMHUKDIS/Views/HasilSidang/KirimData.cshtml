@@ -1,0 +1,203 @@
+﻿@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">DATA HASIL SIDANG</h6>
+    </div>
+    <div class="card-body">
+        <form>
+            <div class="form-group row">
+
+                <div class="col">
+                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">NIP</label>
+                    @Html.TextBox("NIP", "", new { @id = "NIP", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                    @Html.ValidationMessage("NIP", "", new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">NAMA LENGKAP</label>
+                    @Html.TextBox("FullName", "", new { @id = "FullName", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                    @Html.ValidationMessage("FullName", "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+
+                <div class="col">
+                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">NOMOR SK</label>
+                    @Html.TextBox("NO_SK", "", new { @id = "NO_SK", @class = "form-control form-control-user", required = "required" })
+                    @Html.ValidationMessage("NO_SK", "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">TANGGAL SK</label>
+                    @Html.TextBox("Tanggal_SK", "", new { @id = "Tanggal_SK", @class = "form-control form-control-user", required = "Tanggal_SK" })
+                    @Html.ValidationMessage("Tanggal_SK", "", new { @class = "text-danger" })
+                </div>
+                <div class="col">
+                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">FILE SK</label>
+                    @Html.TextBox("FILE_SK", "", new { @type = "file", @id = "FILE_SK", @class = "form-control form-control-user" })
+                    @Html.ValidationMessage("FILE_SK", "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">KETERANGAN</label>
+                    @Html.TextArea("Keterangan_SK", "", new { @id = "File_BAP_Satker", @class = "form-control form-control-user", rows = 5 })
+                    @Html.ValidationMessage("Keterangan_SK", "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Simpan" class="btn btn-primary" style="width:100px;" />
+                    @*<button type="button" id="InsertData" class="btn btn-success" style="background-color:teal;"></button> | @Html.ActionLink("Back to List", "Index")*@
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">PENYAMPAIAN HASIL SIDANG KE SATKER</h6>
+    </div>
+    <div class="card-body">
+        <form>
+            <div class="form-group row" style="display:none;">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">ID</label>
+                    @Html.TextBox("ID", "", new { @id = "ID", @class = "form-control form-control-user", required = "required" })
+                    @Html.ValidationMessage("ID", "", new { @class = "text-danger" })
+                </div>
+                @*<div class="col">
+                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">NIP</label>
+                    @Html.TextBox("NIP", "", new { @id = "NIP", @class = "form-control form-control-user", required = "required" })
+                    @Html.ValidationMessage("NIP", "", new { @class = "text-danger" })
+                </div>*@
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">TANGGAL PENYAMPAIAN</label>
+                    @Html.TextBox("Tanggal_Penyampaian_Ke_Satker", "", new { @id = "Tanggal_Penyampaian_Ke_Satker", @class = "form-control form-control-user", required = "Tanggal_Penyampaian_Ke_Satker" })
+                    @Html.ValidationMessage("Tanggal_Penyampaian_Ke_Satker", "", new { @class = "text-danger" })
+                </div>
+                <div class="col">
+                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">PENERIMA</label>
+                    @Html.TextBox("Penerima_Satker", "", new { @id = "Penerima_Satker", @class = "form-control form-control-user" })
+                    @Html.ValidationMessage("Penerima_Satker", "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">BERITA ACARA PENERIMAAN</label>
+                    @Html.TextBox("BAP_Satker", "", new { @type = "file", @id = "BAP_Satker", @class = "form-control form-control-user" })
+                    @Html.ValidationMessage("BAP_Satker", "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">KETERANGAN</label>
+                    @Html.TextArea("Keterangan_Satker", "", new { @id = "File_BAP_Satker", @class = "form-control form-control-user", rows = 5 })
+                    @Html.ValidationMessage("Keterangan_Satker", "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Simpan" class="btn btn-primary" style="width:100px;" />
+                    @*<button type="button" id="InsertData" class="btn btn-success" style="background-color:teal;"></button> | @Html.ActionLink("Back to List", "Index")*@
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">PENYAMPAIAN HASIL SIDANG KE YBS</h6>
+    </div>
+    <div class="card-body">
+        <form>
+            <div class="form-group row" style="display:none;">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">ID</label>
+                    @Html.TextBox("ID", "", new { @id = "ID", @class = "form-control form-control-user", required = "required" })
+                    @Html.ValidationMessage("ID", "", new { @class = "text-danger" })
+                </div>
+                <div class="col">
+                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">NIP</label>
+                    @Html.TextBox("NIP", "", new { @id = "NIP", @class = "form-control form-control-user", required = "required" })
+                    @Html.ValidationMessage("NIP", "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">TANGGAL PENYAMPAIAN YBS</label>
+                    @Html.TextBox("Tanggal_Penyampaian_Ke_YBS", "", new { @id = "Tanggal_Penyampaian_Ke_YBS", @class = "form-control form-control-user", required = "Tanggal_Penyampaian_Ke_YBS" })
+                    @Html.ValidationMessage("Tanggal_Penyampaian_Ke_YBS", "", new { @class = "text-danger" })
+                </div>
+                <div class="col">
+                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">PENERIMA</label>
+                    @Html.TextBox("Penerima_YBS", "", new { @id = "Penerima_YBS", @class = "form-control form-control-user" })
+                    @Html.ValidationMessage("Penerima_YBS", "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">BERITA ACARA PENERIMAAN</label>
+                    @Html.TextBox("BAP_Penerima", "", new { @type = "file", @id = "BAP_Penerima", @class = "form-control form-control-user" })
+                    @Html.ValidationMessage("BAP_Penerima", "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">KETERANGAN</label>
+                    @Html.TextArea("Keterangan_Penerima", "", new { @id = "Keterangan_Penerima", @class = "form-control form-control-user", rows = 5 })
+                    @Html.ValidationMessage("Keterangan_Penerima", "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Simpan" class="btn btn-primary" style="width:100px;" />
+                    @*<button type="button" id="InsertData" class="btn btn-success" style="background-color:teal;"></button> | @Html.ActionLink("Back to List", "Index")*@
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(function () {
+            $("#Tanggal_Penyampaian_Ke_Satker").datepicker({
+                setDate: new Date(),
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                calendarWeeks: true,
+                clearBtn: true,
+                disableTouchKeyboard: true
+            })
+        });
+        $(function () {
+            $("#Tanggal_SK").datepicker({
+                setDate: new Date(),
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                calendarWeeks: true,
+                clearBtn: true,
+                disableTouchKeyboard: true
+            })
+        });
+        $(function () {
+            $("#Tanggal_Penyampaian_Ke_YBS").datepicker({
+                setDate: new Date(),
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                calendarWeeks: true,
+                clearBtn: true,
+                disableTouchKeyboard: true
+            })
+        });
+    });
+</script>

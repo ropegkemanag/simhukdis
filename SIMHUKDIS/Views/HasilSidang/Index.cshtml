@@ -33,12 +33,12 @@
                         <th>
                             Rekomendasi Hukdis
                         </th>*@
-                        <th>
+                        @*<th>
                             Tanggal Pra Sidang DPK
                         </th>
                         <th>
                             Catatan Pra Sidang DPK
-                        </th>
+                        </th>*@
                         <th>
                             Tanggal Sidang DPK
                         </th>
@@ -57,6 +57,8 @@
                         <tr>
                             <td>
                                 @Html.ActionLink("BUAT SK", "Create", new { ID = item.ID, NIP = item.NIP })
+                                @Html.ActionLink("Penyampaian Hasil", "KirimData", new { ID = item.ID, NIP = item.NIP })
+                                
                             </td>
                             @*<td>
                         @Html.DisplayFor(modelItem => item.No)
@@ -86,12 +88,12 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.RekomendasiHukdis)
                             </td>*@
-                            <td>
+                            @*<td>
                                 @Html.DisplayFor(modelItem => item.Tanggal_Sidang_Pra_DPK)
                             </td>
                             <td>
                                 @Html.DisplayFor(modelItem => item.Catatan_Pra_DPK)
-                            </td>
+                            </td>*@
                             <td>
                                 @Html.DisplayFor(modelItem => item.Tanggal_Sidang_DPK)
                             </td>

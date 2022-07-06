@@ -87,6 +87,32 @@ namespace SIMHUKDIS.Controllers
                 //return RedirectToAction("Error500", "Home");
             }
         }
+        [HttpGet]
+        public ActionResult KirimData(int ID, string NIP)
+        {
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            else
+            {
+                string userlogin = Session["Fullname"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                string UserID = Session["UserID"].ToString();
+
+                ViewBag.StatusAdmin = StatusAdmin;
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+
+                clsHasilSidangDB db = new clsHasilSidangDB();
+                HasilSidangDtl hasil = db.GetListCreate(ID, NIP);
+
+                return View(hasil);
+            }
+        }
         public ActionResult UbahData(string ID, string NIP, string KeputusanSidang, string Tanggal_Sidang, string Catatan_Sidang,
             string DasarBukti, string Pelanggaran, string PasalPelanggaran, string Mengingat, string Tembusan)
         {

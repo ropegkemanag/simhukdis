@@ -67,6 +67,18 @@ namespace SIMHUKDIS.Models
         public string MASAKERJA_TAHUN { get; set; }
         public string TMT_PENSIUN { get; set; }
         public string Jabatan_Konseptor { get; set; }
+        public string Tanggal_SK { get; set; }
+        public string NO_SK { get; set; }
+        public string FILE_SK { get; set; }
+        public string Keterangan_SK { get; set; }
+        public string Tanggal_Penyampaian_Ke_Satker { get; set; }
+        public string Penerima_Satker { get; set; }
+        public string BAP_Satker { get; set; }
+        public string Keterangan_Satker { get; set; }
+        public string Tanggal_Penyampaian_Ke_YBS { get; set; }
+        public string Penerima_YBS { get; set; }
+        public string BAP_Penerima { get; set; }
+        public string Keterangan_Penerima { get; set; }
     }
     public class HasilSidangDtl
     {
@@ -179,6 +191,18 @@ namespace SIMHUKDIS.Models
         public string MASAKERJA_TAHUN { get; set; }
         public string TMT_PENSIUN { get; set; }
         public string Jabatan_Konseptor { get; set; }
+        public string Tanggal_SK { get; set; }
+        public string NO_SK { get; set; }
+        public string FILE_SK { get; set; }
+        public string Keterangan_SK { get; set; }
+        public string Tanggal_Penyampaian_Ke_Satker { get; set; }
+        public string Penerima_Satker { get; set; }
+        public string BAP_Satker { get; set; }
+        public string Keterangan_Satker { get; set; }
+        public string Tanggal_Penyampaian_Ke_YBS { get; set; }
+        public string Penerima_YBS { get; set; }
+        public string BAP_Penerima { get; set; }
+        public string Keterangan_Penerima { get; set; }
     }
     public class clsHasilSidangDB
     {
@@ -222,6 +246,18 @@ namespace SIMHUKDIS.Models
                     data.Tembusan = rd["Tembusan"].ToString();
                     data.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
                     data.Unit_Kerja = rd["Unit_Kerja"].ToString();
+                    data.NO_SK = rd["NO_SK"].ToString();
+                    data.Tanggal_SK = rd["Tanggal_SK"].ToString();
+                    data.FILE_SK = rd["FILE_SK"].ToString();
+                    data.Keterangan_SK = rd["Keterangan_SK"].ToString();
+                    data.Tanggal_Penyampaian_Ke_Satker = rd["Tanggal_Penyampaian_Ke_Satker"].ToString();
+                    data.Penerima_Satker = rd["Penerima_Satker"].ToString();
+                    data.BAP_Satker = rd["BAP_Satker"].ToString();
+                    data.Keterangan_Satker = rd["Keterangan_Satker"].ToString();
+                    data.Tanggal_Penyampaian_Ke_YBS = rd["Tanggal_Penyampaian_Ke_YBS"].ToString();
+                    data.Penerima_YBS = rd["Penerima_YBS"].ToString();
+                    data.BAP_Penerima = rd["BAP_Penerima"].ToString();
+                    data.Keterangan_Penerima = rd["Keterangan_Penerima"].ToString();
                     clsPraDPKDB x = new clsPraDPKDB();
                     List<clsDataPegawaiDtl> y = new List<clsDataPegawaiDtl>();
                     y = x.GetPegawai(data.NIP);
@@ -357,6 +393,18 @@ namespace SIMHUKDIS.Models
                     data.Unit_Kerja = rd["Unit_Kerja"].ToString();
                     data.Jabatan_Konseptor = rd["Jabatan_Konseptor"].ToString();
                     data.Tembusan = rd["Tembusan"].ToString();
+                    data.NO_SK = rd["NO_SK"].ToString();
+                    data.Tanggal_SK = rd["Tanggal_SK"].ToString();
+                    data.FILE_SK = rd["FILE_SK"].ToString();
+                    data.Keterangan_SK = rd["Keterangan_SK"].ToString();
+                    data.Tanggal_Penyampaian_Ke_Satker = rd["Tanggal_Penyampaian_Ke_Satker"].ToString();
+                    data.Penerima_Satker = rd["Penerima_Satker"].ToString();
+                    data.BAP_Satker = rd["BAP_Satker"].ToString();
+                    data.Keterangan_Satker = rd["Keterangan_Satker"].ToString();
+                    data.Tanggal_Penyampaian_Ke_YBS = rd["Tanggal_Penyampaian_Ke_YBS"].ToString();
+                    data.Penerima_YBS = rd["Penerima_YBS"].ToString();
+                    data.BAP_Penerima = rd["BAP_Penerima"].ToString();
+                    data.Keterangan_Penerima = rd["Keterangan_Penerima"].ToString();
                     clsPraDPKDB x = new clsPraDPKDB();
                     List<clsDataPegawaiDtl> y = new List<clsDataPegawaiDtl>();
                     y = x.GetPegawai(data.NIP);
@@ -444,6 +492,18 @@ namespace SIMHUKDIS.Models
                         DP.Unit_Kerja = rd["Unit_Kerja"].ToString();
                         DP.Tembusan = rd["Tembusan"].ToString();
                         DP.Jabatan_Konseptor = rd["Jabatan_Konseptor"].ToString();
+                        DP.NO_SK = rd["NO_SK"].ToString();
+                        DP.Tanggal_SK = rd["Tanggal_SK"].ToString();
+                        DP.FILE_SK = rd["FILE_SK"].ToString();
+                        DP.Keterangan_SK = rd["Keterangan_SK"].ToString();
+                        DP.Tanggal_Penyampaian_Ke_Satker = rd["Tanggal_Penyampaian_Ke_Satker"].ToString();
+                        DP.Penerima_Satker = rd["Penerima_Satker"].ToString();
+                        DP.BAP_Satker = rd["BAP_Satker"].ToString();
+                        DP.Keterangan_Satker = rd["Keterangan_Satker"].ToString();
+                        DP.Tanggal_Penyampaian_Ke_YBS = rd["Tanggal_Penyampaian_Ke_YBS"].ToString();
+                        DP.Penerima_YBS = rd["Penerima_YBS"].ToString();
+                        DP.BAP_Penerima = rd["BAP_Penerima"].ToString();
+                        DP.Keterangan_Penerima = rd["Keterangan_Penerima"].ToString();
                         clsPraDPKDB x = new clsPraDPKDB();
                         List<clsDataPegawaiDtl> y = new List<clsDataPegawaiDtl>();
                         y = x.GetPegawai(DP.NIP);
