@@ -13,7 +13,7 @@ using System.Web.Mvc;
 using Newtonsoft.Json;
 using OfficeOpenXml;
 using OfficeOpenXml.Style;
-using simhukdis.Models;
+using SIMHUKDIS.Models;
 using SIMHUKDIS.Models;
 using Spire.Doc;
 using Syncfusion.XlsIO;

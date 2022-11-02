@@ -1,14 +1,14 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-namespace simhukdis.Models
+namespace SIMHUKDIS.Models
 {
     public class clsMonitoring
     {
@@ -33,13 +33,13 @@ namespace simhukdis.Models
         [DisplayName("Disposisi Status 3")]
         public string DisposisiStatus3 { get; set; }
 
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [DisplayName("Disposisi Date 1")]
         public string DisposisiDate1 { get; set; }
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [DisplayName("Disposisi Date 2")]
         public string DisposisiDate2 { get; set; }
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [DisplayName("Disposisi Date 3")]
         public string DisposisiDate3 { get; set; }
         [DisplayName("Tanggal Surat")]
@@ -54,16 +54,16 @@ namespace simhukdis.Models
         {
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 List<clsMonitoring> cm = new List<clsMonitoring>();
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
                     Int32 pNom = 0;
-                    string q = "sp_Kasus_Monitoring_Sel";
-                    MySqlCommand cmd = new MySqlCommand(q, con);
+                    string q = "SIMHUKDIS.sp_Kasus_Monitoring_Sel";
+                    SqlCommand cmd = new SqlCommand(q, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("iGroupID", UserGroup);
                     cmd.Parameters.AddWithValue("UserLogin", userlogin);
                     con.Open();
-                    MySqlDataReader rd = cmd.ExecuteReader();
+                    SqlDataReader rd = cmd.ExecuteReader();
                     while (rd.Read())
                     {
                         clsMonitoring data = new clsMonitoring();

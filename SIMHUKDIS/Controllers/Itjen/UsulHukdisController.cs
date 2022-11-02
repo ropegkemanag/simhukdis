@@ -1,4 +1,4 @@
-﻿using simhukdis.Models;
+﻿using SIMHUKDIS.Models;
 using Spire.Doc;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace simhukdis.Controllers
+namespace SIMHUKDIS.Controllers
 {
     [SessionExpire]
     public class UsulHukdisController : Controller
@@ -46,25 +46,25 @@ namespace simhukdis.Controllers
                 }
                 if (DateFrom == null)
                 {
-                    ViewBag.DateFrom = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
-                    a.DateFrom = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
+                    ViewBag.DateFrom = Convert.ToDateTime(DateTime.Today).ToString("yyyy-01-01");
+                    a.DateFrom = Convert.ToDateTime(DateTime.Today).ToString("yyyy-01-01");
                 }
                 else
                 {
-                    ViewBag.DateFrom = Convert.ToDateTime(DateFrom).ToString("yyyy-MM-dd");
-                    a.DateFrom = Convert.ToDateTime(DateFrom).ToString("yyyy-MM-dd");
+                    ViewBag.DateFrom = Convert.ToDateTime(DateFrom).ToString("yyyy-01-dd");
+                    a.DateFrom = Convert.ToDateTime(DateFrom).ToString("yyyy-01-dd");
                 }
                 if (DateTo == null)
                 {
                     ViewBag.DateTo = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
-                    DateTo = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
+                    a.DateTo = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
                 }
                 else
                 {
                     ViewBag.DateTo = Convert.ToDateTime(DateTo).ToString("yyyy-MM-dd");
                     a.DateTo = Convert.ToDateTime(DateTo).ToString("yyyy-MM-dd");
                 }
-                List<clsSuratMasuk> sm = db.SuratMasukFilter(a).ToList();
+                List<clsSuratMasuk> sm = db.SuratMasukItjenFilter(a).ToList();
                 return View(sm);
             }
             catch (Exception ex)
@@ -134,9 +134,10 @@ namespace simhukdis.Controllers
         }
         [HttpPost]
         public ActionResult Create(string NoAgenda, string NoSurat, string AsalSurat, string TanggalSurat,
-            string perihal, string KODE_SATUAN_KERJA, string Unit_Kerja, HttpPostedFileBase LampiranSurat1,
+            string perihal, string KODE_SATUAN_KERJA, string Kode_Unit_Kerja, HttpPostedFileBase LampiranSurat1,
             HttpPostedFileBase LampiranSurat2, HttpPostedFileBase LampiranSurat3,
-            HttpPostedFileBase LampiranSurat4, HttpPostedFileBase LampiranSurat5, HttpPostedFileBase LampiranSurat6, HttpPostedFileBase LampiranSurat_LHA)
+            HttpPostedFileBase LampiranSurat4, HttpPostedFileBase LampiranSurat5, HttpPostedFileBase LampiranSurat6, HttpPostedFileBase LampiranSurat_LHA,
+            string UsulStatus)
         {
             if (Session["Fullname"] == null)
             {
@@ -166,7 +167,16 @@ namespace simhukdis.Controllers
                 sm.AsalSurat = AsalSurat;
                 sm.TanggalSurat = TanggalSurat;
                 sm.perihal = perihal;
-                sm.Kode_Unit_Kerja = Unit_Kerja;
+                if (Kode_Unit_Kerja == null && Kode_Unit_Kerja == "")
+                {
+                    sm.Kode_Unit_Kerja = "0";
+                }
+                else
+                {
+                    sm.Kode_Unit_Kerja = Kode_Unit_Kerja;
+                }
+                
+                sm.UsulStatus = UsulStatus;
                 if (KODE_SATUAN_KERJA == null && UserGroup == "03")
                 {
                     sm.SATUAN_KERJA = SatuanKerja;
@@ -179,7 +189,7 @@ namespace simhukdis.Controllers
                 {
                     a = LampiranSurat1.FileName;
                     FileExt = Path.GetExtension(a);
-                    Ext = Server.MapPath("~/Files/Upload/Surat Masuk/1.Surat Pengantar/");
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/1.Surat Pengantar/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(a);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                     Request.Files[0].SaveAs(FilePath);
@@ -193,7 +203,7 @@ namespace simhukdis.Controllers
                 {
                     b = LampiranSurat2.FileName;
                     FileExt = Path.GetExtension(b);
-                    Ext = Server.MapPath("~/Files/Upload/Surat Masuk/2.BAP/");
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/2.BAP/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(b);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                     Request.Files[0].SaveAs(FilePath);
@@ -208,7 +218,7 @@ namespace simhukdis.Controllers
                 {
                     c = LampiranSurat3.FileName;
                     FileExt = Path.GetExtension(c);
-                    Ext = Server.MapPath("~/Files/Upload/Surat Masuk/3.Surat Tugas Pemeriksaan/");
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/3.Surat Tugas Pemeriksaan/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(c);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                     Request.Files[0].SaveAs(FilePath);
@@ -222,7 +232,7 @@ namespace simhukdis.Controllers
                 {
                     d = LampiranSurat4.FileName;
                     FileExt = Path.GetExtension(d);
-                    Ext = Server.MapPath("~/Files/Upload/Surat Masuk/5.Dokumen Lainnya/");
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/5.Dokumen Lainnya/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(d);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                     Request.Files[0].SaveAs(FilePath);
@@ -236,7 +246,7 @@ namespace simhukdis.Controllers
                 {
                     e = LampiranSurat5.FileName;
                     FileExt = Path.GetExtension(e);
-                    Ext = Server.MapPath("~/Files/Upload/Surat Masuk/5.Dokumen Lainnya/");
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/5.Dokumen Lainnya/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(e);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                     Request.Files[0].SaveAs(FilePath);
@@ -250,7 +260,7 @@ namespace simhukdis.Controllers
                 {
                     f = LampiranSurat6.FileName;
                     FileExt = Path.GetExtension(f);
-                    Ext = Server.MapPath("~/Files/Upload/Surat Masuk/6.Surat Putusan Pengadilan/");
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/6.Surat Putusan Pengadilan/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(f);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                     Request.Files[0].SaveAs(FilePath);
@@ -264,7 +274,7 @@ namespace simhukdis.Controllers
                 {
                     g = LampiranSurat_LHA.FileName;
                     FileExt = Path.GetExtension(g);
-                    Ext = Server.MapPath("~/Files/Upload/Surat Masuk/7.LHA/");
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/7.LHA/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(g);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                     Request.Files[0].SaveAs(FilePath);
@@ -278,7 +288,7 @@ namespace simhukdis.Controllers
                 db.Insert(sm);
 
                 int Status = 0;
-                string DateFrom = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
+                string DateFrom = Convert.ToDateTime(DateTime.Today).ToString("yyyy-01-01");
                 string DateTo = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd"); ;
                 return RedirectToAction("Index", "UsulHukdis", new { Status, DateFrom, DateTo });
             }
@@ -306,7 +316,7 @@ namespace simhukdis.Controllers
             }
         }
         [HttpGet]
-        public ActionResult Edit(int ID, string KODE_SATUAN_KERJA)
+        public ActionResult Edit(int ID, string KODE_SATUAN_KERJA, string Kode_Unit_Kerja)
         {
             if (Session["Fullname"] == null)
             {
@@ -324,6 +334,8 @@ namespace simhukdis.Controllers
                 ViewBag.UserID = userlogin;
                 ViewBag.SatuanKerja = SatuanKerja;
                 ViewBag.UserGroup = UserGroup;
+
+                ViewBag.Unit_Kerja = new SelectList(db.GetUnit(KODE_SATUAN_KERJA), "Kode_Unit_Kerja", "Unit_Kerja", Kode_Unit_Kerja);
                 ViewBag.Satker = new SelectList(db.GetListSatker(), "KODE_SATUAN_KERJA", "SATUAN_KERJA", KODE_SATUAN_KERJA);
                 return View(sm);
             }
@@ -338,7 +350,7 @@ namespace simhukdis.Controllers
 
         [HttpPost]
         public ActionResult Edit(int ID, string NoAgenda, string NoSurat, string AsalSurat, string TanggalSurat,
-            string perihal, string KODE_SATUAN_KERJA, string Unit_Kerja, HttpPostedFileBase LampiranSurat1,
+            string perihal, string KODE_SATUAN_KERJA, string Kode_Unit_Kerja, HttpPostedFileBase LampiranSurat1,
             HttpPostedFileBase LampiranSurat2, HttpPostedFileBase LampiranSurat3,
             HttpPostedFileBase LampiranSurat4, HttpPostedFileBase LampiranSurat5, HttpPostedFileBase LampiranSurat6, HttpPostedFileBase LampiranSurat_LHA)
         {
@@ -358,7 +370,10 @@ namespace simhukdis.Controllers
             {
                 GetDateTime = DateTime.Now.ToString("ddMMyyyy_hhmmss");
                 string UserLogin = Session["Fullname"].ToString();
+                string FullPath = "";
                 clsSuratMasuk sm = new clsSuratMasuk();
+                clsSuratMasukDB db = new clsSuratMasukDB();
+                clsSuratMasuk xx = db.GetList(ID);
                 sm.ID = ID;
                 sm.NoAgenda = NoAgenda;
                 sm.NoSurat = NoSurat;
@@ -366,16 +381,29 @@ namespace simhukdis.Controllers
                 sm.TanggalSurat = TanggalSurat;
                 sm.perihal = perihal;
                 sm.SATUAN_KERJA = KODE_SATUAN_KERJA;
-                sm.Kode_Unit_Kerja = Unit_Kerja;
+                if (Kode_Unit_Kerja == null && Kode_Unit_Kerja == "")
+                {
+                    sm.Kode_Unit_Kerja = "0";
+                }
+                else
+                {
+                    sm.Kode_Unit_Kerja = Kode_Unit_Kerja;
+                }
                 if (LampiranSurat1 != null)
                 {
                     a = LampiranSurat1.FileName;
                     FileExt = Path.GetExtension(a);
-                    Ext = Server.MapPath("~/Files/Upload/Surat Masuk/1.Surat Pengantar/");
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/1.Surat Pengantar/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(a);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                     Request.Files[0].SaveAs(FilePath);
                     sm.LampiranSurat1 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+
+                    FullPath = Ext + xx.LampiranSurat1;
+                    if (System.IO.File.Exists(FullPath))
+                    {
+                        System.IO.File.Delete(FullPath);
+                    }
                 }
                 else
                 {
@@ -385,12 +413,16 @@ namespace simhukdis.Controllers
                 {
                     b = LampiranSurat2.FileName;
                     FileExt = Path.GetExtension(b);
-                    Ext = Server.MapPath("~/Files/Upload/Surat Masuk/2.BAP/");
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/2.BAP/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(b);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                     Request.Files[0].SaveAs(FilePath);
                     sm.LampiranSurat2 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
-
+                    FullPath = Ext + xx.LampiranSurat2;
+                    if (System.IO.File.Exists(FullPath))
+                    {
+                        System.IO.File.Delete(FullPath);
+                    }
                 }
                 else
                 {
@@ -400,11 +432,16 @@ namespace simhukdis.Controllers
                 {
                     c = LampiranSurat3.FileName;
                     FileExt = Path.GetExtension(c);
-                    Ext = Server.MapPath("~/Files/Upload/Surat Masuk/3.Surat Tugas Pemeriksaan/");
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/3.Surat Tugas Pemeriksaan/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(c);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                     Request.Files[0].SaveAs(FilePath);
                     sm.LampiranSurat3 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    FullPath = Ext + xx.LampiranSurat3;
+                    if (System.IO.File.Exists(FullPath))
+                    {
+                        System.IO.File.Delete(FullPath);
+                    }
                 }
                 else
                 {
@@ -414,11 +451,16 @@ namespace simhukdis.Controllers
                 {
                     d = LampiranSurat4.FileName;
                     FileExt = Path.GetExtension(d);
-                    Ext = Server.MapPath("~/Files/Upload/Surat Masuk/5.Dokumen Lainnya/");
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/5.Dokumen Lainnya/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(d);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                     Request.Files[0].SaveAs(FilePath);
                     sm.LampiranSurat4 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    FullPath = Ext + xx.LampiranSurat4;
+                    if (System.IO.File.Exists(FullPath))
+                    {
+                        System.IO.File.Delete(FullPath);
+                    }
                 }
                 else
                 {
@@ -428,11 +470,17 @@ namespace simhukdis.Controllers
                 {
                     e = LampiranSurat5.FileName;
                     FileExt = Path.GetExtension(e);
-                    Ext = Server.MapPath("~/Files/Upload/Surat Masuk/5.Dokumen Lainnya/");
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/5.Dokumen Lainnya/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(e);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                     Request.Files[0].SaveAs(FilePath);
                     sm.LampiranSurat5 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+
+                    FullPath = Ext + xx.LampiranSurat5;
+                    if (System.IO.File.Exists(FullPath))
+                    {
+                        System.IO.File.Delete(FullPath);
+                    }
                 }
                 else
                 {
@@ -442,11 +490,17 @@ namespace simhukdis.Controllers
                 {
                     f = LampiranSurat6.FileName;
                     FileExt = Path.GetExtension(f);
-                    Ext = Server.MapPath("~/Files/Upload/Surat Masuk/6.Surat Putusan Pengadilan/");
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/6.Surat Putusan Pengadilan/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(f);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                     Request.Files[0].SaveAs(FilePath);
                     sm.LampiranSurat6 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+
+                    FullPath = Ext + xx.LampiranSurat6;
+                    if (System.IO.File.Exists(FullPath))
+                    {
+                        System.IO.File.Delete(FullPath);
+                    }
                 }
                 else
                 {
@@ -456,23 +510,27 @@ namespace simhukdis.Controllers
                 {
                     g = LampiranSurat_LHA.FileName;
                     FileExt = Path.GetExtension(g);
-                    Ext = Server.MapPath("~/Files/Upload/Surat Masuk/7.LHA/");
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/7.LHA/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(g);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                     Request.Files[0].SaveAs(FilePath);
                     sm.LampiranSurat_LHA = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+
+                    FullPath = Ext + xx.LampiranSurat_LHA;
+                    if (System.IO.File.Exists(FullPath))
+                    {
+                        System.IO.File.Delete(FullPath);
+                    }
                 }
                 else
                 {
                     sm.LampiranSurat_LHA = "";
                 }
                 sm.UpdatUser = UserLogin;
-
-                clsSuratMasukDB db = new clsSuratMasukDB();
                 db.Edit(sm);
 
                 int Status = 0;
-                string DateFrom = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
+                string DateFrom = Convert.ToDateTime(DateTime.Today).ToString("yyyy-01-01");
                 string DateTo = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd"); ;
                 return RedirectToAction("Index", "UsulHukdis", new { Status, DateFrom, DateTo });
             }
@@ -489,7 +547,7 @@ namespace simhukdis.Controllers
             try
             {
                 //Build the File Path.
-                string path = Server.MapPath("~/Files/Upload/Surat Masuk/1.Surat Pengantar/") + fileName;
+                string path = Server.MapPath("/Files/Upload/Surat Masuk/1.Surat Pengantar/") + fileName;
 
                 //Read the File data into Byte Array.
                 byte[] bytes = System.IO.File.ReadAllBytes(path);
@@ -509,7 +567,7 @@ namespace simhukdis.Controllers
             try
             {
                 //Build the File Path.
-                string path = Server.MapPath("~/Files/Upload/Surat Masuk/2.BAP/") + fileName;
+                string path = Server.MapPath("/Files/Upload/Surat Masuk/2.BAP/") + fileName;
 
                 //Read the File data into Byte Array.
                 byte[] bytes = System.IO.File.ReadAllBytes(path);
@@ -528,7 +586,7 @@ namespace simhukdis.Controllers
             try
             {
                 //Build the File Path.
-                string path = Server.MapPath("~/Files/Upload/Surat Masuk/3.Surat Tugas Pemeriksaan/") + fileName;
+                string path = Server.MapPath("/Files/Upload/Surat Masuk/3.Surat Tugas Pemeriksaan/") + fileName;
 
                 //Read the File data into Byte Array.
                 byte[] bytes = System.IO.File.ReadAllBytes(path);
@@ -547,7 +605,7 @@ namespace simhukdis.Controllers
             try
             {
                 //Build the File Path.
-                string path = Server.MapPath("~/Files/Upload/Surat Masuk/4.Surat Panggilan/") + fileName;
+                string path = Server.MapPath("/Files/Upload/Surat Masuk/4.Surat Panggilan/") + fileName;
 
                 //Read the File data into Byte Array.
                 byte[] bytes = System.IO.File.ReadAllBytes(path);
@@ -566,7 +624,7 @@ namespace simhukdis.Controllers
             try
             {
                 //Build the File Path.
-                string path = Server.MapPath("~/Files/Upload/Surat Masuk/5.Dokumen Lainnya/") + fileName;
+                string path = Server.MapPath("/Files/Upload/Surat Masuk/5.Dokumen Lainnya/") + fileName;
 
                 //Read the File data into Byte Array.
                 byte[] bytes = System.IO.File.ReadAllBytes(path);
@@ -585,7 +643,7 @@ namespace simhukdis.Controllers
             try
             {
                 //Build the File Path.
-                string path = Server.MapPath("~/Files/Upload/Surat Masuk/6.Surat Putusan Pengadilan/") + fileName;
+                string path = Server.MapPath("/Files/Upload/Surat Masuk/6.Surat Putusan Pengadilan/") + fileName;
 
                 //Read the File data into Byte Array.
                 byte[] bytes = System.IO.File.ReadAllBytes(path);
@@ -604,7 +662,7 @@ namespace simhukdis.Controllers
             try
             {
                 //Build the File Path.
-                string path = Server.MapPath("~/Files/Upload/Surat Masuk/7.LHA/") + fileName;
+                string path = Server.MapPath("/Files/Upload/Surat Masuk/7.LHA/") + fileName;
 
                 //Read the File data into Byte Array.
                 byte[] bytes = System.IO.File.ReadAllBytes(path);
@@ -700,7 +758,7 @@ namespace simhukdis.Controllers
                 GetDateTime = DateTime.Now.ToString("ddMMyyyy_hhmmss");
                 FileName = Request.Files[0].FileName;
                 FileExt = Path.GetExtension(FileName);
-                Ext = Server.MapPath("~/Files/Upload/Surat Masuk/1.Surat Pengantar/");
+                Ext = Server.MapPath("/Files/Upload/Surat Masuk/1.Surat Pengantar/");
                 FileNameWithoutExtension = Path.GetFileNameWithoutExtension(FileName);
                 FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                 Request.Files[0].SaveAs(FilePath);

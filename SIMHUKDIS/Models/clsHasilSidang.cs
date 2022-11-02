@@ -1,11 +1,11 @@
-﻿using MySql.Data.MySqlClient;
-using simhukdis.Models;
+﻿using SIMHUKDIS.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
@@ -83,7 +83,7 @@ namespace SIMHUKDIS.Models
     public class HasilSidangDtl
     {
         [Key]
-        public int ID { get; set; }
+        public string ID { get; set; }
         [DisplayName("No")]
         public int No { get; set; }
         [DisplayName("No Agenda")]
@@ -211,14 +211,14 @@ namespace SIMHUKDIS.Models
             int a = 0;
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             List<clsHasilSidang> DP = new List<clsHasilSidang>();
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                string q = "sp_HasilSidang_Sel";
-                MySqlCommand cmd = new MySqlCommand(q, con);
+                string q = "SIMHUKDIS.sp_HasilSidang_Sel";
+                SqlCommand cmd = new SqlCommand(q, con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("UserID", UserID);
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     clsHasilSidang data = new clsHasilSidang();
@@ -291,13 +291,13 @@ namespace SIMHUKDIS.Models
             int a = 0;
             string pasalpelanggaran = "";
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                string q = "sp_PasalPelanggaran_Sel";
-                MySqlCommand cmd = new MySqlCommand(q, con);
+                string q = "SIMHUKDIS.sp_PasalPelanggaran_Sel";
+                SqlCommand cmd = new SqlCommand(q, con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     if (pasalpelanggaran == "")
@@ -317,22 +317,22 @@ namespace SIMHUKDIS.Models
         {
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             HasilSidangDtl data = new HasilSidangDtl();
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
                 Int32 pNom = 0;
                 string k = "";
-                string q = "sp_HasilSidang_Create";
-                MySqlCommand cmd = new MySqlCommand(q, con);
+                string q = "SIMHUKDIS.sp_HasilSidang_Create";
+                SqlCommand cmd = new SqlCommand(q, con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iid", ID);
                 cmd.Parameters.AddWithValue("iNIP", NIP);
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     pNom = pNom + 1;
                     data.No = pNom;
-                    data.ID = Convert.ToInt32(rd["id"].ToString());
+                    data.ID = rd["id"].ToString();
                     data.NoAgenda = rd["nomor_agenda"].ToString();
                     data.NoSurat = rd["nomor_surat"].ToString();
                     data.AsalSurat = rd["asal_surat"].ToString();
@@ -414,7 +414,7 @@ namespace SIMHUKDIS.Models
                         if (z == 1)
                         {
                             data.FullName = item.NAMA_LENGKAP;
-                            data.GOL_RUANG = item.PANGKAT + ", " + item.GOL_RUANG;
+                            data.GOL_RUANG = item.PANGKAT;
                             data.LEVEL_JABATAN = item.LEVEL_JABATAN;
                             data.UnitKerja = item.SATUAN_KERJA;
                             data.TEMPAT_LAHIR = item.TEMPAT_LAHIR;
@@ -446,15 +446,15 @@ namespace SIMHUKDIS.Models
             string k = "";
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             clsHasilSidang DP = new clsHasilSidang();
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                string q = "sp_HasilSidang_Sel_ByID";
-                MySqlCommand cmd = new MySqlCommand(q, con);
+                string q = "SIMHUKDIS.sp_HasilSidang_Sel_ByID";
+                SqlCommand cmd = new SqlCommand(q, con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("IID", ID);
                 cmd.Parameters.AddWithValue("INIP", NIP);
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     if (a == 1 )
@@ -539,18 +539,18 @@ namespace SIMHUKDIS.Models
         {
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             HasilSidangDtl data = new HasilSidangDtl();
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
                 Int32 pNom = 1;
                 string a,b,c,d,e,f,g,h,i,j = "";
                 string Tembusan = "";
-                string q = "sp_Tembusan_sel";
-                MySqlCommand cmd = new MySqlCommand(q, con);
+                string q = "SIMHUKDIS.sp_Tembusan_sel";
+                SqlCommand cmd = new SqlCommand(q, con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iKODE_SATUAN_KERJA", KodeSatker);
                 cmd.Parameters.AddWithValue("iKode_Unit_Kerja", Satker3);
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     a = rd["Tembusan_1"].ToString();
@@ -685,11 +685,11 @@ namespace SIMHUKDIS.Models
                 int i = 0;
                 Encryption encrypt = new Encryption();
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "sp_DPK_Ins";
+                    string MySql = "SIMHUKDIS.sp_DPK_Ins";
                     string TanggalSidang = Convert.ToDateTime(PD.Tanggal_Sidang_DPK).ToString("yyyy-MM-dd");
-                    MySqlCommand cmd = new MySqlCommand(MySql, con);
+                    SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("iid", PD.ID);
                     cmd.Parameters.AddWithValue("iNIP", PD.NIP);
@@ -712,6 +712,109 @@ namespace SIMHUKDIS.Models
                 throw ex;
             }
         }
+        public int HasilSidang_Insert(HasilSidangDtl PD)
+        {
+            try
+            {
+                int i = 0;
+                Encryption encrypt = new Encryption();
+                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                using (SqlConnection con = new SqlConnection(constr))
+                {
+                    string MySql = "SIMHUKDIS.sp_HasilSidang_Ins";
+                    string Tanggal_SK = Convert.ToDateTime(PD.Tanggal_SK).ToString("yyyy-MM-dd");
+                    string Tanggal_Penyampaian_Ke_Satker = Convert.ToDateTime(PD.Tanggal_Penyampaian_Ke_Satker).ToString("yyyy-MM-dd");
+                    string Tanggal_Penyampaian_Ke_YBS = Convert.ToDateTime(PD.Tanggal_Penyampaian_Ke_YBS).ToString("yyyy-MM-dd");
+                    SqlCommand cmd = new SqlCommand(MySql, con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("IID", PD.ID);
+                    cmd.Parameters.AddWithValue("iNIP", PD.NIP);
+                    cmd.Parameters.AddWithValue("INO_SK", PD.NO_SK);
+                    cmd.Parameters.AddWithValue("ITanggal_SK", Tanggal_SK);
+                    cmd.Parameters.AddWithValue("IFILE_SK", PD.FILE_SK);
+                    cmd.Parameters.AddWithValue("IKeterangan_SK", PD.Keterangan_SK);
+                    cmd.Parameters.AddWithValue("ITanggal_Penyampaian_Ke_Satker", Tanggal_Penyampaian_Ke_Satker);
+                    cmd.Parameters.AddWithValue("IPenerima_Satker", PD.Penerima_Satker);
+                    cmd.Parameters.AddWithValue("IBAP_Satker", PD.BAP_Satker);
+                    cmd.Parameters.AddWithValue("IKeterangan_Satker", PD.Keterangan_Satker);
+                    cmd.Parameters.AddWithValue("ITanggal_Penyampaian_Ke_YBS", Tanggal_Penyampaian_Ke_YBS);
+                    cmd.Parameters.AddWithValue("IPenerima_YBS", PD.Penerima_YBS);
+                    cmd.Parameters.AddWithValue("IBAP_Penerima", PD.BAP_Penerima);
+                    cmd.Parameters.AddWithValue("IKeterangan_Penerima", PD.Keterangan_Penerima);
+                    cmd.Parameters.AddWithValue("ICreate_User", PD.CreateUser);
+                    con.Open();
+                    i = cmd.ExecuteNonQuery();
+                }
+                return i;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+        public bool GetDataExist(string ID, string NIP)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_DPK_Already_Sel", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("iid", ID);
+                cmd.Parameters.AddWithValue("iNIP", NIP);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                if (dt.Rows.Count == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+        }
+        public int Ubah(HasilSidangDtl PD)
+        {
+            try
+            {
+                int i = 0;
+                Encryption encrypt = new Encryption();
+                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                using (SqlConnection con = new SqlConnection(constr))
+                {
+                    string MySql = "SIMHUKDIS.sp_HasilSidang_Upd";
+                    string Tanggal_SK = Convert.ToDateTime(PD.Tanggal_SK).ToString("yyyy-MM-dd");
+                    string Tanggal_Penyampaian_Ke_Satker = Convert.ToDateTime(PD.Tanggal_Penyampaian_Ke_Satker).ToString("yyyy-MM-dd");
+                    string Tanggal_Penyampaian_Ke_YBS = Convert.ToDateTime(PD.Tanggal_Penyampaian_Ke_YBS).ToString("yyyy-MM-dd");
+                    SqlCommand cmd = new SqlCommand(MySql, con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("IID", PD.ID);
+                    cmd.Parameters.AddWithValue("iNIP", PD.NIP);
+                    cmd.Parameters.AddWithValue("INO_SK", PD.NO_SK);
+                    cmd.Parameters.AddWithValue("ITanggal_SK", Tanggal_SK);
+                    cmd.Parameters.AddWithValue("IFILE_SK", PD.FILE_SK);
+                    cmd.Parameters.AddWithValue("IKeterangan_SK", PD.KeputusanSidang);
+                    cmd.Parameters.AddWithValue("ITanggal_Penyampaian_Ke_Satker", Tanggal_Penyampaian_Ke_Satker);
+                    cmd.Parameters.AddWithValue("IPenerima_Satker", PD.Penerima_Satker);
+                    cmd.Parameters.AddWithValue("IBAP_Satker", PD.BAP_Satker);
+                    cmd.Parameters.AddWithValue("IKeterangan_Satker", PD.Keterangan_Satker);
+                    cmd.Parameters.AddWithValue("ITanggal_Penyampaian_Ke_YBS", Tanggal_Penyampaian_Ke_YBS);
+                    cmd.Parameters.AddWithValue("IPenerima_YBS", PD.Penerima_YBS);
+                    cmd.Parameters.AddWithValue("IBAP_Penerima", PD.BAP_Penerima);
+                    cmd.Parameters.AddWithValue("IKeterangan_Penerima", PD.Keterangan_Penerima);
+                    cmd.Parameters.AddWithValue("ICreate_User", PD.CreateUser);
+                    con.Open();
+                    i = cmd.ExecuteNonQuery();
+                }
+                return i;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public int Update(clsHasilSidang PD)
         {
             try
@@ -719,11 +822,11 @@ namespace SIMHUKDIS.Models
                 int i = 0;
                 Encryption encrypt = new Encryption();
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "sp_DPK_Upd";
+                    string MySql = "SIMHUKDIS.sp_DPK_Upd";
                     string TanggalSidang = Convert.ToDateTime(PD.Tanggal_Sidang_DPK).ToString("yyyy-MM-dd");
-                    MySqlCommand cmd = new MySqlCommand(MySql, con);
+                    SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("iid", PD.ID);
                     cmd.Parameters.AddWithValue("iNIP", PD.NIP);
@@ -746,17 +849,17 @@ namespace SIMHUKDIS.Models
                 throw ex;
             }
         }
-        public bool GetDataExist(string ID, string NIP)
+        public bool cek(string ID, string NIP)
         {
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
                 con.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_DPK_Already_Sel", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_HasilSidang_AlreadyExist", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("iid", ID);
-                cmd.Parameters.AddWithValue("iNIP", NIP);
-                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                cmd.Parameters.AddWithValue("IID", ID);
+                cmd.Parameters.AddWithValue("INIP", NIP);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 if (dt.Rows.Count == 0)

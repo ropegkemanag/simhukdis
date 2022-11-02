@@ -1,6 +1,4 @@
-﻿using MySql.Data.MySqlClient;
-using Newtonsoft.Json;
-using simhukdis.Models;
+﻿using Newtonsoft.Json;
 using SIMHUKDIS.Models;
 using Spire.Xls;
 using System;
@@ -18,7 +16,7 @@ using OfficeOpenXml;
 using OfficeOpenXml.Style;
 using System.Drawing;
 
-namespace simhukdis.Controllers
+namespace SIMHUKDIS.Controllers
 {
     [SessionExpire]
     public class UserController : Controller
@@ -31,16 +29,24 @@ namespace simhukdis.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            string userlogin = Session["Fullname"].ToString();
-            string SatuanKerja = Session["Satker"].ToString();
-            string StatusAdmin = Session["StatusAdmin"].ToString();
-            string UserGroup = Session["UserGroup"].ToString();
-            ViewBag.UserID = userlogin;
-            ViewBag.SatuanKerja = SatuanKerja;
-            ViewBag.UserGroup = UserGroup;
+            try
+            {
+                string userlogin = Session["Fullname"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
 
-            List<clsUserLogin> sm = db.Users.ToList();
-            return View(sm);
+                List<clsUserLogin> sm = db.Users();
+                return View(sm);
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
+            }
         }
         [HttpGet]
         public ActionResult Create()
@@ -49,18 +55,26 @@ namespace simhukdis.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            string userlogin = Session["Fullname"].ToString();
-            string SatuanKerja = Session["Satker"].ToString();
-            string StatusAdmin = Session["StatusAdmin"].ToString();
-            string UserGroup = Session["UserGroup"].ToString();
-            ViewBag.UserID = userlogin;
-            ViewBag.SatuanKerja = SatuanKerja;
-            ViewBag.UserGroup = UserGroup;
+            try
+            { 
+                string userlogin = Session["Fullname"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
 
-            clsUserLogin user = new clsUserLogin();
-            ViewBag.Satker = new SelectList(db.GetListSatker(), "KODE_SATUAN_KERJA", "SATUAN_KERJA");
-            ViewBag.GroupID = new SelectList(db.GetListUserGroup(), "GroupID", "GroupDesc");
-            return View();
+                clsUserLogin user = new clsUserLogin();
+                ViewBag.Satker = new SelectList(db.GetListSatker(), "KODE_SATUAN_KERJA", "SATUAN_KERJA");
+                ViewBag.GroupID = new SelectList(db.GetListUserGroup(), "GroupID", "GroupDesc");
+                return View();
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message});
+            }
         }
         [HttpGet]
         public ActionResult ChangePassword()
@@ -160,8 +174,9 @@ namespace simhukdis.Controllers
                 ViewBag.UserID = userlogin;
                 ViewBag.SatuanKerja = SatuanKerja;
                 ViewBag.UserGroup = UserGroup;
+                ViewBag.StatusAdmin = StatusAdmin;
 
-                clsUserLogin users = db.Users.SingleOrDefault(sub => sub.UserID == UserID);
+                clsUserLogin users = db.UbahData(UserID);
                 ViewBag.GroupID = new SelectList(db.GetListUserGroup(), "GroupID", "GroupDesc", GroupID);
                 users.StatusAdmin = StatusAdmin;
                 ViewBag.Satker = new SelectList(db.GetListSatker(), "KODE_SATUAN_KERJA", "SATUAN_KERJA", Satker);
@@ -176,7 +191,7 @@ namespace simhukdis.Controllers
         }
 
         [HttpPost]
-        public ActionResult Ubah(string UserID, string UserName, string Fullname, string Password, string StatusAdmin, string GroupID, string NIP, string LEVEL_JABATAN)
+        public ActionResult Ubah(string UserID, string UserName, string Fullname, string Password, string StatusAdmin, string GroupID, string NIP, string LEVEL_JABATAN, string satker)
         {
             string strMsg = "";
             string UserLogin = "";
@@ -193,6 +208,7 @@ namespace simhukdis.Controllers
                 users.GroupID = GroupID;
                 users.LastUser = UserLogin;
                 users.LEVEL_JABATAN = LEVEL_JABATAN;
+                users.Satker = satker;
                 db.Edit(users);
                 strMsg = "Success";
                 return Json(strMsg, JsonRequestBehavior.AllowGet);
@@ -383,7 +399,7 @@ namespace simhukdis.Controllers
                 {
                     string sFilename = "DataUser_" + String.Format("{0:yyyyMMdd}", DateTime.Now) + "_" + String.Format("{0:HHmm}", DateTime.Now);
                     List<clsUserLogin> rpt = new List<clsUserLogin>();
-                    rpt = db.Users.ToList();
+                    rpt = db.Users();
                     ExcelWorksheet ws = exl.Workbook.Worksheets.Add("Sheet1");
                     if (rpt.Count == 0)
                     {

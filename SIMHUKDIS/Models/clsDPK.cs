@@ -1,10 +1,10 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
@@ -61,13 +61,13 @@ namespace SIMHUKDIS.Models
             int a = 0;
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             List<clsDPK> DP = new List<clsDPK>();
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                string q ="sp_DPK_Sel";
-                MySqlCommand cmd = new MySqlCommand(q, con);
+                string q ="SIMHUKDIS.sp_DPK_Sel";
+                SqlCommand cmd = new SqlCommand(q, con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     clsDPK data = new clsDPK();
@@ -115,14 +115,14 @@ namespace SIMHUKDIS.Models
             int a = 0;
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             List<clsDPK> DP = new List<clsDPK>();
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                string q = "sp_DPK_Sel";
-                MySqlCommand cmd = new MySqlCommand(q, con);
+                string q = "SIMHUKDIS.sp_DPK_Sel";
+                SqlCommand cmd = new SqlCommand(q, con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iTanggalSidang", TanggalSidang);
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     clsDPK data = new clsDPK();
@@ -168,14 +168,14 @@ namespace SIMHUKDIS.Models
         public bool GetDataExist(string ID, string NIP)
         {
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
                 con.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_DPK_Already_Sel", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_DPK_Already_Sel", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iid", ID);
                 cmd.Parameters.AddWithValue("iNIP", NIP);
-                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 if (dt.Rows.Count == 0)
@@ -195,10 +195,10 @@ namespace SIMHUKDIS.Models
                 int i = 0;
                 Encryption encrypt = new Encryption();
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "sp_DPK_Upd_Status";
-                    MySqlCommand cmd = new MySqlCommand(MySql, con);
+                    string MySql = "SIMHUKDIS.sp_DPK_Upd_Status";
+                    SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("iid", PD.ID);
                     cmd.Parameters.AddWithValue("iNIP", PD.NIP);
@@ -219,10 +219,10 @@ namespace SIMHUKDIS.Models
             {
                 int i = 0;
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "sp_DPK_Upd_Status2";
-                    MySqlCommand cmd = new MySqlCommand(MySql, con);
+                    string MySql = "SIMHUKDIS.sp_DPK_Upd_Status2";
+                    SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("iid", PD.ID);
                     cmd.Parameters.AddWithValue("iCreate_User", PD.UserLogin);
@@ -243,11 +243,11 @@ namespace SIMHUKDIS.Models
                 int i = 0;
                 Encryption encrypt = new Encryption();
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "sp_DPK_Ins";
                     string TanggalSidang = Convert.ToDateTime(PD.Tanggal_Sidang_DPK).ToString("yyyy-MM-dd");
-                    MySqlCommand cmd = new MySqlCommand(MySql, con);
+                    SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("iid", PD.ID);
                     cmd.Parameters.AddWithValue("iNIP", PD.NIP);
@@ -278,11 +278,11 @@ namespace SIMHUKDIS.Models
                 int i = 0;
                 Encryption encrypt = new Encryption();
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "sp_DPK_Upd";
+                    string MySql = "SIMHUKDIS.sp_DPK_Upd";
                     string TanggalSidang = Convert.ToDateTime(PD.Tanggal_Sidang_DPK).ToString("yyyy-MM-dd");
-                    MySqlCommand cmd = new MySqlCommand(MySql, con);
+                    SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("iid", PD.ID);
                     cmd.Parameters.AddWithValue("iNIP", PD.NIP);
@@ -305,5 +305,44 @@ namespace SIMHUKDIS.Models
                 throw ex;
             }
         }
+        public clsDPK ListByID(string ID, string NIP)
+        {
+            int a = 0;
+            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            clsDPK DP = new clsDPK();
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                string q = "sp_DPK_Sel_ByID";
+                SqlCommand cmd = new SqlCommand(q, con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("iid", ID);
+                cmd.Parameters.AddWithValue("inip", NIP);
+                con.Open();
+                SqlDataReader rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    a = a + 1;
+                    DP.No = a;
+                    DP.ID = rd["id"].ToString();
+                    DP.NoSurat = rd["nomor_surat"].ToString();
+                    DP.AsalSurat = rd["asal_surat"].ToString();
+                    DP.perihal = rd["perihal"].ToString();
+                    DP.NIP = rd["NIP"].ToString();
+                    DP.FullName = rd["Fullname"].ToString();
+                    DP.DasarBukti = rd["Dasar_dan_Bukti_Penunjang"].ToString();
+                    DP.PelanggaranDisiplin = rd["Pelanggaran"].ToString();
+                    DP.SATUAN_KERJA = rd["SatuanKerja"].ToString();
+                    DP.PasalPelanggaran = rd["Pasal_Pelanggaran"].ToString();
+                    DP.RekomendasiHukdis = rd["Rekomendasi_Hukuman"].ToString();
+                    DP.Catatan = rd["Catatan_Sidang"].ToString();
+                    DP.Tanggal_Sidang_DPK = rd["tanggal_sidang_dpk"].ToString();
+                    DP.Tanggal_Sidang_Pra_DPK = rd["tanggal_sidang_pra_dpk"].ToString();
+                    DP.KeputusanSidang = rd["KeputusanSidang"].ToString();
+                    DP.hukuman = rd["hukuman"].ToString();
+                }
+                return DP;
+            }
+        }
+
     }
 }

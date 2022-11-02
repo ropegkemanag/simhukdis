@@ -1,81 +1,118 @@
-﻿@model simhukdis.Models.clsUserLogin
+﻿@model SIMHUKDIS.Models.clsUserLogin
 @{
     ViewBag.Title = "EDIT USER";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
+<div class="pd-20 card-box mb-30">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
-<div class="form-horizontal" style="font-family:Calibri;">
-    <div class="form-group" style="display:none;">
-        @Html.LabelFor(model => model.UserID, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.UserID, new { htmlAttributes = new { @class = "form-control", @readonly = "True", @id = "UserID", required = "required" } })
-            @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "text-danger" })
+    <form>
+        <div class="form-group" style="display:none;">
+            @Html.LabelFor(model => model.UserID, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col">
+                @Html.EditorFor(model => model.UserID, new { htmlAttributes = new { @class = "form-control", @readonly = "True", @id = "UserID", required = "required" } })
+                @Html.ValidationMessageFor(model => model.UserID, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label style="font-weight: bold;color:cornflowerblue;" class="control-label col">NIP *</label>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.NIP, new { htmlAttributes = new { @class = "form-control", @readonly = "True", @id = "NIP", required = "required" } })
-            @Html.ValidationMessageFor(model => model.NIP, "", new { @class = "text-danger" })
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label class="control-label col">NIP *</label>
+            </div>
+            <div class="col">
+                @Html.EditorFor(model => model.NIP, new { htmlAttributes = new { @class = "form-control", @readonly = "True", @id = "NIP", required = "required" } })
+                @Html.ValidationMessageFor(model => model.NIP, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <label style="font-weight: bold;color:cornflowerblue;" class="control-label col">Nama Lengkap *</label>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control", @id = "Fullname", required = "required", @readonly = "True" } })
-            @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label class="control-label col">Nama Lengkap *</label>
+            </div>
+            
+            <div class="col">
+                @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control", @id = "Fullname", required = "required", @readonly = "True" } })
+                @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label style="font-weight: bold;color:cornflowerblue;" class="control-label col">Satuan Kerja *</label>
-        <div class="col-md-10">
-            @Html.DropDownList("KODE_SATUAN_KERJA", ViewBag.Satker as SelectList, new { @class = "fstdropdown-select  form-control", required = "required", @id = "KODE_SATUAN_KERJA" })
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label class="control-label col">Jabatan *</label>
+            </div>
+            
+            <div class="col">
+                @Html.EditorFor(model => model.LEVEL_JABATAN, new { htmlAttributes = new { @class = "form-control", @id = "LEVEL_JABATAN", required = "required", @readonly = "True" } })
+                @Html.ValidationMessage("LEVEL_JABATAN", "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
-    <div class="form-group">
-        <label style="font-weight: bold;color:cornflowerblue;" class="control-label col">Password *</label>
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control password", @id = "Password", required = "required" } })
-            @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label class="control-label col">Satuan Kerja *</label>
+            </div>
+            
+            <div class="col">
+                @Html.DropDownList("KODE_SATUAN_KERJA", ViewBag.Satker as SelectList, new { @class = "custom-select2  form-control", required = "required", @id = "KODE_SATUAN_KERJA" })
+            </div>
         </div>
-        <div class="col-md-10">
-            <input type="checkbox" onclick="ShowPassword()">
-            @Html.Label("Lihat Password", htmlAttributes: new { @class = "control-label col-md-2" })
-        </div>
-    </div>
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label class="control-label col">Password *</label>
+            </div>
+            
+            <div class="col">
+                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control password", @id = "Password", required = "required" } })
+                @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+            </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.StatusAdmin, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.StatusAdmin, new List<SelectListItem>
-                        {
-                            new SelectListItem{ Text = "No", Value = "0" },
-                            new SelectListItem{ Text = "Yes", Value = "1" }
-                        }, htmlAttributes: new { @class = "form-control", @id = "StatusAdmin", required = "required" }
-                    )
         </div>
-    </div>
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label class="control-label col"></label>
+            </div>
+            <div class="col">
+                <input type="checkbox" onclick="ShowPassword()"> Lihat Password
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label class="control-label col">Status Admin *</label>
+            </div>
+            <div class="col">
+                @Html.DropDownListFor(model => model.StatusAdmin, new List<SelectListItem>
+                            {
+                                new SelectListItem{ Text = "No", Value = "0" },
+                                new SelectListItem{ Text = "Yes", Value = "1" }
+                            }, htmlAttributes: new { @class = "custom-select2 form-control", @id = "StatusAdmin", required = "required" }
+                        )
+            </div>
+        </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.GroupID, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.DropDownListFor(model => model.GroupID, (SelectList)ViewBag.GroupID, htmlAttributes: new { @class = "fstdropdown-select form-control", @id = "GroupID", required = "required" })
-            @Html.ValidationMessageFor(model => model.GroupID, "", new { @class = "text-danger" })
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label class="control-label col">Grup *</label>
+            </div>
+            <div class="col">
+                @Html.DropDownListFor(model => model.GroupID, (SelectList)ViewBag.GroupID, htmlAttributes: new { @class = "custom-select2 form-control", @id = "GroupID", required = "required" })
+                @Html.ValidationMessageFor(model => model.GroupID, "", new { @class = "text-danger" })
+            </div>
         </div>
-    </div>
 
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Save" class="btn btn-primary" onclick="Ubah()" /> | @Html.ActionLink("Back to List", "Index")
+        <div class="form-group row">
+            <div class="col-md-offset-2 col">
+                <input type="submit" value="Save" class="btn btn-primary" onclick="Ubah()" /> | @Html.ActionLink("Back to List", "Index")
+            </div>
         </div>
-    </div>
+    </form>
+        }
 </div>
-}
-<script type="text/javascript">
+    
+    <script src="/Scripts/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        $("#StatusAdmin").val('@ViewBag.StatusAdmin');
+    });
+
     function ShowPassword() {
         var x = document.getElementById("Password");
         if (x.type === "password") {
@@ -93,7 +130,8 @@
             StatusAdmin: $('#StatusAdmin').val(),
             GroupID: $('#GroupID').val(),
             NIP: $('#NIP').val(),
-            satker: $('#KODE_SATUAN_KERJA').val()
+            satker: $('#KODE_SATUAN_KERJA').val(),
+            LEVEL_JABATAN: $('#LEVEL_JABATAN').val()
         };
         $.ajax({
             url: "/User/Ubah",
@@ -142,4 +180,4 @@
             }
         });
     }
-</script>
+    </script>

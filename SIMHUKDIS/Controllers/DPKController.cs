@@ -1,4 +1,4 @@
-﻿using simhukdis.Models;
+﻿using SIMHUKDIS.Models;
 using SIMHUKDIS.Models;
 using Syncfusion.XlsIO;
 using System;
@@ -62,7 +62,37 @@ namespace SIMHUKDIS.Controllers
                 return RedirectToAction("Error500", "Home", new { Error_Message });
             }            
         }
-        public ActionResult UbahData(string ID, string NIP, string KeputusanSidang, string Tanggal_Sidang, string Catatan_Sidang)
+        public ActionResult Edit(string ID, string NIP)
+        {
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            try
+            {
+                clsDPKDB db = new clsDPKDB();
+                clsDPK sm = db.ListByID(ID, NIP);
+
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                string userlogin = Session["Fullname"].ToString();
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+                clsHukdisDB x = new clsHukdisDB();
+                ViewBag.Hukdis = new SelectList(x.GetListHukdis(), "ID", "HukdisDesc", sm.KeputusanSidang);
+                //ViewBag.JenisPelanggaran = new SelectList(xx.GetListJenisPelanggaran(), "Kode_Jenis_Pelanggaran", "JenisPelanggaran");
+                ViewBag.Catatan = sm.Catatan;
+                return View(sm);
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
+            }
+        }
+        public ActionResult UbahData(string ID, string NIP, string KeputusanSidang, string Tanggal_Sidang_DPK, string Catatan)
         {
             string strMsg = "";
             if (Session["Fullname"] == null)
@@ -76,13 +106,15 @@ namespace SIMHUKDIS.Controllers
                 PD.ID = ID;
                 PD.NIP = NIP;
                 PD.KeputusanSidang = KeputusanSidang;
-                PD.Catatan_Sidang = Catatan_Sidang;
+                PD.Catatan_Sidang = Catatan;
                 PD.UserLogin = UserLogin;
-                PD.Tanggal_Sidang_DPK = Tanggal_Sidang;
+                PD.Tanggal_Sidang_DPK = Tanggal_Sidang_DPK;
                 PD.DasarBukti = "";
                 PD.PelanggaranDisiplin = "";
                 PD.PasalPelanggaran = "";
-                
+                PD.Mengingat = "";
+                PD.Tembusan = "";
+
                 if (db.GetDataExist(ID, NIP) == true)
                 {
                     db.Update(PD);
@@ -91,15 +123,14 @@ namespace SIMHUKDIS.Controllers
                 {
                     db.Insert(PD);
                 }
-                strMsg = "Success";
-                return Json(strMsg, JsonRequestBehavior.AllowGet);
+                //strMsg = "Success";
+                //return Json(strMsg, JsonRequestBehavior.AllowGet);
+                return RedirectToAction("Index");
             }
             catch (Exception ex)
             {
-                strMsg = ex.Message.ToString();
-                ModelState.AddModelError(string.Empty, strMsg);
-                ViewBag.Message = string.Format(strMsg, strMsg, DateTime.Now.ToString());
-                return Json(strMsg, JsonRequestBehavior.AllowGet);
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
             }
         }
         public ActionResult DownloadToExcel2(string TanggalSidang)

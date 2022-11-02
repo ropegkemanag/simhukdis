@@ -1,32 +1,33 @@
 ﻿@model SIMHUKDIS.Models.HasilSidangDtl
 
 @{
-    ViewBag.Title = "CREATE TELAAH";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Buat SK";
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <div class="card shadow mb-4">
+    <div class="card-box mb-30">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">1. IDENTITAS PEGAWAI NEGERI SIPIL</h6>
         </div>
+
         <div class="card-body">
-            <form>
+            <form >
                 <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0" style="display:none;">
                         <label class="control-label ">ID</label>
-                        @Html.TextBox("ID", "", new { @id = "ID", @class = "form-control form-control-user", required = "required" })
+                        @Html.TextBoxFor(model => model.ID, "", new { @id = "ID", @class = "form-control", required = "required" })
                         @Html.ValidationMessage("ID", "", new { @class = "text-danger" })
                     </div>
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <label class="control-label ">NIP</label>
-                        @Html.TextBoxFor(model => model.NIP, "", new { @id = "NIP", @class = "form-control form-control-user", required = "required", onchange = "getData()", onkeypress = "AllowOnlyNumbers()", @readonly = "True" })
+                        @Html.TextBoxFor(model => model.NIP, "", new { @id = "NIP", @class = "form-control", required = "required", onchange = "getData()", onkeypress = "AllowOnlyNumbers()", @readonly = "True" })
                         @Html.ValidationMessage("NIP", "", new { @class = "text-danger" })
                     </div>
                     <div class="col-sm-6">
                         <label>Nama Lengkap</label>
-                        @Html.TextBox("NAMA_LENGKAP", "", new { @id = "NAMA_LENGKAP", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.TextBoxFor(model => model.FullName, "", new { @id = "NAMA_LENGKAP", @class = "form-control", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("NAMA_LENGKAP", "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -34,12 +35,12 @@
                 <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <label class="control-label ">Pangkat, Golongan Ruang</label>
-                        @Html.TextBox("GOL_RUANG", "", new { @id = "GOL_RUANG", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.TextBoxFor(model => model.GOL_RUANG, "", new { @id = "GOL_RUANG", @class = "form-control", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("GOL_RUANG", "", new { @class = "text-danger" })
                     </div>
                     <div class="col-sm-6">
                         <label>Jabatan</label>
-                        @Html.TextBox("LEVEL_JABATAN", "", new { @id = "LEVEL_JABATAN", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.TextBoxFor(model => model.LEVEL_JABATAN, "", new { @id = "LEVEL_JABATAN", @class = "form-control", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("LEVEL_JABATAN", "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -47,8 +48,9 @@
                 <div class="form-group row">
                     <div class="col">
                         <label class="control-label">Unit Kerja</label>
-                        <textarea class="form-control" id="Satker" rows="5" name="Satker" readonly="readonly"></textarea>
-                        @*@Html.TextArea("Satker", new { htmlAttributes = new { @class = "form-control", @id = "Satker" } })*@
+                        @Html.TextAreaFor(model => model.SATUAN_KERJA, new { @type = "text", @id = "Satker", @class = "form-control", required = "required", rows = 5, @readonly = "True" })
+                        @*<textarea class="form-control" id="Satker" rows="5" name="Satker" readonly="readonly"></textarea>*@
+                        @*@Html.TextAreaFor(model => model.SATUAN_KERJA, new { htmlAttributes = new { @class = "form-control", @id = "Satker", rows = 5 } })*@
                         @Html.ValidationMessage("Satker", "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -56,24 +58,24 @@
                 <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <label class="control-label ">Tempat Lahir</label>
-                        @Html.TextBox("TEMPAT_LAHIR", "", new { @id = "TEMPAT_LAHIR", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.TextBoxFor(model => model.TEMPAT_LAHIR, "", new { @id = "TEMPAT_LAHIR", @class = "form-control", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("TEMPAT_LAHIR", "", new { @class = "text-danger" })
                     </div>
                     <div class="col-sm-6">
                         <label>Tanggal Lahir</label>
-                        @Html.TextBox("TANGGAL_LAHIR", "", new { @id = "TANGGAL_LAHIR", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.TextBoxFor(model => model.TANGGAL_LAHIR, "", new { @id = "TANGGAL_LAHIR", @class = "form-control", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("TANGGAL_LAHIR", "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <label class="control-label ">Masa Kerja</label>
-                        @Html.TextBox("MASAKERJA_TAHUN", "", new { @id = "MASAKERJA_TAHUN", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.TextBoxFor(model => model.MASAKERJA_TAHUN, "", new { @id = "MASAKERJA_TAHUN", @class = "form-control", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("MASAKERJA_TAHUN", "", new { @class = "text-danger" })
                     </div>
                     <div class="col-sm-6" style="display:none;">
                         <label>TMT Pensiun</label>
-                        @Html.TextBox("TMT_Pensiun", "", new { @type = "text", @id = "TMT_Pensiun", @class = "form-control form-control-user", required = "required" })
+                        @Html.TextBoxFor(model => model.TMT_PENSIUN, "", new { @type = "text", @id = "TMT_Pensiun", @class = "form-control", required = "required" })
                         @Html.ValidationMessage("TMT_Pensiun", "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -81,46 +83,46 @@
                 <div class="form-group row" style="display:none;">
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <label class="control-label ">Unit Satker</label>
-                        @Html.TextBox("satker3", "", new { @id = "satker3", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.TextBox("satker3", "", new { @id = "satker3", @class = "form-control", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("satker3", "", new { @class = "text-danger" })
                         <label class="control-label ">Satuan Kerja 1</label>
-                        @Html.TextBox("SATKER_1", "", new { @id = "SATKER_1", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.TextBox("SATKER_1", "", new { @id = "SATKER_1", @class = "form-control", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("SATKER_1", "", new { @class = "text-danger" })
                     </div>
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <label class="control-label ">Satuan Kerja 2</label>
-                        @Html.TextBox("SATKER_2", "", new { @id = "SATKER_2", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.TextBox("SATKER_2", "", new { @id = "SATKER_2", @class = "form-control", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("SATKER_2", "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group row" style="display:none;">
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <label class="control-label ">Satuan Kerja 3</label>
-                        @Html.TextBox("SATKER_3", "", new { @id = "SATKER_3", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.TextBox("SATKER_3", "", new { @id = "SATKER_3", @class = "form-control", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("SATKER_3", "", new { @class = "text-danger" })
                     </div>
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <label class="control-label ">Satuan Kerja 4</label>
-                        @Html.TextBox("SATKER_4", "", new { @id = "SATKER_4", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.TextBox("SATKER_4", "", new { @id = "SATKER_4", @class = "form-control", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("SATKER_4", "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group row" style="display:none;">
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <label class="control-label ">Satuan Kerja 5</label>
-                        @Html.TextBox("SATKER_5", "", new { @id = "SATKER_5", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.TextBox("SATKER_5", "", new { @id = "SATKER_5", @class = "form-control", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("SATKER_5", "", new { @class = "text-danger" })
                     </div>
                     @*<div class="col-sm-6 mb-3 mb-sm-0">
                 <label class="control-label ">Satuan Kerja</label>
-                @Html.TextBox("SATUAN_KERJA", "", new { @id = "SATUAN_KERJA", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                @Html.TextBox("SATUAN_KERJA", "", new { @id = "SATUAN_KERJA", @class = "form-control", required = "required", @readonly = "True" })
                 @Html.ValidationMessage("SATUAN_KERJA", "", new { @class = "text-danger" })
             </div>*@
                 </div>
                 <div class="form-group row" style="display:none;">
                     <div class="col">
                         <label class="control-label ">Satuan Kerja</label>
-                        @Html.TextBox("SATUAN_KERJA", "", new { @id = "SATUAN_KERJA", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.TextBox("SATUAN_KERJA", "", new { @id = "SATUAN_KERJA", @class = "form-control", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("SATUAN_KERJA", "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -129,7 +131,7 @@
     </div>
 
     
-    <div class="card shadow mb-4">
+    <div class="card-box mb-30">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">2.DATA KEPUTUSAN SIDANG DPK</h6>
         </div>
@@ -138,28 +140,28 @@
                 <div class="form-group row">
                     <div class="col">
                         <label class="control-label">A. TANGGAL SIDANG DPK</label>
-                        @Html.TextBoxFor(model => model.Tanggal_Sidang_DPK, "", new { @type = "text", @id = "Tanggal_Sidang_DPK", @class = "form-control form-control-user", required = "required" })
+                        @Html.TextBoxFor(model => model.Tanggal_Sidang_DPK, "", new { @type = "text", @id = "Tanggal_Sidang_DPK", @class = "form-control", required = "required" })
                         @Html.ValidationMessage("Tanggal_Sidang_DPK", "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col">
                         <label class="control-label">B. DASAR BUKTI</label>
-                        @Html.TextAreaFor(model => model.DasarBukti, new { @type = "text", @id = "DasarBukti", @class = "form-control form-control-user", required = "required", rows = 5 })
+                        @Html.TextAreaFor(model => model.DasarBukti, new { @type = "text", @id = "DasarBukti", @class = "form-control", required = "required", rows = 5 })
                         @Html.ValidationMessageFor(model => model.DasarBukti, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col">
                         <label class="control-label">C. TERBUKTI MELAKUKAN PELANGGARAN</label>
-                        @Html.TextAreaFor(model => model.PelanggaranDisiplin, new { @type = "text", @id = "PelanggaranDisiplin", @class = "form-control form-control-user", required = "required", rows = 5 })
+                        @Html.TextAreaFor(model => model.PelanggaranDisiplin, new { @type = "text", @id = "PelanggaranDisiplin", @class = "form-control", required = "required", rows = 5 })
                         @Html.ValidationMessageFor(model => model.PelanggaranDisiplin, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col">
                         <label class="control-label">D. TERBUKTI MELANGGAR PASAL</label>
-                        @Html.TextAreaFor(model => model.PasalPelanggaran, new { @type = "text", @id = "PasalPelanggaran", @class = "form-control form-control-user", required = "required", rows = 5 })
+                        @Html.TextAreaFor(model => model.PasalPelanggaran, new { @type = "text", @id = "PasalPelanggaran", @class = "form-control", required = "required", rows = 5 })
                         @Html.ValidationMessageFor(model => model.PasalPelanggaran, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -174,7 +176,7 @@
                     <div class="col">
                         <label class="control-label">F. CATATAN SIDANG</label>
                         @*<textarea class="form-control" id="Catatan_Sidang" rows="5" name="Catatan_Sidang"></textarea>*@
-                        @Html.TextAreaFor(model => model.Catatan_Sidang, new { @type = "text", @id = "Catatan_Sidang", @class = "form-control form-control-user", @readonly = true, rows = 5 })
+                        @Html.TextAreaFor(model => model.Catatan_Sidang, new { @type = "text", @id = "Catatan_Sidang", @class = "form-control", @readonly = true, rows = 5 })
                         @Html.ValidationMessageFor(model => model.Catatan_Sidang, "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -205,13 +207,13 @@
 
 
         }
-        <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+        <script src="/Scripts/jquery-3.6.0.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function () {
-                var NIP = @ViewBag.NIP;
+                @*var NIP = @ViewBag.NIP;
                 var satkerx = '@ViewBag.SatuanKerja';
-                getData('@ViewBag.NIP');
-                getTembusan();
+                getData('@ViewBag.NIP');*@
+                //getTembusan();
                 $(function () {
                     $("#TMT_Pensiun").datepicker({
                         setDate: new Date(),
@@ -253,33 +255,31 @@
 
             return (/^\d+$/.test(str));
             }
-        function getTembusan()
-        {
-            var satkerx = '@ViewBag.SatuanKerja';
-            var satker3 = $("#SATKER_3").val();
-            alert(satker3);
-            $.ajax({
-                type: "GET",
-                url: "/HasilSidang/GetTembusan?",
-                cache: false,
-                data: ({ Satker: satkerx, Satker3 : satker3 }),
-                contentType: "application/json;charset=UTF-8",
-                dataType: "json",
-                success: function (result) {
-                    $('#Tembusan').val(result.Tembusan);
-                },
-                error: function (errormessage) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: "Tembusan tidak ditemukan",
-                        showConfirmButton: false,
-                        timer: 3000
-                    })
-                }
-            });
-            return false;
-        }
-        }
+            function getTembusan() {
+                var satkerx = '@ViewBag.SatuanKerja';
+                var satker3 = $("#SATKER_3").val();
+                alert(satker3);
+                $.ajax({
+                    type: "GET",
+                    url: "/HasilSidang/GetTembusan?",
+                    cache: false,
+                    data: ({ Satker: satkerx, Satker3: satker3 }),
+                    contentType: "application/json;charset=UTF-8",
+                    dataType: "json",
+                    success: function (result) {
+                        $('#Tembusan').val(result.Tembusan);
+                    },
+                    error: function (errormessage) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: "Tembusan tidak ditemukan",
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                    }
+                });
+                return false;
+            }
         function getData() {
             var NIP = $('#NIP').val();
             $.ajax({
@@ -314,10 +314,10 @@
             UbahData();
             GenerateWord();
         }
-        function UbahData() {
-                var ID = '@ViewBag.ID';
+            function UbahData() {
+                alert("UbahData");
                 var dpObj = {
-                    ID: ID,
+                    ID: $('#ID').val(),
                     NIP: $('#NIP').val(),
                     KeputusanSidang: $('#KeputusanSidang').val(),
                     Tanggal_Sidang: $('#Tanggal_Sidang_DPK').val(),
@@ -325,7 +325,8 @@
                     DasarBukti: $('#DasarBukti').val(),
                     Pelanggaran: $('#PelanggaranDisiplin').val(),
                     PasalPelanggaran: $('#PasalPelanggaran').val(),
-                    Mengingat: $('#Mengingat').val()
+                    Mengingat: $('#Mengingat').val(),
+                    Tembusan: $('#Tembusan').val()
                 };
             $.ajax({
             url: "/HasilSidang/UbahData",
@@ -360,7 +361,8 @@
                 })
             }
         });
-    }
+            }
+
     function GenerateWord()
     {
         var dpObj = {
@@ -374,7 +376,8 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (result) {
-                if (result.toString() == "Success") {
+                DownloadPDF(result.DocPDF, result.DocWord);
+                if (result.Msg.toString() == "Success") {
                     Swal.fire({
                         icon: 'success',
                         title: 'SK berhasil !',
@@ -400,5 +403,10 @@
                 })
             }
         });
+    }
+            function DownloadPDF(fileName1, fileName2) {
+        window.location = '@Url.Action("DownloadFile", "HasilSidang")?fileName=' + fileName1;
+        window.location = '@Url.Action("DownloadFile", "HasilSidang")?fileName=' + fileName2;
+
     }
         </script>

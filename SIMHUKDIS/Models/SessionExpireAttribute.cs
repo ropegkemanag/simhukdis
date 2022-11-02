@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace simhukdis.Models
+namespace SIMHUKDIS.Models
 {
     public class SessionExpireAttribute : ActionFilterAttribute
     {
@@ -14,7 +14,7 @@ namespace simhukdis.Models
             // check  sessions here
             if (HttpContext.Current.Session["LogUserID"] == null)
             {
-                filterContext.Result = new RedirectResult("~/Home/Login");
+                filterContext.Result = new RedirectResult("/Home/Login");
                 return;
             }
             base.OnActionExecuting(filterContext);

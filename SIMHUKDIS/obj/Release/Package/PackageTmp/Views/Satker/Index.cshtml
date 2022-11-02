@@ -1,11 +1,11 @@
-﻿@model IEnumerable<simhukdis.Models.Datum>
+﻿@model IEnumerable<SIMHUKDIS.Models.Datum>
 
 @{
     ViewBag.Title = "Master Satuan Kerja";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
 
-<div class="card shadow mb-4">
+<div class="card-box mb-30">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">Satuan Kerja</h6>
     </div>
@@ -14,11 +14,11 @@
         <div class="form-group">
             @if (@ViewBag.UserGroup == "01")
             {
-            <input type="submit" value="Create" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Satker")'" />
+            <input type="submit" value="Tambah Data" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Satker")'" />
             }
             else
             {
-            <input type="submit" value="Create" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Satker")'" disabled/>
+            <input type="submit" value="Tambah Data" class="btn btn-primary" onclick="location.href='@Url.Action("Create", "Satker")'" disabled/>
             }
             
         </div>

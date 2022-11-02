@@ -1,85 +1,83 @@
-﻿@model simhukdis.Models.clsSuratMasuk
+﻿@model SIMHUKDIS.Models.clsSuratMasuk
 
 @{
-    ViewBag.Title = "Detail Surat Masuk";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Detail Usulan";
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
 
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Detail Surat Masuk</h6>
-    </div>
-    <div class="card-body">
-        <p style="text-align:right;">
-            <button id="DownloadWord" type="button" onclick="GenerateWord()" class="btn btn-primary">Download Detail Surat Masuk</button>
-        </p>
-        
-        <form>
-            <div class="form-group row" style="display:none;">
-                <div class="col-4">
-                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.ID)</label>
-                </div>
-                <div class="col">
-                    @Html.TextBoxFor(model => model.ID, "", new { @type = "text", @id = "ID", @class = "form-control form-control-user" })
-                    @*<text class="form-control" disabled id="NoSurat">@Html.DisplayFor(model => model.NoSurat)</text>*@
-                </div>
+<div class="pd-20 card-box mb-30">
+    <p style="text-align:right;">
+        <button id="DownloadWord" type="button" class="btn btn-primary">Download Detail</button>
+    </p>
+
+    <form>
+        <div class="form-group row" style="display:none;">
+            <div class="col-md-3">
+                <label class="control-label "> @Html.DisplayNameFor(model => model.ID)</label>
             </div>
-            <div class="form-group row">
-                <div class="col-4">
-                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.NoSurat)</label>
-                </div>
-                <div class="col">
-                    @Html.TextBoxFor(model => model.NoSurat, "", new { @type = "text", @id = "NoSurat", @class = "form-control form-control-user" })
-                    @*<text class="form-control" disabled id="NoSurat">@Html.DisplayFor(model => model.NoSurat)</text>*@
-                </div>
+            <div class="col">
+                @Html.TextBoxFor(model => model.ID, "", new { @type = "text", @id = "ID", @class = "form-control" })
+                @*<text class="form-control" disabled id="NoSurat">@Html.DisplayFor(model => model.NoSurat)</text>*@
             </div>
-            <div class="form-group row">
-                <div class="col-4">
-                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.AsalSurat)</label>
-                </div>
-                <div class="col">
-                    @Html.TextBoxFor(model => model.AsalSurat, "", new { @type = "text", @id = "AsalSurat", @class = "form-control form-control-user" })
-                </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label class="control-label "> @Html.DisplayNameFor(model => model.NoSurat)</label>
             </div>
-            <div class="form-group row">
-                <div class="col-4">
-                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.TanggalSurat)</label>
-                </div>
-                <div class="col">
-                    @Html.TextBoxFor(model => model.TanggalSurat, "", new { @type = "text", @id = "TanggalSurat", @class = "form-control form-control-user" })
-                </div>
+            <div class="col">
+                @Html.TextBoxFor(model => model.NoSurat, "", new { @type = "text", @id = "NoSurat", @class = "form-control", disabled = "disabled" })
+                @*<text class="form-control" disabled id="NoSurat">@Html.DisplayFor(model => model.NoSurat)</text>*@
             </div>
-            <div class="form-group row">
-                <div class="col-4">
-                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.perihal)</label>
-                </div>
-                <div class="col">
-                    @Html.TextBoxFor(model => model.perihal, "", new { @type = "text", @id = "perihal", @class = "form-control form-control-user" })
-                </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label class="control-label "> @Html.DisplayNameFor(model => model.AsalSurat)</label>
             </div>
-            <div class="form-group row">
-                <div class="col-4">
-                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.SATUAN_KERJA)</label>
-                </div>
-                <div class="col">
-                    @Html.TextBoxFor(model => model.SATUAN_KERJA, "", new { @type = "text", @id = "SATUAN_KERJA", @class = "form-control form-control-user" })
-                </div>
+            <div class="col">
+                @Html.TextBoxFor(model => model.AsalSurat, "", new { @type = "text", @id = "AsalSurat", @class = "form-control", disabled = "disabled" })
             </div>
-            <div class="form-group row">
-                <div class="col-4">
-                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.Unit_Kerja)</label>
-                </div>
-                <div class="col">
-                    @Html.TextBoxFor(model => model.Unit_Kerja, "", new { @type = "text", @id = "Unit_Kerja", @class = "form-control form-control-user" })
-                </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label class="control-label "> @Html.DisplayNameFor(model => model.TanggalSurat)</label>
             </div>
+            <div class="col">
+                @Html.TextBoxFor(model => model.TanggalSurat, "", new { @type = "text", @id = "TanggalSurat", @class = "form-control", disabled = "disabled" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label class="control-label "> @Html.DisplayNameFor(model => model.perihal)</label>
+            </div>
+            <div class="col">
+                @Html.TextAreaFor(model => model.perihal, new { @type = "text", @id = "perihal", @class = "form-control", disabled = "disabled" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label class="control-label "> @Html.DisplayNameFor(model => model.SATUAN_KERJA)</label>
+            </div>
+            <div class="col">
+                @Html.TextBoxFor(model => model.SATUAN_KERJA, "", new { @type = "text", @id = "SATUAN_KERJA", @class = "form-control", disabled = "disabled" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label class="control-label ">Unit Kerja</label>
+            </div>
+            <div class="col">
+                @Html.TextBoxFor(model => model.Unit_Kerja, "", new { @type = "text", @id = "Unit_Kerja", @class = "form-control", disabled = "disabled" })
+            </div>
+        </div>
+        @if (Model.UsulStatus == "1")
+        {
             <div class="form-group row">
-                <div class="col-4">
-                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat1)</label>
+                <div class="col-md-3">
+                    <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat1)</label>
                 </div>
                 <div class="col">
                     <text class="form-control" id="LampiranSurat1" disabled>
-                        @if (Model.LampiranSurat1 == "")
+                        @if (Model.LampiranSurat1 == "" || Model.LampiranSurat1 == null)
                         {
                         }
                         else
@@ -90,12 +88,12 @@
                 </div>
             </div>
             <div class="form-group row">
-                <div class="col-4">
-                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat2)</label>
+                <div class="col-md-3">
+                    <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat2)</label>
                 </div>
                 <div class="col">
                     <text class="form-control" id="LampiranSurat2" disabled>
-                        @if (Model.LampiranSurat2 == "")
+                        @if (Model.LampiranSurat2 == "" || Model.LampiranSurat2 == null)
                         {
                         }
                         else
@@ -106,12 +104,12 @@
                 </div>
             </div>
             <div class="form-group row">
-                <div class="col-4">
-                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat3)</label>
+                <div class="col-md-3">
+                    <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat3)</label>
                 </div>
                 <div class="col">
                     <text class="form-control" id="LampiranSurat3" disabled>
-                        @if (Model.LampiranSurat3 == "")
+                        @if (Model.LampiranSurat3 == "" || Model.LampiranSurat3 == null)
                         {
                         }
                         else
@@ -122,12 +120,12 @@
                 </div>
             </div>
             <div class="form-group row">
-                <div class="col-4">
-                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat4)</label>
+                <div class="col-md-3">
+                    <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat4)</label>
                 </div>
                 <div class="col">
                     <text class="form-control" id="LampiranSurat4" disabled>
-                        @if (Model.LampiranSurat4 == "")
+                        @if (Model.LampiranSurat4 == "" || Model.LampiranSurat4 == null)
                         {
                         }
                         else
@@ -139,12 +137,12 @@
             </div>
 
             <div class="form-group row">
-                <div class="col-4">
-                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat5)</label>
+                <div class="col-md-3">
+                    <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat5)</label>
                 </div>
                 <div class="col">
                     <text class="form-control" id="LampiranSurat5" disabled>
-                        @if (Model.LampiranSurat5 == "")
+                        @if (Model.LampiranSurat5 == "" || Model.LampiranSurat5 == null)
                         {
                         }
                         else
@@ -154,13 +152,34 @@
                     </text>
                 </div>
             </div>
+
+        }
+        @if (Model.UsulStatus == "2")
+        {
             <div class="form-group row">
-                <div class="col-4">
-                    <label style="color:cornflowerblue;" class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat6)</label>
+                <div class="col-md-3">
+                    <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat1)</label>
+                </div>
+                <div class="col">
+                    <text class="form-control" id="LampiranSurat1" disabled>
+                        @if (Model.LampiranSurat1 == "" || Model.LampiranSurat1 == null)
+                        {
+                        }
+                        else
+                        {
+                            @Html.ActionLink(Model.LampiranSurat1, "DownloadFile1", new { fileName = Model.LampiranSurat1 })
+                        }
+                    </text>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat6)</label>
                 </div>
                 <div class="col">
                     <text class="form-control" id="LampiranSurat6" disabled>
-                        @if (Model.LampiranSurat6 == "")
+                        @if (Model.LampiranSurat6 == "" || Model.LampiranSurat6 == null)
                         {
                         }
                         else
@@ -170,10 +189,61 @@
                     </text>
                 </div>
             </div>
+        }
+        @if (Model.UsulStatus == "3")
+        {
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat_LHA)</label>
+                </div>
+                <div class="col">
+                    <text class="form-control" id="LampiranSurat6" disabled>
+                        @if (Model.LampiranSurat_LHA == "" || Model.LampiranSurat_LHA == null)
+                        {
+                        }
+                        else
+                        {
+                            @Html.ActionLink(Model.LampiranSurat_LHA, "DownloadFile7", new { fileName = Model.LampiranSurat_LHA })
+                        }
+                    </text>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label class="control-label "> Lampiran BAP</label>
+                </div>
+                <div class="col">
+                    <text class="form-control" id="LampiranSurat2" disabled>
+                        @if (Model.LampiranSurat2 == "" || Model.LampiranSurat2 == null)
+                        {
+                        }
+                        else
+                        {
+                            @Html.ActionLink(Model.LampiranSurat2, "DownloadFile2", new { fileName = Model.LampiranSurat2 })
+                        }
+                    </text>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat5)</label>
+                </div>
+                <div class="col">
+                    <text class="form-control" id="LampiranSurat5" disabled>
+                        @if (Model.LampiranSurat5 == "" || Model.LampiranSurat5 == null)
+                        {
+                        }
+                        else
+                        {
+                            @Html.ActionLink(Model.LampiranSurat5, "DownloadFile5", new { fileName = Model.LampiranSurat5 })
+                        }
+                    </text>
+                </div>
+            </div>
+        }
 
 
-        </form>
-    </div>
+    </form>
 </div>
 <script src="~/Scripts/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">

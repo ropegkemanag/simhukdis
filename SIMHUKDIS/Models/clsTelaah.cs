@@ -1,11 +1,11 @@
-﻿using MySql.Data.MySqlClient;
-using simhukdis.Models;
+﻿using SIMHUKDIS.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
@@ -35,7 +35,10 @@ namespace SIMHUKDIS.Models
         public string StatusProses { get; set; }
         public string TelaahNo { get; set; }
         public string Tanggal_Telaah { get; set; }
+        public string Karopeg { get; set; }
+        public string NIP_Karopeg { get; set; }
     }
+
     public class suratmasuk
     {
         [Key]
@@ -104,13 +107,13 @@ namespace SIMHUKDIS.Models
         [DisplayName("Disposisi Status Koordinator Sub Bagian")]
         public string DisposisiStatus3 { get; set; }
 
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [DisplayName("Tanggal Disposisi Kepala Biro")]
         public string DisposisiDate1 { get; set; }
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [DisplayName("Tanggal Disposisi Koordinator Bagian")]
         public string DisposisiDate2 { get; set; }
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [DisplayName("Tanggal Disposisi Koordinator Sub Bagian")]
         public string DisposisiDate3 { get; set; }
         public int Status { get; set; }
@@ -127,15 +130,15 @@ namespace SIMHUKDIS.Models
         {
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             List<clsSuratMasuk> SuratMasuks = new List<clsSuratMasuk>();
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
                 Int32 pNom = 0;
-                string q = "sp_Telaah_Create";
-                MySqlCommand cmd = new MySqlCommand(q, con);
+                string q = "SIMHUKDIS.sp_Telaah_Create";
+                SqlCommand cmd = new SqlCommand(q, con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iUserID", UserID);
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     clsSuratMasuk data = new clsSuratMasuk();
@@ -193,13 +196,13 @@ namespace SIMHUKDIS.Models
         {
             List<clsTelaah> lst = new List<clsTelaah>();
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
                 con.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_Telaah_Sel", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Telaah_Sel", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iID", ID);
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     clsTelaah data = new clsTelaah();
@@ -225,14 +228,14 @@ namespace SIMHUKDIS.Models
         {
             List<clsTelaah> lst = new List<clsTelaah>();
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
                 con.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_Telaah_Sel_ByIDNIP", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Telaah_Sel_ByIDNIP", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iID", ID);
                 cmd.Parameters.AddWithValue("iNIP", NIP);
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     clsTelaah data = new clsTelaah();
@@ -259,9 +262,9 @@ namespace SIMHUKDIS.Models
         {
             int i;
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_Telaah_Ins", con);
+                SqlCommand cmd = new SqlCommand("sp_Telaah_Ins", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iID", t.ID);
                 cmd.Parameters.AddWithValue("iNIP", t.NIP);
@@ -284,9 +287,9 @@ namespace SIMHUKDIS.Models
         {
             int i;
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_TelaahNo_Insert", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_TelaahNo_Insert", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iTelaahNo", No);
                 cmd.Parameters.AddWithValue("iBulan", Bulan);
@@ -300,9 +303,9 @@ namespace SIMHUKDIS.Models
         {
             int i;
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_Telaah_Upd", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Telaah_Upd", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iID", t.ID);
                 cmd.Parameters.AddWithValue("iNIP", t.NIP);
@@ -326,9 +329,9 @@ namespace SIMHUKDIS.Models
         {
             int i;
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_Telaah_UpdStatus", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Telaah_UpdStatus", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iID", ID);
                 cmd.Parameters.AddWithValue("iNIP", NIP);
@@ -342,9 +345,9 @@ namespace SIMHUKDIS.Models
         {
             int i;
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_Telaah_UpdTelaahStatus", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Telaah_UpdTelaahStatus", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iID", t.ID);
                 cmd.Parameters.AddWithValue("iNIP", t.NIP);
@@ -361,10 +364,10 @@ namespace SIMHUKDIS.Models
             {
                 int i = 0;
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "sp_Telaah_Del";
-                    MySqlCommand cmd = new MySqlCommand(MySql, con);
+                    string MySql = "SIMHUKDIS.sp_Telaah_Del";
+                    SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("iid", ID);
                     cmd.Parameters.AddWithValue("iNIP", NIP);
@@ -383,15 +386,15 @@ namespace SIMHUKDIS.Models
         {
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             suratmasuk data = new suratmasuk();
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
                 Int32 pNom = 0;
-                string q = "sp_SuratMasuk_Sel";
-                MySqlCommand cmd = new MySqlCommand(q, con);
+                string q = "SIMHUKDIS.sp_SuratMasuk_Sel";
+                SqlCommand cmd = new SqlCommand(q, con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iid", ID);
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     pNom = pNom + 1;
@@ -450,14 +453,14 @@ namespace SIMHUKDIS.Models
 
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 List<clsSuratMasuk> SuratMasuks = new List<clsSuratMasuk>();
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
                     Int32 pNom = 0;
-                    string q = "sp_Telaah_SM_Sel";
-                    MySqlCommand cmd = new MySqlCommand(q, con);
+                    string q = "SIMHUKDIS.sp_Telaah_SM_Sel";
+                    SqlCommand cmd = new SqlCommand(q, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
-                    MySqlDataReader rd = cmd.ExecuteReader();
+                    SqlDataReader rd = cmd.ExecuteReader();
                     while (rd.Read())
                     {
                         clsSuratMasuk data = new clsSuratMasuk();
@@ -518,14 +521,14 @@ namespace SIMHUKDIS.Models
             {
                 List<clsSuratMasuk> sm = new List<clsSuratMasuk>();
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string q = "sp_SuratMasuk_ByID_Sel";
-                    MySqlCommand cmd = new MySqlCommand(q, con);
+                    string q = "SIMHUKDIS.sp_SuratMasuk_ByID_Sel";
+                    SqlCommand cmd = new SqlCommand(q, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("iid", ID);
                     con.Open();
-                    MySqlDataReader rd = cmd.ExecuteReader();
+                    SqlDataReader rd = cmd.ExecuteReader();
                     while (rd.Read())
                     {
                         clsSuratMasuk data = new clsSuratMasuk();
@@ -587,14 +590,14 @@ namespace SIMHUKDIS.Models
         {
             int TelaahNo = 0;
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_TelaahNo_GetNo", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_TelaahNo_GetNo", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iBulan", Bulan);
                 cmd.Parameters.AddWithValue("iTahun", Tahun);
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 int i = 1;
                 
                 while (rd.Read())

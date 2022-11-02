@@ -1,12 +1,12 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 
-namespace simhukdis.Models
+namespace SIMHUKDIS.Models
 {
     public class ClsSatker
     {
@@ -24,13 +24,13 @@ namespace simhukdis.Models
 
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 List<ClsSatker> Satker = new List<ClsSatker>();
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string q = "sp_Satker_Sel";
-                    MySqlCommand cmd = new MySqlCommand(q, con);
+                    string q = "SIMHUKDIS.sp_Satker_Sel";
+                    SqlCommand cmd = new SqlCommand(q, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
-                    MySqlDataReader rd = cmd.ExecuteReader();
+                    SqlDataReader rd = cmd.ExecuteReader();
                     while (rd.Read())
                     {
                         ClsSatker data = new ClsSatker();
@@ -51,10 +51,10 @@ namespace simhukdis.Models
                 int i = 0;
 
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "sp_Satker_Ins";
-                    MySqlCommand cmd = new MySqlCommand(MySql, con);
+                    string MySql = "SIMHUKDIS.sp_Satker_Ins";
+                    SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("iSATUAN_KERJA", User.SATUAN_KERJA);
                     cmd.Parameters.AddWithValue("iUserID", User.UserLogin);
@@ -71,13 +71,13 @@ namespace simhukdis.Models
         public bool GetDataExist(string SATUAN_KERJA)
         {
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
                 con.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_Satker_AlreadyExists", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Satker_AlreadyExists", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iSATUAN_KERJA", SATUAN_KERJA);
-                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 if (dt.Rows.Count == 0)
@@ -96,10 +96,10 @@ namespace simhukdis.Models
             {
                 int i = 0;
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "sp_Satker_Upd";
-                    MySqlCommand cmd = new MySqlCommand(MySql, con);
+                    string MySql = "SIMHUKDIS.sp_Satker_Upd";
+                    SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("iKODE_SATUAN_KERJA", Hukdis.KODE_SATUAN_KERJA);
                     cmd.Parameters.AddWithValue("iSATUAN_KERJA", Hukdis.SATUAN_KERJA);
@@ -120,10 +120,10 @@ namespace simhukdis.Models
             {
                 int i = 0;
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "sp_Satker_Del";
-                    MySqlCommand cmd = new MySqlCommand(MySql, con);
+                    string MySql = "SIMHUKDIS.sp_Satker_Del";
+                    SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("iKODE_SATUAN_KERJA", KODE_SATUAN_KERJA);
                     con.Open();
@@ -144,13 +144,13 @@ namespace simhukdis.Models
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 string Satker = "";
                 int i = 0;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
-                    MySqlCommand cmd = new MySqlCommand("sp_Satker_GetName", con);
+                    SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Satker_GetName", con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("IID", id);
                     con.Open();
-                    MySqlDataReader rd = cmd.ExecuteReader();
+                    SqlDataReader rd = cmd.ExecuteReader();
                     while (rd.Read())
                     {
                         if (i == 0)

@@ -2,62 +2,73 @@
 
 @{
     ViewBag.Title = "Pejabat Penandatangan";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
+<div class="pd-20 card-box mb-30">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
 
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.Label("Menteri Agama", htmlAttributes: new { @class = "control-label col" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Menag, new { htmlAttributes = new { @class = "form-control", @id = "menag", required = "required" } })
-                @Html.ValidationMessageFor(model => model.Menag, "", new { @class = "text-danger" })
+        <form>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label class="control-label "> Menteri Agama</label>
+                </div>
+                <div class="col">
+                    @Html.EditorFor(model => model.Menag, new { htmlAttributes = new { @class = "form-control", @id = "menag", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.Menag, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.Label("Sekertaris Jenderal", htmlAttributes: new { @class = "control-label col" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Sekjend, new { htmlAttributes = new { @class = "form-control", @id = "sekjend", required = "required" } })
-                @Html.ValidationMessageFor(model => model.Sekjend, "", new { @class = "text-danger" })
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label class="control-label "> Sekertaris Jenderal</label>
+                </div>
+                <div class="col">
+                    @Html.EditorFor(model => model.Sekjend, new { htmlAttributes = new { @class = "form-control", @id = "sekjend", required = "required" } })
+                    @Html.ValidationMessageFor(model => model.Sekjend, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.Label("Kepala Biro Kepegawaian", htmlAttributes: new { @class = "control-label col" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Karopeg, ViewBag.karopeg as SelectList, new { @class = "form-control", required = "required", @id = "karopeg" })
-                @Html.ValidationMessage("karopeg", "", new { @class = "text-danger" })
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label class="control-label "> Kepala Biro Kepegawaian</label>
+                </div>
+                <div class="col">
+                    @Html.DropDownListFor(model => model.Karopeg, ViewBag.karopeg as SelectList, new { @class = "form-control", required = "required", @id = "karopeg" })
+                    @Html.ValidationMessage("karopeg", "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.Label("Koordinator Bagian", htmlAttributes: new { @class = "control-label col" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.Koordinator, ViewBag.koordinator as SelectList, new { @class = "form-control", required = "required", @id = "koordinator" })
-                @Html.ValidationMessage("Koordinator", "", new { @class = "text-danger" })
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label class="control-label ">Koordinator</label>
+                </div>
+                <div class="col">
+                    @Html.DropDownListFor(model => model.Koordinator, ViewBag.koordinator as SelectList, new { @class = "form-control", required = "required", @id = "koordinator" })
+                    @Html.ValidationMessage("Koordinator", "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.Label("SubKoordinator Bagian", htmlAttributes: new { @class = "control-label col" })
-            <div class="col-md-10">
-                @Html.DropDownListFor(model => model.SubKoordinator, ViewBag.SubKoordinator as SelectList, new { @class = "form-control", required = "required", @id = "subkoordinator" })
-                @Html.ValidationMessage("SubKoordinator", "", new { @class = "text-danger" })
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label class="control-label ">SubKoordinator</label>
+                </div>
+                <div class="col">
+                    @Html.DropDownListFor(model => model.SubKoordinator, ViewBag.SubKoordinator as SelectList, new { @class = "form-control", required = "required", @id = "subkoordinator" })
+                    @Html.ValidationMessage("SubKoordinator", "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>       
 
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="button" value="Simpan" class="btn btn-primary" onclick="Insert()" />
+            <div class="form-group row">
+                <div class="col-md-offset-2 col">
+                    <input type="button" value="Simpan" class="btn btn-primary" onclick="Insert()" />
+                </div>
             </div>
-        </div>
-    </div>
-}
+        </form>
+    }
+</div>
     <script type="text/javascript">
     function Insert() {
         var dpObj = {
@@ -83,7 +94,7 @@
                     })
                     window.location.href = '@Url.Action("Index", "PejabatMst")'
                 }
-                
+
             },
             error: function (errormessage) {
                 Swal.fire({

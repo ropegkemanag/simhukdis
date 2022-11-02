@@ -1,11 +1,11 @@
-﻿using simhukdis.Models;
+﻿using SIMHUKDIS.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace simhukdis.Controllers
+namespace SIMHUKDIS.Controllers
 {
     [SessionExpire]
     public class HukdisController : Controller
@@ -44,8 +44,16 @@ namespace simhukdis.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
+            
             try
             {
+                string userlogin = Session["Fullname"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
                 return View();
             }
             catch (Exception ex)
@@ -94,9 +102,25 @@ namespace simhukdis.Controllers
             {
                 return RedirectToAction("Login", "Home");
             }
-            clsHukdisDB db = new clsHukdisDB();
-            clsHukdis UHukdis = db.HukdisList.SingleOrDefault(sub => sub.ID == ID);
-            return View(UHukdis);
+            try
+            {
+                string userlogin = Session["Fullname"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                ViewBag.StatusAdmin = StatusAdmin;
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+                clsHukdisDB db = new clsHukdisDB();
+                clsHukdis UHukdis = db.HukdisList.SingleOrDefault(sub => sub.ID == ID);
+                return View(UHukdis);
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
+            }
         }
 
         [HttpPost]

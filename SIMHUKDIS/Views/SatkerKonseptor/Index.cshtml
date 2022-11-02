@@ -1,36 +1,32 @@
 ﻿@model IEnumerable<SIMHUKDIS.Models.clsSatkerKonseptor>
 
 @{
-    ViewBag.Title = "Satuan Kerja Konseptor";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Wilayah Kerja Konseptor";
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
 
 <!-- DataTales Example -->
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Satuan Kerja Konseptor</h6>
-    </div>
+<div class="card-box mb-30">
 
-    <div class="card-body">
         @if (@ViewBag.UserGroup == "01")
         {
-        <button id="GridLoad" class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal" value="New" onclick="location.href='@Url.Action("Create", "SatkerKonseptor")'">
-            Tambah Data
-        </button>
+            <button id="GridLoad" class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal" value="New" onclick="location.href='@Url.Action("Create", "SatkerKonseptor")'">
+                Tambah Data
+            </button>
         }
         else
         {
-        <button id="GridLoad" class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal" value="New" onclick="location.href='@Url.Action("Create", "SatkerKonseptor")'" disabled>
-            Tambah Data
-        </button>
+            <button id="GridLoad" class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal" value="New" onclick="location.href='@Url.Action("Create", "SatkerKonseptor")'" disabled>
+                Tambah Data
+            </button>
         }
-        
+
 
         <div style="height: 15px"></div>
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" style="width:100%;" cellspacing="0">
+        <div class="pb-20">
+            <table class="table hover data-table-export">
                 <thead class="table table-primary">
-                    <tr>
+                    <tr style="text-align:center;">
                         <th>
                             Aksi
                         </th>
@@ -38,7 +34,7 @@
                             Satuan Kerja
                         </th>
                         <th>
-                            Fullname
+                            Nama Konseptor
                         </th>
                     </tr>
                 </thead>
@@ -63,7 +59,6 @@
                 </tbody>
             </table>
         </div>
-    </div>
 </div>
 
 <div class="modal fade" id="DeleteSK" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"

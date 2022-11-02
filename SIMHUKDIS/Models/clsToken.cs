@@ -1,5 +1,5 @@
 ﻿using Newtonsoft.Json;
-using simhukdis.Models;
+using SIMHUKDIS.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;

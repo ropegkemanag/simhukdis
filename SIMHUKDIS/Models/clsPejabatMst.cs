@@ -1,9 +1,9 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
@@ -16,6 +16,15 @@ namespace SIMHUKDIS.Models
         public string Karopeg { get; set; }
         public string Koordinator { get; set; }
         public string SubKoordinator { get; set; }
+
+        public string NIP_Karopeg { get; set; }
+        public string NIP_Koordinator { get; set; }
+        public string NIP_SubKoordinator { get; set; }
+
+        public string Nama_Karopeg { get; set; }
+        public string Nama_Koordinator { get; set; }
+        public string Nama_SubKoordinator { get; set; }
+
         [DisplayName("Create Date")]
         public string CreateDate { get; set; }
         [DisplayName("Create User")]
@@ -36,14 +45,14 @@ namespace SIMHUKDIS.Models
         {
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             clsPejabatMst data = new clsPejabatMst();
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
                 Int32 pNom = 0;
-                string q = "sp_PejabatMst_Sel";
-                MySqlCommand cmd = new MySqlCommand(q, con);
+                string q = "SIMHUKDIS.sp_PejabatMst_Sel";
+                SqlCommand cmd = new SqlCommand(q, con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     pNom = pNom + 1;
@@ -52,6 +61,14 @@ namespace SIMHUKDIS.Models
                     data.Koordinator = rd["Koordinator"].ToString();
                     data.Karopeg = rd["Karopeg"].ToString();
                     data.SubKoordinator = rd["SubKoordinator"].ToString();
+
+                    data.NIP_Koordinator = rd["NIP_Koordinator"].ToString();
+                    data.NIP_Karopeg = rd["NIP_Karopeg"].ToString();
+                    data.NIP_SubKoordinator = rd["NIP_SubKoordinator"].ToString();
+
+                    data.Nama_Koordinator = rd["Nama_Koordinator"].ToString();
+                    data.Nama_Karopeg = rd["Nama_Karopeg"].ToString();
+                    data.Nama_SubKoordinator = rd["Nama_SubKoordinator"].ToString();
                 }
                 return data;
             }
@@ -60,9 +77,9 @@ namespace SIMHUKDIS.Models
         {
             int i;
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_PejabatMst_Ins", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_PejabatMst_Ins", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iMenag", t.Menag);
                 cmd.Parameters.AddWithValue("iSekjend", t.Sekjend);
@@ -79,9 +96,9 @@ namespace SIMHUKDIS.Models
         {
             int i;
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_PejabatMst_Upd", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_PejabatMst_Upd", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iMenag", t.Menag);
                 cmd.Parameters.AddWithValue("iSekjend", t.Sekjend);
@@ -97,12 +114,12 @@ namespace SIMHUKDIS.Models
         public bool GetDataExist()
         {
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
                 con.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_PejabatMst_Sel", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_PejabatMst_Sel", con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 if (dt.Rows.Count == 0)
@@ -119,12 +136,12 @@ namespace SIMHUKDIS.Models
         {
             List<clsPejabatName> SK = new List<clsPejabatName>();
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_Karopeg_Sel", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Karopeg_Sel", con);
                 cmd.CommandType = CommandType.Text;
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     clsPejabatName s = new clsPejabatName();
@@ -141,12 +158,12 @@ namespace SIMHUKDIS.Models
         {
             List<clsPejabatName> SK = new List<clsPejabatName>();
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_Koordinator_Sel", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Koordinator_Sel", con);
                 cmd.CommandType = CommandType.Text;
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     clsPejabatName s = new clsPejabatName();
@@ -163,12 +180,12 @@ namespace SIMHUKDIS.Models
         {
             List<clsPejabatName> SK = new List<clsPejabatName>();
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_SubKoordinator_Sel", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_SubKoordinator_Sel", con);
                 cmd.CommandType = CommandType.Text;
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     clsPejabatName s = new clsPejabatName();

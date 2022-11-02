@@ -1,0 +1,199 @@
+﻿
+@{
+    ViewBag.Title = "CreateSPTJM";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card-box mb-30">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">IDENTITAS PEMBUAT SPTJM</h6>
+    </div>
+    <div class="card-body">
+        <form>
+            <div class="form-group row">
+                <div class="col">
+                    <label class="control-label ">Tanggal Surat *</label>
+                    <input class="form-control date-picker" id="Tanggal_Surat" placeholder="Pilih Tanggal" type="text" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <label class="control-label ">NIP*</label>
+                    @Html.TextBox("NIP", "", new { @id = "NIP", @class = "form-control", required = "required", onchange = "getData()", onkeypress = "AllowOnlyNumbers()" })
+                    @Html.ValidationMessage("NIP", "", new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-6">
+                    <label>Nama Lengkap</label>
+                    @Html.TextBox("NAMA_LENGKAP", "", new { @id = "NAMA_LENGKAP", @class = "form-control", required = "required" })
+                    @Html.ValidationMessage("NAMA_LENGKAP", "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <label class="control-label ">Pangkat, Golongan Ruang</label>
+                    @Html.TextArea("GOL_RUANG", "", new { @id = "GOL_RUANG", @class = "form-control", required = "required"})
+                    @Html.ValidationMessage("GOL_RUANG", "", new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-6">
+                    <label>Jabatan</label>
+                    @Html.TextArea("LEVEL_JABATAN", "", new { @id = "LEVEL_JABATAN", @class = "form-control", required = "required"})
+                    @Html.ValidationMessage("LEVEL_JABATAN", "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col">
+                    <label class="control-label">Unit Kerja</label>
+                    <textarea class="form-control" id="Satker" rows="5" name="Satker" required></textarea>
+                    @Html.ValidationMessage("Satker", "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">IDENTITAS YANG DIUSULKAN</h6>
+    </div>
+    <div class="card-body">
+        <form>
+            <div class="form-group row">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <label class="control-label ">NIP</label>
+                    @Html.TextBox("NIP_USUL", "", new { @id = "NIP_USUL", @class = "form-control", required = "required", onchange = "getYangdiUsulkan()", onkeypress = "AllowOnlyNumbers()" })
+                    @Html.ValidationMessage("NIP_USUL", "", new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-6">
+                    <label>Nama Lengkap</label>
+                    @Html.TextBox("NAMA_LENGKAP_USUL", "", new { @id = "NAMA_LENGKAP_USUL", @class = "form-control", required = "required"})
+                    @Html.ValidationMessage("NAMA_LENGKAP_USUL", "", new { @class = "text-danger" })
+                </div>
+            </div>            
+            <div class="form-group row">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Simpan" class="btn btn-primary" onclick="GenerateWord()" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+    });
+    function AllowOnlyNumbers(e) {
+        e = (e) ? e : window.event;
+        var clipboardData = e.clipboardData ? e.clipboardData : window.clipboardData;
+        var key = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
+        var str = (e.type && e.type == "paste") ? clipboardData.getData('Text') : String.fromCharCode(key);
+        return (/^\d+$/.test(str));
+    }
+    function getYangdiUsulkan() {
+        //getJabatan();
+        var NIP_USUL = $('#NIP_USUL').val();
+        $.ajax({
+            type: "GET",
+            url: "/SuratMasuk/GetPegawai?",
+            cache: false,
+            data: ({ NIP: NIP_USUL }),
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (result) {
+                $('#NAMA_LENGKAP_USUL').val(result.NAMA_LENGKAP);
+            },
+            error: function (errormessage) {
+                Swal.fire({
+                    icon: 'error',
+                    title: "NIP tidak ditemukan",
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        });
+        return false;
+    }
+    function getData() {
+        //getJabatan();
+        var NIP = $('#NIP').val();
+        $.ajax({
+            type: "GET",
+            url: "/Telaah/GetPegawai?",
+            cache: false,
+            data: ({ NIP: NIP }),
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (result) {
+                $('#NAMA_LENGKAP').val(result.NAMA_LENGKAP);
+                $('#GOL_RUANG').val(result.GOL_RUANG);
+                $('#LEVEL_JABATAN').val(result.TAMPIL_JABATAN);
+                $('#Satker').val(result.SATUAN_KERJA);
+            },
+            error: function (errormessage) {
+                Swal.fire({
+                    icon: 'error',
+                    title: "NIP tidak ditemukan",
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        });
+        return false;
+    }
+     function GenerateWord()
+    {
+        var dpObj = {
+            NIP: $('#NIP').val(),
+            NAMA_LENGKAP: $('#NAMA_LENGKAP').val(),
+            GOL_RUANG: $('#GOL_RUANG').val(),
+            LEVEL_JABATAN: $('#LEVEL_JABATAN').val(),
+            Satker: $('#Satker').val(),
+            NIP_USUL: $('#NIP_USUL').val(),
+            NAMA_LENGKAP_USUL: $('#NAMA_LENGKAP_USUL').val(),
+            Tanggal_Surat: $('#Tanggal_Surat').val(),
+         };
+        $.ajax({
+            url: "/SuratMasuk/cetakSPTJM",
+            data: JSON.stringify(dpObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+
+                DownloadPDF(result.DocPDF, result.DocWord);
+                //DownloadPDF(result.DocWord);
+                if (result.Msg.toString() == "Success") {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'SPTJM berhasil !',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: result.toString(),
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
+            },
+            error: function (errormessage) {
+                Swal.fire({
+                    icon: 'error',
+                    title: result.toString(),
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+                @*window.location.href = '@Url.Action("Index", "SuratMasuk")?ID=' + InputID;*@
+            }
+        });
+    }
+     function DownloadPDF(fileName1, fileName2) {
+        window.location = '@Url.Action("DownloadFileSPTJM", "SuratMasuk")?fileName=' + fileName1;
+        window.location = '@Url.Action("DownloadFileSPTJM", "SuratMasuk")?fileName=' + fileName2;
+
+    }
+</script>

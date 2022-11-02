@@ -1,15 +1,15 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
 
-namespace simhukdis.Models
+namespace SIMHUKDIS.Models
 {
     public class clsDisposisi
     {
@@ -55,19 +55,20 @@ namespace simhukdis.Models
         [DisplayName("Disposisi Status 3")]
         public string DisposisiStatus3 { get; set; }
 
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [DisplayName("Disposisi Date 1")]
         public string DisposisiDate1 { get; set; }
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [DisplayName("Disposisi Date 2")]
         public string DisposisiDate2 { get; set; }
-        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MMM/yyyy}")]
+        //[DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [DisplayName("Disposisi Date 3")]
         public string DisposisiDate3 { get; set; }
         [DisplayName("Update User")]
         public string UpdateUser { get; set; }
         public string Kode_Unit_Kerja { get; set; }
         public string Unit_Kerja { get; set; }
+        public string UsulStatus { get; set; }
     }
     public class clsDisposisiDB
     {
@@ -75,14 +76,14 @@ namespace simhukdis.Models
         {
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             List<clsDisposisi> DP = new List<clsDisposisi>();
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
                 Int32 pNom = 0;
-                string q = "sp_Disposisi1_Sel";
-                MySqlCommand cmd = new MySqlCommand(q, con);
+                string q = "SIMHUKDIS.sp_Disposisi1_Sel";
+                SqlCommand cmd = new SqlCommand(q, con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     clsDisposisi data = new clsDisposisi();
@@ -140,14 +141,14 @@ namespace simhukdis.Models
 
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 List<clsDisposisi> DP = new List<clsDisposisi>();
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
                     Int32 pNom = 0;
-                    string q = "sp_Disposisi1_Sel";
-                    MySqlCommand cmd = new MySqlCommand(q, con);
+                    string q = "SIMHUKDIS.sp_Disposisi1_Sel";
+                    SqlCommand cmd = new SqlCommand(q, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
-                    MySqlDataReader rd = cmd.ExecuteReader();
+                    SqlDataReader rd = cmd.ExecuteReader();
                     while (rd.Read())
                     {
                         clsDisposisi data = new clsDisposisi();
@@ -179,12 +180,12 @@ namespace simhukdis.Models
             clsDisposisiDB db = new clsDisposisiDB();
             List<clsDisposisi> User = new List<clsDisposisi>();
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_Konseptor_Sel", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Konseptor_Sel", con);
                 cmd.CommandType = CommandType.Text;
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     clsDisposisi s = new clsDisposisi();
@@ -202,10 +203,10 @@ namespace simhukdis.Models
             {
                 int i = 0;
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "sp_Disposisi1_Upd";
-                    MySqlCommand cmd = new MySqlCommand(MySql, con);
+                    string MySql = "SIMHUKDIS.sp_Disposisi1_Upd";
+                    SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("i_id", disposisi.ID);
                     cmd.Parameters.AddWithValue("iStatus", 2);
@@ -229,14 +230,14 @@ namespace simhukdis.Models
         {
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             List<clsDisposisi> DP = new List<clsDisposisi>();
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
                 Int32 pNom = 0;
-                string q = "sp_Disposisi2_Sel";
-                MySqlCommand cmd = new MySqlCommand(q, con);
+                string q = "SIMHUKDIS.sp_Disposisi2_Sel";
+                SqlCommand cmd = new SqlCommand(q, con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     clsDisposisi data = new clsDisposisi();
@@ -282,14 +283,14 @@ namespace simhukdis.Models
 
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 List<clsDisposisi> DP = new List<clsDisposisi>();
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
                     Int32 pNom = 0;
-                    string q = "sp_Disposisi2_Sel";
-                    MySqlCommand cmd = new MySqlCommand(q, con);
+                    string q = "SIMHUKDIS.sp_Disposisi2_Sel";
+                    SqlCommand cmd = new SqlCommand(q, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
-                    MySqlDataReader rd = cmd.ExecuteReader();
+                    SqlDataReader rd = cmd.ExecuteReader();
                     while (rd.Read())
                     {
                         clsDisposisi data = new clsDisposisi();
@@ -346,12 +347,12 @@ namespace simhukdis.Models
             clsDisposisi2DB db = new clsDisposisi2DB();
             List<clsDisposisi> User = new List<clsDisposisi>();
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_Konseptor_Sel", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Konseptor_Sel", con);
                 cmd.CommandType = CommandType.Text;
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     clsDisposisi s = new clsDisposisi();
@@ -369,10 +370,10 @@ namespace simhukdis.Models
             {
                 int i = 0;
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "sp_Disposisi2_Upd";
-                    MySqlCommand cmd = new MySqlCommand(MySql, con);
+                    string MySql = "SIMHUKDIS.sp_Disposisi2_Upd";
+                    SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("i_id", disposisi.ID);
                     cmd.Parameters.AddWithValue("iStatus", 3);
@@ -397,14 +398,14 @@ namespace simhukdis.Models
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             string konseptor = "";
             List<clsDisposisi> DP = new List<clsDisposisi>();
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                string q = "sp_SuratMasuk_GetKonseptor";
-                MySqlCommand cmd = new MySqlCommand(q, con);
+                string q = "SIMHUKDIS.sp_SuratMasuk_GetKonseptor";
+                SqlCommand cmd = new SqlCommand(q, con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iKODE_SATUAN_KERJA", Satker);
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     konseptor = rd["konseptor "].ToString();
@@ -416,14 +417,14 @@ namespace simhukdis.Models
         {
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             List<clsDisposisi> DP = new List<clsDisposisi>();
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
                 Int32 pNom = 0;
-                string q = "sp_Disposisi3_Sel";
-                MySqlCommand cmd = new MySqlCommand(q, con);
+                string q = "SIMHUKDIS.sp_Disposisi3_Sel";
+                SqlCommand cmd = new SqlCommand(q, con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     clsDisposisi data = new clsDisposisi();
@@ -481,14 +482,14 @@ namespace simhukdis.Models
 
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 List<clsDisposisi> DP = new List<clsDisposisi>();
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
                     Int32 pNom = 0;
-                    string q = "sp_Disposisi3_Sel";
-                    MySqlCommand cmd = new MySqlCommand(q, con);
+                    string q = "SIMHUKDIS.sp_Disposisi3_Sel";
+                    SqlCommand cmd = new SqlCommand(q, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
-                    MySqlDataReader rd = cmd.ExecuteReader();
+                    SqlDataReader rd = cmd.ExecuteReader();
                     while (rd.Read())
                     {
                         clsDisposisi data = new clsDisposisi();
@@ -543,10 +544,10 @@ namespace simhukdis.Models
                 }
                 int i = 0;
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "sp_Disposisi3_Upd";
-                    MySqlCommand cmd = new MySqlCommand(MySql, con);
+                    string MySql = "SIMHUKDIS.sp_Disposisi3_Upd";
+                    SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("i_id", disposisi.ID);
                     cmd.Parameters.AddWithValue("iStatus", iStatus);
@@ -570,12 +571,12 @@ namespace simhukdis.Models
             clsDisposisi3DB db = new clsDisposisi3DB();
             List<clsDisposisi> SK = new List<clsDisposisi>();
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_Satker_Sel", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Satker_Sel", con);
                 cmd.CommandType = CommandType.Text;
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     clsDisposisi s = new clsDisposisi();
@@ -592,12 +593,12 @@ namespace simhukdis.Models
             clsDisposisi3DB db = new clsDisposisi3DB();
             List<clsDisposisi> SK = new List<clsDisposisi>();
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_Konseptor_Sel", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Konseptor_Sel", con);
                 cmd.CommandType = CommandType.Text;
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     clsDisposisi s = new clsDisposisi();

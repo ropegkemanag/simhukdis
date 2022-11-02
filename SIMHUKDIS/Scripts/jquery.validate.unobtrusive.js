@@ -137,7 +137,7 @@
             result = {
                 options: {  // options structure passed to jQuery Validate's validate() method
                     errorClass: defaultOptions.errorClass || "input-validation-error",
-                    errorElement: defaultOptions.errorElement || "span",
+                    errorElement: defaultOptions.errorElement || "SIMHUKDIS..span",
                     errorPlacement: function () {
                         onError.apply(form, arguments);
                         execInContext("errorPlacement", arguments);
@@ -261,8 +261,8 @@
         /// <param name="adapterName" type="String">The name of the adapter to be added. This matches the name used
         /// in the data-val-nnnn HTML attribute (where nnnn is the adapter name).</param>
         /// <param name="params" type="Array" optional="true">[Optional] An array of parameter names (strings) that will
-        /// be extracted from the data-val-nnnn-mmmm HTML attributes (where nnnn is the adapter name, and
-        /// mmmm is the parameter name).</param>
+        /// be extracted from the data-val-nnnn-MMm HTML attributes (where nnnn is the adapter name, and
+        /// MMm is the parameter name).</param>
         /// <param name="fn" type="Function">The function to call, which adapts the values from the HTML
         /// attributes into jQuery Validate rules and/or messages.</param>
         /// <returns type="jQuery.validator.unobtrusive.adapters" />

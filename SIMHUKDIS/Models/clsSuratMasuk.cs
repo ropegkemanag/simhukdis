@@ -1,14 +1,14 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-namespace simhukdis.Models
+namespace SIMHUKDIS.Models
 {
     public class clsSuratMasuk
     {
@@ -41,9 +41,12 @@ namespace simhukdis.Models
         public string LampiranSurat5 { get; set; }
         [DisplayName("Lampiran Putusan Pengadilan")]
         public string LampiranSurat6 { get; set; }
-        [DisplayName("Lampiran LHA")]
+        [DisplayName("Lampiran LHA/STL")]
         public string LampiranSurat_LHA { get; set; }
-
+        [DisplayName("Lampiran Laporan Hasil Pemeriksaan")]
+        public string LampiranLHP { get; set; }
+        [DisplayName("Lampiran Laporan Surat Pernyataan Tanggung Jawab Mutlak")]
+        public string LampiranSPTJM { get; set; }
         [DisplayName("Dokumen yang akan di buat Konseptor")]
         public string Dokumen_Yang_Akan_Dibuat { get; set; }
 
@@ -92,6 +95,22 @@ namespace simhukdis.Models
         public string Kode_Unit_Kerja { get; set; }
         public string UsulStatus { get; set; }
     }
+    public class clsSPTMJ
+    {
+        public string id { get; set; }
+        public string NIP { get; set; }
+        public string NAMA_LENGKAP { get; set; }
+        public string GOL_RUANG { get; set; }
+        public string LEVEL_JABATAN { get; set; }
+        public string Satker { get; set; }
+        public string NIP_USUL { get; set; }
+        public string NAMA_LENGKAP_USUL { get; set; }
+        public string Tanggal_Surat { get; set; }
+        public string Created_Date { get; set; }
+        public string Created_User { get; set; }
+        public string Updated_Date { get; set; }
+        public string Updated_User { get; set; }
+    }
     public class clsLampiranSurat
     {
         [DisplayName("Lampiran Surat 1")]
@@ -133,14 +152,14 @@ namespace simhukdis.Models
             {
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 List<clsSuratMasuk> SuratMasuks = new List<clsSuratMasuk>();
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
                     Int32 pNom = 0;
-                    string q ="sp_SuratMasuk_Display";
-                    MySqlCommand cmd = new MySqlCommand(q, con);
+                    string q ="SIMHUKDIS.sp_SuratMasuk_Display";
+                    SqlCommand cmd = new SqlCommand(q, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
-                    MySqlDataReader rd = cmd.ExecuteReader();
+                    SqlDataReader rd = cmd.ExecuteReader();
                     while (rd.Read())
                     {
                         clsSuratMasuk data = new clsSuratMasuk();
@@ -165,6 +184,8 @@ namespace simhukdis.Models
                         data.LampiranSurat5 = rd["LampiranSurat5"].ToString();
                         data.LampiranSurat_LHA = rd["Lampiran_LHA"].ToString();
                         data.LampiranSurat6 = rd["LampiranSurat6"].ToString();
+                        data.LampiranLHP = rd["LampiranLHP"].ToString();
+                        data.LampiranSPTJM = rd["LampiranSPTJM"].ToString();
                         data.CreateDate = rd["created_date"].ToString();
                         //if (!Convert.IsDBNull(rd["created_date"]))
                         //{
@@ -202,19 +223,19 @@ namespace simhukdis.Models
         {
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             List<clsSuratMasuk> SuratMasuks = new List<clsSuratMasuk>();
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
                 Int32 pNom = 0;
                 string q ="sp_SuratMasuk_Filter_Sel";
-                MySqlCommand cmd = new MySqlCommand(q, con);
+                SqlCommand cmd = new SqlCommand(q, con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("iStatus", filter.Status);
-                cmd.Parameters.AddWithValue("DateFrom", filter.DateFrom);
-                cmd.Parameters.AddWithValue("DateTo", filter.DateTo);
-                cmd.Parameters.AddWithValue("iGroupID", filter.GroupID);
-                cmd.Parameters.AddWithValue("UserLogin", filter.UserLogin);
+                cmd.Parameters.AddWithValue("@iStatus", filter.Status);
+                cmd.Parameters.AddWithValue("@DateFrom", filter.DateFrom);
+                cmd.Parameters.AddWithValue("@DateTo", filter.DateTo);
+                cmd.Parameters.AddWithValue("@iGroupID", filter.GroupID);
+                cmd.Parameters.AddWithValue("@UserLogin", filter.UserLogin);
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     clsSuratMasuk data = new clsSuratMasuk();
@@ -240,6 +261,85 @@ namespace simhukdis.Models
                     data.LampiranSurat5 = rd["LampiranSurat5"].ToString();
                     data.LampiranSurat_LHA = rd["Lampiran_LHA"].ToString();
                     data.LampiranSurat6 = rd["LampiranSurat6"].ToString();
+                    data.LampiranLHP = rd["LampiranLHP"].ToString();
+                    data.LampiranSPTJM = rd["LampiranSPTJM"].ToString();
+
+                    data.CreateDate = rd["created_date"].ToString();
+                    //if (!Convert.IsDBNull(rd["created_date"]))
+                    //{
+                    //    data.CreateDate = Convert.ToDateTime(rd["created_date"].ToString());
+                    //}
+                    data.CreateUser = rd["create_user"].ToString();
+                    data.UpdateDate = rd["update_date"].ToString();
+                    //if (!Convert.IsDBNull(rd["update_date"]))
+                    //{
+                    //    data.UpdateDate = Convert.ToDateTime(rd["update_date"].ToString());
+                    //}
+                    data.UpdatUser = rd["update_user"].ToString();
+                    data.Catatan1 = rd["Disposisi1_Notes"].ToString();
+                    data.Catatan2 = rd["Disposisi2_Notes"].ToString();
+                    data.Catatan3 = rd["Disposisi3_Notes"].ToString();
+                    data.DisposisiStatus1 = rd["Disposisi1_Status"].ToString();
+                    data.DisposisiStatus2 = rd["Disposisi2_Status"].ToString();
+                    data.DisposisiStatus3 = rd["Disposisi3_Status"].ToString();
+                    data.DisposisiBy1 = rd["Disposisi1_By"].ToString();
+                    data.DisposisiBy2 = rd["Disposisi2_By"].ToString();
+                    data.DisposisiBy3 = rd["Disposisi3_By"].ToString();
+                    data.DisposisiDate1 = rd["Disposisi1_Date"].ToString();
+                    data.DisposisiDate2 = rd["Disposisi2_Date"].ToString();
+                    data.DisposisiDate3 = rd["Disposisi3_Date"].ToString();
+                    data.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
+                    data.Unit_Kerja = rd["Unit_Kerja"].ToString();
+                    data.UsulStatus = rd["UsulStatus"].ToString();
+                    SuratMasuks.Add(data);
+                }
+                return SuratMasuks;
+            }
+        }
+        public List<clsSuratMasuk> SuratMasukItjenFilter(clsSuratMasukFilter filter)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            List<clsSuratMasuk> SuratMasuks = new List<clsSuratMasuk>();
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                Int32 pNom = 0;
+                string q = "SIMHUKDIS.sp_SuratMasuk_Itjen_Sel";
+                SqlCommand cmd = new SqlCommand(q, con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("iStatus", filter.Status);
+                cmd.Parameters.AddWithValue("DateFrom", filter.DateFrom);
+                cmd.Parameters.AddWithValue("DateTo", filter.DateTo);
+                cmd.Parameters.AddWithValue("UserLogin", filter.UserLogin);
+                con.Open();
+                SqlDataReader rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    clsSuratMasuk data = new clsSuratMasuk();
+                    pNom = pNom + 1;
+                    data.No = pNom;
+                    data.ID = Convert.ToInt32(rd["id"].ToString());
+                    data.Status = Convert.ToInt32(rd["STATUS"].ToString());
+                    data.NoAgenda = rd["nomor_agenda"].ToString();
+                    data.NoSurat = rd["nomor_surat"].ToString();
+                    data.AsalSurat = rd["asal_surat"].ToString();
+                    data.TanggalSurat = rd["tanggal_surat"].ToString();
+                    //if (!Convert.IsDBNull(rd["tanggal_surat"]))
+                    //{
+                    //    data.TanggalSurat = Convert.ToDateTime(rd["tanggal_surat"].ToString());
+                    //}
+                    data.perihal = rd["perihal"].ToString();
+                    data.SATUAN_KERJA = rd["SatuanKerja"].ToString();
+                    data.KODE_SATUAN_KERJA = rd["KODE_SATUAN_KERJA"].ToString();
+                    data.LampiranSurat1 = rd["LampiranSurat1"].ToString();
+                    data.LampiranSurat2 = rd["LampiranSurat2"].ToString();
+                    data.LampiranSurat3 = rd["LampiranSurat3"].ToString();
+                    data.LampiranSurat4 = rd["LampiranSurat4"].ToString();
+                    data.LampiranSurat5 = rd["LampiranSurat5"].ToString();
+                    data.LampiranSurat_LHA = rd["Lampiran_LHA"].ToString();
+                    data.LampiranSurat6 = rd["LampiranSurat6"].ToString();
+                    data.LampiranLHP = rd["LampiranLHP"].ToString();
+                    data.LampiranSPTJM = rd["LampiranSPTJM"].ToString();
+
                     data.CreateDate = rd["created_date"].ToString();
                     //if (!Convert.IsDBNull(rd["created_date"]))
                     //{
@@ -276,15 +376,15 @@ namespace simhukdis.Models
         {
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             clsSuratMasuk data = new clsSuratMasuk();
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
                 Int32 pNom = 0;
-                string q ="sp_SuratMasuk_Sel";
-                MySqlCommand cmd = new MySqlCommand(q, con);
+                string q ="SIMHUKDIS.sp_SuratMasuk_Sel";
+                SqlCommand cmd = new SqlCommand(q, con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iid", ID);
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     pNom = pNom + 1;
@@ -308,6 +408,9 @@ namespace simhukdis.Models
                     data.LampiranSurat5 = rd["LampiranSurat5"].ToString();
                     data.LampiranSurat_LHA = rd["Lampiran_LHA"].ToString();
                     data.LampiranSurat6 = rd["LampiranSurat6"].ToString();
+                    data.LampiranLHP = rd["LampiranLHP"].ToString();
+                    data.LampiranSPTJM = rd["LampiranSPTJM"].ToString();
+
                     data.CreateDate = rd["created_date"].ToString();
                     //if (!Convert.IsDBNull(rd["created_date"]))
                     //{
@@ -343,23 +446,25 @@ namespace simhukdis.Models
         {
             int i;
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_SuratMasuk_Ins", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_SuratMasuk_Ins", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 //DateTime dy = DateTime.ParseExact(suratMasuk.TanggalSurat,"dd-MM-yyyy",
                 //                       System.Globalization.CultureInfo.InvariantCulture);
-                cmd.Parameters.AddWithValue("inomor_agenda", suratMasuk.NoAgenda);
+                cmd.Parameters.AddWithValue("inomor_agenda", "");
                 cmd.Parameters.AddWithValue("inomor_surat", suratMasuk.NoSurat);
                 cmd.Parameters.AddWithValue("iasal_surat", suratMasuk.AsalSurat);
                 cmd.Parameters.AddWithValue("itanggal_surat", Convert.ToDateTime(suratMasuk.TanggalSurat).ToString("yyyy-MM-dd"));
                 cmd.Parameters.AddWithValue("iperihal", suratMasuk.perihal);
-                cmd.Parameters.AddWithValue("iLampiranSurat1", suratMasuk.LampiranSurat1);
-                cmd.Parameters.AddWithValue("iLampiranSurat2", suratMasuk.LampiranSurat2);
-                cmd.Parameters.AddWithValue("iLampiranSurat3", suratMasuk.LampiranSurat3);
-                cmd.Parameters.AddWithValue("iLampiranSurat4", suratMasuk.LampiranSurat4);
-                cmd.Parameters.AddWithValue("iLampiranSurat5", suratMasuk.LampiranSurat5);
-                cmd.Parameters.AddWithValue("iLampiranSurat6", suratMasuk.LampiranSurat6);
+                cmd.Parameters.AddWithValue("iLampiranSurat1", suratMasuk.LampiranSurat1 ?? "");
+                cmd.Parameters.AddWithValue("iLampiranSurat2", suratMasuk.LampiranSurat2 ?? "");
+                cmd.Parameters.AddWithValue("iLampiranSurat3", suratMasuk.LampiranSurat3 ?? "");
+                cmd.Parameters.AddWithValue("iLampiranSurat4", suratMasuk.LampiranSurat4 ?? "");
+                cmd.Parameters.AddWithValue("iLampiranSurat5", suratMasuk.LampiranSurat5 ?? "");
+                cmd.Parameters.AddWithValue("iLampiranSurat6", suratMasuk.LampiranSurat6 ?? "");
+                cmd.Parameters.AddWithValue("iLampiranLHP", suratMasuk.LampiranLHP ?? "");
+                cmd.Parameters.AddWithValue("iLampiranSPTJM", suratMasuk.LampiranSPTJM ?? "");
                 cmd.Parameters.AddWithValue("iSatuanKerja", suratMasuk.SATUAN_KERJA);
                 cmd.Parameters.AddWithValue("icreate_user", suratMasuk.CreateUser);
                 cmd.Parameters.AddWithValue("iLampiran_LHA", suratMasuk.LampiranSurat_LHA);
@@ -370,33 +475,57 @@ namespace simhukdis.Models
             }
             return i;
         }
+        public int InsertSPTJM(clsSPTMJ s)
+        {
+            int i;
+            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                SqlCommand cmd = new SqlCommand("sp_SuratMasuk_SPTJM_Ins", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@NIP_Atasan", s.NIP);
+                cmd.Parameters.AddWithValue("@Nama_Lengkap_Atasan", s.NAMA_LENGKAP);
+                cmd.Parameters.AddWithValue("@PangkatGolongan_Atasan", "");
+                cmd.Parameters.AddWithValue("@Jabatan_Atasan", s.LEVEL_JABATAN);
+                cmd.Parameters.AddWithValue("@Unit_Kerja_Atasan", s.Satker);
+                cmd.Parameters.AddWithValue("@Tanggal_Surat", Convert.ToDateTime(s.Tanggal_Surat).ToString("yyyy-MM-dd"));
+                cmd.Parameters.AddWithValue("@NIP_yang_Diusulkan", s.NIP_USUL);
+                cmd.Parameters.AddWithValue("@Nama_yang_Diusulkan", s.NAMA_LENGKAP_USUL);
+                cmd.Parameters.AddWithValue("@Created_User", s.Created_User);
+                con.Open();
+                i = cmd.ExecuteNonQuery();
+            }
+            return i;
+        }
         public int Edit(clsSuratMasuk suratMasuk)
         {
             int i;
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_SuratMasuk_Upd", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_SuratMasuk_Upd", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 //DateTime dy = DateTime.ParseExact(suratMasuk.TanggalSurat,"dd-MM-yyyy",
                 //                       System.Globalization.CultureInfo.InvariantCulture);
                 cmd.Parameters.AddWithValue("iid", suratMasuk.ID);
-                cmd.Parameters.AddWithValue("inomor_agenda", suratMasuk.NoAgenda);
-                cmd.Parameters.AddWithValue("inomor_surat", suratMasuk.NoSurat);
-                cmd.Parameters.AddWithValue("iasal_surat", suratMasuk.AsalSurat);                
+                cmd.Parameters.AddWithValue("inomor_agenda", "");
+                cmd.Parameters.AddWithValue("inomor_surat", suratMasuk.NoSurat ?? "");
+                cmd.Parameters.AddWithValue("iasal_surat", suratMasuk.AsalSurat ?? "");                
                 cmd.Parameters.AddWithValue("itanggal_surat", Convert.ToDateTime(suratMasuk.TanggalSurat).ToString("yyyy-MM-dd"));
-                cmd.Parameters.AddWithValue("iperihal", suratMasuk.perihal);
-                cmd.Parameters.AddWithValue("iLampiranSurat1", suratMasuk.LampiranSurat1);
-                cmd.Parameters.AddWithValue("iLampiranSurat2", suratMasuk.LampiranSurat2);
-                cmd.Parameters.AddWithValue("iLampiranSurat3", suratMasuk.LampiranSurat3);
-                cmd.Parameters.AddWithValue("iLampiranSurat4", suratMasuk.LampiranSurat4);
-                cmd.Parameters.AddWithValue("iLampiranSurat5", suratMasuk.LampiranSurat5);
-                cmd.Parameters.AddWithValue("iLampiranSurat6", suratMasuk.LampiranSurat6);
-                cmd.Parameters.AddWithValue("iSatuanKerja", suratMasuk.SATUAN_KERJA);
-                cmd.Parameters.AddWithValue("iupdate_user", suratMasuk.UpdatUser);
-                cmd.Parameters.AddWithValue("iLampiran_LHA", suratMasuk.LampiranSurat_LHA);
-                cmd.Parameters.AddWithValue("iUnit_Kerja", suratMasuk.Kode_Unit_Kerja);
+                cmd.Parameters.AddWithValue("iperihal", suratMasuk.perihal ?? "");
+                cmd.Parameters.AddWithValue("iLampiranSurat1", suratMasuk.LampiranSurat1 ?? "");
+                cmd.Parameters.AddWithValue("iLampiranSurat2", suratMasuk.LampiranSurat2 ?? "");
+                cmd.Parameters.AddWithValue("iLampiranSurat3", suratMasuk.LampiranSurat3 ?? "");
+                cmd.Parameters.AddWithValue("iLampiranSurat4", suratMasuk.LampiranSurat4 ?? "");
+                cmd.Parameters.AddWithValue("iLampiranSurat5", suratMasuk.LampiranSurat5 ?? "");
+                cmd.Parameters.AddWithValue("iLampiranSurat6", suratMasuk.LampiranSurat6 ?? "");
+                cmd.Parameters.AddWithValue("iLampiranLHP", suratMasuk.LampiranLHP ?? "");
+                cmd.Parameters.AddWithValue("iLampiranSPTJM", suratMasuk.LampiranSPTJM ?? "");
+                cmd.Parameters.AddWithValue("iSatuanKerja", suratMasuk.SATUAN_KERJA ?? "");
+                cmd.Parameters.AddWithValue("iupdate_user", suratMasuk.UpdatUser ?? "");
+                cmd.Parameters.AddWithValue("iLampiran_LHA", suratMasuk.LampiranSurat_LHA ?? "");
+                cmd.Parameters.AddWithValue("iUnit_Kerja", suratMasuk.Kode_Unit_Kerja ?? "");
                 con.Open();
                 i = cmd.ExecuteNonQuery();
             }
@@ -406,16 +535,16 @@ namespace simhukdis.Models
         {
             int i;
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_SuratMasuk_Upd", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_SuratMasuk_Upd", con);
                 cmd.CommandType = CommandType.StoredProcedure;
 
                 //DateTime dy = DateTime.ParseExact(suratMasuk.TanggalSurat,"dd-MM-yyyy",
                 //                       System.Globalization.CultureInfo.InvariantCulture);
 
                 cmd.Parameters.AddWithValue("iid", suratMasuk.ID);
-                cmd.Parameters.AddWithValue("inomor_agenda", suratMasuk.NoAgenda);
+                cmd.Parameters.AddWithValue("inomor_agenda", "");
                 cmd.Parameters.AddWithValue("inomor_surat", suratMasuk.NoSurat);
                 cmd.Parameters.AddWithValue("iasal_surat", suratMasuk.AsalSurat);
                 cmd.Parameters.AddWithValue("itanggal_surat", Convert.ToDateTime(suratMasuk.TanggalSurat).ToString("yyyy-MM-dd"));
@@ -425,11 +554,13 @@ namespace simhukdis.Models
                 cmd.Parameters.AddWithValue("iLampiranSurat3", suratMasuk.LampiranSurat3);
                 cmd.Parameters.AddWithValue("iLampiranSurat4", suratMasuk.LampiranSurat4);
                 cmd.Parameters.AddWithValue("iLampiranSurat5", suratMasuk.LampiranSurat5);
-                cmd.Parameters.AddWithValue("iLampiranSurat5", suratMasuk.LampiranSurat6);
+                cmd.Parameters.AddWithValue("iLampiranSurat6", suratMasuk.LampiranSurat6);
+                cmd.Parameters.AddWithValue("iLampiranLHP", suratMasuk.LampiranLHP);
+                cmd.Parameters.AddWithValue("iLampiranSPTJM", suratMasuk.LampiranSPTJM);
                 cmd.Parameters.AddWithValue("iSatuanKerja", suratMasuk.SATUAN_KERJA);
                 cmd.Parameters.AddWithValue("iupdate_user", suratMasuk.UpdatUser);
                 cmd.Parameters.AddWithValue("iLampiran_LHA", suratMasuk.LampiranSurat_LHA);
-                cmd.Parameters.AddWithValue("iUnit_Kerja", suratMasuk.Kode_Unit_Kerja);
+                cmd.Parameters.AddWithValue("iUnit_Kerja", suratMasuk.Kode_Unit_Kerja ?? "");
                 con.Open();
                 i = cmd.ExecuteNonQuery();
             }
@@ -439,9 +570,9 @@ namespace simhukdis.Models
         {
             int i;
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_SuratMasuk_Del", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_SuratMasuk_Del", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iid", ID);
                 con.Open();
@@ -453,9 +584,9 @@ namespace simhukdis.Models
         {
             int i;
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_SuratMasuk_Proses", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_SuratMasuk_Proses", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iid", suratMasuk.ID);
                 cmd.Parameters.AddWithValue("iupdate_user", suratMasuk.UpdatUser);
@@ -469,12 +600,12 @@ namespace simhukdis.Models
             clsSuratMasukDB db = new clsSuratMasukDB();
             List<clsSuratMasuk> User = new List<clsSuratMasuk>();
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_Satker_Sel", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Satker_Sel", con);
                 cmd.CommandType = CommandType.Text;
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     clsSuratMasuk s = new clsSuratMasuk();
@@ -491,13 +622,13 @@ namespace simhukdis.Models
             clsSuratMasukDB db = new clsSuratMasukDB();
             List<clsUnitKerja> User = new List<clsUnitKerja>();
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_UnitKerja_Sel", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_UnitKerja_Sel", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iKodeSatker", KodeSatker);
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     clsUnitKerja s = new clsUnitKerja();
@@ -513,13 +644,13 @@ namespace simhukdis.Models
         {
             clsUnitKerja s = new clsUnitKerja();
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_UnitKerja_Sel", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_UnitKerja_Sel", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iKodeSatker", KodeSatker);
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     s.Unit_Kerja = rd["Unit_Kerja"].ToString();

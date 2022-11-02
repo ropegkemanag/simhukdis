@@ -1,12 +1,12 @@
-﻿using MySql.Data.MySqlClient;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 
-namespace simhukdis.Models
+namespace SIMHUKDIS.Models
 {
     public class clsHukdis
     {
@@ -31,13 +31,13 @@ namespace simhukdis.Models
 
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 List<clsHukdis> Hukdis = new List<clsHukdis>();
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string q = "sp_Hukdis_Sel";
-                    MySqlCommand cmd = new MySqlCommand(q, con);
+                    string q = "SIMHUKDIS.sp_Hukdis_Sel";
+                    SqlCommand cmd = new SqlCommand(q, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
-                    MySqlDataReader rd = cmd.ExecuteReader();
+                    SqlDataReader rd = cmd.ExecuteReader();
                     while (rd.Read())
                     {
                         clsHukdis data = new clsHukdis();
@@ -61,12 +61,12 @@ namespace simhukdis.Models
         {
             List<clsHukdis> Hukdis = new List<clsHukdis>();
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_Hukdis_Sel", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Hukdis_Sel", con);
                 cmd.CommandType = CommandType.Text;
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     clsHukdis s = new clsHukdis();
@@ -82,13 +82,13 @@ namespace simhukdis.Models
         public bool GetDataExist(string GroupID)
         {
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
                 con.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_Hukdis_AlreadyExist", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Hukdis_AlreadyExist", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("ihukuman", GroupID);
-                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 if (dt.Rows.Count == 0)
@@ -107,10 +107,10 @@ namespace simhukdis.Models
             {
                 int i = 0;
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "sp_Hukdis_Ins";
-                    MySqlCommand cmd = new MySqlCommand(MySql, con);
+                    string MySql = "SIMHUKDIS.sp_Hukdis_Ins";
+                    SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("iHukdisID", Hukdis.HukdisID);
                     cmd.Parameters.AddWithValue("iHukuman", Hukdis.HukdisDesc);
@@ -132,13 +132,12 @@ namespace simhukdis.Models
             {
                 int i = 0;
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "sp_Hukdis_Upd";
-                    MySqlCommand cmd = new MySqlCommand(MySql, con);
+                    string MySql = "SIMHUKDIS.sp_Hukdis_Upd";
+                    SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("iid", Hukdis.ID);
-                    cmd.Parameters.AddWithValue("iHukdisID", Hukdis.HukdisID);
                     cmd.Parameters.AddWithValue("iHukuman", Hukdis.HukdisDesc);
                     cmd.Parameters.AddWithValue("iTingkat", Hukdis.Tingkat);
                     cmd.Parameters.AddWithValue("iLastUser", Hukdis.LastUser);
@@ -158,10 +157,10 @@ namespace simhukdis.Models
             {
                 int i = 0;
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "sp_Hukdis_Del";
-                    MySqlCommand cmd = new MySqlCommand(MySql, con);
+                    string MySql = "SIMHUKDIS.sp_Hukdis_Del";
+                    SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("iid", ID);
                     con.Open();

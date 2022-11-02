@@ -1,5 +1,4 @@
 ﻿using Newtonsoft.Json;
-using simhukdis.Models;
 using SIMHUKDIS.Models;
 using System;
 using System.Collections.Generic;
@@ -59,13 +58,21 @@ namespace SIMHUKDIS.Controllers
             }
             try
             {
+                string userlogin = Session["Fullname"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+
                 return View();
             }
             catch (Exception ex)
             {
                 var Error_Message = "Error Catch ! (" + ex.Message + ")";
                 return RedirectToAction("Error500", "Home", new { Error_Message });
-            }            
+            }
         }
         [HttpPost]
         public ActionResult Create(string SATUAN_KERJA)
@@ -75,6 +82,14 @@ namespace SIMHUKDIS.Controllers
             try
             {
                 UserLogin = Session["Fullname"].ToString();
+                string userlogin = Session["Fullname"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+
                 ClsSatker Satker = new ClsSatker();
                 Satker.SATUAN_KERJA = SATUAN_KERJA;
                 Satker.UserLogin = UserLogin;
@@ -103,6 +118,14 @@ namespace SIMHUKDIS.Controllers
             }
             try
             {
+                string userlogin = Session["Fullname"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+
                 ClsSatkerDB db = new ClsSatkerDB();
                 ClsSatker Satker = db.SatkerList.SingleOrDefault(sub => sub.KODE_SATUAN_KERJA == ID);
                 return View(Satker);
@@ -122,6 +145,14 @@ namespace SIMHUKDIS.Controllers
 
             try
             {
+                string userlogin = Session["Fullname"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+
                 UserLogin = Session["Fullname"].ToString();
                 ClsSatker Satker = new ClsSatker();
                 Satker.KODE_SATUAN_KERJA = KODE_SATUAN_KERJA;
@@ -144,6 +175,15 @@ namespace SIMHUKDIS.Controllers
             string UserLogin = Session["Fullname"].ToString();
             try
             {
+
+                string userlogin = Session["Fullname"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+
                 ClsSatkerDB db = new ClsSatkerDB();
                 db.Delete(ID);
                 strMsg = "Success";

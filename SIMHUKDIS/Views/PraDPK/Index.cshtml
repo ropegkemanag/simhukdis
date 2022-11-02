@@ -1,91 +1,70 @@
 ﻿@model IEnumerable<SIMHUKDIS.Models.clsPraDPK>
 
 @{
-    ViewBag.Title = "Data Pra Sidang Dewan Pertimbangan Kepegawaian";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Data Pra Sidang DPK";
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
 
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Data Pra Sidang Dewan Pertimbangan Kepegawaian</h6>
-    </div>
+<div class="pd-20 card-box mb-30">
     @Html.ValidationSummary(true)
     <div class="card-body">
-        <table>
-            <tr>
-                <td>
-                    <label style="color:cornflowerblue;" class="control-label ">Tanggal SIdang</label>
-                </td>
-                <td style="width:20px;"> </td>
-                <td>
-                    <input id="TanggalSidang" class="form-control" value="@string.Format("{0:dd-MM-yyyy}", ViewBag.TanggalSidang)" type="date" />
-                </td>
-                <td style="width:20px;"> </td>
-                <td>
-                    <button class="btn btn-primary" type="button" id="GridLoad">
-                        Cari
-                    </button>
-                </td>
-                <td style="width:20px;"> </td>
-                <td>
-                    <button id="downloadtoexcel" class="btn btn-primary" type="button" name="action:DownloadToExcel">
-                        Download to Excel
-                    </button>
-                </td>
+        @*<table>
+                <tr>
+                    <td>
+                        <label style="color:cornflowerblue;" class="control-label ">Tanggal Sidang</label>
+                    </td>
+                    <td style="width:20px;"> </td>
+                    <td>
+                        <input id="TanggalSidang" class="form-control" value="@string.Format("{0:dd-MM-yyyy}", ViewBag.TanggalSidang)" type="date" />
+                    </td>
+                    <td style="width:20px;"> </td>
+                    <td>
+                        <button class="btn btn-primary" type="button" id="GridLoad">
+                            Cari
+                        </button>
+                    </td>
+                    <td style="width:20px;"> </td>
+                    <td>
+                        <button id="downloadtoexcel" class="btn btn-primary" type="button" name="action:DownloadToExcel">
+                            Download to Excel
+                        </button>
+                    </td>
 
-            </tr>
-            @*<tr>
-                <td>
-                    <label style="color:cornflowerblue;" class="control-label ">Tanggal Surat</label>
-                </td>
-                <td style="width:20px;"> </td>
-                <td>
-                    <input id="TanggalSuratFrom" class="form-control" value="@string.Format("{0:dd-MM-yyyy}", ViewBag.DateFrom)" type="date" />
-                </td>
-                <td style="color:cornflowerblue;" class="control-label ">s/d</td>
-                <td>
-                    <input id="TanggalSuratTo" class="form-control" value="@string.Format("{0:dd-MM-yyyy}", ViewBag.DateTo)" type="date" />
-                </td>
-                <td style="width:20px;"> </td>
-                <td>
-                    <button class="btn btn-primary" type="button" id="GridLoad">
-                        Cari
-                    </button>
-                </td>
-            </tr>*@
-        </table>
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" style="width:100%;" cellspacing="0">
-                <thead class="table table-primary" style="white-space: nowrap; text-align: center;">
-                    <tr>
-                        <th>
-                            Aksi
-                        </th>
-                        @*<th>
+                </tr>
+            </table>*@
+        <div class="card-body">
+        </div>
+        <table class="table hover data-table-export">
+            <thead class="table table-primary" style="white-space:nowrap;">
+                <tr>
+                    <th>
+                        Aksi
+                    </th>
+                    @*<th>
                             No
                         </th>*@
-                        <th>
-                            Identitas
-                        </th>
-                        <th>
-                            Pasal Pelanggaran
-                        </th>
-                        <th>
-                            Jenis Pelanggaran
-                        </th>
-                        <th>
-                            Uraian Pelanggaran
-                        </th>
-                        <th>
-                            Rekomendasi Hukdis
-                        </th>
-                        <th>
-                            Tanggal Sidang
-                        </th>
-                        <th>
-                            Catatan Pra Sidang DPK
-                        </th>
-                        @*<th>
+                    <th>
+                        Identitas
+                    </th>
+                    <th>
+                        Pasal Pelanggaran
+                    </th>
+                    <th>
+                        Jenis Pelanggaran
+                    </th>
+                    <th>
+                        Uraian Pelanggaran
+                    </th>
+                    <th>
+                        Rekomendasi Hukdis
+                    </th>
+                    <th>
+                        Tanggal Sidang
+                    </th>
+                    <th>
+                        Catatan Pra Sidang DPK
+                    </th>
+                    @*<th>
                             @Html.DisplayNameFor(model => model.PelanggaranDisiplin)
                         </th>
                         <th>
@@ -109,60 +88,59 @@
                         <th>
                             @Html.DisplayNameFor(model => model.SATUAN_KERJA)
                         </th>*@
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
 
-                        <tr>
-                            <td>
-                                @Html.ActionLink("Ubah", "Edit", new { ID = item.ID, NIP = item.NIP })
-                                @*<a href="#" onclick="Update('@item.ID','@item.NIP','@item.Catatan','@item.Tanggal_Sidang','@item.Kode_JenisPelanggaran')">Ubah</a>*@
-                                <br />
-                                <a href="#" onclick="SendData('@item.ID','@item.NIP')">Proses Sidang DPK</a>
+                    <tr>
+                        <td>
+                            @Html.ActionLink("Ubah", "Edit", new { ID = item.ID, NIP = item.NIP })
+                            @*<a href="#" onclick="Update('@item.ID','@item.NIP','@item.Catatan','@item.Tanggal_Sidang','@item.Kode_JenisPelanggaran')">Ubah</a>*@
+                            <br />
+                            <a href="#" onclick="SendData('@item.ID','@item.NIP')">Proses Sidang DPK</a>
 
-                            </td>
-                            @*<td>
+                        </td>
+                        @*<td>
                                 @Html.DisplayFor(modelItem => item.No)
                             </td>*@
-                            <td>
-                                @Html.DisplayFor(modelItem => item.FullName)
-                                <br />
-                                @Html.DisplayFor(modelItem => item.NIP)
-                                <br />
-                                @Html.DisplayFor(modelItem => item.GOL_RUANG)
-                                <br />
-                                @Html.DisplayFor(modelItem => item.LEVEL_JABATAN)
-                                <br />
-                                @Html.DisplayFor(modelItem => item.AsalSurat)
-                                <br />
-                                @Html.DisplayFor(modelItem => item.DasarBukti)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.PasalPelanggaran)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.JenisPelanggaran)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.PelanggaranDisiplin)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.RekomendasiHukdis)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Tanggal_Sidang)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Catatan)
-                            </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FullName)
+                            <br />
+                            @Html.DisplayFor(modelItem => item.NIP)
+                            <br />
+                            @Html.DisplayFor(modelItem => item.GOL_RUANG)
+                            <br />
+                            @Html.DisplayFor(modelItem => item.LEVEL_JABATAN)
+                            <br />
+                            @Html.DisplayFor(modelItem => item.AsalSurat)
+                            <br />
+                            @Html.DisplayFor(modelItem => item.DasarBukti)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PasalPelanggaran)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.JenisPelanggaran)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.PelanggaranDisiplin)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.RekomendasiHukdis)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tanggal_Sidang)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Catatan)
+                        </td>
 
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
+                    </tr>
+                }
+            </tbody>
+        </table>
     </div>
 </div>
 
@@ -176,7 +154,7 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">Apakah Anda yakin untuk mengirim data ini ?</div>
+            <div class="modal-body">Apakah Anda yakin untuk mengirim data ini untuk Sidang DPK ?</div>
             <div class="form-group" style="display:none;">
                 <div class="col">
                     <label for="ID">ID</label>
@@ -197,7 +175,7 @@
         </div>
     </div>
 </div>
-<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script src="/Scripts/jquery-3.6.0.min.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {

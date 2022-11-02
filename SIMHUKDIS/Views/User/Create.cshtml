@@ -1,80 +1,98 @@
-﻿@model simhukdis.Models.clsUserLogin
+﻿@model SIMHUKDIS.Models.clsUserLogin
 @{
     ViewBag.Title = "CREATE USER";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
 
-<div class="card shadow mb-4" style="font-family:Calibri">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Tambah User</h6>
-    </div>
-    <div class="card-body">
+<div class="pd-20 card-box mb-30">
         <form>
-            <div class="form-group">
-                <label style="font-weight: bold;color:red;" class="control-label col">NIP *</label>
-                <div class="col-md-10">
-                    @Html.Editor("NIP", new { htmlAttributes = new { @class = "form-control", @id = "NIP", required = "required", onkeypress = "return AllowOnlyNumbers(event);", maxlength = "18", onchange = "getData()" } })
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label class="control-label col">NIP *</label>
+                </div>
+                <div class="col">
+                    @Html.Editor("NIP", new { htmlAttributes = new { @class = "form-control", @id = "NIP", required = "required", maxlength = "18"} })
+                 @*   @Html.Editor("NIP", new { htmlAttributes = new { @class = "form-control", @id = "NIP", required = "required", onkeypress = "return AllowOnlyNumbers(event);", maxlength = "18", onchange = "getData()" } })*@
                     @Html.ValidationMessage("NIP", "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="form-group">
-                <label style="font-weight: bold;color:red;" class="control-label col">Fullname *</label>
-                <div class="col-md-10">
-                    @Html.Editor("FullName", new { htmlAttributes = new { @class = "form-control", @id = "Fullname", required = "required", @readonly = "True" } })
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label class="control-label col">Nama Lengkap *</label>
+                </div>
+                
+                <div class="col">
+
+                    @Html.Editor("FullName", new { htmlAttributes = new { @class = "form-control", @id = "Fullname", required = "required", @readonly = "True", @row = 3 } })
                     @Html.ValidationMessage("FullName", "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="form-group">
-                <label style="font-weight: bold;color:red;" class="control-label col">Jabatan *</label>
-                <div class="col-md-10">
-                    @Html.Editor("LEVEL_JABATAN", new { htmlAttributes = new { @class = "form-control", @id = "LEVEL_JABATAN", required = "required", @readonly = "True" } })
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label class="control-label col">Jabatan *</label>
+                </div>
+                
+                <div class="col">
+                    @Html.TextArea("perihal", "", new { @id = "LEVEL_JABATAN", @class = "form-control", required = "required" })
+                    @*@Html.TextArea("LEVEL_JABATAN", new { htmlAttributes = new { @class = "form-control", @id = "LEVEL_JABATAN", required = "required", @readonly = "True", rows = 5 } })*@
                     @Html.ValidationMessage("LEVEL_JABATAN", "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="form-group">
-                <label style="font-weight: bold;color:red;" class="control-label col">Satuan Kerja *</label>
-                <div class="col-md-10">
-                    @Html.DropDownList("KODE_SATUAN_KERJA", ViewBag.Satker as SelectList, new { @class = "fstdropdown-select form-control", required = "required", @id = "KODE_SATUAN_KERJA" })
+            <div class="form-group row">
+                
+                <div class="col-md-3">
+                    <label class="control-label col">Satuan Kerja *</label>
+                </div>
+                <div class="col">
+                    @Html.DropDownList("KODE_SATUAN_KERJA", ViewBag.Satker as SelectList, new { @class = "custom-select2 form-control", required = "required", @id = "KODE_SATUAN_KERJA" })
                 </div>
             </div>
-            <div class="form-group">
-                <label style="font-weight: bold;color:red;" class="control-label col">Password *</label>
-                <div class="col-md-10">
-                    @Html.Editor("Password", new { htmlAttributes = new { @class = "form-control form-control-user password", @id = "Password", required = "required" } })
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label class="control-label col">Password *</label>
+                </div>
+                
+                <div class="col">
+                    @Html.Editor("Password", new { htmlAttributes = new { @class = "form-control password", @id = "Password", required = "required" } })
                     @Html.ValidationMessage("Password", "", new { @class = "text-danger" })
                 </div>
             </div>
 
-            <div class="form-group">
-                <label style="font-weight: bold;color:red;" class="control-label col">Status Admin *</label>
-                <div class="col-md-10">
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label class="control-label col">Status Admin *</label>
+                </div>
+                
+                <div class="col">
                     @Html.DropDownList("StatusAdmin", new List<SelectListItem>
                                                                         {
                                                                             new SelectListItem{ Text = "No", Value = "0" },
                                                                             new SelectListItem{ Text = "Yes", Value = "1" }
-                                                                        }, htmlAttributes: new { @class = "form-control", @id = "StatusAdmin", required = "required" }
+                                                                        }, htmlAttributes: new { @class = "custom-select2 form-control", @id = "StatusAdmin", required = "required" }
                                                                     )
                     @Html.ValidationMessage("StatusAdmin", "", new { @class = "text-danger" })
                 </div>
             </div>
 
-            <div class="form-group">
-                <label style="font-weight: bold;color:red;" class="control-label col">Group ID *</label>
-                <div class="col-md-10">
-                    @Html.DropDownList("GroupID", (SelectList)ViewBag.GroupID, htmlAttributes: new { @class = "fstdropdown-select form-control", @id = "GroupID", required = "required" })
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label class="control-label col">Group ID *</label>
+                </div>
+                
+                <div class="col">
+                    @Html.DropDownList("GroupID", (SelectList)ViewBag.GroupID, htmlAttributes: new { @class = "custom-select2 form-control", @id = "GroupID", required = "required" })
                     @Html.ValidationMessage("GroupID", "", new { @class = "text-danger" })
                 </div>
             </div>
 
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
+            <div class="form-group row">
+                <div class="col-md-offset-2 col">
                     <input type="submit" value="Tambah Data" class="btn btn-primary" onclick="Insert()" /> | @Html.ActionLink("Back to List", "Index")
                 </div>
             </div>
         </form>
-    </div>
 </div>
-    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+    <script src="/Scripts/jquery-3.6.0.min.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             $('.mdb-select').materialSelect();

@@ -1,12 +1,12 @@
-﻿@model IEnumerable<simhukdis.Models.clsMonitoring>
+﻿@model IEnumerable<SIMHUKDIS.Models.clsMonitoring>
 
 @{
     ViewBag.Title = "Monitoring";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
 
 <!-- DataTales Example -->
-<div class="card shadow mb-4">
+<div class="card-box mb-30">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">Monitoring</h6>
     </div>
@@ -14,8 +14,8 @@
     <div class="card-body">
 
         <div style="height: 15px"></div>
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <div class="pb-20">
+            <table class="table hover data-table-export">
                 <thead class="table table-primary">
                     <tr>
 
@@ -29,14 +29,14 @@
                             Surat Masuk
                         </th>
                         @*<th style="white-space: nowrap; text-align: center;">
-                                Disposisi Kepala Biro
-                            </th>
-                            <th style="white-space: nowrap; text-align: center;">
-                                Disposisi Koordinator
-                            </th>
-                            <th style="white-space: nowrap; text-align: center;">
-                                Disposisi Sub Koordinator
-                            </th>*@
+                            Disposisi Kepala Biro
+                        </th>
+                        <th style="white-space: nowrap; text-align: center;">
+                            Disposisi Koordinator
+                        </th>
+                        <th style="white-space: nowrap; text-align: center;">
+                            Disposisi Sub Koordinator
+                        </th>*@
                         <th style="white-space: nowrap; text-align: center;">
                             Telaah
                         </th>
@@ -68,32 +68,32 @@
                                     @r.Perihal
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
 
                                 @*<td style="text-align:center;color:red;">
-                                        <i class="fas fa-minus-circle"></i>
-                                    </td>
-                                    <td style="text-align:center;color:red;">
-                                        <i class="fas fa-minus-circle"></i>
-                                    </td>
-                                    <td style="text-align:center;color:red;">
-                                        <i class="fas fa-minus-circle"></i>
-                                    </td>*@
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
+                                </td>*@
+                                <td style="text-align:center;color:red;">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="icon-copy dw dw-stop"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                             </tr>
                         }
@@ -107,36 +107,36 @@
                                     @r.Perihal
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label></label>
                                     @r.TanggalSurat
                                 </td>
 
                                 @*<td style="text-align:center;color:red;">
-                                        <i class="fas fa-minus-circle"></i>
-                                        <br /><label style="margin-top:100PX;"></label>
-                                        @r.DisposisiDate1
-                                    </td>
-                                    <td style="text-align:center;color:red;">
-                                        <i class="fas fa-minus-circle"></i>
-                                    </td>
-                                    <td style="text-align:center;color:red;">
-                                        <i class="fas fa-minus-circle"></i>
-                                    </td>*@
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
+                                    <br /><label ></label>
+                                    @r.DisposisiDate1
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
+                                </td>*@
+                                <td style="text-align:center;color:red;">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="icon-copy dw dw-stop"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                             </tr>
                         }
@@ -150,36 +150,36 @@
                                     @r.Perihal
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label></label>
                                     @r.TanggalSurat
                                 </td>
 
                                 @*<td style="text-align:center;color:mediumspringgreen;">
-                                        <i class="fas fa-check-circle"></i>
-                                        <br /><label style="margin-top:100PX;"></label>
-                                        @r.DisposisiDate1
-                                    </td>
-                                    <td style="text-align:center;color:red;">
-                                        <i class="fas fa-minus-circle"></i>
-                                    </td>
-                                    <td style="text-align:center;color:red;">
-                                        <i class="fas fa-minus-circle"></i>
-                                    </td>*@
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label ></label>
+                                    @r.DisposisiDate1
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
+                                </td>*@
+                                <td style="text-align:center;color:red;">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="icon-copy dw dw-stop"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                             </tr>
                         }
@@ -193,38 +193,38 @@
                                     @r.Perihal
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label></label>
                                     @r.TanggalSurat
                                 </td>
 
                                 @*<td style="text-align:center;color:mediumspringgreen;">
-                                        <i class="fas fa-check-circle"></i>
-                                        <br /><label style="margin-top:100PX;"></label>
-                                        @r.DisposisiDate1
-                                    </td>
-                                    <td style="text-align:center;color:mediumspringgreen;">
-                                        <i class="fas fa-check-circle"></i>
-                                        <br /><label style="margin-top:100PX;"></label>
-                                        @r.DisposisiDate2
-                                    </td>
-                                    <td style="text-align:center;color:red;">
-                                        <i class="fas fa-minus-circle"></i>
-                                    </td>*@
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label ></label>
+                                    @r.DisposisiDate1
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label ></label>
+                                    @r.DisposisiDate2
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
+                                </td>*@
+                                <td style="text-align:center;color:red;">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
+                                </td>
+                                <td style="text-align:center;color:red;">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                             </tr>
                         }
@@ -238,40 +238,40 @@
                                     @r.Perihal
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label></label>
                                     @r.TanggalSurat
                                 </td>
 
                                 @*<td style="text-align:center;color:mediumspringgreen;">
-                                        <i class="fas fa-check-circle"></i>
-                                        <br /><label style="margin-top:100PX;"></label>
-                                        @r.DisposisiDate1
-                                    </td>
-                                    <td style="text-align:center;color:mediumspringgreen;">
-                                        <i class="fas fa-check-circle"></i>
-                                        <br /><label style="margin-top:100PX;"></label>
-                                        @r.DisposisiDate2
-                                    </td>
-                                    <td style="text-align:center;color:mediumspringgreen;">
-                                        <i class="fas fa-check-circle"></i>
-                                        <br /><label style="margin-top:100PX;"></label>
-                                        @r.DisposisiDate3
-                                    </td>*@
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label ></label>
+                                    @r.DisposisiDate1
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label ></label>
+                                    @r.DisposisiDate2
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label ></label>
+                                    @r.DisposisiDate3
+                                </td>*@
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                             </tr>
                         }
@@ -285,42 +285,42 @@
                                     @r.Perihal
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label></label>
                                     @r.TanggalSurat
                                 </td>
 
                                 @*<td style="text-align:center;color:mediumspringgreen;">
-                                        <i class="fas fa-check-circle"></i>
-                                        <br /><label style="margin-top:100PX;"></label>
-                                        @r.DisposisiDate1
-                                    </td>
-                                    <td style="text-align:center;color:mediumspringgreen;">
-                                        <i class="fas fa-check-circle"></i>
-                                        <br /><label style="margin-top:100PX;"></label>
-                                        @r.DisposisiDate2
-                                    </td>
-                                    <td style="text-align:center;color:mediumspringgreen;">
-                                        <i class="fas fa-check-circle"></i>
-                                        <br /><label style="margin-top:100PX;"></label>
-                                        @r.DisposisiDate3
-                                    </td>*@
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label ></label>
+                                    @r.DisposisiDate1
+                                </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label ></label>
+                                    @r.DisposisiDate2
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label ></label>
+                                    @r.DisposisiDate3
+                                </td>*@
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label></label>
                                     @r.Tanggal_Telaah
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                             </tr>
                         }
@@ -334,44 +334,44 @@
                                     @r.Perihal
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label></label>
                                     @r.TanggalSurat
                                 </td>
 
                                 @*<td style="text-align:center;color:mediumspringgreen;">
-                                        <i class="fas fa-check-circle"></i>
-                                        <br /><label style="margin-top:100PX;"></label>
-                                        @r.DisposisiDate1
-                                    </td>
-                                    <td style="text-align:center;color:mediumspringgreen;">
-                                        <i class="fas fa-check-circle"></i>
-                                        <br /><label style="margin-top:100PX;"></label>
-                                        @r.DisposisiDate2
-                                    </td>
-                                    <td style="text-align:center;color:mediumspringgreen;">
-                                        <i class="fas fa-check-circle"></i>
-                                        <br /><label style="margin-top:100PX;"></label>
-                                        @r.DisposisiDate3
-                                    </td>*@
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label ></label>
+                                    @r.DisposisiDate1
+                                </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label ></label>
+                                    @r.DisposisiDate2
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label ></label>
+                                    @r.DisposisiDate3
+                                </td>*@
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label></label>
                                     @r.Tanggal_Telaah
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label></label>
                                     @r.Tanggal_PraDPK
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                             </tr>
                         }
@@ -385,46 +385,46 @@
                                     @r.Perihal
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label></label>
                                     @r.TanggalSurat
                                 </td>
 
                                 @*<td style="text-align:center;color:mediumspringgreen;">
-                                        <i class="fas fa-check-circle"></i>
-                                        <br /><label style="margin-top:100PX;"></label>
-                                        @r.DisposisiDate1
-                                    </td>
-                                    <td style="text-align:center;color:mediumspringgreen;">
-                                        <i class="fas fa-check-circle"></i>
-                                        <br /><label style="margin-top:100PX;"></label>
-                                        @r.DisposisiDate2
-                                    </td>
-                                    <td style="text-align:center;color:mediumspringgreen;">
-                                        <i class="fas fa-check-circle"></i>
-                                        <br /><label style="margin-top:100PX;"></label>
-                                        @r.DisposisiDate3
-                                    </td>*@
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label ></label>
+                                    @r.DisposisiDate1
+                                </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label ></label>
+                                    @r.DisposisiDate2
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label ></label>
+                                    @r.DisposisiDate3
+                                </td>*@
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label></label>
                                     @r.Tanggal_Telaah
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label></label>
                                     @r.Tanggal_PraDPK
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label></label>
                                     @r.Tanggal_DPK
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                             </tr>
                         }
@@ -438,46 +438,46 @@
                                     @r.Perihal
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label></label>
                                     @r.TanggalSurat
                                 </td>
 
                                 @*<td style="text-align:center;color:mediumspringgreen;">
-                                        <i class="fas fa-check-circle"></i>
-                                        <br /><label style="margin-top:100PX;"></label>
-                                        @r.DisposisiDate1
-                                    </td>
-                                    <td style="text-align:center;color:mediumspringgreen;">
-                                        <i class="fas fa-check-circle"></i>
-                                        <br /><label style="margin-top:100PX;"></label>
-                                        @r.DisposisiDate2
-                                    </td>
-                                    <td style="text-align:center;color:mediumspringgreen;">
-                                        <i class="fas fa-check-circle"></i>
-                                        <br /><label style="margin-top:100PX;"></label>
-                                        @r.DisposisiDate3
-                                    </td>*@
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label ></label>
+                                    @r.DisposisiDate1
+                                </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label ></label>
+                                    @r.DisposisiDate2
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label ></label>
+                                    @r.DisposisiDate3
+                                </td>*@
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label></label>
                                     @r.Tanggal_Telaah
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label></label>
                                     @r.Tanggal_PraDPK
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label></label>
                                     @r.Tanggal_DPK
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
+                                    <i class="icon-copy dw dw-checked"></i>
                                 </td>
                                 <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                             </tr>
                         }
@@ -491,46 +491,46 @@
                                     @r.Perihal
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label></label>
                                     @r.TanggalSurat
                                 </td>
 
                                 @*<td style="text-align:center;color:mediumspringgreen;">
-                                        <i class="fas fa-check-circle"></i>
-                                        <br /><label style="margin-top:100PX;"></label>
-                                        @r.DisposisiDate1
-                                    </td>
-                                    <td style="text-align:center;color:mediumspringgreen;">
-                                        <i class="fas fa-check-circle"></i>
-                                        <br /><label style="margin-top:100PX;"></label>
-                                        @r.DisposisiDate2
-                                    </td>
-                                    <td style="text-align:center;color:mediumspringgreen;">
-                                        <i class="fas fa-check-circle"></i>
-                                        <br /><label style="margin-top:100PX;"></label>
-                                        @r.DisposisiDate3
-                                    </td>*@
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label ></label>
+                                    @r.DisposisiDate1
+                                </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label ></label>
+                                    @r.DisposisiDate2
+                                </td>
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label ></label>
+                                    @r.DisposisiDate3
+                                </td>*@
+                                <td style="text-align:center;color:mediumspringgreen;">
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label></label>
                                     @r.Tanggal_Telaah
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label></label>
                                     @r.Tanggal_PraDPK
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy dw dw-checked"></i>
+                                    <br /><label></label>
                                     @r.Tanggal_DPK
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
+                                    <i class="icon-copy dw dw-checked"></i>
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
+                                    <i class="icon-copy dw dw-checked"></i>
                                 </td>
                             </tr>
                         }

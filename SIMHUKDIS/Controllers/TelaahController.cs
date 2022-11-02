@@ -9,7 +9,7 @@ using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
-using simhukdis.Models;
+using SIMHUKDIS.Models;
 using SIMHUKDIS.Models;
 using Spire.Doc;
 
@@ -321,7 +321,7 @@ namespace SIMHUKDIS.Controllers
                         fname = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                         
                         FileName = fname;
-                        fname = Path.Combine(Server.MapPath("~/Files/Upload/Telaah/"), fname);
+                        fname = Path.Combine(Server.MapPath("/Files/Upload/Telaah/"), fname);
                         file.SaveAs(fname);
                     }
 
@@ -455,6 +455,14 @@ namespace SIMHUKDIS.Controllers
                 strTelaahNo = string.Format(string.Format("{0:000}", intTelaahNo));
                 string strBulan = string.Format(string.Format("{0:00}", Bulan));
                 strTelaahNo = "R-" + strTelaahNo + "/B.II/2-b/KP.04.1/" + strBulan + "/" + Tahun;
+                clsPejabatMst pejabatMst = new clsPejabatMst();
+                clsPejabatMstDB pdb = new clsPejabatMstDB();
+                pejabatMst = pdb.GetList();
+
+                string Karopeg = pejabatMst.Karopeg;
+                string NIP_Karopeg = pejabatMst.NIP_Karopeg;
+                telaah.Karopeg = Karopeg;
+                telaah.NIP_Karopeg = NIP_Karopeg;
                 telaah.TelaahNo = strTelaahNo;
                 Document doc = new Document();
                 doc.LoadFromFile(strTemplate);
@@ -541,6 +549,16 @@ namespace SIMHUKDIS.Controllers
                 telaah.KeputusanSidangDPK = KeputusanSidangDPK;
                 telaah.CreatedUser = UserLogin;
                 telaah.Tanggal_Telaah = Tanggal_Telaah;
+
+                clsPejabatMst pejabatMst = new clsPejabatMst();
+                clsPejabatMstDB pdb = new clsPejabatMstDB();
+                pejabatMst = pdb.GetList();
+
+                string Karopeg = pejabatMst.Nama_Karopeg;
+                string NIP_Karopeg = pejabatMst.NIP_Karopeg;
+                telaah.Karopeg = Karopeg;
+                telaah.NIP_Karopeg = NIP_Karopeg;
+
                 telaah.TelaahNo = Telaah_No;
                 Document doc = new Document();
                 doc.LoadFromFile(strTemplate);
@@ -578,7 +596,7 @@ namespace SIMHUKDIS.Controllers
             try
             {
                 //Build the File Path.
-                string path = Server.MapPath("~/Files/Result/Telaah/") + fileName;
+                string path = Server.MapPath("/Files/Result/Telaah/") + fileName;
 
                 //Read the File data into Byte Array.
                 byte[] bytes = System.IO.File.ReadAllBytes(path);
@@ -621,7 +639,8 @@ namespace SIMHUKDIS.Controllers
             replaceDict.Add("*AnalisaPertimbangan*", telaah.AnalisaPertimbangan);
             replaceDict.Add("*KeputusanSidangDPK*", telaah.KeputusanSidangDPK);
             replaceDict.Add("*TelaahNo*", telaah.TelaahNo);
-
+            replaceDict.Add("*Karopeg*", telaah.Karopeg);
+            replaceDict.Add("*NIP_Karopeg*", telaah.NIP_Karopeg);
 
             return replaceDict;
         }
@@ -676,6 +695,9 @@ namespace SIMHUKDIS.Controllers
                     dtl.KODE_LEVEL_JABATAN = clsDataPegawai.data.KODE_LEVEL_JABATAN;
                     dtl.LEVEL_JABATAN = clsDataPegawai.data.LEVEL_JABATAN;
 
+                    string Jabatan = clsDataPegawai.data.LEVEL_JABATAN;
+                    string dtl_Satker = clsDataPegawai.data.SATUAN_KERJA;
+
                     string strPangkat = clsDataPegawai.data.PANGKAT;
                     string strGolRuang = clsDataPegawai.data.GOL_RUANG;
                     string strPangkatGolRuang = strPangkat + ", " + strGolRuang;
@@ -690,12 +712,12 @@ namespace SIMHUKDIS.Controllers
                     string strMasaKerjaThn = clsDataPegawai.data.MASAKERJA_TAHUN.ToString();
                     string strMasaKerjaBln = clsDataPegawai.data.MASAKERJA_BULAN.ToString();
                     string strMasaKerja = strMasaKerjaThn + " Tahun " + strMasaKerjaBln + " Bulan";
-
+                    dtl.SATUAN_KERJA = clsDataPegawai.data.SATUAN_KERJA;
                     dtl.MASAKERJA_TAHUN = strMasaKerja;
                     dtl.MASAKERJA_BULAN = strMasaKerja;
                     dtl.TIPE_JABATAN = clsDataPegawai.data.TIPE_JABATAN;
                     dtl.KODE_JABATAN = clsDataPegawai.data.KODE_JABATAN;
-                    dtl.TAMPIL_JABATAN = clsDataPegawai.data.TAMPIL_JABATAN;
+                    dtl.TAMPIL_JABATAN = clsDataPegawai.data.TAMPIL_JABATAN + " " + clsDataPegawai.data.SATUAN_KERJA;
                     dtl.TMT_JABATAN = clsDataPegawai.data.TMT_JABATAN;
                     dtl.KODE_SATKER_1 = clsDataPegawai.data.KODE_SATKER_1;
                     dtl.SATKER_1 = clsDataPegawai.data.SATKER_1;
@@ -707,7 +729,7 @@ namespace SIMHUKDIS.Controllers
                     dtl.SATKER_4 = clsDataPegawai.data.SATKER_4;
                     dtl.KODE_SATKER_5 = clsDataPegawai.data.KODE_SATKER_5;
                     dtl.SATKER_5 = clsDataPegawai.data.SATKER_5;
-                    dtl.SATUAN_KERJA = clsDataPegawai.data.SATUAN_KERJA;
+                    
                     dtl.STATUS_KAWIN = clsDataPegawai.data.STATUS_KAWIN;
                     dtl.ALAMAT_1 = clsDataPegawai.data.ALAMAT_1;
                     dtl.ALAMAT_2 = clsDataPegawai.data.ALAMAT_2;
@@ -736,5 +758,43 @@ namespace SIMHUKDIS.Controllers
                 };
             }            
         }
+        //public JsonResult GetPekerjaan(string NIP)
+        //{
+        //    try
+        //    {
+        //        var client = new HttpClient();
+        //        clsDataPekerjaan dtl = new clsDataPekerjaan();
+        //        strToken = db.GetAccessToken(Username, Password);
+        //        client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", strToken);
+        //        HttpResponseMessage resp = client.GetAsync(baseAddress + "pegawai/pekerjaan/" + WebUtility.UrlEncode(NIP)).GetAwaiter().GetResult();
+        //        if (resp.IsSuccessStatusCode)
+        //        {
+        //            clsPekerjaan clsPekerjaan = new clsPekerjaan();
+        //            var JsonContent = resp.Content.ReadAsStringAsync().Result;
+        //            clsPekerjaan = JsonConvert.DeserializeObject<clsPekerjaan>(JsonContent);
+        //            int x = 0;
+        //            dtl.jabatan = clsPekerjaan.data.jabatan[];
+        //            dtl.pangkat = clsPekerjaan.data.pangkat;
+
+        //            clsJabatan jab = new clsJabatan();
+        //            jab.KETERANGAN = dtl.pangkat[x].KETERANGAN;
+        //            return Json(dtl, JsonRequestBehavior.AllowGet);
+        //        }
+        //        else
+        //        {
+        //            return Json(null, JsonRequestBehavior.AllowGet);
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new JsonResult
+        //        {
+        //            Data = new { ErrorMessage = ex.Message, Success = false },
+        //            ContentEncoding = System.Text.Encoding.UTF8,
+        //            JsonRequestBehavior = JsonRequestBehavior.DenyGet
+        //        };
+        //    }
+        //}
     }
 }

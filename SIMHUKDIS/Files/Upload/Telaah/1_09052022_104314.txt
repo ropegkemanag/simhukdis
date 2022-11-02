@@ -1,9 +1,0 @@
-SELECT 
-id,nomor_agenda,nomor_surat,asal_surat,tanggal_surat,
-perihal,LampiranSurat1,LampiranSurat2,LampiranSurat3,
-LampiranSurat4,LampiranSurat5,konseptor,SatuanKerja,
-created_date,create_user,update_date,update_user,Status,
-Disposisi1_Date,Disposisi1_By,Disposisi1_Status,Disposisi1_Notes,
-Disposisi2_By,Disposisi2_Date,Disposisi2_Status,Disposisi2_Notes,
-Disposisi3_By,Disposisi3_Date,Disposisi3_Status,Disposisi3_Notes
-FROM kasus WHERE 1

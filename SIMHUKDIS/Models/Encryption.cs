@@ -10,7 +10,7 @@ namespace SIMHUKDIS.Models
     {
         public string Encrypt(string clearText, string EncryptionKey)
         {
-            EncryptionKey = EncryptionKey + "simhukdis2022";
+            EncryptionKey = EncryptionKey + "SIMHUKDIS2022";
             byte[] clearBytes = Encoding.Unicode.GetBytes(clearText);
             using (Aes encryptor = Aes.Create())
             {
@@ -36,7 +36,7 @@ namespace SIMHUKDIS.Models
             {
                 return cipherText;
             }
-            EncryptionKey = EncryptionKey + "simhukdis2022";
+            EncryptionKey = EncryptionKey + "SIMHUKDIS2022";
             byte[] cipherBytes = System.Convert.FromBase64String(cipherText);
             using (Aes encryptor = Aes.Create())
             {

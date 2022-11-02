@@ -1,549 +1,540 @@
-﻿@model IEnumerable<simhukdis.Models.clsMonitoring>
+﻿@model IEnumerable<SIMHUKDIS.Models.clsMonitoring>
 
 @{
     ViewBag.Title = "Monitoring";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
 
 <!-- DataTales Example -->
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Monitoring</h6>
+<div class="card-box mb-30">
+    <div class="col-md-3">
+        <label></label>
     </div>
     @Html.ValidationSummary(true)
-    <div class="card-body">
+    <div class="pb-20">
+        <table class="table hover data-table-export">
+            <thead>
+                <tr>
 
-        <div style="height: 15px"></div>
-        <div class="table-responsive">
-            <table class="table table-bordered " id="dataTable"  cellspacing="0" style="font-size:12px;width:100%;">
-                <thead class="table table-primary">
-                    <tr>
+                    <th style="white-space: nowrap; text-align: center;">
+                        No Surat
+                    </th>
+                    <th style="white-space: nowrap; text-align: center;">
+                        Perihal
+                    </th>
+                    <th style="white-space: nowrap; text-align: center;">
+                        Surat Masuk
+                    </th>
+                    <th style="white-space: nowrap; text-align: center;">
+                        Disposisi Kepala Biro
+                    </th>
+                    <th style="white-space: nowrap; text-align: center;">
+                        Disposisi Koordinator
+                    </th>
+                    <th style="white-space: nowrap; text-align: center;">
+                        Disposisi Sub Koordinator
+                    </th>
+                    <th style="white-space: nowrap; text-align: center;">
+                        Telaah
+                    </th>
+                    <th style="white-space: nowrap; text-align: center;">
+                        Pra DPK
+                    </th>
+                    <th style="white-space: nowrap; text-align: center;">
+                        Sidang DPK
+                    </th>
+                    <th style="white-space: nowrap; text-align: center;">
+                        Hasil Sidang DPK
+                    </th>
+                    <th style="white-space: nowrap; text-align: center;">
+                        Penyampaian Hasil Sidang
+                    </th>
+                </tr>
+            </thead>
 
-                        <th style="white-space: nowrap; text-align: center;">
-                            No Surat
-                        </th>
-                        <th style="white-space: nowrap; text-align: center;">
-                            Perihal
-                        </th>
-                        <th style="white-space: nowrap; text-align: center;">
-                            Surat Masuk
-                        </th>
-                        <th style="white-space: nowrap; text-align: center;">
-                            Disposisi Kepala Biro
-                        </th>
-                        <th style="white-space: nowrap; text-align: center;">
-                            Disposisi Koordinator
-                        </th>
-                        <th style="white-space: nowrap; text-align: center;">
-                            Disposisi Sub Koordinator
-                        </th>
-                        <th style="white-space: nowrap; text-align: center;">
-                            Telaah
-                        </th>
-                        <th style="white-space: nowrap; text-align: center;">
-                            Pra DPK
-                        </th>
-                        <th style="white-space: nowrap; text-align: center;">
-                            Sidang DPK
-                        </th>
-                        <th style="white-space: nowrap; text-align: center;">
-                            Hasil Sidang DPK
-                        </th>
-                        <th style="white-space: nowrap; text-align: center;">
-                            Penyampaian Hasil Sidang
-                        </th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @foreach (var r in Model)
+            <tbody class="widget-icon">
+                @foreach (var r in Model)
+                {
+                    if (@r.Status == "0")
                     {
-                        if (@r.Status == "0")
-                        {
-                            <tr class="table-bordered table-hover my-3">
-                                <td>
-                                    @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
-                                </td>
-                                <td>
-                                    @r.Perihal
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
+                        <tr>
+                            <td>
+                                @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
+                            </td>
+                            <td>
+                                @r.Perihal
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
 
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                            </tr>
-                        }
-                        else if (@r.Status == "1")
-                        {
-                            <tr class="table-bordered table-hover my-3">
-                                <td>
-                                    @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
-                                </td>
-                                <td>
-                                    @r.Perihal
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.TanggalSurat
-                                </td>
-
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate1
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                            </tr>
-                        }
-                        else if (@r.Status == "2")
-                        {
-                            <tr class="table-bordered table-hover my-3">
-                                <td>
-                                    @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
-                                </td>
-                                <td>
-                                    @r.Perihal
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.TanggalSurat
-                                </td>
-
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate1
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                            </tr>
-                        }
-                        else if (@r.Status == "3")
-                        {
-                            <tr class="table-bordered table-hover my-3">
-                                <td>
-                                    @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
-                                </td>
-                                <td>
-                                    @r.Perihal
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.TanggalSurat
-                                </td>
-
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate1
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate2
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                            </tr>
-                        }
-                        else if (@r.Status == "4")
-                        {
-                            <tr class="table-bordered table-hover my-3">
-                                <td>
-                                    @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
-                                </td>
-                                <td>
-                                    @r.Perihal
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.TanggalSurat
-                                </td>
-
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate1
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate2
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate3
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                            </tr>
-                        }
-                        else if (@r.Status == "5")
-                        {
-                            <tr class="table-bordered table-hover my-3">
-                                <td>
-                                    @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
-                                </td>
-                                <td>
-                                    @r.Perihal
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.TanggalSurat
-                                </td>
-
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate1
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate2
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate3
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.Tanggal_Telaah
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                            </tr>
-                        }
-                        else if (@r.Status == "6")
-                        {
-                            <tr class="table-bordered table-hover my-3">
-                                <td>
-                                    @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
-                                </td>
-                                <td>
-                                    @r.Perihal
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.TanggalSurat
-                                </td>
-
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate1
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate2
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate3
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.Tanggal_Telaah
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.Tanggal_PraDPK
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                            </tr>
-                        }
-                        else if (@r.Status == "7")
-                        {
-                            <tr class="table-bordered table-hover my-3">
-                                <td>
-                                    @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
-                                </td>
-                                <td>
-                                    @r.Perihal
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.TanggalSurat
-                                </td>
-
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate1
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate2
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate3
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.Tanggal_Telaah
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.Tanggal_PraDPK
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.Tanggal_DPK
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                            </tr>
-                        }
-                        else if (@r.Status == "8")
-                        {
-                            <tr class="table-bordered table-hover my-3">
-                                <td>
-                                    @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
-                                </td>
-                                <td>
-                                    @r.Perihal
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.TanggalSurat
-                                </td>
-
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate1
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate2
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate3
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.Tanggal_Telaah
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.Tanggal_PraDPK
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.Tanggal_DPK
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                            </tr>
-                        }
-                        else if (@r.Status == "9")
-                        {
-                            <tr class="table-bordered table-hover my-3">
-                                <td>
-                                    @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
-                                </td>
-                                <td>
-                                    @r.Perihal
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.TanggalSurat
-                                </td>
-
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate1
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate2
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate3
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.Tanggal_Telaah
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.Tanggal_PraDPK
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.Tanggal_DPK
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                </td>
-                            </tr>
-                        }
-
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                        </tr>
                     }
-                </tbody>
-            </table>
-        </div>
+                    else if (@r.Status == "1")
+                    {
+                        <tr>
+                            <td>
+                                @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
+                            </td>
+                            <td>
+                                @r.Perihal
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.TanggalSurat
+                            </td>
+
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate1
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                        </tr>
+                    }
+                    else if (@r.Status == "2")
+                    {
+                        <tr>
+                            <td>
+                                @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
+                            </td>
+                            <td>
+                                @r.Perihal
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.TanggalSurat
+                            </td>
+
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate1
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                        </tr>
+                    }
+                    else if (@r.Status == "3")
+                    {
+                        <tr>
+                            <td>
+                                @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
+                            </td>
+                            <td>
+                                @r.Perihal
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.TanggalSurat
+                            </td>
+
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate1
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate2
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                        </tr>
+                    }
+                    else if (@r.Status == "4")
+                    {
+                        <tr>
+                            <td>
+                                @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
+                            </td>
+                            <td>
+                                @r.Perihal
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.TanggalSurat
+                            </td>
+
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate1
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate2
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate3
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                        </tr>
+                    }
+                    else if (@r.Status == "5")
+                    {
+                        <tr>
+                            <td>
+                                @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
+                            </td>
+                            <td>
+                                @r.Perihal
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.TanggalSurat
+                            </td>
+
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate1
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate2
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate3
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.Tanggal_Telaah
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                        </tr>
+                    }
+                    else if (@r.Status == "6")
+                    {
+                        <tr>
+                            <td>
+                                @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
+                            </td>
+                            <td>
+                                @r.Perihal
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.TanggalSurat
+                            </td>
+
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate1
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate2
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate3
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.Tanggal_Telaah
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.Tanggal_PraDPK
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                        </tr>
+                    }
+                    else if (@r.Status == "7")
+                    {
+                        <tr>
+                            <td>
+                                @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
+                            </td>
+                            <td>
+                                @r.Perihal
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.TanggalSurat
+                            </td>
+
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate1
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate2
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate3
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.Tanggal_Telaah
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.Tanggal_PraDPK
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.Tanggal_DPK
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                        </tr>
+                    }
+                    else if (@r.Status == "8")
+                    {
+                        <tr>
+                            <td>
+                                @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
+                            </td>
+                            <td>
+                                @r.Perihal
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.TanggalSurat
+                            </td>
+
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate1
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate2
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate3
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.Tanggal_Telaah
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.Tanggal_PraDPK
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.Tanggal_DPK
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                        </tr>
+                    }
+                    else if (@r.Status == "9")
+                    {
+                        <tr>
+                            <td>
+                                @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
+                            </td>
+                            <td>
+                                @r.Perihal
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.TanggalSurat
+                            </td>
+
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate1
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate2
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate3
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.Tanggal_Telaah
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.Tanggal_PraDPK
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                                <br /><label></label>
+                                @r.Tanggal_DPK
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                                <i class="icon-copy dw dw-checked"></i>
+                            </td>
+                        </tr>
+                    }
+
+                }
+            </tbody>
+        </table>
     </div>
 </div>
-<script src="~/Scripts/jquery-3.6.0.min.js"></script>
-<script type="text/javascript">
-    $('#dataTable').dataTable({
-        "scrollX": true
-    });
-</script>
+<script src="/Scripts/jquery-3.6.0.min.js"></script>

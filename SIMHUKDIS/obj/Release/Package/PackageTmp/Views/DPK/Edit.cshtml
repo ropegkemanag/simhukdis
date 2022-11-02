@@ -1,0 +1,79 @@
+﻿@model SIMHUKDIS.Models.clsDPK
+
+@{
+    ViewBag.Title = "Edit";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="pd-20 card-box mb-30">
+    <div class="card-body">
+        @using (Html.BeginForm("UbahData", "DPK", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <form>
+            @Html.HiddenFor(model => model.ID)
+
+            <div class="form-group row">
+                <div class="col">
+                    @Html.LabelFor(model => model.NIP, htmlAttributes: new { @class = "control-label" })
+                    @Html.EditorFor(model => model.NIP, new { htmlAttributes = new { @class = "form-control", @readonly = "True" } })
+                    @Html.ValidationMessageFor(model => model.NIP, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col">
+                    @Html.LabelFor(model => model.Catatan, htmlAttributes: new { @class = "control-label" })
+                    @Html.TextAreaFor(model => model.Catatan, new { @type = "text", @id = "Catatan", @class = "form-control", required = "required", rows = 5 })
+                    @Html.ValidationMessageFor(model => model.Catatan, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col">
+                    @Html.Label("Tanggal Sidang DPK", htmlAttributes: new { @class = "control-label" })
+                    @Html.TextBoxFor(model => model.Tanggal_Sidang_DPK, "{0:dd MM yyyy}", new { @type = "text", @id = "Tanggal_Sidang_DPK", @class = "form-control date-picker", required = "required" })
+                    @*@Html.TextBox(model => model.Tanggal_Sidang, "{0:dd MM yyyy}", new { htmlAttributes = new { @class = "form-control date-picker", @id = "Tanggal_Sidang" } })*@
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col">
+                    @Html.Label("Keputusan Sidang", htmlAttributes: new { @class = "control-label" })
+                    @Html.DropDownListFor(model => model.KeputusanSidang, ViewBag.Hukdis as SelectList, new { @class = "custom-select2 form-control", required = "required", @id = "KeputusanSidang" })
+                    @Html.ValidationMessageFor(model => model.KeputusanSidang, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*<div class="form-group row">
+                <div class="col">
+                    @Html.Label("Catatan Sidang", htmlAttributes: new { @class = "control-label" })
+                    @Html.TextAreaFor(model => model.Catatan_Sidang, new { @class = "form-control", required = "required", @id = "Catatan_Sidang" })
+                </div>
+            </div>*@
+
+            <div class="form-group row">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Simpan" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+        }
+    </div>
+</div>
+<script src="/Scripts/jquery-3.6.0.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(function () {
+
+            //$("#Tanggal_Sidang").datepicker({
+            //    format: 'dd-MM-yyyy', //'M Y',
+            //    onSelect: function () {
+            //        $(this).change();
+            //    }
+            //})
+        });
+    });
+</script>

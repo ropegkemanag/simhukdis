@@ -1,6 +1,4 @@
-﻿using MySql.Data.MySqlClient;
-using Newtonsoft.Json;
-using simhukdis.Models;
+﻿using Newtonsoft.Json;
 using SIMHUKDIS.Models;
 using System;
 using System.Collections.Generic;
@@ -54,6 +52,14 @@ namespace SIMHUKDIS.Controllers
             ViewBag.Konseptor = new SelectList(db.GetKonseptorList(), "UserID", "Fullname");
             try
             {
+                string userlogin = Session["Fullname"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+
                 return View();
             }
             catch (Exception ex)
@@ -95,6 +101,13 @@ namespace SIMHUKDIS.Controllers
         {
             try
             {
+                string userlogin = Session["Fullname"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
                 clsSatkerKonseptor SK = db.SK.SingleOrDefault(sub => sub.KODE_SATUAN_KERJA == KODE_SATUAN_KERJA);
                 ViewBag.Satker = new SelectList(db.GetListSatker(), "KODE_SATUAN_KERJA", "SATUAN_KERJA", KODE_SATUAN_KERJA);
                 ViewBag.Konseptor = new SelectList(db.GetKonseptorList(), "UserID", "Fullname", UserID);

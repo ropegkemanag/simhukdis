@@ -1,5 +1,4 @@
-﻿using MySql.Data.MySqlClient;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -9,7 +8,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
 
-namespace simhukdis.Models
+namespace SIMHUKDIS.Models
 {
     public class Token
     {

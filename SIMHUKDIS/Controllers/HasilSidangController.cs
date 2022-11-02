@@ -1,8 +1,9 @@
-﻿using simhukdis.Models;
+﻿using SIMHUKDIS.Models;
 using SIMHUKDIS.Models;
 using Spire.Doc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -43,6 +44,35 @@ namespace SIMHUKDIS.Controllers
                 var Error_Message = "Error Catch ! (" + ex.Message + ")";
                 return RedirectToAction("Error500", "Home", new { Error_Message });
             }            
+        }
+        [HttpGet]
+        public ActionResult BuatSK()
+        {
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            try
+            {
+                string userlogin = Session["Fullname"].ToString();
+                string UserID = Session["UserID"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+                ViewBag.UserID = userlogin;
+
+                clsHukdisDB x = new clsHukdisDB();
+                ViewBag.Hukdis = new SelectList(x.GetListHukdis(), "ID", "HukdisDesc");
+                return View();
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
+            }
         }
         [HttpGet]
         public ActionResult Create(int ID, string NIP)
@@ -111,6 +141,115 @@ namespace SIMHUKDIS.Controllers
                 HasilSidangDtl hasil = db.GetListCreate(ID, NIP);
 
                 return View(hasil);
+            }
+        }
+        [HttpPost]
+        public ActionResult KirimData(string ID, string NIP, string NO_SK, string Tanggal_SK, HttpPostedFileBase FILE_SK, string Keterangan_SK,
+         string Tanggal_Penyampaian_Ke_Satker, string Penerima_Satker, HttpPostedFileBase BAP_Satker, string Keterangan_Satker,
+         string Tanggal_Penyampaian_Ke_YBS, string Penerima_YBS, HttpPostedFileBase BAP_Penerima, string Keterangan_Penerima)
+        {
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            string userlogin = Session["Fullname"].ToString();
+            string SatuanKerja = Session["Satker"].ToString();
+            string StatusAdmin = Session["StatusAdmin"].ToString();
+            string UserGroup = Session["UserGroup"].ToString();
+            ViewBag.UserID = userlogin;
+            ViewBag.SatuanKerja = SatuanKerja;
+            ViewBag.UserGroup = UserGroup;
+
+            try
+            {
+                String FilePath = "";
+                String FileExt = "";
+                String GetDateTime = "";
+                String Ext = "";
+                String FileNameWithoutExtension = "";
+                string a, b, c, d, e, f, g;
+                GetDateTime = DateTime.Now.ToString("ddMMyyyy_hhmmss");
+                string UserLogin = Session["Fullname"].ToString();
+                HasilSidangDtl sm = new HasilSidangDtl();
+                sm.ID = ID;
+                sm.NIP = NIP;
+                sm.NO_SK = NO_SK;
+                sm.Tanggal_SK = Tanggal_SK;
+                sm.Keterangan_SK = Keterangan_SK;
+                sm.Penerima_Satker = Penerima_Satker;
+                sm.Tanggal_Penyampaian_Ke_Satker = Tanggal_Penyampaian_Ke_Satker;
+                sm.Tanggal_Penyampaian_Ke_YBS = Tanggal_Penyampaian_Ke_YBS;
+                sm.Penerima_Satker = Penerima_Satker;
+                sm.Keterangan_Satker = Keterangan_Satker;
+                sm.Keterangan_Satker = Keterangan_Satker;
+                sm.Penerima_YBS = Penerima_YBS; 
+                sm.Keterangan_Penerima = Keterangan_Penerima; 
+                
+                if (FILE_SK != null)
+                {
+                    a = FILE_SK.FileName;
+                    FileExt = Path.GetExtension(a);
+                    Ext = Server.MapPath("/Files/Upload/SK/");
+                    FileNameWithoutExtension = Path.GetFileNameWithoutExtension(a);
+                    FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    Request.Files[0].SaveAs(FilePath);
+                    sm.FILE_SK = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                }
+                else
+                {
+                    sm.FILE_SK = "";
+                }
+                if (BAP_Satker != null)
+                {
+                    b = BAP_Satker.FileName;
+                    FileExt = Path.GetExtension(b);
+                    Ext = Server.MapPath("/Files/Upload/BAP SATKER/");
+                    FileNameWithoutExtension = Path.GetFileNameWithoutExtension(b);
+                    FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    Request.Files[0].SaveAs(FilePath);
+                    sm.BAP_Satker = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+
+                }
+                else
+                {
+                    sm.BAP_Satker = "";
+                }
+                if (BAP_Penerima != null)
+                {
+                    c = BAP_Penerima.FileName;
+                    FileExt = Path.GetExtension(c);
+                    Ext = Server.MapPath("/Files/Upload/BAP YBS/");
+                    FileNameWithoutExtension = Path.GetFileNameWithoutExtension(c);
+                    FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    Request.Files[0].SaveAs(FilePath);
+                    sm.BAP_Penerima = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                }
+                else
+                {
+                    sm.BAP_Penerima = "";
+                }
+                
+                sm.CreateUser = UserLogin;
+                if (db.cek(ID, NIP) == true)
+                {
+                    db.Ubah(sm);
+                }
+                else
+                {
+                    db.HasilSidang_Insert(sm);
+                }
+                
+
+                int Status = 0;
+                string DateFrom = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
+                string DateTo = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd"); ;
+                return RedirectToAction("Index", "HasilSidang", new { Status, DateFrom, DateTo });
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
+
             }
         }
         public ActionResult UbahData(string ID, string NIP, string KeputusanSidang, string Tanggal_Sidang, string Catatan_Sidang,
@@ -229,7 +368,7 @@ namespace SIMHUKDIS.Controllers
             try
             {
                 //Build the File Path.
-                string path = Server.MapPath("~/Files/Result/SK/") + fileName;
+                string path = Server.MapPath("/Files/Result/SK/") + fileName;
 
                 //Read the File data into Byte Array.
                 byte[] bytes = System.IO.File.ReadAllBytes(path);

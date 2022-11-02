@@ -6232,7 +6232,7 @@
 				"aaSorting",
 				"aaSortingFixed",
 				"aLengthMenu",
-				"sPaginationType",
+				"SIMHUKDIS..spaginationType",
 				"sAjaxSource",
 				"sAjaxDataProp",
 				"iStateDuration",
@@ -9550,7 +9550,7 @@
 		 * When DataTables calculates the column widths to assign to each column,
 		 * it finds the longest string in each column and then constructs a
 		 * temporary table and reads the widths from that. The problem with this
-		 * is that "mmm" is much wider then "iiii", but the latter is a longer
+		 * is that "MM" is much wider then "iiii", but the latter is a longer
 		 * string - thus the calculation can go wrong (doing it properly and putting
 		 * it into an DOM object and measuring that is horribly(!) slow). Thus as
 		 * a "work around" we provide this option. It will append its value to the
@@ -11190,7 +11190,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sPrevious": "Previous"
+				"SIMHUKDIS..sprevious": "Previous"
 			},
 	
 			/**
@@ -11451,7 +11451,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sProcessing": "Processing...",
+			"SIMHUKDIS..sprocessing": "Processing...",
 	
 	
 			/**
@@ -11710,7 +11710,7 @@
 		 *      } );
 		 *    } )
 		 */
-		"sPaginationType": "simple_numbers",
+		"SIMHUKDIS..spaginationType": "simple_numbers",
 	
 	
 		/**
@@ -12424,7 +12424,7 @@
 		 * When DataTables calculates the column widths to assign to each column,
 		 * it finds the longest string in each column and then constructs a
 		 * temporary table and reads the widths from that. The problem with this
-		 * is that "mmm" is much wider then "iiii", but the latter is a longer
+		 * is that "MM" is much wider then "iiii", but the latter is a longer
 		 * string - thus the calculation can go wrong (doing it properly and putting
 		 * it into an DOM object and measuring that is horribly(!) slow). Thus as
 		 * a "work around" we provide this option. It will append its value to the
@@ -12445,7 +12445,7 @@
 		 *          null,
 		 *          null,
 		 *          {
-		 *            "contentPadding": "mmm"
+		 *            "contentPadding": "MM"
 		 *          }
 		 *        ]
 		 *      } );
@@ -13241,7 +13241,7 @@
 		 *  @type string
 		 *  @default two_button
 		 */
-		"sPaginationType": "two_button",
+		"SIMHUKDIS..spaginationType": "two_button",
 	
 		/**
 		 * The state duration (for `stateSave`) in seconds.
@@ -14154,9 +14154,9 @@
 		"sNoFooter": "no-footer",
 	
 		/* Paging buttons */
-		"sPageButton": "paginate_button",
-		"sPageButtonActive": "current",
-		"sPageButtonDisabled": "disabled",
+		"SIMHUKDIS..spageButton": "paginate_button",
+		"SIMHUKDIS..spageButtonActive": "current",
+		"SIMHUKDIS..spageButtonDisabled": "disabled",
 	
 		/* Striping classes */
 		"sStripeOdd": "odd",
@@ -14169,9 +14169,9 @@
 		"sWrapper": "dataTables_wrapper",
 		"sFilter": "dataTables_filter",
 		"sInfo": "dataTables_info",
-		"sPaging": "dataTables_paginate paging_", /* Note that the type is postfixed */
+		"SIMHUKDIS..spaging": "dataTables_paginate paging_", /* Note that the type is postfixed */
 		"sLength": "dataTables_length",
-		"sProcessing": "dataTables_processing",
+		"SIMHUKDIS..sprocessing": "dataTables_processing",
 	
 		/* Sorting */
 		"sSortAsc": "sorting_asc",
@@ -14228,12 +14228,12 @@
 	
 	$.extend( DataTable.ext.oJUIClasses, DataTable.ext.classes, {
 		/* Full numbers paging buttons */
-		"sPageButton":         "fg-button ui-button "+_stateDefault,
-		"sPageButtonActive":   "ui-state-disabled",
-		"sPageButtonDisabled": "ui-state-disabled",
+		"SIMHUKDIS..spageButton":         "fg-button ui-button "+_stateDefault,
+		"SIMHUKDIS..spageButtonActive":   "ui-state-disabled",
+		"SIMHUKDIS..spageButtonDisabled": "ui-state-disabled",
 	
 		/* Features */
-		"sPaging": "dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi "+
+		"SIMHUKDIS..spaging": "dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi "+
 			"ui-buttonset-multi paging_", /* Note that the type is postfixed */
 	
 		/* Sorting */

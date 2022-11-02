@@ -1,13 +1,13 @@
-﻿@model simhukdis.Models.clsSuratMasuk
+﻿@model SIMHUKDIS.Models.clsSuratMasuk
 
 @{
     ViewBag.Title = "CREATE TELAAH";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    <div class="card shadow mb-4">
+    <div class="card-box mb-30">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">LAMPIRAN SURAT MASUK</h6>
         </div>
@@ -15,37 +15,37 @@
             <div class="form-group row">
                 @*<div class="col-sm-6 mb-3 mb-sm-0">
                     <label class="control-label ">No Agenda</label>
-                    @Html.TextBoxFor(model => model.NoAgenda, "", new { @id = "NoAgenda", @class = "form-control form-control-user", @readonly = "True" })
+                    @Html.TextBoxFor(model => model.NoAgenda, "", new { @id = "NoAgenda", @class = "form-control", @readonly = "True" })
                 </div>*@
                 <div class="col">
                     <label>No Surat</label>
-                    @Html.TextBoxFor(model => model.NoSurat, "", new { @id = "NoSurat", @class = "form-control form-control-user", @readonly = "True" })
+                    @Html.TextBoxFor(model => model.NoSurat, "", new { @id = "NoSurat", @class = "form-control", @readonly = "True" })
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-sm-6 mb-3 mb-sm-0">
                     <label class="control-label ">Asal Surat</label>
-                    @Html.TextBoxFor(model => model.AsalSurat, "", new { @id = "AsalSurat", @class = "form-control form-control-user", @readonly = "True" })
+                    @Html.TextBoxFor(model => model.AsalSurat, "", new { @id = "AsalSurat", @class = "form-control", @readonly = "True" })
                 </div>
                 <div class="col-sm-6">
                     <label>Tanggal Surat</label>
-                    @Html.TextBoxFor(model => model.TanggalSurat, "", new { @id = "TanggalSurat", @class = "form-control form-control-user", @readonly = "True" })
+                    @Html.TextBoxFor(model => model.TanggalSurat, "", new { @id = "TanggalSurat", @class = "form-control", @readonly = "True" })
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-sm-6 mb-3 mb-sm-0">
                     <label class="control-label ">Perihal</label>
-                    @Html.TextBoxFor(model => model.perihal, "", new { @id = "perihal", @class = "form-control form-control-user", @readonly = "True" })
+                    @Html.TextBoxFor(model => model.perihal, "", new { @id = "perihal", @class = "form-control", @readonly = "True" })
                 </div>
                 <div class="col-sm-6">
                     <label>Satuan Kerja</label>
-                    @Html.TextBoxFor(model => model.SATUAN_KERJA, "", new { @id = "SATUAN_KERJA", @class = "form-control form-control-user", @readonly = "True" })
+                    @Html.TextBoxFor(model => model.SATUAN_KERJA, "", new { @id = "SATUAN_KERJA", @class = "form-control", @readonly = "True" })
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-sm-6 mb-3 mb-sm-0">
                     <label class="control-label ">Lampiran Surat Pengantar</label>
-                    <label class="form-control form-control-user" style="height:65px;">
+                    <label class="form-control" style="height:65px;">
                         @if (Model.LampiranSurat1 == "")
                         {
                         }
@@ -58,7 +58,7 @@
                 </div>
                 <div class="col-sm-6">
                     <label>Lampiran BAP</label>
-                    <label class="form-control form-control-user" style="height:65px;">
+                    <label class="form-control" style="height:65px;">
                         @if (Model.LampiranSurat2 == "")
                         {
                         }
@@ -72,7 +72,7 @@
             <div class="form-group row">
                 <div class="col-sm-6 mb-3 mb-sm-0">
                     <label class="control-label ">Lampiran Surat Tugas Pemeriksaan</label>
-                    <label class="form-control form-control-user" style="height:65px;">
+                    <label class="form-control" style="height:65px;">
                         @if (Model.LampiranSurat3 == "")
                         {
                         }
@@ -85,7 +85,7 @@
                 </div>
                 <div class="col-sm-6">
                     <label>Lampiran Surat Panggilan</label>
-                    <label class="form-control form-control-user" style="height:65px;">
+                    <label class="form-control" style="height:65px;">
                         @if (Model.LampiranSurat4 == "")
                         {
                         }
@@ -99,7 +99,7 @@
             <div class="form-group row">
                 <div class="col-sm-6 mb-3 mb-sm-0">
                     <label class="control-label ">Lampiran Surat Dokumen Lainnya</label>
-                    <label class="form-control form-control-user" style="height:65px;">
+                    <label class="form-control" style="height:65px;">
                         @if (Model.LampiranSurat5 == "")
                         {
                         }
@@ -112,7 +112,7 @@
                 </div>
                 <div class="col-sm-6">
                     <label>Lampiran Putusan Pengadilan</label>
-                    <label class="form-control form-control-user" style="height:65px;">
+                    <label class="form-control" style="height:65px;">
                         @if (Model.LampiranSurat6 == "")
                         {
                         }
@@ -126,7 +126,7 @@
             <div class="form-group row">
                 <div class="col-sm-6 mb-3 mb-sm-0">
                     <label class="control-label ">Lampiran LHA</label>
-                    <label class="form-control form-control-user" style="height:65px;">
+                    <label class="form-control" style="height:65px;">
                         @if (Model.LampiranSurat_LHA == "")
                         {
                         }
@@ -139,7 +139,7 @@
             </div>
         </div>
     </div>
-    <div class="card shadow mb-4">
+    <div class="card-box mb-30">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">1. IDENTITAS PEGAWAI NEGERI SIPIL</h6>
         </div>
@@ -148,17 +148,17 @@
                 <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0" style="display:none;">
                         <label class="control-label ">ID</label>
-                        @Html.TextBox("ID", "", new { @id = "ID", @class = "form-control form-control-user", required = "required" })
+                        @Html.TextBox("ID", "", new { @id = "ID", @class = "form-control", required = "required" })
                         @Html.ValidationMessage("ID", "", new { @class = "text-danger" })
                     </div>
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <label class="control-label ">NIP</label>
-                        @Html.TextBox("NIP", "", new { @id = "NIP", @class = "form-control form-control-user", required = "required", onchange = "getData()", onkeypress = "AllowOnlyNumbers()" })
+                        @Html.TextBox("NIP", "", new { @id = "NIP", @class = "form-control", required = "required", onchange = "getData()", onkeypress = "AllowOnlyNumbers()" })
                         @Html.ValidationMessage("NIP", "", new { @class = "text-danger" })
                     </div>
                     <div class="col-sm-6">
                         <label>Nama Lengkap</label>
-                        @Html.TextBox("NAMA_LENGKAP", "", new { @id = "NAMA_LENGKAP", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.TextBox("NAMA_LENGKAP", "", new { @id = "NAMA_LENGKAP", @class = "form-control", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("NAMA_LENGKAP", "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -166,12 +166,12 @@
                 <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <label class="control-label ">Pangkat, Golongan Ruang</label>
-                        @Html.TextBox("GOL_RUANG", "", new { @id = "GOL_RUANG", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.TextBox("GOL_RUANG", "", new { @id = "GOL_RUANG", @class = "form-control", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("GOL_RUANG", "", new { @class = "text-danger" })
                     </div>
                     <div class="col-sm-6">
                         <label>Jabatan</label>
-                        @Html.TextBox("LEVEL_JABATAN", "", new { @id = "LEVEL_JABATAN", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.TextArea("LEVEL_JABATAN", "", new { @id = "LEVEL_JABATAN", @class = "form-control", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("LEVEL_JABATAN", "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -188,24 +188,24 @@
                 <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <label class="control-label ">Tempat Lahir</label>
-                        @Html.TextBox("TEMPAT_LAHIR", "", new { @id = "TEMPAT_LAHIR", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.TextBox("TEMPAT_LAHIR", "", new { @id = "TEMPAT_LAHIR", @class = "form-control", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("TEMPAT_LAHIR", "", new { @class = "text-danger" })
                     </div>
                     <div class="col-sm-6">
                         <label>Tanggal Lahir</label>
-                        @Html.TextBox("TANGGAL_LAHIR", "", new { @type = "Text", @id = "TANGGAL_LAHIR", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.TextBox("TANGGAL_LAHIR", "", new { @type = "Text", @id = "TANGGAL_LAHIR", @class = "form-control", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("TANGGAL_LAHIR", "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <label class="control-label ">Masa Kerja</label>
-                        @Html.TextBox("MASAKERJA_TAHUN", "", new { @id = "MASAKERJA_TAHUN", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.TextBox("MASAKERJA_TAHUN", "", new { @id = "MASAKERJA_TAHUN", @class = "form-control", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("MASAKERJA_TAHUN", "", new { @class = "text-danger" })
                     </div>
                     <div class="col-sm-6">
                         <label>TMT Pensiun</label>
-                        @Html.TextBox("TMT_PENSIUN", "", new { @type = "Text", @id = "TMT_PENSIUN", @class = "form-control form-control-user", required = "required", @readonly = "True" })
+                        @Html.TextBox("TMT_PENSIUN", "", new { @type = "Text", @id = "TMT_PENSIUN", @class = "form-control", required = "required", @readonly = "True" })
                         @Html.ValidationMessage("TMT_PENSIUN", "", new { @class = "text-danger" })
                     </div>
                 </div>
@@ -215,7 +215,7 @@
         </div>
     </div>
 
-    <div class="card shadow mb-4">
+    <div class="card-box mb-30">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">2.DATA TELAAH</h6>
         </div>
@@ -224,7 +224,7 @@
                 <div class="form-group row">
                     <div class="col">
                         <label class="control-label">A. TANGGAL TELAAH </label>
-                        @Html.TextBox("Tanggal_Telaah", "", new { @type = "text", @id = "Tanggal_Telaah", @class = "form-control form-control-user", required = "required" })
+                        @Html.TextBox("Tanggal_Telaah", "", new { @type = "text", @id = "Tanggal_Telaah", @class = "form-control date-picker", required = "required" })
                         @*<input class="form-control" id="Tanggal_Telaah" rows="5" name="Tanggal_Telaah" type="text" />*@
                         @Html.ValidationMessage("Tanggal_Telaah", "", new { @class = "text-danger" })
                     </div>
@@ -277,7 +277,7 @@
                 @*<div class="form-group row">
             <div class="col">
                 <label class="control-label ">H. UPLOAD HASIL TELAAH *</label>
-                @Html.TextBox("FileTelaah", "", new { @type = "file", @id = "FileTelaah", @class = "form-control form-control-user"})
+                @Html.TextBox("FileTelaah", "", new { @type = "file", @id = "FileTelaah", @class = "form-control"})
                 @Html.ValidationMessage("FileTelaah", "", new { @class = "text-danger" })
             </div>
         </div>*@
@@ -291,22 +291,22 @@
         </div>
     </div>
 }
-    <script src="~/Scripts/jquery-3.6.0.min.js"></script>
+    <script src="/Scripts/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {  
         //$("#PasalPelanggaran").val("Yang bersangkutan melanggar ketentuan ...");
         $("#RekomendasiHukdis").val("Yang bersangkutan direkomendasikan oleh ... untuk dijatuhi hukuman disiplin Tingkat ... berupa ... berdasarkan ...");
         
-        $(function () {
-            $("#Tanggal_Telaah").datepicker({
-                setDate: new Date(),
-                format: 'dd-mm-yyyy',
-                autoclose: true,
-                calendarWeeks: true,
-                clearBtn: true,
-                disableTouchKeyboard: true
-            })
-        });        
+        //$(function () {
+        //    $("#Tanggal_Telaah").datepicker({
+        //        setDate: new Date(),
+        //        format: 'dd-mm-yyyy',
+        //        autoclose: true,
+        //        calendarWeeks: true,
+        //        clearBtn: true,
+        //        disableTouchKeyboard: true
+        //    })
+        //});        
     });
     function AllowOnlyNumbers(e) {
 
@@ -317,7 +317,31 @@
 
         return (/^\d+$/.test(str));
     }
+    function getJabatan() {
+        var NIP = $('#NIP').val();
+        $.ajax({
+            type: "GET",
+            url: "/Telaah/GetPekerjaan?",
+            cache: false,
+            data: ({ NIP: NIP }),
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (result) {
+                
+            },
+            error: function (errormessage) {
+                Swal.fire({
+                    icon: 'error',
+                    title: "NIP tidak ditemukan",
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        });
+        return false;
+    }
     function getData() {
+        getJabatan();
         var NIP = $('#NIP').val();
         $.ajax({
             type: "GET",
@@ -329,7 +353,7 @@
             success: function (result) {
                 $('#NAMA_LENGKAP').val(result.NAMA_LENGKAP);
                 $('#GOL_RUANG').val(result.GOL_RUANG);
-                $('#LEVEL_JABATAN').val(result.LEVEL_JABATAN);
+                $('#LEVEL_JABATAN').val(result.TAMPIL_JABATAN);
                 $('#Satker').val(result.SATUAN_KERJA);
                 $('#TEMPAT_LAHIR').val(result.TEMPAT_LAHIR);
                 $('#TANGGAL_LAHIR').val(result.TANGGAL_LAHIR);
@@ -377,14 +401,16 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (result) {
-                if (result.toString() == "Success") {
+
+                DownloadPDF(result.DocPDF, result.DocWord);
+                //DownloadPDF(result.DocWord);
+                if (result.Msg.toString() == "Success") {
                     Swal.fire({
                         icon: 'success',
                         title: 'Telaah berhasil !',
                         showConfirmButton: false,
                         timer: 3000
                     })
-                    window.location.href = '@Url.Action("Details2", "Telaah")?ID=' + InputID;
                 }
                 else {
                     Swal.fire({
@@ -405,5 +431,10 @@
                 window.location.href = '@Url.Action("Details2", "Telaah")?ID=' + InputID;
             }
         });
+    }
+     function DownloadPDF(fileName1, fileName2) {
+        window.location = '@Url.Action("DownloadFile", "Telaah")?fileName=' + fileName1;
+        window.location = '@Url.Action("DownloadFile", "Telaah")?fileName=' + fileName2;
+
     }
 </script>

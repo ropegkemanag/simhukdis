@@ -1,66 +1,73 @@
-﻿@model simhukdis.Models.clsSuratMasuk
+﻿@model SIMHUKDIS.Models.clsSuratMasuk
 @{
     ViewBag.Title = "Ubah Surat Masuk";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
 
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Edit Surat Masuk</h6>
-    </div>
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    @Html.HiddenFor(model => model.ID)
-    <div class="card-body">
-        @using (Html.BeginForm("Edit", "SuratMasuk", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+<div class="pd-20 card-box mb-30">
+    @using (Html.BeginForm("Edit", "SuratMasuk", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <form>
             <div class="form-group row">
                 @*<div class="col-sm-6 mb-3 mb-sm-0">
-                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">No. Agenda *</label>
-                    @Html.TextBoxFor(model => model.NoAgenda, "", new { @id = "NoAgenda", @class = "form-control form-control-user", required = "required" })
-                    @Html.ValidationMessageFor(model => model.NoAgenda, "", new { @class = "text-danger" })
-                </div>*@
+                        <label  class="control-label ">No. Agenda *</label>
+                        @Html.TextBoxFor(model => model.NoAgenda, "", new { @id = "NoAgenda", @class = "form-control", required = "required" })
+                        @Html.ValidationMessageFor(model => model.NoAgenda, "", new { @class = "text-danger" })
+                    </div>*@
                 <div class="col">
-                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">No. Surat *</label>
-                    @Html.TextBoxFor(model => model.NoSurat, "", new { @id = "NoSurat", @class = "form-control form-control-user", required = "required" })
+                    <label class="control-label ">No. Surat *</label>
+                    @Html.TextBoxFor(model => model.NoSurat, "", new { @id = "NoSurat", @class = "form-control", required = "required" })
                     @Html.ValidationMessageFor(model => model.NoSurat, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-sm-6 mb-3 mb-sm-0">
-                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">Asal Surat *</label>
-                    @Html.TextBoxFor(model => model.AsalSurat, "", new { @id = "AsalSurat", @class = "form-control form-control-user", required = "required" })
+                    <label class="control-label ">Asal Surat *</label>
+                    @Html.TextBoxFor(model => model.AsalSurat, "", new { @id = "AsalSurat", @class = "form-control", required = "required" })
                     @Html.ValidationMessageFor(model => model.AsalSurat, "", new { @class = "text-danger" })
                 </div>
                 <div class="col-sm-6">
-                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">Tanggal Surat *</label>
-                    @*<input id="TanggalSurat" class="form-control" type="text" />*@
-                    @Html.TextBoxFor(model => model.TanggalSurat, "", new { @type = "text", @id = "TanggalSurat", @class = "form-control form-control-user", required = "required" })
+                    <label class="control-label ">Tanggal Surat *</label>
+                    @Html.TextBoxFor(model => model.TanggalSurat, "{0:dd MM yyyy}", new { @type = "text", @id = "TanggalSurat", @class = "form-control date-picker", required = "required" })
                     @Html.ValidationMessageFor(model => model.TanggalSurat, "", new { @class = "text-danger" })
-                    @*@Html.EditorFor(model => model.TanggalSurat, new { htmlAttributes = new { @class = "form-control", type = "date" } })*@
-                    @*@Html.TextBoxFor(model => model.TanggalSurat, "", new { Type = "date" ,@id = "TanggalSurat", @class = "form-control form-control-user", required = "required", @style = "text-align:left;" })
-        @Html.ValidationMessageFor(model => model.TanggalSurat, "", new { @class = "text-danger" })*@
+                    @* @Html.TextBoxFor(model => model.TanggalSurat, "{0:dd-MM-yyyy}", new { @class = "form-control date-picker", @id = "TanggalSurat" })*@
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col">
-                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">Perihal *</label>
-                    @Html.TextAreaFor(model => model.perihal, new { @id = "perihal", @class = "form-control form-control-user", required = "required" })
+                    <label class="control-label ">Perihal *</label>
+                    @Html.TextAreaFor(model => model.perihal, new { @id = "perihal", @class = "form-control", required = "required" })
                     @Html.ValidationMessageFor(model => model.perihal, "", new { @class = "text-danger" })
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col">
-                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">Satuan Kerja *</label>
-                    @Html.DropDownList("KODE_SATUAN_KERJA", ViewBag.Satker as SelectList, new { @class = "form-control", required = "required", @id = "KODE_SATUAN_KERJA", @onchange = "Satker()" })
+                    <label class="control-label ">Satuan Kerja *</label>
+                    @Html.DropDownListFor(model => model.KODE_SATUAN_KERJA, ViewBag.Satker as SelectList, new { @class = "custom-select2 form-control", required = "required", @id = "KODE_SATUAN_KERJA" })
+                @*    @Html.DropDownList("KODE_SATUAN_KERJA", ViewBag.Satker as SelectList, new { @class = "custom-select2 form-control", required = "required", @id = "KODE_SATUAN_KERJA", @onchange = "GetUnit()" })*@
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    <label class="control-label ">Unit Kerja *</label>
+                    @Html.DropDownListFor(model => model.Kode_Unit_Kerja, ViewBag.Unit_Kerja as SelectList, new { @id = "Kode_Unit_Kerja", @class = "custom-select2 form-control" })
+               @*     @Html.DropDownList("Kode_Unit_Kerja", ViewBag.Unit_Kerja as SelectList, new { @class = "custom-select2 form-control", @id = "Kode_Unit_Kerja" })*@
+                </div>
+            </div>
+            <div class="form-group row" style="display:none;">
+                <div class="col">
+                    <label class="control-label ">Status *</label>
+                    @Html.TextArea("UsulStatus", "1", new { @id = "UsulStatus", @class = "form-control", required = "required" })
+
                 </div>
             </div>
             <div class="form-group row" id="LampiranSP">
                 <div class="col">
-                    <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">Lampiran Surat Pengantar *</label>
-                    @Html.TextBox("LampiranSurat1", "", new { @type = "file", @id = "LampiranSurat1", @class = "form-control" })
+                    <label class="control-label ">Lampiran Surat Pengantar *</label>
+                    @Html.TextBox("LampiranSurat1", "", new { @type = "file", @id = "LampiranSurat1", @class = "form-control", accept = "application/pdf" })
                     @Html.ValidationMessage("LampiranSurat1", "", new { @class = "text-danger" })
                     @if (Model.LampiranSurat1 == "")
                     {
@@ -77,7 +84,7 @@
             <div class="form-group row" id="LampiranBAP">
                 <div class="col">
                     <label class="control-label ">Lampiran BAP</label>
-                    @Html.TextBox("LampiranSurat2", "", new { @type = "file", @id = "LampiranSurat2", @class = "form-control" })
+                    @Html.TextBox("LampiranSurat2", "", new { @type = "file", @id = "LampiranSurat2", @class = "form-control", accept = "application/pdf" })
                     @Html.ValidationMessage("LampiranSurat2", "", new { @class = "text-danger" })
                     @if (Model.LampiranSurat2 == "")
                     {
@@ -94,7 +101,7 @@
             <div class="form-group row" id="LampiranSTP">
                 <div class="col">
                     <label class="control-label ">Lampiran Surat Tugas Pemeriksaan</label>
-                    @Html.TextBox("LampiranSurat3", "", new { @type = "file", @id = "LampiranSurat3", @class = "form-control" })
+                    @Html.TextBox("LampiranSurat3", "", new { @type = "file", @id = "LampiranSurat3", @class = "form-control", accept = "application/pdf" })
                     @Html.ValidationMessage("LampiranSurat3", "", new { @class = "text-danger" })
                     @if (Model.LampiranSurat3 == "")
                     {
@@ -111,7 +118,7 @@
             <div class="form-group row" id="LampiranSPanggilan">
                 <div class="col">
                     <label class="control-label ">Lampiran Surat Panggilan</label>
-                    @Html.TextBox("LampiranSurat4", "", new { @type = "file", @id = "LampiranSurat4", @class = "form-control" })
+                    @Html.TextBox("LampiranSurat4", "", new { @type = "file", @id = "LampiranSurat4", @class = "form-control", accept = "application/pdf" })
                     @Html.ValidationMessage("LampiranSurat4", "", new { @class = "text-danger" })
                     @if (Model.LampiranSurat4 == "")
                     {
@@ -128,7 +135,7 @@
             <div class="form-group row" id="Lainnya">
                 <div class="col">
                     <label class="control-label ">Lampiran Dokumen Lainnya</label>
-                    @Html.TextBox("LampiranSurat5", "", new { @type = "file", @id = "LampiranSurat5", @class = "form-control form-control-user" })
+                    @Html.TextBox("LampiranSurat5", "", new { @type = "file", @id = "LampiranSurat5", @class = "form-control", accept = "application/pdf" })
                     @Html.ValidationMessage("LampiranSurat5", "", new { @class = "text-danger" })
                     @if (Model.LampiranSurat5 == "")
                     {
@@ -142,159 +149,166 @@
                     }
                 </div>
             </div>
-            <div class="form-group row" id="LHA">
-                <div class="col">
-                    <label class="control-label ">Lampiran LHA</label>
-                    @Html.TextBox("LampiranSurat_LHA", "", new { @type = "file", @id = "LampiranSurat_LHA", @class = "form-control form-control-user" })
-                    @Html.ValidationMessage("LampiranSurat_LHA", "", new { @class = "text-danger" })
-                    @if (Model.LampiranSurat_LHA == "")
-                    {
-                    }
-                    else
-                    {
-                        <div style="width:5px;">
-                            <label></label>
-                        </div>
-                        @Html.ActionLink(Model.LampiranSurat_LHA, "DownloadFile7", new { fileName = Model.LampiranSurat_LHA, @class = "form-control" })
-                    }
-                </div>
-            </div>
-            <div class="form-group row" id="DokumenisLampiranSurat6">
-                <div class="col">
-                    <label>Apakah ada Putusan Pengadilan ?</label>
-                    @Html.DropDownList("isLampiranSurat6", new List<SelectListItem>
-                                                                        {
-                                                                            new SelectListItem{ Text = "Tidak", Value = "0" },
-                                                                            new SelectListItem{ Text = "Ya", Value = "1" }
-                                                                        }, htmlAttributes: new { @class = "form-control", @id = "isLampiranSurat6", @onchange = "LampiranPP()" }
-                                                      )
-                    @*@Html.EditorFor(model => model.StatusAdmin, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessage(model => model.StatusAdmin, "", new { @class = "text-danger" })*@
-                </div>
-            </div>
-            <div class="form-group row" id="LampiranSuratPP" name="LampiranSuratPP">
-                <div class="col">
-                    <label class="control-label ">Lampiran Putusan Pengadilan</label>
-                    @Html.TextBox("LampiranSurat6", "", new { @type = "file", @id = "LampiranSurat6", @class = "form-control form-control-user", disabled = true })
-                    @Html.ValidationMessage("LampiranSurat6", "", new { @class = "text-danger" })
-                    @if (Model.LampiranSurat6 == "")
-                    {
-                    }
-                    else
-                    {
-                        <div style="width:5px;">
-                            <label></label>
-                        </div>
-                        @Html.ActionLink(Model.LampiranSurat6, "DownloadFile6", new { fileName = Model.LampiranSurat6, @class = "form-control" })
-                    }
-                </div>
-            </div>
             <hr />
             <div class="form-group row">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Ubah Data" class="btn btn-primary" /> 
+                    <input type="submit" value="Ubah Data" class="btn btn-primary" />
                     @*<button type="button" id="InsertData" class="btn btn-success" style="background-color:teal;"></button> | @Html.ActionLink("Back to List", "Index")*@
                 </div>
             </div>
         </form>
-        }
-    </div>
+    }
 </div>
 
 <script src="~/Scripts/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        //GetUnit();      
+    });
+    $('#LampiranSurat1').on('change', function () {
+        for (var i = 0; i < $(this).get(0).files.length; ++i) {
+            var file1 = $(this).get(0).files[i].size;
+            if (file1) {
+                var file_size = $(this).get(0).files[i].size;
+                if (file_size > 1000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "File lebih dari 1MB!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $('#LampiranSurat1').val('');
+                } else {
 
-        $('#TanggalSurat').datepicker({
-            setDate: new Date(),
-            format: 'dd-mm-yyyy',
-            autoclose: true,
-            calendarWeeks: true,
-            clearBtn: true,
-            disableTouchKeyboard: true
-        });
-        var SatuanKerja = '@ViewBag.SatuanKerja';
-        if (SatuanKerja == 143) {
-            $("#KODE_SATUAN_KERJA").prop('disabled', false);
-            $("#LampiranSP").show();
-            $("#LHA").show();
-            $("#Lainnya").show();
-            //$("#LampiranSurat_LHA").prop('required', true);
-            $("#DokumenisLampiranSurat6").show();
-            $("#LampiranSuratPP").show();
-            $("#LampiranBAP").hide();
-            $("#LampiranSTP").hide();
-            $("#LampiranSPanggilan").hide();
-        }
-        else
-        {            
-            $("#KODE_SATUAN_KERJA").prop('disabled', true);
-            $("#DokumenisLampiranSurat6").show();
-            $("#LampiranSP").show();
-            $("#LampiranBAP").show();
-            $("#LampiranSTP").show();
-            $("#LampiranSPanggilan").show();
-            $("#Lainnya").show();
-            $("#LampiranSuratPP").show();
-            $("#LampiranSurat6").prop('disabled', true);
-            $("#LHA").hide();
-            $("#LampiranSurat_LHA").prop('required', false);
-        }
-        if ($(LampiranSurat6).val() == "") {
-            $("#isLampiranSurat6").val(0);
-            $("#LampiranSurat6").prop('disabled', true);
-        }
-        else
-        {
-            $("#isLampiranSurat6").val(1);
-            $("#LampiranSurat6").prop('disabled', false);
+                }
+            }
         }
     });
-    //function HideBox()
-    //{
-    //    $("#DokumenisLampiranSurat6").hide();
-    //    $("#LampiranSP").hide();
-    //    $("#LampiranBAP").hide();
-    //    $("#LampiranSTP").hide();
-    //    $("#LampiranSPanggilan").hide();
-    //    $("#Lainnya").hide();
-    //    $("#LampiranSuratPP").hide();
-    //    $("#LampiranSurat6").prop('disabled', true);
-    //    $("#LHA").hide();
-    //}
-    //function Satker()
-    //{
-    //    if ($(KODE_SATUAN_KERJA).val() == 143) {
-    //        $("#LampiranSP").show();
-    //        $("#LHA").show();
-    //        $("#LampiranSurat_LHA").prop('required', true);
-    //        $("#DokumenisLampiranSurat6").show();
-    //        $("#LampiranSuratPP").show();
-    //    }
-    //    else
-    //    {
-    //        $("#DokumenisLampiranSurat6").show();
-    //        $("#LampiranSP").show();
-    //        $("#LampiranBAP").show();
-    //        $("#LampiranSTP").show();
-    //        $("#LampiranSPanggilan").show();
-    //        $("#Lainnya").show();
-    //        $("#LampiranSuratPP").show();
-    //        $("#LampiranSurat6").prop('disabled', true);
-    //        $("#LHA").hide();
-    //        $("#LampiranSurat_LHA").prop('required', false);
-    //    }
-    //}
-    function LampiranPP()
-    {
-        if ($(isLampiranSurat6).val() == 1) {
-            $("#LampiranSurat6").prop('disabled', false);
-            $("#LampiranSurat6").prop('required', true);
+    $('#LampiranSurat2').on('change', function () {
+        for (var i = 0; i < $(this).get(0).files.length; ++i) {
+            var file1 = $(this).get(0).files[i].size;
+            if (file1) {
+                var file_size = $(this).get(0).files[i].size;
+                if (file_size > 5000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "File upload size is larger than 5MB!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $('#LampiranSurat2').val('');
+                } else {
+
+                }
+            }
         }
-        else
-        {
-            $("#LampiranSurat6").prop('disabled', true);
-            $("#LampiranSurat6").prop('required', false);
+    });
+    $('#LampiranSurat3').on('change', function () {
+        for (var i = 0; i < $(this).get(0).files.length; ++i) {
+            var file1 = $(this).get(0).files[i].size;
+            if (file1) {
+                var file_size = $(this).get(0).files[i].size;
+                if (file_size > 5000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "File upload size is larger than 5MB!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $('#LampiranSurat3').val('');
+                } else {
+
+                }
+            }
         }
+    });
+    $('#LampiranSurat4').on('change', function () {
+        for (var i = 0; i < $(this).get(0).files.length; ++i) {
+            var file1 = $(this).get(0).files[i].size;
+            if (file1) {
+                var file_size = $(this).get(0).files[i].size;
+                if (file_size > 5000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "File upload size is larger than 5MB!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $('#LampiranSurat4').val('');
+                } else {
+
+                }
+            }
+        }
+    });
+    $('#LampiranSurat5').on('change', function () {
+        for (var i = 0; i < $(this).get(0).files.length; ++i) {
+            var file1 = $(this).get(0).files[i].size;
+            if (file1) {
+                var file_size = $(this).get(0).files[i].size;
+                if (file_size > 5000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "File upload size is larger than 5MB!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $('#LampiranSurat5').val('');
+                } else {
+
+                }
+            }
+        }
+    });
+    $('#LampiranSurat_LHA').on('change', function () {
+        for (var i = 0; i < $(this).get(0).files.length; ++i) {
+            var file1 = $(this).get(0).files[i].size;
+            if (file1) {
+                var file_size = $(this).get(0).files[i].size;
+                if (file_size > 5000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "File upload size is larger than 5MB!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $('#LampiranSurat_LHA').val('');
+                } else {
+
+                }
+            }
+        }
+    });
+
+    function GetUnit() {
+        var SatuanKerja = $('#KODE_SATUAN_KERJA').val();
+        $.ajax({
+            type: "GET",
+            url: "/UsulHukdis/GetUnitKerja?",
+            dataType: "json",
+            data: { KodeSatker: SatuanKerja },
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.length > 0) {
+                    $('#Kode_Unit_Kerja').empty();
+                    //$("#Unit_Kerja").append('<option value="-1">Pilih Unit Kerja</option>');
+                    for (var i = 0; i < result.length; i++) {
+                        $("#Kode_Unit_Kerja").append('<option value="' + result[i].Kode_Unit_Kerja + '" >' + result[i].Unit_Kerja + '</option>');
+                        //options += '<option value="' + result[i].Kode_Unit_Kerja + '">' + result[i].Unit_Kerja + '</option>';
+                    }
+                }
+            },
+            error: function (errormessage) {
+                Swal.fire({
+                    icon: 'error',
+                    title: "Tidak ditemukan",
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        });
     }
+
+
 </script>

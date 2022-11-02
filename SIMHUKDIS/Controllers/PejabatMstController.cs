@@ -1,4 +1,4 @@
-﻿using simhukdis.Models;
+﻿using SIMHUKDIS.Models;
 using SIMHUKDIS.Models;
 using System;
 using System.Collections.Generic;
@@ -37,6 +37,7 @@ namespace SIMHUKDIS.Controllers
                 ViewBag.UserGroup = UserGroup;
 
                 clsPejabatMst p = db.GetList();
+
                 ViewBag.karopeg = new SelectList(db.GetKaropegList(), "userid", "nama");
                 ViewBag.koordinator = new SelectList(db.GetKoordinatorList(), "userid", "nama");
                 ViewBag.subkoordinator = new SelectList(db.GeSubKoordinatorList(), "userid", "nama");

@@ -1,9 +1,9 @@
-﻿using MySql.Data.MySqlClient;
-using simhukdis.Models;
+﻿using SIMHUKDIS.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
@@ -15,12 +15,12 @@ namespace SIMHUKDIS.Models
         {
             List<Datum> DataAPI = new List<Datum>();
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_Satker_Sel", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Satker_Sel", con);
                 cmd.CommandType = CommandType.Text;
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     Datum s = new Datum();
@@ -38,10 +38,10 @@ namespace SIMHUKDIS.Models
             {
                 int i = 0;
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "sp_Satker_InsUpd";
-                    MySqlCommand cmd = new MySqlCommand(MySql, con);
+                    string MySql = "SIMHUKDIS.sp_Satker_InsUpd";
+                    SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("iKODE_SATUAN_KERJA", KODE_SATUAN_KERJA);
                     cmd.Parameters.AddWithValue("iSATUAN_KERJA", SATUAN_KERJA);

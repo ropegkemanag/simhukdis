@@ -1,6 +1,5 @@
-﻿using MySql.Data.MySqlClient;
-using Newtonsoft.Json;
-using simhukdis.Models;
+﻿using Newtonsoft.Json;
+using SIMHUKDIS.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -174,5 +173,140 @@ namespace SIMHUKDIS.Controllers
 
             return new SelectList(list, "Value", "Text");
         }
+        public FileResult DownloadFile1(string fileName)
+        {
+            try
+            {
+                //Build the File Path.
+                string path = Server.MapPath("/Files/Upload/Surat Masuk/1.Surat Pengantar/") + fileName;
+
+                //Read the File data into Byte Array.
+                byte[] bytes = System.IO.File.ReadAllBytes(path);
+
+                //Send the File to Download.
+                return File(bytes, "application/octet-stream", fileName);
+            }
+            catch (Exception ex)
+            {
+                string strMsg = ex.Message.ToString();
+                return null;
+            }
+
+        }
+        public FileResult DownloadFile2(string fileName)
+        {
+            try
+            {
+                //Build the File Path.
+                string path = Server.MapPath("/Files/Upload/Surat Masuk/2.BAP/") + fileName;
+
+                //Read the File data into Byte Array.
+                byte[] bytes = System.IO.File.ReadAllBytes(path);
+
+                //Send the File to Download.
+                return File(bytes, "application/octet-stream", fileName);
+            }
+            catch (Exception ex)
+            {
+                string strMsg = ex.Message.ToString();
+                return null;
+            }
+        }
+        public FileResult DownloadFile3(string fileName)
+        {
+            try
+            {
+                //Build the File Path.
+                string path = Server.MapPath("/Files/Upload/Surat Masuk/3.Surat Tugas Pemeriksaan/") + fileName;
+
+                //Read the File data into Byte Array.
+                byte[] bytes = System.IO.File.ReadAllBytes(path);
+
+                //Send the File to Download.
+                return File(bytes, "application/octet-stream", fileName);
+            }
+            catch (Exception ex)
+            {
+                string strMsg = ex.Message.ToString();
+                return null;
+            }
+        }
+        public FileResult DownloadFile4(string fileName)
+        {
+            try
+            {
+                //Build the File Path.
+                string path = Server.MapPath("/Files/Upload/Surat Masuk/4.Surat Panggilan/") + fileName;
+
+                //Read the File data into Byte Array.
+                byte[] bytes = System.IO.File.ReadAllBytes(path);
+
+                //Send the File to Download.
+                return File(bytes, "application/octet-stream", fileName);
+            }
+            catch (Exception ex)
+            {
+                string strMsg = ex.Message.ToString();
+                return null;
+            }
+        }
+        public FileResult DownloadFile5(string fileName)
+        {
+            try
+            {
+                //Build the File Path.
+                string path = Server.MapPath("/Files/Upload/Surat Masuk/5.Dokumen Lainnya/") + fileName;
+
+                //Read the File data into Byte Array.
+                byte[] bytes = System.IO.File.ReadAllBytes(path);
+
+                //Send the File to Download.
+                return File(bytes, "application/octet-stream", fileName);
+            }
+            catch (Exception ex)
+            {
+                string strMsg = ex.Message.ToString();
+                return null;
+            }
+        }
+        public FileResult DownloadFile6(string fileName)
+        {
+            try
+            {
+                //Build the File Path.
+                string path = Server.MapPath("/Files/Upload/Surat Masuk/6.Surat Putusan Pengadilan/") + fileName;
+
+                //Read the File data into Byte Array.
+                byte[] bytes = System.IO.File.ReadAllBytes(path);
+
+                //Send the File to Download.
+                return File(bytes, "application/octet-stream", fileName);
+            }
+            catch (Exception ex)
+            {
+                string strMsg = ex.Message.ToString();
+                return null;
+            }
+        }
+        public FileResult DownloadFile7(string fileName)
+        {
+            try
+            {
+                //Build the File Path.
+                string path = Server.MapPath("/Files/Upload/Surat Masuk/7.LHA/") + fileName;
+
+                //Read the File data into Byte Array.
+                byte[] bytes = System.IO.File.ReadAllBytes(path);
+
+                //Send the File to Download.
+                return File(bytes, "application/octet-stream", fileName);
+            }
+            catch (Exception ex)
+            {
+                string strMsg = ex.Message.ToString();
+                return null;
+            }
+        }
+
     }
 }

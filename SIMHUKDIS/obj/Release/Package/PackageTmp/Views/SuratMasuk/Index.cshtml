@@ -1,170 +1,126 @@
-﻿@model IEnumerable<simhukdis.Models.clsSuratMasuk>
+﻿@model IEnumerable<SIMHUKDIS.Models.clsSuratMasuk>
 
 @{
     ViewBag.Title = "Usul Hukuman Disiplin";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
-
-<!-- DataTales Example -->
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Daftar Usul Hukuman Disiplin</h6>
-    </div>
-
-    <div class="card-body">
-        <p style="text-align:left;">
-            <div class="form-group">
-                <table>
-                    <tr>
-                        <td>
-                            <label style="color:cornflowerblue;" class="control-label ">Status</label>
-                        </td>
-                        <td style="width:20px;"> </td>
-                        <td>
-                            @Html.DropDownList("StatusProses", new List<SelectListItem>
+<!-- Default Basic Forms Start -->
+<div class="pd-20 card-box mb-30">
+    <form>
+        <div class="form-group row" style="vertical-align:central;">
+            <label class="col-sm-12 col-md-2 col-form-label">Status</label>
+            <div class="col-md-3">
+                @Html.DropDownList("StatusProses", new List<SelectListItem>
                                                                     {
+                           new SelectListItem{ Text = "Semua", Value = "2" },
                                                                         new SelectListItem{ Text = "Belum di Proses", Value = "0" },
                                                                         new SelectListItem{ Text = "Sudah di Proses", Value = "1" }
-                                                                    }, htmlAttributes: new { @class = "form-control", @id = "StatusProses" }
+
+                                                                    }, htmlAttributes: new { @class = "custom-select col-12", @id = "StatusProses" }
                                                                 )
-                            @Html.ValidationMessage("StatusProses", "", new { @class = "text-danger" })
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <label style="color:cornflowerblue;" class="control-label ">Tanggal Surat</label>
-                        </td>
-                        <td style="width:20px;"> </td>
-                        <td>
-                            <input id="TanggalSuratFrom" class="form-control" value="@string.Format("{0:dd-MM-yyyy}", ViewBag.DateFrom)" type="date" />
-                        </td>
-                        <td style="color:cornflowerblue;" class="control-label ">s/d</td>
-                        <td>
-                            <input id="TanggalSuratTo" class="form-control" value="@string.Format("{0:dd-MM-yyyy}", ViewBag.DateTo)" type="date" />
-                        </td>
-                        <td style="width:20px;"> </td>
-                        <td>
-                            <button class="btn btn-primary" type="button" id="GridLoad">
-                                Cari
-                            </button>
-                        </td>
-                    </tr>
-                </table>
-                <hr />
+                @Html.ValidationMessage("StatusProses", "", new { @class = "text-danger" })
             </div>
-        </p>
-        <p style="text-align:right;">
-            @*@if (@ViewBag.UserGroup == "03")
-            {
-                <button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("Create", "SuratMasuk")'">
-                    Tambah Data
-                </button>
-            }
-            else
-            {
-                <button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("Create", "SuratMasuk")'" disabled>
-                    Tambah Data
-                </button>
-            }*@
-            <!-- Example single danger button -->
-                <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Tambah Data
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="@Url.Action("Create", "SuratMasuk")">Indisipliner</a>
-                        <a class="dropdown-item" href="@Url.Action("CreateTindakPidana", "SuratMasuk")">Tindak Pidana</a>
-                    </div>
-                </div>
-        </p>
-        
-        <div style="height:10px;">
-
         </div>
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                <thead class="table table-primary">
-                    <tr>
-                        <th>
-                            Aksi
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.NoSurat)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.perihal)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.SATUAN_KERJA)
-                        </th>
-                    </tr>
-                </thead>
+        <div class="form-group row">
+            <label class="col-sm-12 col-md-2 col-form-label">Date</label>
+            <div class="col-md-3">
+                <input class="form-control date-picker" data-date-format="dd-MM-yyyy"
+                       placeholder="Select Date"
+                       type="text" id="TanggalSuratFrom" value="@string.Format("{0:dd-MM-yyyy}", ViewBag.DateFrom)" />
+            </div>
 
-                <tbody>
-                    @if (Model == null)
-                    {
-                    }
-                    else
-                    {
-                        foreach (var item in Model)
-                        {
-                            <tr class="table-bordered table-hover my-3">
-                                @if (@ViewBag.UserID == item.CreateUser && item.Status == 0)
-                                {
-                                    <td>
-                                        @Html.ActionLink("Ubah", "Edit", new { ID = item.ID, Satker = item.KODE_SATUAN_KERJA })
-                                        <br />
-                                        <a href="#" onclick="Hapus('@item.ID')">Hapus</a>
-                                        <br />
-                                        <a href="#" onclick="Proses('@item.ID')">Kirim</a>
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td>
-                                        Edit
-                                        <br />
-                                        Hapus
-                                        <br />
-                                        Kirim
-                                    </td>
-                                }
-                                <td>
-                                    @Html.ActionLink(item.NoSurat, "Details", new { ID = item.ID })
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.perihal)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.SATUAN_KERJA)
-                                </td>
-                            </tr>
-                        }
-                    }
-                </tbody>
-            </table>
+            <label class="col-form-label">s/d</label>
+            <div class="col-md-3">
+                <input class="form-control date-picker"
+                       placeholder="Select Date"
+                       type="text" id="TanggalSuratTo" value="@string.Format("{0:dd-MM-yyyy}", ViewBag.DateTo)" />
+            </div>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-primary" id="GridLoad">Cari</button>
+            </div>
+            <div class="col-md-3">
+                <button type="button" class="btn btn-primary" id="GridLoad">Cari</button>
+            </div>
         </div>
-    </div>
+
+    </form>
 </div>
-<div class="modal fade" id="ProsesSM" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-            <div class="modal-body">Apakah Anda yakin untuk mengirim data ini ?</div>
-            <div class="modal-footer">
-                <label id="ID" name="ID"></label>
-                <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
-                <input class="btn btn-success" onclick="KirimData()" value="Kirim" type="button" />
+<!-- Default Basic Forms End -->
+<!-- Export Datatable start -->
+<div class="card-box mb-30">
+    <div class="pd-20">
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Tambah Data
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="@Url.Action("Create", "SuratMasuk")">Indisipliner</a>
+                <a class="dropdown-item" href="@Url.Action("CreateTindakPidana", "SuratMasuk")">Tindak Pidana</a>
             </div>
         </div>
     </div>
+    <div class="pb-20">
+        <table class="table hover data-table-export">
+            <thead class="table table-primary" style="white-space:nowrap;">
+                <tr>
+                    <th class="table-plus datatable-nosort">Aksi</th>
+                    <th>No Surat</th>
+                    <th>Perihal</th>
+                    <th>Satuan Kerja</th>
+                    <th>Unit Kerja</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model == null)
+                {
+
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            @if (@ViewBag.UserID == item.CreateUser && item.Status == 0)
+                            {
+                                <td class="table-plus">
+                                    @if (item.UsulStatus == "1")
+                                    {
+                                        @Html.ActionLink("Ubah", "Edit", new { ID = item.ID, KODE_SATUAN_KERJA = item.KODE_SATUAN_KERJA, Kode_Unit_Kerja = item.Kode_Unit_Kerja })
+                                    }
+                                    @if (item.UsulStatus == "2")
+                                    {
+                                        @Html.ActionLink("Ubah", "EditTindakPidana", new { ID = item.ID, KODE_SATUAN_KERJA = item.KODE_SATUAN_KERJA, Kode_Unit_Kerja = item.Kode_Unit_Kerja })
+                                    }
+
+                                    <br />
+                                    <a href="#" onclick="Hapus('@item.ID')">Hapus</a>
+                                    <br />
+                                    <a href="#" onclick="Proses('@item.ID')">Proses</a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td class="table-plus">
+                                    Ubah
+                                    <br />
+                                    Hapus
+                                    <br />
+                                    Proses
+                                </td>
+                            }
+                            <td>@Html.ActionLink(item.NoSurat, "Details", new { ID = item.ID })</td>
+                            <td>@Html.DisplayFor(modelItem => item.perihal)</td>
+                            <td>@Html.DisplayFor(modelItem => item.SATUAN_KERJA)</td>
+                            <td>@Html.DisplayFor(modelItem => item.Unit_Kerja)</td>
+                        </tr>
+                    }
+
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
+
 <div class="modal fade" id="DeleteSM" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -179,14 +135,18 @@
             <div class="modal-footer">
                 <label id="ID" name="ID"></label>
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                <input class="btn btn-primary" onclick="HapusDataSM()" value="Hapus" type="button"/>
+                <input class="btn btn-primary" onclick="HapusDataSM()" value="Hapus" type="button" />
             </div>
         </div>
     </div>
 </div>
+<!-- Export Datatable End -->
 <script src="~/Scripts/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
+        $("#StatusProses").val(2);
+        var date1 = $('#TanggalSuratFrom').datepicker({ dateFormat: 'dd-mm-yy' }).val();
+        var date2 = $('#TanggalSuratTo').datepicker({ dateFormat: 'dd-mm-yy' }).val();
     });
      $("#GridLoad").click(function () {
          window.location = '@Url.Action("Index", "SuratMasuk")?Status=' + $("#StatusProses").val() + '&DateFrom=' + $("#TanggalSuratFrom").val() + '&DateTo=' + $("#TanggalSuratTo").val();

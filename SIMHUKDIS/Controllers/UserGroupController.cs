@@ -1,11 +1,11 @@
-﻿using simhukdis.Models;
+﻿using SIMHUKDIS.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace simhukdis.Controllers
+namespace SIMHUKDIS.Controllers
 {
     [SessionExpire]
     public class UserGroupController : Controller
@@ -39,7 +39,28 @@ namespace simhukdis.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            return View();
+            if (Session["Fullname"] == null)
+            {
+            
+                return RedirectToAction("Login", "Home");
+            }
+            try
+            {
+                string userlogin = Session["Fullname"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+                return View();
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
+            }
+           
         }
         [HttpPost]
         public ActionResult Create(string GroupID, string GroupDesc)
@@ -55,6 +76,14 @@ namespace simhukdis.Controllers
 
                 if (db.GetDataExist(GroupDesc) == true)
                 {
+                    string userlogin = Session["Fullname"].ToString();
+                    string SatuanKerja = Session["Satker"].ToString();
+                    string StatusAdmin = Session["StatusAdmin"].ToString();
+                    string UserGroup = Session["UserGroup"].ToString();
+                    ViewBag.UserID = userlogin;
+                    ViewBag.SatuanKerja = SatuanKerja;
+                    ViewBag.UserGroup = UserGroup;
+
                     strMsg = "User Group sudah ada !";
                     ModelState.AddModelError(string.Empty, strMsg);
                     ViewBag.Message = string.Format(strMsg, strMsg, DateTime.Now.ToString());
@@ -78,9 +107,28 @@ namespace simhukdis.Controllers
         [HttpGet]
         public ActionResult Edit(string GroupID)
         {
-            clsUserGroupDB db = new clsUserGroupDB();
-            clsUserGroup UGroup = db.UserGroupList.SingleOrDefault(sub => sub.GroupID == GroupID);
-            return View(UGroup);
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            try
+            {
+                string userlogin = Session["Fullname"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+                clsUserGroupDB db = new clsUserGroupDB();
+                clsUserGroup UGroup = db.UserGroupList.SingleOrDefault(sub => sub.GroupID == GroupID);
+                return View(UGroup);
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
+            }
         }
 
         [HttpPost]

@@ -1,15 +1,15 @@
-﻿using MySql.Data.MySqlClient;
-using SIMHUKDIS.Models;
+﻿using SIMHUKDIS.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
-namespace simhukdis.Models
+namespace SIMHUKDIS.Models
 {
     public class clsUserLogin
     {
@@ -42,93 +42,64 @@ namespace simhukdis.Models
         public string Satker { get; set; }
         public string Satuan_Kerja { get; set; }
         public string LEVEL_JABATAN { get; set; }
+        public string KodeStatusAdmin { get; set; }
     }
     public class clsUserLoginDB
     {
-        public IEnumerable<clsUserLogin> Users
+        public List<clsUserLogin> Users()
         {
-            get
-            {
-                Encryption encrypt = new Encryption();
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-                List<clsUserLogin> Users = new List<clsUserLogin>();
-                using (MySqlConnection con = new MySqlConnection(constr))
-                {
-                    string q = "sp_User_sel";
-                    MySqlCommand cmd = new MySqlCommand(q, con);
-                    cmd.CommandType = CommandType.StoredProcedure;
-                    con.Open();
-                    MySqlDataReader rd = cmd.ExecuteReader();
-                    while (rd.Read())
-                    {
-                        clsUserLogin User = new clsUserLogin();
-                        User.UserID = rd["UserID"].ToString();
-                        User.UserName = rd["UserName"].ToString();
-                        User.FullName = rd["FullName"].ToString();
-                        User.Password = encrypt.Decrypt(rd["Password"].ToString(), rd["NIP"].ToString());
-                        //User.Password = rd["Password"].ToString();
-                        User.GroupID = rd["GroupID"].ToString();
-                        User.GroupDesc = rd["GroupDesc"].ToString();
-                        User.LastUser = rd["LastUser"].ToString();
-                        User.NIP = rd["NIP"].ToString();
-                        User.Satker = rd["Satker"].ToString();
-                        User.Satuan_Kerja = rd["SATUAN_KERJA"].ToString();
-                        User.LEVEL_JABATAN = rd["LEVEL_JABATAN"].ToString();
-                        if (rd["LastLogin"].ToString() == "")
-                        {
-                            User.LastLogin = "";
-                        }
-                        else
-                        {
-                            User.LastLogin = Convert.ToDateTime(rd["LastLogin"]).ToString("dd/MM/yyyy");
-                        }
-                        if (rd["StatusAdmin"].ToString() == "1")
-                        {
-                            User.StatusAdmin = "Yes";
-                        }
-                        else
-                        {
-                            User.StatusAdmin = "No";
-                        }
-                        Users.Add(User);
-                    }
-                    return Users;
-                }
-            }
-        }
-        public List<clsUserLogin> GetKonseptorList()
-        {
-            clsUserLoginDB db = new clsUserLoginDB();
-            List<clsUserLogin> User = new List<clsUserLogin>();
+            Encryption encrypt = new Encryption();
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            List<clsUserLogin> Users = new List<clsUserLogin>();
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_Konseptor_Sel", con);
-                cmd.CommandType = CommandType.Text;
+                string q = "simhukdis.sp_User_sel";
+                SqlCommand cmd = new SqlCommand(q, con);
+                cmd.CommandType = CommandType.StoredProcedure;
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
-                    clsUserLogin s = new clsUserLogin();
-                    s.FullName = rd["Fullname"].ToString();
-                    //s.GroupDesc = rd["GroupDesc"].ToString();
-                    User.Add(s);
+                    clsUserLogin User = new clsUserLogin();
+                    User.UserID = rd["UserID"].ToString();
+                    User.UserName = rd["UserName"].ToString();
+                    User.FullName = rd["FullName"].ToString();
+                    string Pwd = encrypt.Decrypt(rd["Password"].ToString(), rd["NIP"].ToString());
+                    //User.Password = encrypt.Decrypt(rd["Password"].ToString(), rd["NIP"].ToString());
+                    User.Password = Pwd;
+                    User.GroupID = rd["GroupID"].ToString();
+                    User.GroupDesc = rd["GroupDesc"].ToString();
+                    User.LastUser = rd["LastUser"].ToString();
+                    User.NIP = rd["NIP"].ToString();
+                    User.Satker = rd["Satker"].ToString();
+                    User.Satuan_Kerja = rd["SATUAN_KERJA"].ToString();
+                    User.LEVEL_JABATAN = rd["LEVEL_JABATAN"].ToString();
+                    User.KodeStatusAdmin = rd["StatusAdmin"].ToString();
+                    User.LastLogin = rd["LastLogin"].ToString();
+                    if (rd["StatusAdmin"].ToString() == "1")
+                    {
+                        User.StatusAdmin = "Yes";
+                    }
+                    else
+                    {
+                        User.StatusAdmin = "No";
+                    }
+                    Users.Add(User);
                 }
-                rd.Close();
+                return Users;
             }
-            return User;
         }
         public List<clsSatkerKonseptor> GetListSatker()
         {
             clsSatkerKonseptorDB db = new clsSatkerKonseptorDB();
             List<clsSatkerKonseptor> SK = new List<clsSatkerKonseptor>();
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_Satker_Sel", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Satker_Sel", con);
                 cmd.CommandType = CommandType.Text;
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     clsSatkerKonseptor s = new clsSatkerKonseptor();
@@ -145,12 +116,12 @@ namespace simhukdis.Models
             clsUserLoginDB db = new clsUserLoginDB();
             List<clsUserLogin> User = new List<clsUserLogin>();
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                MySqlCommand cmd = new MySqlCommand("sp_UserGroup_Sel", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_UserGroup_Sel", con);
                 cmd.CommandType = CommandType.Text;
                 con.Open();
-                MySqlDataReader rd = cmd.ExecuteReader();
+                SqlDataReader rd = cmd.ExecuteReader();
                 while (rd.Read())
                 {
                     clsUserLogin s = new clsUserLogin();
@@ -165,13 +136,13 @@ namespace simhukdis.Models
         public bool GetDataExist(string NIP)
         {
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
                 con.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_User_AlreadyExist", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_User_AlreadyExist", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iNIP", NIP);
-                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 if (dt.Rows.Count == 0)
@@ -187,13 +158,13 @@ namespace simhukdis.Models
         public bool GetAlreadyUse(string UserID)
         {
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
                 con.Open();
-                MySqlCommand cmd = new MySqlCommand("sp_User_AlreadyUse", con);
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_User_AlreadyUse", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("iUserID", UserID);
-                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 if (dt.Rows.Count == 0)
@@ -210,13 +181,13 @@ namespace simhukdis.Models
         {
             Encryption encrypt = new Encryption();
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                string q = "select count(*) from tbl_user where NIP = @NIP and Password = @Password";
-                MySqlCommand cmd = new MySqlCommand(q, con);
-                cmd.CommandType = CommandType.Text;
-                cmd.Parameters.AddWithValue("NIP", User.NIP);
-                cmd.Parameters.AddWithValue("Password", encrypt.Encrypt(User.Password, User.NIP));
+                string q = "sp_User_sel";
+                SqlCommand cmd = new SqlCommand(q, con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@NIP", User.NIP);
+                cmd.Parameters.AddWithValue("@Password", encrypt.Encrypt(User.Password, User.NIP));
                 //cmd.Parameters.AddWithValue("Password", User.Password);
                 con.Open();
                 return Convert.ToInt32(cmd.ExecuteScalar());
@@ -224,16 +195,17 @@ namespace simhukdis.Models
         }
         public clsUserLogin GetData(string NIP)
         {
+            Encryption encrypt = new Encryption();
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-            using (MySqlConnection con = new MySqlConnection(constr))
+            using (SqlConnection con = new SqlConnection(constr))
             {
-                string q = "sp_User_byuser_sel";
-                MySqlCommand cmd = new MySqlCommand(q, con);
+                string q = "sp_UserLogin_CheckData";
+                SqlCommand cmd = new SqlCommand(q, con);
                 cmd.CommandType = CommandType.StoredProcedure;
-                cmd.Parameters.AddWithValue("iNIP", NIP);
+                cmd.Parameters.AddWithValue("@iNIP", NIP);
                 con.Open();
                 clsUserLogin user = new clsUserLogin();
-                MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
                 da.Fill(dt);
                 if (dt.Rows.Count == 0)
@@ -242,12 +214,14 @@ namespace simhukdis.Models
                 }
                 else
                 {
+                    //string PWD = encrypt.Decrypt(dt.Rows[0]["Password"].ToString(), dt.Rows[0]["NIP"].ToString());
                     user.NIP = dt.Rows[0]["NIP"].ToString();
                     user.StatusAdmin = Convert.ToInt16(dt.Rows[0]["StatusAdmin"]).ToString();
                     user.FullName = dt.Rows[0]["FullName"].ToString();
                     user.Satker = dt.Rows[0]["Satker"].ToString();
                     user.GroupID = dt.Rows[0]["GroupID"].ToString();
                     user.UserID = dt.Rows[0]["UserID"].ToString();
+                    //user.Password = encrypt.Decrypt(dt.Rows[0]["Password"].ToString(), dt.Rows[0]["NIP"].ToString());
                     return user;
                 }
             }
@@ -259,20 +233,20 @@ namespace simhukdis.Models
                 int i = 0;
                 Encryption encrypt = new Encryption();
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "sp_User_Ins";
-                    MySqlCommand cmd = new MySqlCommand(MySql, con);
+                    string MySql = "SIMHUKDIS.sp_User_Ins";
+                    SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;                    
-                    cmd.Parameters.AddWithValue("iUserName", User.UserName);
-                    cmd.Parameters.AddWithValue("iFullname", User.FullName);
-                    cmd.Parameters.AddWithValue("iPassword", encrypt.Encrypt(User.Password,User.NIP));
-                    cmd.Parameters.AddWithValue("iStatusAdmin", User.StatusAdmin);
-                    cmd.Parameters.AddWithValue("iGroupID", User.GroupID);
-                    cmd.Parameters.AddWithValue("iLastUser", User.LastUser);
-                    cmd.Parameters.AddWithValue("iNIP", User.NIP);
-                    cmd.Parameters.AddWithValue("iSatker", User.Satker);
-                    cmd.Parameters.AddWithValue("iLevelJabatan", User.LEVEL_JABATAN);
+                    cmd.Parameters.AddWithValue("@iUserName", "");
+                    cmd.Parameters.AddWithValue("@iFullname", User.FullName);
+                    cmd.Parameters.AddWithValue("@iPassword", encrypt.Encrypt(User.Password,User.NIP));
+                    cmd.Parameters.AddWithValue("@iStatusAdmin", User.StatusAdmin);
+                    cmd.Parameters.AddWithValue("@iGroupID", User.GroupID);
+                    cmd.Parameters.AddWithValue("@iLastUser", User.LastUser);
+                    cmd.Parameters.AddWithValue("@iNIP", User.NIP);
+                    cmd.Parameters.AddWithValue("@iSatker", User.Satker);
+                    cmd.Parameters.AddWithValue("@iLevelJabatan", User.LEVEL_JABATAN);
                     
                     con.Open();
                     i = cmd.ExecuteNonQuery();
@@ -291,21 +265,21 @@ namespace simhukdis.Models
                 int i = 0;
                 Encryption encrypt = new Encryption();
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "sp_User_Upd";
-                    MySqlCommand cmd = new MySqlCommand(MySql, con);
+                    string MySql = "SIMHUKDIS.sp_User_Upd";
+                    SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("iUserID", User.UserID);
-                    cmd.Parameters.AddWithValue("iUserName", User.UserName);
-                    cmd.Parameters.AddWithValue("iFullname", User.FullName);
-                    cmd.Parameters.AddWithValue("iPassword", encrypt.Encrypt(User.Password, User.NIP));
-                    cmd.Parameters.AddWithValue("iStatusAdmin", User.StatusAdmin);
-                    cmd.Parameters.AddWithValue("iGroupID", User.GroupID);
-                    cmd.Parameters.AddWithValue("iLastUser", User.LastUser);
-                    cmd.Parameters.AddWithValue("iNIP", User.NIP);
-                    cmd.Parameters.AddWithValue("iSatker", User.Satker);
-                    cmd.Parameters.AddWithValue("iLevelJabatan", User.LEVEL_JABATAN);
+                    cmd.Parameters.AddWithValue("@iUserID", User.UserID);
+                    cmd.Parameters.AddWithValue("@iUserName", "");
+                    cmd.Parameters.AddWithValue("@iFullname", User.FullName);
+                    cmd.Parameters.AddWithValue("@iPassword", encrypt.Encrypt(User.Password, User.NIP));
+                    cmd.Parameters.AddWithValue("@iStatusAdmin", User.StatusAdmin);
+                    cmd.Parameters.AddWithValue("@iGroupID", User.GroupID);
+                    cmd.Parameters.AddWithValue("@iLastUser", User.LastUser);
+                    cmd.Parameters.AddWithValue("@iNIP", User.NIP);
+                    cmd.Parameters.AddWithValue("@iSatker", User.Satker);
+                    cmd.Parameters.AddWithValue("@iLevelJabatan", User.LEVEL_JABATAN);
                     con.Open();
                     i = cmd.ExecuteNonQuery();
                 }
@@ -323,10 +297,10 @@ namespace simhukdis.Models
                 int i = 0;
                 Encryption encrypt = new Encryption();
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "sp_User_ChangePassword";
-                    MySqlCommand cmd = new MySqlCommand(MySql, con);
+                    string MySql = "SIMHUKDIS.sp_User_ChangePassword";
+                    SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("iUserID", User.UserID);
                     cmd.Parameters.AddWithValue("iPassword", encrypt.Encrypt(User.Password, User.NIP));
@@ -348,12 +322,12 @@ namespace simhukdis.Models
             {
                 int i = 0;
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "sp_UserLogin_Upd_LastLogin";
-                    MySqlCommand cmd = new MySqlCommand(MySql, con);
+                    SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("iNIP", NIP);
+                    cmd.Parameters.AddWithValue("@iNIP", NIP);
                     con.Open();
                     i = cmd.ExecuteNonQuery();
                 }
@@ -370,10 +344,10 @@ namespace simhukdis.Models
             {
                 int i = 0;
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
-                using (MySqlConnection con = new MySqlConnection(constr))
+                using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "sp_User_Del";
-                    MySqlCommand cmd = new MySqlCommand(MySql, con);
+                    string MySql = "SIMHUKDIS.sp_User_Del";
+                    SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("iUserID", UserID);
                     cmd.Parameters.AddWithValue("iNIP", NIP);
@@ -388,5 +362,39 @@ namespace simhukdis.Models
                 throw ex;
             }
         }
+        public clsUserLogin UbahData(string NIP)
+        {
+            Encryption encrypt = new Encryption();
+            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                string q = "sp_User_byuser_sel";
+                SqlCommand cmd = new SqlCommand(q, con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@iNIP", NIP);
+                con.Open();
+                clsUserLogin user = new clsUserLogin();
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+                if (dt.Rows.Count == 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    string PWD = encrypt.Decrypt(dt.Rows[0]["Password"].ToString(), dt.Rows[0]["NIP"].ToString());
+                    user.NIP = dt.Rows[0]["NIP"].ToString();
+                    user.StatusAdmin = Convert.ToInt16(dt.Rows[0]["StatusAdmin"]).ToString();
+                    user.FullName = dt.Rows[0]["FullName"].ToString();
+                    user.Satker = dt.Rows[0]["Satker"].ToString();
+                    user.GroupID = dt.Rows[0]["GroupID"].ToString();
+                    user.UserID = dt.Rows[0]["UserID"].ToString();
+                    user.Password = encrypt.Decrypt(dt.Rows[0]["Password"].ToString(), dt.Rows[0]["NIP"].ToString());
+                    return user;
+                }
+            }
+        }
+
     }
 }

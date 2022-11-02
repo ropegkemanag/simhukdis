@@ -1,32 +1,52 @@
 ﻿@model IEnumerable<SIMHUKDIS.Models.clsDPK>
 
 @{
-    ViewBag.Title = "Data Pra Sidang Dewan Pertimbangan Kepegawaian";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Data Sidang Dewan Pertimbangan Kepegawaian";
+    Layout = "/Views/Shared/_Layout.cshtml";
 }
 
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Data Sidang Dewan Pertimbangan Kepegawaian</h6>
-    </div>
-    @Html.ValidationSummary(true)
+<div class="card-box mb-30">
     <div class="card-body">
-        <button id="downloadtoexcel" class="btn btn-primary btn-sm" type="button" name="action:DownloadToExcel">
-            <span style="font-size:12px"> Download to Excel </span>
-        </button>
-        <div>
-            <label style="height:10px"></label>
-        </div>
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" style="width:100%;" cellspacing="0">
+        <p style="text-align:left;">
+            <div class="form-group">
+                <table>
+                    <tr>
+                        <td>
+                            <label style="color:cornflowerblue;" class="control-label ">Tanggal SIdang</label>
+                        </td>
+                        <td style="width:20px;"> </td>
+                        <td>
+                            <input id="TanggalSidang" class="form-control" value="@string.Format("{0:dd-MM-yyyy}", ViewBag.TanggalSidang)" type="date" />
+                        </td>
+                        <td style="width:20px;"> </td>
+                        <td>
+                            <button class="btn btn-primary" type="button" id="GridLoad">
+                                Cari
+                            </button>
+                        </td>
+                        <td style="width:20px;"> </td>
+                        <td>
+                            <button id="downloadtoexcel" class="btn btn-primary" type="button" name="action:DownloadToExcel">
+                                Download to Excel
+                            </button>
+                        </td>
+
+                    </tr>
+                    
+                </table>
+                <hr />
+            </div>
+        </p>
+        <div class="pb-20">
+            <table class="table hover data-table-export">
                 <thead class="table table-primary" style="white-space: nowrap; text-align: center;">
                     <tr>
                         <th>
                             Aksi
                         </th>
                         @*<th>
-            No
-        </th>*@
+                        No
+                    </th>*@
                         <th>
                             Identitas
                         </th>
@@ -49,93 +69,69 @@
                             Tanggal Sidang DPK
                         </th>
                         <th>
-                            Keputusan Sidang
+                            Keputusan Sidang DPK
                         </th>
                         <th>
-                            Catatan Sidang
+                            Catatan Sidang DPK
                         </th>
-                        @*<th>
-            @Html.DisplayNameFor(model => model.PelanggaranDisiplin)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.PasalPelanggaran)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RekomendasiHukdis)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.NoSurat)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AsalSurat)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.TanggalSurat)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.perihal)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.SATUAN_KERJA)
-        </th>*@
                     </tr>
                 </thead>
                 <tbody>
                     @foreach (var item in Model)
                     {
 
-                    <tr>
-                        <td>
-                            <a href="#" onclick="Update('@item.ID','@item.NIP','@item.KeputusanSidang','@item.Tanggal_Sidang_DPK','@item.Catatan_Sidang')">Ubah</a>
-                            <br />
-                            <br />
-                            <a href="#" onclick="SendData('@item.ID','@item.NIP')">Proses Hasil Sidang DPK</a>
+                        <tr>
+                            <td>
+                                @Html.ActionLink("Ubah", "Edit", new { ID = item.ID, NIP = item.NIP })
+                                @*<a href="#" onclick="Update('@item.ID','@item.NIP','@item.KeputusanSidang','@item.Tanggal_Sidang_DPK','@item.Catatan_Sidang');">Ubah</a>*@
+                                <br />
+                                <a href="#" onclick="SendData('@item.ID','@item.NIP');">Proses Hasil Sidang DPK</a>
 
-                        </td>
-                        @*<td>
-            @Html.DisplayFor(modelItem => item.No)
-        </td>*@
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FullName)
-                            <br />
-                            @Html.DisplayFor(modelItem => item.NIP)
-                            <br />
-                            @Html.DisplayFor(modelItem => item.GOL_RUANG)
-                            <br />
-                            @Html.DisplayFor(modelItem => item.LEVEL_JABATAN)
-                            <br />
-                            @Html.DisplayFor(modelItem => item.AsalSurat)
-                            <br />
-                            @Html.DisplayFor(modelItem => item.DasarBukti)
-                            <br />
-                            @Html.DisplayFor(modelItem => item.perihal)
-                            <br />
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PasalPelanggaran)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.PelanggaranDisiplin)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.RekomendasiHukdis)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Tanggal_Sidang_Pra_DPK)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Catatan)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Tanggal_Sidang_DPK)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.hukuman)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Catatan_Sidang)
-                        </td>
-                    </tr>
+                            </td>
+                            @*<td>
+                            @Html.DisplayFor(modelItem => item.No)
+                        </td>*@
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FullName)
+                                <br />
+                                @Html.DisplayFor(modelItem => item.NIP)
+                                <br />
+                                @Html.DisplayFor(modelItem => item.GOL_RUANG)
+                                <br />
+                                @Html.DisplayFor(modelItem => item.LEVEL_JABATAN)
+                                <br />
+                                @Html.DisplayFor(modelItem => item.AsalSurat)
+                                <br />
+                                @Html.DisplayFor(modelItem => item.DasarBukti)
+                                <br />
+                                @Html.DisplayFor(modelItem => item.perihal)
+                                <br />
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PasalPelanggaran)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PelanggaranDisiplin)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RekomendasiHukdis)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Tanggal_Sidang_Pra_DPK)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Catatan)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Tanggal_Sidang_DPK)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.hukuman)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Catatan_Sidang)
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -182,7 +178,7 @@
                                     <div class="form-group">
                                         <div class="col">
                                             <label for="catatan">Tanggal Sidang DPK</label>
-                                            <input type="text" class="form-control" id="Tanggal_Sidang" name="Tanggal_Sidang" />
+                                            <input type="text" class="form-control date-picker" id="Tanggal_Sidang" name="Tanggal_Sidang" />
                                             @*@Html.TextBox("Tanggal_Sidang", "Tanggal_Sidang", new { @id = "Tanggal_Sidang", @class = "form-control input-md col-md-1", placeholder = "dd-mm-yyyy" })*@
                                         </div>
                                     </div>
@@ -230,7 +226,7 @@
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
-            <div class="modal-body">Apakah Anda yakin untuk mengirim data ini ?</div>
+            <div class="modal-body">Apakah Anda yakin untuk submit data ini ?</div>
             <div class="form-group" style="display:none;">
                 <div class="col">
                     <label for="ID">ID</label>
@@ -251,28 +247,38 @@
         </div>
     </div>
 </div>
-<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script src="/Scripts/jquery-3.6.0.min.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function () {
-        $(function () {
+        //$(function () {
 
-            $("#Tanggal_Sidang").datepicker({
-                format: 'dd-MM-yyyy', //'M Y',
-                onSelect: function () {
-                    $(this).change();
-                }
-            })
-        });
+        //    $("#Tanggal_Sidang").datepicker({
+        //        format: 'dd-MM-yyyy', //'M Y',
+        //        onSelect: function () {
+        //            $(this).change();
+        //        }
+        //    })
+        //});
     });
-    function Update(ID, NIP, KeputusanSidang, Tanggal_Sidang, Catatan_Sidang) {
-        $('#ID').val(ID);
-        $('#NIP').val(NIP);
-        $('#KeputusanSidang').val(KeputusanSidang);
-        $('#Tanggal_Sidang').val(Tanggal_Sidang);
-        $('#Catatan_Sidang').val(Catatan_Sidang);
-        $('#UbahDataDPK').modal('show');
+    $("#GridLoad").click(function () {
+        window.location = '@Url.Action("Index", "DPK")?TanggalSidang=' + $("#TanggalSidang").val();
+                setTimeout(function () {
+                    waitingDialog.hide();
+                }, 1000);
+    });
+    function Update(ID, NIP, KeputusanSidang, Catatan_Sidang) {
+        alert(ID, NIP, KeputusanSidang, Catatan_Sidang);
+        //$('#UbahDataDPK').modal('show');
     }
+    //function Update(ID, NIP, KeputusanSidang, Tanggal_Sidang, Catatan_Sidang) {
+    //    $('#ID').val(ID);
+    //    $('#NIP').val(NIP);
+    //    $('#KeputusanSidang').val(KeputusanSidang);
+    //    $('#Tanggal_Sidang').val(Tanggal_Sidang);
+    //    $('#Catatan_Sidang').val(Catatan_Sidang);
+    //    $('#UbahDataDPK').modal('show');
+    //}
     function SendData(ID, NIP) {
         $('#IDX').val(ID);
         $('#NIPX').val(NIP);
@@ -368,7 +374,7 @@
     });
     $("#downloadtoexcel").click(function () {
                 //var selectedRow = pBrand + "|" + pSoldTo + "|" + pCFC + "|" + pDistributor;
-             window.location = '@Url.Action("DownloadToExcel", "DPK")';
+        window.location = '@Url.Action("DownloadToExcel2", "DPK")?TanggalSidang=' + $("#TanggalSidang").val();
                 setTimeout(function () {
                     waitingDialog.hide();
                 }, 1000);
