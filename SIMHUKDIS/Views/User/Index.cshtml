@@ -55,12 +55,12 @@
                     <th>
                         User Group
                     </th>
-                    <th style="display:none;">
+                    @*<th style="display:none;">
                         @Html.DisplayNameFor(model => model.LastUser)
                     </th>
                     <th style="display:none;">
                         Kode Status Admin
-                    </th>
+                    </th>*@
                 </tr>
             </thead>
 
@@ -69,7 +69,9 @@
                 {
                     <tr class="table-bordered table-hover my-3">
                         <td>
-
+                            @*<button type="button" class="btn btn-primary"><i class="fa fa-eye-slash"></i></button>
+                            <button type="button" class="btn btn-success"><i class="fa fa-edit"></i></button>
+                            <button type="button" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>*@
                             @Html.ActionLink("Edit", "Edit", new { UserID = item.UserID, StatusAdmin = item.KodeStatusAdmin, GroupID = item.GroupID, Satker = item.Satker }) |
                             <a href="#" onclick="Hapus('@item.UserID','@item.NIP')">Hapus</a>
                         </td>
@@ -100,12 +102,12 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.GroupDesc)
                         </td>
-                        <td style="display:none;">
+                        @*<td style="display:none;">
                             @Html.DisplayFor(modelItem => item.LastUser)
                         </td>
                         <td style="display:none;">
                             @Html.DisplayFor(modelItem => item.KodeStatusAdmin)
-                        </td>
+                        </td>*@
                     </tr>
                 }
             </tbody>

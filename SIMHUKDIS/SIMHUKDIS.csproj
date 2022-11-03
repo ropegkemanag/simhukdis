@@ -1054,6 +1054,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\Background_Simhukdis.png" />
     <Content Include="Images\kemenag.ico" />
     <Content Include="Images\Login.jpg" />
     <Content Include="Images\Background_Simhukdis.jpg" />
