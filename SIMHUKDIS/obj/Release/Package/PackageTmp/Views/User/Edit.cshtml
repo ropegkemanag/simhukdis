@@ -42,7 +42,7 @@
             </div>
             
             <div class="col">
-                @Html.EditorFor(model => model.LEVEL_JABATAN, new { htmlAttributes = new { @class = "form-control", @id = "LEVEL_JABATAN", required = "required", @readonly = "True" } })
+                @Html.EditorFor(model => model.LEVEL_JABATAN, new { htmlAttributes = new { @class = "form-control", @id = "LEVEL_JABATAN", required = "required", @readonly = "True", rows=3 } })
                 @Html.ValidationMessage("LEVEL_JABATAN", "", new { @class = "text-danger" })
             </div>
         </div>
@@ -111,7 +111,33 @@
     <script type="text/javascript">
     $(document).ready(function () {
         $("#StatusAdmin").val('@ViewBag.StatusAdmin');
+        getData();
     });
+        function getData() {
+            var NIP = $('#NIP').val();
+            $.ajax({
+                type: "GET",
+                url: "/Telaah/GetPegawai?",
+                cache: false,
+                data: ({ NIP: NIP }),
+                contentType: "application/json;charset=UTF-8",
+                dataType: "json",
+                success: function (result) {
+                    $('#Fullname').val(result.NAMA_LENGKAP);
+                    $('#LEVEL_JABATAN').val(result.TAMPIL_JABATAN);
+                },
+                error: function (errormessage) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "NIP tidak ditemukan",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $('#NIP').val('');
+                }
+            });
+            return false;
+        }
 
     function ShowPassword() {
         var x = document.getElementById("Password");

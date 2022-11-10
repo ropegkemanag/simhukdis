@@ -58,7 +58,7 @@
                 </a>
             </div>
         </div>
-        <div class="user-notification">
+        @*<div class="user-notification">
             <div class="dropdown">
                 <a class="dropdown-toggle no-arrow"
                    href="#"
@@ -69,7 +69,7 @@
                 </a>
                 <div class="dropdown-menu dropdown-menu-right">
                     <div class="notification-list mx-h-350 customscroll">
-                        @*<ul>
+                        <ul>
                             <li>
                                 <a href="#">
                                     <img src="~/Content/DeskApp/vendors/images/img.jpg" alt="" />
@@ -130,11 +130,12 @@
                                     </p>
                                 </a>
                             </li>
-                        </ul>*@
+                        </ul>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
+        
         <div class="user-info-dropdown">
             <div class="dropdown">
                 <a class="dropdown-toggle"
@@ -319,6 +320,11 @@
                             <span class="micon bi bi-check2-square"></span><span class="mtext">Usulan Hukdis</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="@Url.Action("Index", "MonitoringItjen")" class="dropdown-toggle no-arrow">
+                            <span class="micon bi bi-check2-square"></span><span class="mtext">Monitoring</span>
+                        </a>
+                    </li>
                 }
                 @if (ViewBag.UserGroup == "01" || ViewBag.UserGroup == "02")
                 {
@@ -373,12 +379,17 @@
                             <span class="micon bi bi-check2-square"></span><span class="mtext">Disposisi</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="@Url.Action("DetailAtasan","Telaah")" class="dropdown-toggle no-arrow">
+                            <span class="micon bi bi-pencil-square"></span><span class="mtext">Telaah</span>
+                        </a>
+                    </li>
                 }
-                @if (ViewBag.UserGroup == "02" || ViewBag.UserGroup == "01"||ViewBag.UserGroup == "04" || ViewBag.UserGroup == "05" || ViewBag.UserGroup == "06")
+                @if (ViewBag.UserGroup == "02" || ViewBag.UserGroup == "01" || ViewBag.UserGroup == "04" || ViewBag.UserGroup == "05")
                 {
                     <li>
                         <a href="@Url.Action("Index","Telaah")" class="dropdown-toggle no-arrow">
-                            <span class="micon bi bi-check2-square"></span><span class="mtext">Telaah</span>
+                            <span class="micon bi bi-pencil-square"></span><span class="mtext">Telaah</span>
                         </a>
                     </li>
 
@@ -406,7 +417,7 @@
                         </a>
                     </li>
                 }
-                @if (ViewBag.UserGroup == "01" || ViewBag.UserGroup == "02" || ViewBag.UserGroup == "04" || ViewBag.UserGroup == "05" || ViewBag.UserGroup == "06" || ViewBag.UserGroup == "07")
+                @if (ViewBag.UserGroup == "01" || ViewBag.UserGroup == "02" || ViewBag.UserGroup == "04" || ViewBag.UserGroup == "05" || ViewBag.UserGroup == "06")
                 {
                     <li>
                         <a href="@Url.Action("Index", "Monitoring")" class="dropdown-toggle no-arrow">

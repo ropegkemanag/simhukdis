@@ -285,7 +285,9 @@
         </div>*@
                 <div class="form-group row">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Simpan" class="btn btn-primary" onclick="Update()" /> | @Html.ActionLink("Back to List", "Index")
+                        <input type="button" value="Simpan" class="btn btn-primary" onclick="UpdateData()" />
+                        @*<input type="button" value="Buat Telaah" class="btn btn-primary" onclick="GenerateWord()" />*@
+
                         @*<button type="button" id="InsertData" class="btn btn-success" style="background-color:teal;"></button> | @Html.ActionLink("Back to List", "Index")*@
                     </div>
                 </div>
@@ -296,7 +298,7 @@
 <script src="/Scripts/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#PelanggaranDisiplin').summernote({ height: 300 });
+        //$('#PelanggaranDisiplin').summernote({ height: 300 });
         var NIP = '@ViewBag.NIP';
         getData('@ViewBag.NIP');
         GetTelaah('@ViewBag.ID',NIP);
@@ -405,15 +407,67 @@
             dataType: "json",
             success: function (result) {
                 if (result.toString() == "Success") {
-                    //Swal.fire({
-                    //    icon: 'success',
-                    //    title: 'Telaah berhasil !',
-                    //    showConfirmButton: false,
-                    //    timer: 30000
-                    //})
-                    
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Simpan berhasil !',
+                        showConfirmButton: false,
+                        timer: 30000
+                    }) 
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: result.toString(),
+                        showConfirmButton: false,
+                        timer: 30000
+                    })
+                }
+            },
+            error: function (errormessage) {
+                Swal.fire({
+                    icon: 'error',
+                    title: errormessage,
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        });
+    }
+    function UpdateData()
+    {
+        var InputID = $('#ID').val();
+        var dpObj = {
+            ID: $('#ID').val(),
+            NIP: $('#NIP').val(),
+            NAMA_LENGKAP: $('#NAMA_LENGKAP').val(),
+            GOL_RUANG: $('#GOL_RUANG').val(),
+            LEVEL_JABATAN: $('#TAMPIL_JABATAN').val(),
+            SATUAN_KERJA: $('#SATUAN_KERJA').val(),
+            TEMPAT_LAHIR: $('#TEMPAT_LAHIR').val(),
+            TANGGAL_LAHIR: $('#TANGGAL_LAHIR').val(),
+            MASAKERJA_TAHUN: $('#MASAKERJA_TAHUN').val(),
+            TANGGAL_LAHIR: $('#TANGGAL_LAHIR').val(),
+            TMT_PENSIUN: $('#TMT_PENSIUN').val(),
+            DasarBukti: $('#DasarBukti').val(),
+            PelanggaranDisiplin: $('#PelanggaranDisiplin').val(),
+            PasalPelanggaran: $('#PasalPelanggaran').val(),
+            RekomendasiHukdis: $('#RekomendasiHukdis').val(),
+            AnalisaPertimbangan: $('#AnalisaPertimbangan').val(),
+            KeputusanSidangDPK: $('#KeputusanSidangDPK').val(),
+            TelaahNo: $('#TelaahNo').val(),
+            Tanggal_Telaah: $('#Tanggal_Telaah').val()
+        };
+        $.ajax({
+            url: "/Telaah/UpdateData",
+            data: JSON.stringify(dpObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                
+                if (result.toString() == "Success") {
+                    //alert(result.toString());
                     GenerateWord();
-                   
                 }
                 else {
                     Swal.fire({
@@ -522,13 +576,11 @@
         });
     }
     function DownloadPDF(fileName1, fileName2) {
-        window.location = '@Url.Action("DownloadFile", "Telaah")?fileName=' + fileName1;
+        //window.location = '@Url.Action("DownloadFile", "Telaah")?fileName=' + fileName1;
         window.location = '@Url.Action("DownloadFile", "Telaah")?fileName=' + fileName2;
-
     }
     function GenerateWord()
     {
-       
         var dpObj = {
             ID: $('#ID').val(),
             NIP: $('#NIP').val(),
@@ -557,31 +609,37 @@
             contentType: "application/json;charset=utf-8",
             dataType: "json",
             success: function (result) {
-                
                 DownloadPDF(result.DocPDF, result.DocWord);
-                //DownloadPDF(result.DocWord);
-                if (result.Msg.toString() == "Success") {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Telaah berhasil !',
-                        showConfirmButton: false,
-                        timer: 3000
-                    })
-                }
+                //alert(result.Msg.toString());
+                //alert(result.DocPDF.toString());
+                //alert(result.DocWord.toString());
+                //          //DownloadPDF(result.DocWord);
+                //if (result.Msg.toString() == "Success") {
+                    
+                //    DownloadPDF(result.DocPDF, result.DocWord);
+                    
+                //    Swal.fire({
+                //        icon: 'success',
+                //        title: 'Telaah berhasil !',
+                //        showConfirmButton: false,
+                //        timer: 3000
+                //    })
+                    
+                //}
                 
-                else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: result.toString(),
-                        showConfirmButton: false,
-                        timer: 3000
-                    })
-                }
+                //else {
+                //    Swal.fire({
+                //        icon: 'error',
+                //        title: result.Msg.toString(),
+                //        showConfirmButton: false,
+                //        timer: 3000
+                //    })
+                //}
             },
             error: function (errormessage) {
                 Swal.fire({
                     icon: 'error',
-                    title: result.toString(),
+                    title: errormessage,
                     showConfirmButton: false,
                     timer: 3000
                 })

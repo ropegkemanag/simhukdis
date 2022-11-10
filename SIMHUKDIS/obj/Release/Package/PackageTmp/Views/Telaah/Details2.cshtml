@@ -12,13 +12,13 @@
             @foreach (dynamic a in Model.clsSuratMasuk)
             {
                 @*<tr>
-                    <td width="25%">
-                        No Agenda
-                    </td>
-                    <td width="75%">
-                        @a.NoAgenda
-                    </td>
-                </tr>*@
+                        <td width="25%">
+                            No Agenda
+                        </td>
+                        <td width="75%">
+                            @a.NoAgenda
+                        </td>
+                    </tr>*@
                 <tr>
                     <td>
                         No Surat
@@ -273,9 +273,9 @@
             }
         </p>
         <hr />
-        
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+        <div class="pb-20">
+            <table class="table hover data-table-export nowrap">
                 <thead class="table table-primary">
                     <tr>
                         <th>
@@ -291,7 +291,7 @@
                             Satuan Kerja
                         </th>
                         <th>
-                            Status
+                            File Telaah
                         </th>
                     </tr>
                 </thead>
@@ -299,58 +299,32 @@
                 <tbody>
                     @foreach (dynamic b in Model.clsTelaah)
                     {
-                        if (@b.StatusProses == "1")
-                        {
-
-                            <tr class="table-bordered table-hover my-3">
-                                <td>
-                                    Ubah
-                                    @*<a href="@Url.Action("Edit", "Telaah", new { ID = b.ID, NIP = b.NIP })">Ubah</a>*@
-                                    <br />
-                                    Hapus
-                                    @*<a href="#" onclick="Hapus('@b.ID','@b.NIP')">Hapus</a>*@
-                                    <br />
-                                    Proses Pra Sidang DPK
-                                </td>
-                                <td>
-                                    @b.NIP
-                                </td>
-                                <td>
-                                    @b.NAMA_LENGKAP
-                                </td>
-                                <td>
-                                    @b.SATUAN_KERJA
-                                </td>
-                                <td>
-                                    @b.Status
-                                </td>
-                            </tr>
-                        }
-                        else if (@b.StatusProses == "0")
-                        {
-
-                            <tr class="table-bordered table-hover my-3">
-                                <td>
-                                    <a href="@Url.Action("Edit", "Telaah", new { ID = b.ID, NIP = b.NIP })">Ubah</a>
-                                    <br />
-                                    <a href="#" onclick="Hapus('@b.ID','@b.NIP')">Hapus</a>
-                                    <br />
-                                    <a href="#" onclick="Proses('@b.ID','@b.NIP')">Proses Pra Sidang DPK</a>
-                                </td>
-                                <td>
-                                    @b.NIP
-                                </td>
-                                <td>
-                                    @b.NAMA_LENGKAP
-                                </td>
-                                <td>
-                                    @b.SATUAN_KERJA
-                                </td>
-                                <td>
-                                    @b.Status
-                                </td>
-                            </tr>
-                        }
+                        <tr class="table-bordered table-hover my-3">
+                            <td>
+                                <a class="btn btn-outline-primary" href="@Url.Action("Edit", "Telaah", new { ID = b.ID, NIP = b.NIP })"><i class="micon bi-pencil"></i>Ubah</a>
+                                <br />
+                                <br />
+                                <a class="btn btn-outline-danger" href="#" onclick="Hapus('@b.ID','@b.NIP')"><i class="micon bi-trash"></i>Hapus</a>
+                                <br />
+                                <br />
+                                <a class="btn btn-outline-success" href="#" onclick="Proses('@b.ID','@b.NIP')"><i class="micon bi-arrow-bar-up"></i>Proses Ke Atasan</a>
+                                <br />
+                                <br />
+                                <a class="btn btn-outline-warning" href="#" onclick="ProsesPraSidang('@b.ID','@b.NIP')"><i class="micon bi-send"></i>Kirim Ke Pra Sidang</a>
+                            </td>
+                            <td>
+                                @b.NIP
+                            </td>
+                            <td>
+                                @b.NAMA_LENGKAP
+                            </td>
+                            <td>
+                                @b.SATUAN_KERJA
+                            </td>
+                            <td>
+                                <a class="btn btn-outline-primary" onclick="location.href='@Url.Action("DownloadFile","Telaah", new { @fileName = b.FileTelaah})'">File Telaah</a>
+                            </td>
+                        </tr>
                     }
                 </tbody>
             </table>
@@ -380,47 +354,91 @@
     </div>
 </div>
 
-<div class="modal fade" id="ProsesPraDPK" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+<div class="modal fade" id="MajukanKeAtasan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Proses Pra Sidang DPK</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Kirim Telaah Ke Atasan ...</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                 </button>
             </div>
 
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                <div class="modal-body" style="margin-left:20px;">
-                    <form id="Form" >
-                        <div class="form-group row" style="display:none;">
-                            <div class="col-sm-6 mb-3 mb-sm-0">
-                                <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">ID</label>
-                                @Html.TextBox("ID", "", new { @id = "ID", @class = "form-control", required = "required" })
-                                @Html.ValidationMessage("ID", "", new { @class = "text-danger" })
-                            </div>
-                            <div class="col-sm-6">
-                                <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">NIP</label>
-                                @Html.TextBox("NIP", "", new {@id = "NIPx", @class = "form-control", required = "required" })
-                                @Html.ValidationMessage("NIP", "", new { @class = "text-danger" })
-                            </div>
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="modal-body" style="margin-left:20px;">
+                <form id="Form">
+                    <div class="form-group row" style="display:none;">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">ID</label>
+                            @Html.TextBox("ID", "", new { @id = "ID", @class = "form-control", required = "required" })
+                            @Html.ValidationMessage("ID", "", new { @class = "text-danger" })
                         </div>
-                        <div class="form-group row">
-                            <div class="col">
-                                <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">File Telaah</label>
-                                @Html.TextBox("FileTelaah", "", new { @id = "FileTelaah", @class = "form-control", required = "required" , accept = "application/pdf", Type="file" })
-                                @Html.ValidationMessage("FileTelaah", "", new { @class = "text-danger" })
-                            </div>
+                        <div class="col-sm-6">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">NIP</label>
+                            @Html.TextBox("NIP", "", new { @id = "NIPx", @class = "form-control", required = "required" })
+                            @Html.ValidationMessage("NIP", "", new { @class = "text-danger" })
                         </div>
-                    </form>
-                </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">File Telaah</label>
+                            @Html.TextBox("FileTelaah", "", new { @id = "FileTelaah", @class = "form-control", required = "required", accept = "application/pdf", Type = "file" })
+                            @Html.ValidationMessage("FileTelaah", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </form>
+            </div>
 
-                <div class="modal-footer">
-                    <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
-                    <input type="submit" value="Proses" class="btn btn-primary" style="width:100px;" onclick="UploadTelaah()"/>
-                </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                <input type="submit" value="Proses" class="btn btn-primary" style="width:100px;" onclick="UploadTelaah()" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ProsesPraDPK" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Kirim Ke Pra Sidang DPK</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="modal-body" style="margin-left:20px;">
+                <form id="Form">
+                    <div class="form-group row" style="display:none;">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">ID</label>
+                            @Html.TextBox("ID", "", new { @id = "ID", @class = "form-control", required = "required" })
+                            @Html.ValidationMessage("ID", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-6">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">NIP</label>
+                            @Html.TextBox("NIP", "", new { @id = "NIPx", @class = "form-control", required = "required" })
+                            @Html.ValidationMessage("NIP", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">File Telaah</label>
+                            @Html.TextBox("FileTelaah", "", new { @id = "FileTelaah", @class = "form-control", required = "required", Type = "file" })
+                            @Html.ValidationMessage("FileTelaah", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                <input type="submit" value="Proses" class="btn btn-primary" style="width:100px;" onclick="PraDPK()" />
+            </div>
         </div>
     </div>
 </div>
@@ -429,25 +447,99 @@
     function Proses(ID, NIP) {
         $('#ID').val(ID);
         $('#NIPx').val(NIP);
+        $('#MajukanKeAtasan').modal('show');
+    }
+    function ProsesPraSidang(ID, NIP) {
+        $('#ID').val(ID);
+        $('#NIPx').val(NIP);
         $('#ProsesPraDPK').modal('show');
     }
-    function UploadTelaah() {
+    function PraDPK() {
         var InputID = '@ViewBag.ID';
         var fileUpload = $("#FileTelaah").get(0);
         var files = fileUpload.files;
 
-        // Create FormData object  
+        // Create FormData object
         var fileData = new FormData();
 
-        // Looping over all files and add it to FormData object  
+        // Looping over all files and add it to FormData object
         for (var i = 0; i < files.length; i++) {
             fileData.append(files[i].name, files[i]);
         }
         $.ajax({
             url: '/Telaah/UploadFiles',
             type: "POST",
-            contentType: false, // Not to set any content header  
-            processData: false, // Not to process data  
+            contentType: false, // Not to set any content header
+            processData: false, // Not to process data
+            data: fileData,
+            success: function (result) {
+                var dpObj = {
+                    ID: $('#ID').val(),
+                    NIP: $('#NIPx').val(),
+                    FileTelaah: result
+                };
+                $.ajax({
+                    url: "/Telaah/PraDPK",
+                    data: JSON.stringify(dpObj),
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.toString() == "Success") {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Proses berhasil !',
+                                showConfirmButton: false,
+                                timer: 3000
+                            })
+                            window.location.href = '@Url.Action("Details2", "Telaah")?ID=' + $("#ID").val();
+                        }
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: result.toString(),
+                                showConfirmButton: false,
+                                timer: 3000
+                            })
+                        }
+                    },
+                    error: function (errormessage) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: result.toString(),
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                    }
+                });
+            },
+            error: function (err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: result.toString(),
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        });
+    }
+    function UploadTelaah() {
+        var InputID = '@ViewBag.ID';
+        var fileUpload = $("#FileTelaah").get(0);
+        var files = fileUpload.files;
+
+        // Create FormData object
+        var fileData = new FormData();
+
+        // Looping over all files and add it to FormData object
+        for (var i = 0; i < files.length; i++) {
+            fileData.append(files[i].name, files[i]);
+        }
+        $.ajax({
+            url: '/Telaah/UploadFiles',
+            type: "POST",
+            contentType: false, // Not to set any content header
+            processData: false, // Not to process data
             data: fileData,
             success: function (result) {
                 var dpObj = {

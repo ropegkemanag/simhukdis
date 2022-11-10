@@ -1,0 +1,305 @@
+﻿@model IEnumerable<SIMHUKDIS.Models.clsTelaah>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Export Datatable start -->
+<div class="card-box mb-30">
+    <div class="pd-20">
+        <h4 class="text-blue h4">Data Telaah</h4>
+    </div>
+    <div class="pb-20">
+        <table class="table hover data-table-export nowrap">
+            <thead>
+                <tr>
+                    <th class="table-plus datatable-nosort">Aksi</th>
+                    <th class="table-plus datatable-nosort">File Telaah</th>
+                    <th>NIP</th>
+                    <th>Nama</th>
+                    <th>Satuan Kerja</th>
+                    <th>Konseptor</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model == null)
+                {
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr class="table-bordered table-hover my-3">
+                            <td align="center">
+                                <a class="btn btn-outline-primary" href="@Url.Action("Edit", "Telaah", new { ID = item.ID, NIP = item.NIP })"><i class="micon bi-pencil"></i>Ubah</a>
+                                <br />
+                                <br />
+                                <a class="btn btn-outline-danger" onclick="Proses('@item','@item')"><i class="micon bi-arrow-90deg-down"></i>Kembalikan Ke Konseptor</a>
+                                <br />
+                                <br />
+                                <a class="btn btn-outline-success" onclick="Majukan('@item.ID','@item.NIP')"><i class="micon bi-arrow-bar-up"></i>Majukan Ke Atasan</a>
+                            </td>
+                            <td>
+                                <a class="btn btn-outline-primary" onclick="location.href='@Url.Action("DownloadResultFile","Telaah", new { @fileName = item.FileTelaah})'">File Telaah</a>
+                            </td>
+                            <td>
+                                @Html.DisplayFor(Model => item.NIP)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(Model => item.NAMA_LENGKAP)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(Model => item.SATUAN_KERJA)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(Model => item.Konseptor)
+                            </td>
+
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- Export Datatable End -->
+<div class="modal fade" id="KembaliKonseptor" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Kembalikan Telaah Ke Konseptor</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="modal-body" style="margin-left:20px;">
+                <form id="Form">
+                    <div class="form-group row" style="display:none;">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">ID</label>
+                            @Html.TextBox("ID", "", new { @id = "ID", @class = "form-control", required = "required" })
+                            @Html.ValidationMessage("ID", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-6">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">NIP</label>
+                            @Html.TextBox("NIP", "", new { @id = "NIPx", @class = "form-control", required = "required" })
+                            @Html.ValidationMessage("NIP", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">File Telaah</label>
+                            @Html.TextBox("FileTelaah", "", new { @id = "FileTelaah", @class = "form-control", required = "required", Type = "file" })
+                            @Html.ValidationMessage("FileTelaah", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                <input type="submit" value="Proses" class="btn btn-primary" style="width:100px;" onclick="UploadKeKonseptor()" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="MajukanKeAtasan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Majukan Telaah Ke Atasan</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="modal-body" style="margin-left:20px;">
+                <form id="Form">
+                    <div class="form-group row" style="display:none;">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">ID</label>
+                            @Html.TextBox("ID", "", new { @id = "ID", @class = "form-control", required = "required" })
+                            @Html.ValidationMessage("ID", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-6">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">NIP</label>
+                            @Html.TextBox("NIP", "", new { @id = "NIPx", @class = "form-control", required = "required" })
+                            @Html.ValidationMessage("NIP", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">File Telaah</label>
+                            @Html.TextBox("FileTelaah", "", new { @id = "FileTelaah", @class = "form-control", required = "required", Type = "file" })
+                            @Html.ValidationMessage("FileTelaah", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                <input type="submit" value="Proses" class="btn btn-primary" style="width:100px;" onclick="UploadKeAtasan()" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function Proses(ID, NIP) {
+        $('#ID').val(ID);
+        $('#NIPx').val(NIP);
+        $('#KembaliKonseptor').modal('show');
+    }
+    function Majukan(ID, NIP) {
+        $('#ID').val(ID);
+        $('#NIPx').val(NIP);
+        $('#MajukanKeAtasan').modal('show');
+    }
+    function UploadKeAtasan() {
+        var InputID = '@ViewBag.ID';
+        var fileUpload = $("#FileTelaah").get(0);
+        var files = fileUpload.files;
+
+        // Create FormData object  
+        var fileData = new FormData();
+
+        // Looping over all files and add it to FormData object  
+        for (var i = 0; i < files.length; i++) {
+            fileData.append(files[i].name, files[i]);
+        }
+        $.ajax({
+            url: '/Telaah/UploadFiles',
+            type: "POST",
+            contentType: false, // Not to set any content header  
+            processData: false, // Not to process data  
+            data: fileData,
+            success: function (result) {
+                var dpObj = {
+                    ID: $('#ID').val(),
+                    NIP: $('#NIPx').val(),
+                    FileTelaah: result
+                };
+                $.ajax({
+                    url: "/Telaah/ProsesKeAtasan",
+                    data: JSON.stringify(dpObj),
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.toString() == "Success") {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Proses berhasil !',
+                                showConfirmButton: false,
+                                timer: 3000
+                            })
+                            window.location.href = '@Url.Action("Details2", "Telaah")?ID=' + $("#ID").val();
+                        }
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: result.toString(),
+                                showConfirmButton: false,
+                                timer: 3000
+                            })
+                        }
+                    },
+                    error: function (errormessage) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: result.toString(),
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                    }
+                });
+            },
+            error: function (err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: result.toString(),
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        });
+    }
+    function UploadKeKonseptor() {
+        var InputID = '@ViewBag.ID';
+        var fileUpload = $("#FileTelaah").get(0);
+        var files = fileUpload.files;
+
+        // Create FormData object  
+        var fileData = new FormData();
+
+        // Looping over all files and add it to FormData object  
+        for (var i = 0; i < files.length; i++) {
+            fileData.append(files[i].name, files[i]);
+        }
+        $.ajax({
+            url: '/Telaah/UploadFiles',
+            type: "POST",
+            contentType: false, // Not to set any content header  
+            processData: false, // Not to process data  
+            data: fileData,
+            success: function (result) {
+                var dpObj = {
+                    ID: $('#ID').val(),
+                    NIP: $('#NIPx').val(),
+                    FileTelaah: result
+                };
+                $.ajax({
+                    url: "/Telaah/ProsesKeKonseptor",
+                    data: JSON.stringify(dpObj),
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.toString() == "Success") {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Proses berhasil !',
+                                showConfirmButton: false,
+                                timer: 3000
+                            })
+                            window.location.href = '@Url.Action("Details2", "Telaah")?ID=' + $("#ID").val();
+                        }
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: result.toString(),
+                                showConfirmButton: false,
+                                timer: 3000
+                            })
+                        }
+                    },
+                    error: function (errormessage) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: result.toString(),
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                    }
+                });
+            },
+            error: function (err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: result.toString(),
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        });
+    }
+</script>

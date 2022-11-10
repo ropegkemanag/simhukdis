@@ -38,9 +38,9 @@
             <div class="col-md-3">
                 <button type="button" class="btn btn-primary" id="GridLoad">Cari</button>
             </div>
-            <div class="col-md-3">
+            @*<div class="col-md-3">
                 <button type="button" class="btn btn-primary" id="GridLoad">Cari</button>
-            </div>
+            </div>*@
         </div>
 
     </form>
@@ -57,7 +57,9 @@
                 <a class="dropdown-item" href="@Url.Action("Create", "SuratMasuk")">Indisipliner</a>
                 <a class="dropdown-item" href="@Url.Action("CreateTindakPidana", "SuratMasuk")">Tindak Pidana</a>
             </div>
+            <a type="button" class="btn btn-primary" href="@Url.Action("CreateSPTJM", "SuratMasuk")">Buat SPTJM</a>
         </div>
+        
     </div>
     <div class="pb-20">
         <table class="table hover data-table-export">

@@ -6,9 +6,9 @@
 }
 
 <div class="pd-20 card-box mb-30">
-    <p style="text-align:right;">
+    @*<p style="text-align:right;">
         <button id="DownloadWord" type="button" class="btn btn-primary">Download Detail</button>
-    </p>
+    </p>*@
 
     <form>
         <div class="form-group row" style="display:none;">
@@ -135,7 +135,39 @@
                     </text>
                 </div>
             </div>
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranLHP)</label>
+                </div>
+                <div class="col">
+                    <text class="form-control" id="LampiranSurat5" disabled>
+                        @if (Model.LampiranLHP == "" || Model.LampiranLHP == null)
+                        {
+                        }
+                        else
+                        {
+                            @Html.ActionLink(Model.LampiranLHP, "DownloadFile8", new { fileName = Model.LampiranLHP })
+                        }
+                    </text>
+                </div>
+            </div>
 
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSPTJM)</label>
+                </div>
+                <div class="col">
+                    <text class="form-control" id="LampiranSurat5" disabled>
+                        @if (Model.LampiranSPTJM == "" || Model.LampiranSPTJM == null)
+                        {
+                        }
+                        else
+                        {
+                            @Html.ActionLink(Model.LampiranSPTJM, "DownloadFile9", new { fileName = Model.LampiranSPTJM })
+                        }
+                    </text>
+                </div>
+            </div>
             <div class="form-group row">
                 <div class="col-md-3">
                     <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat5)</label>
@@ -152,6 +184,8 @@
                     </text>
                 </div>
             </div>
+
+
 
         }
         @if (Model.UsulStatus == "2")

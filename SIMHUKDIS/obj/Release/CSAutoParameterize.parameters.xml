@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <parameters>
-  <parameter name="DBCS-Web.config Connection String" description="DBCS Connection String used in web.config by the application to access the database." defaultValue="Data Source=ROPEG-KEMENAG;Initial Catalog=SIMHUKDIS;User ID=sa;Password=ropeg123;Integrated Security=True;Trusted_Connection=True;" tags="SqlConnectionString">
+  <parameter name="DBCS-Web.config Connection String" description="DBCS Connection String used in web.config by the application to access the database." defaultValue="Data Source=10.1.7.82;Initial Catalog=SIMHUKDIS;User ID=sa;Password=P@ssw0rd1;Integrated Security=True;Trusted_Connection=True;" tags="SqlConnectionString">
     <parameterEntry kind="XmlFile" scope="E:\\simhukdis\\SIMHUKDIS\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DBCS']/@connectionString" />
   </parameter>
 </parameters>

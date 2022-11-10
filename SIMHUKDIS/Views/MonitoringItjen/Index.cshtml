@@ -8,14 +8,14 @@
 <!-- DataTales Example -->
 <div class="card-box mb-30">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Monitoring</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Monitoring Inspektorat Jenderal</h6>
     </div>
     @Html.ValidationSummary(true)
     <div class="card-body">
 
         <div style="height: 15px"></div>
-        <div class="table-responsive">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" style="font-size:10pt;">
+        <div class="pb-20">
+            <table class="table hover data-table-export">
                 <thead class="table table-primary">
                     <tr>
 
@@ -29,14 +29,14 @@
                             Surat Masuk
                         </th>
                         @*<th style="white-space: nowrap; text-align: center;">
-                            Disposisi Kepala Biro
-                        </th>
-                        <th style="white-space: nowrap; text-align: center;">
-                            Disposisi Koordinator
-                        </th>
-                        <th style="white-space: nowrap; text-align: center;">
-                            Disposisi Sub Koordinator
-                        </th>*@
+                        Disposisi Kepala Biro
+                    </th>
+                    <th style="white-space: nowrap; text-align: center;">
+                        Disposisi Koordinator
+                    </th>
+                    <th style="white-space: nowrap; text-align: center;">
+                        Disposisi Sub Koordinator
+                    </th>*@
                         <th style="white-space: nowrap; text-align: center;">
                             Telaah
                         </th>
@@ -62,38 +62,38 @@
                         {
                             <tr class="table-bordered table-hover my-3">
                                 <td>
-                                    @r.NoSurat
+                                     @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
                                 </td>
                                 <td>
                                     @r.Perihal
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
 
-                                @*<td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                @*<td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>*@
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>*@
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                             </tr>
                         }
@@ -101,42 +101,42 @@
                         {
                             <tr class="table-bordered table-hover my-3">
                                 <td>
-                                    @r.NoSurat
+                                     @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
                                 </td>
                                 <td>
                                     @r.Perihal
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy bi bi-check2-all"></i>
+                                    <br /><label></label>
                                     @r.TanggalSurat
                                 </td>
 
-                                @*<td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate1
+                                @*<td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate1
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>*@
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>*@
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                             </tr>
                         }
@@ -144,42 +144,42 @@
                         {
                             <tr class="table-bordered table-hover my-3">
                                 <td>
-                                    @r.NoSurat
+                                     @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
                                 </td>
                                 <td>
                                     @r.Perihal
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy bi bi-check2-all"></i>
+                                    <br /><label></label>
                                     @r.TanggalSurat
                                 </td>
 
                                 @*<td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate1
+                                <i class="icon-copy bi bi-check2-all"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate1
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>*@
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>*@
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                             </tr>
                         }
@@ -187,44 +187,44 @@
                         {
                             <tr class="table-bordered table-hover my-3">
                                 <td>
-                                    @r.NoSurat
+                                     @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
                                 </td>
                                 <td>
                                     @r.Perihal
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy bi bi-check2-all"></i>
+                                    <br /><label></label>
                                     @r.TanggalSurat
                                 </td>
 
                                 @*<td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate1
+                                <i class="icon-copy bi bi-check2-all"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate1
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;">
+                                <i class="icon-copy bi bi-check2-all"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate2
+                            </td>
+                            <td style="text-align:center;color:red;" class="icon">
+                                <i class="icon-copy dw dw-stop"></i>
+                            </td>*@
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate2
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>*@
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                             </tr>
                         }
@@ -232,46 +232,46 @@
                         {
                             <tr class="table-bordered table-hover my-3">
                                 <td>
-                                    @r.NoSurat
+                                     @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
                                 </td>
                                 <td>
                                     @r.Perihal
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy bi bi-check2-all"></i>
+                                    <br /><label></label>
                                     @r.TanggalSurat
                                 </td>
 
                                 @*<td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate1
+                                <i class="icon-copy bi bi-check2-all"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate1
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;">
+                                <i class="icon-copy bi bi-check2-all"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate2
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;">
+                                <i class="icon-copy bi bi-check2-all"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate3
+                            </td>*@
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate2
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate3
-                                </td>*@
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                             </tr>
                         }
@@ -279,48 +279,48 @@
                         {
                             <tr class="table-bordered table-hover my-3">
                                 <td>
-                                    @r.NoSurat
+                                     @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
                                 </td>
                                 <td>
                                     @r.Perihal
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy bi bi-check2-all"></i>
+                                    <br /><label></label>
                                     @r.TanggalSurat
                                 </td>
 
                                 @*<td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate1
-                                </td>
+                                <i class="icon-copy bi bi-check2-all"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate1
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;">
+                                <i class="icon-copy bi bi-check2-all"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate2
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;">
+                                <i class="icon-copy bi bi-check2-all"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate3
+                            </td>*@
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate2
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate3
-                                </td>*@
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy bi bi-check2-all"></i>
+                                    <br /><label></label>
                                     @r.Tanggal_Telaah
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                             </tr>
                         }
@@ -328,50 +328,50 @@
                         {
                             <tr class="table-bordered table-hover my-3">
                                 <td>
-                                    @r.NoSurat
+                                     @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
                                 </td>
                                 <td>
                                     @r.Perihal
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy bi bi-check2-all"></i>
+                                    <br /><label></label>
                                     @r.TanggalSurat
                                 </td>
 
                                 @*<td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate1
-                                </td>
+                                <i class="icon-copy bi bi-check2-all"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate1
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;">
+                                <i class="icon-copy bi bi-check2-all"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate2
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;">
+                                <i class="icon-copy bi bi-check2-all"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate3
+                            </td>*@
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate2
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate3
-                                </td>*@
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy bi bi-check2-all"></i>
+                                    <br /><label></label>
                                     @r.Tanggal_Telaah
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy bi bi-check2-all"></i>
+                                    <br /><label></label>
                                     @r.Tanggal_PraDPK
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                             </tr>
                         }
@@ -379,52 +379,52 @@
                         {
                             <tr class="table-bordered table-hover my-3">
                                 <td>
-                                    @r.NoSurat
+                                     @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
                                 </td>
                                 <td>
                                     @r.Perihal
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy bi bi-check2-all"></i>
+                                    <br /><label></label>
                                     @r.TanggalSurat
                                 </td>
 
                                 @*<td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate1
-                                </td>
+                                <i class="icon-copy bi bi-check2-all"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate1
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;">
+                                <i class="icon-copy bi bi-check2-all"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate2
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;">
+                                <i class="icon-copy bi bi-check2-all"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate3
+                            </td>*@
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate2
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate3
-                                </td>*@
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy bi bi-check2-all"></i>
+                                    <br /><label></label>
                                     @r.Tanggal_Telaah
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy bi bi-check2-all"></i>
+                                    <br /><label></label>
                                     @r.Tanggal_PraDPK
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy bi bi-check2-all"></i>
+                                    <br /><label></label>
                                     @r.Tanggal_DPK
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                             </tr>
                         }
@@ -432,52 +432,52 @@
                         {
                             <tr class="table-bordered table-hover my-3">
                                 <td>
-                                    @r.NoSurat
+                                     @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
                                 </td>
                                 <td>
                                     @r.Perihal
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy bi bi-check2-all"></i>
+                                    <br /><label></label>
                                     @r.TanggalSurat
                                 </td>
 
                                 @*<td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate1
-                                </td>
+                                <i class="icon-copy bi bi-check2-all"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate1
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;">
+                                <i class="icon-copy bi bi-check2-all"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate2
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;">
+                                <i class="icon-copy bi bi-check2-all"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate3
+                            </td>*@
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate2
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate3
-                                </td>*@
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy bi bi-check2-all"></i>
+                                    <br /><label></label>
                                     @r.Tanggal_Telaah
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy bi bi-check2-all"></i>
+                                    <br /><label></label>
                                     @r.Tanggal_PraDPK
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy bi bi-check2-all"></i>
+                                    <br /><label></label>
                                     @r.Tanggal_DPK
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
+                                    <i class="icon-copy bi bi-check2-all"></i>
                                 </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="fas fa-minus-circle"></i>
+                                <td style="text-align:center;color:red;" class="icon">
+                                    <i class="icon-copy dw dw-stop"></i>
                                 </td>
                             </tr>
                         }
@@ -485,52 +485,52 @@
                         {
                             <tr class="table-bordered table-hover my-3">
                                 <td>
-                                    @r.NoSurat
+                                     @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
                                 </td>
                                 <td>
                                     @r.Perihal
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy bi bi-check2-all"></i>
+                                    <br /><label></label>
                                     @r.TanggalSurat
                                 </td>
 
                                 @*<td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate1
-                                </td>
+                                <i class="icon-copy bi bi-check2-all"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate1
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;">
+                                <i class="icon-copy bi bi-check2-all"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate2
+                            </td>
+                            <td style="text-align:center;color:mediumspringgreen;">
+                                <i class="icon-copy bi bi-check2-all"></i>
+                                <br /><label></label>
+                                @r.DisposisiDate3
+                            </td>*@
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate2
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
-                                    @r.DisposisiDate3
-                                </td>*@
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy bi bi-check2-all"></i>
+                                    <br /><label></label>
                                     @r.Tanggal_Telaah
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy bi bi-check2-all"></i>
+                                    <br /><label></label>
                                     @r.Tanggal_PraDPK
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
-                                    <br /><label style="margin-top:100PX;"></label>
+                                    <i class="icon-copy bi bi-check2-all"></i>
+                                    <br /><label></label>
                                     @r.Tanggal_DPK
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
+                                    <i class="icon-copy bi bi-check2-all"></i>
                                 </td>
                                 <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="fas fa-check-circle"></i>
+                                    <i class="icon-copy bi bi-check2-all"></i>
                                 </td>
                             </tr>
                         }

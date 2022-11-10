@@ -65,5 +65,6 @@ namespace SIMHUKDIS.Models
         public string NSM { get; set; }
         public string NPSN { get; set; }
         public string STATUS_PEGAWAI { get; set; }
+        public string KETERANGAN { get; set; }
     }
 }

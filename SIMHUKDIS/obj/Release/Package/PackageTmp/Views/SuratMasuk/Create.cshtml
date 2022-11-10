@@ -7,98 +7,113 @@
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <form>
-            <div class="form-group row">
-                <div class="col">
-                    <label class="control-label ">No. Surat *</label>
-                    @Html.TextBox("NoSurat", "", new { @id = "NoSurat", @class = "form-control", required = "required" })
-                    @Html.ValidationMessage("NoSurat", "", new { @class = "text-danger" })
-                </div>
+    <form>
+        <div class="form-group row">
+            <div class="col">
+                <label class="control-label ">A. No. Surat *</label>
+                @Html.TextBox("NoSurat", "", new { @id = "NoSurat", @class = "form-control", required = "required" })
+                @Html.ValidationMessage("NoSurat", "", new { @class = "text-danger" })
             </div>
-            <div class="form-group row">
-                <div class="col-sm-6 mb-3 mb-sm-0">
-                    <label class="control-label ">Asal Surat *</label>
-                    @Html.TextBox("AsalSurat", "", new { @id = "AsalSurat", @class = "form-control", required = "required" })
-                    @Html.ValidationMessage("AsalSurat", "", new { @class = "text-danger" })
-                </div>
-                <div class="col-sm-6">
-                    <label class="control-label ">Tanggal Surat *</label>
-                    @Html.TextBoxFor(model => model.TanggalSurat, "{0:dd MM yyyy}", new { @type = "text", @id = "TanggalSurat", @class = "form-control date-picker", required = "required" })
-                    @Html.ValidationMessageFor(model => model.TanggalSurat, "", new { @class = "text-danger" })
-                </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-sm-6 mb-3 mb-sm-0">
+                <label class="control-label ">B. Asal Surat *</label>
+                @Html.TextBox("AsalSurat", "", new { @id = "AsalSurat", @class = "form-control", required = "required" })
+                @Html.ValidationMessage("AsalSurat", "", new { @class = "text-danger" })
             </div>
-            <div class="form-group row">
-                <div class="col">
-                    <label class="control-label ">Perihal *</label>
-                    @Html.TextArea("perihal", "", new { @id = "perihal", @class = "form-control", required = "required" })
-                    @Html.ValidationMessageFor(model => model.perihal, "", new { @class = "text-danger" })
-                </div>
+            <div class="col-sm-6">
+                <label class="control-label ">C. Tanggal Surat *</label>
+                @Html.TextBoxFor(model => model.TanggalSurat, "{0:dd MM yyyy}", new { @type = "text", @id = "TanggalSurat", @class = "form-control date-picker", required = "required" })
+                @Html.ValidationMessageFor(model => model.TanggalSurat, "", new { @class = "text-danger" })
             </div>
-            <div class="form-group row">
-                <div class="col">
-                    <label class="control-label ">Satuan Kerja *</label>
-                    @Html.DropDownListFor(model => model.KODE_SATUAN_KERJA, ViewBag.Satker as SelectList, new { @class = "custom-select2 form-control", required = "required", @id = "KODE_SATUAN_KERJA", @onchange = "GetUnit()" })
-                    @*@Html.TextBox("Satker", "", new { @id = "Satker", @class = "form-control" })
-                        @Html.ValidationMessage("Satker", "", new { @class = "text-danger" })*@
-                </div>
+        </div>
+        <div class="form-group row">
+            <div class="col">
+                <label class="control-label ">D. Perihal *</label>
+                @Html.TextArea("perihal", "", new { @id = "perihal", @class = "form-control", required = "required" })
+                @Html.ValidationMessageFor(model => model.perihal, "", new { @class = "text-danger" })
             </div>
-            <div class="form-group row">
-                <div class="col">
-                    <label class="control-label ">Unit Kerja *</label>
-                    @Html.DropDownListFor(model => model.Kode_Unit_Kerja, new SelectList(string.Empty, "Value", "Text"), "", new { @id = "Kode_Unit_Kerja", @class = "custom-select2 form-control" })
-                    @* @Html.DropDownListFor(model => model.Unit_Kerja, ViewBag.Unit_Kerja as SelectList, new { @class = "fstdropdown-select form-control", required = "required", @id = "Unit_Kerja" })*@
-                </div>
+        </div>
+        <div class="form-group row">
+            <div class="col">
+                <label class="control-label ">E. Satuan Kerja *</label>
+                @Html.DropDownListFor(model => model.KODE_SATUAN_KERJA, ViewBag.Satker as SelectList, new { @class = "custom-select2 form-control", required = "required", @id = "KODE_SATUAN_KERJA", @onchange = "GetUnit()" })
+                @*@Html.TextBox("Satker", "", new { @id = "Satker", @class = "form-control" })
+                @Html.ValidationMessage("Satker", "", new { @class = "text-danger" })*@
             </div>
-            <div class="form-group row" style="display:none;">
-                <div class="col">
-                    <label class="control-label ">Status *</label>
-                    @Html.TextArea("UsulStatus", "1", new { @id = "UsulStatus", @class = "form-control", required = "required" })
+        </div>
+        <div class="form-group row">
+            <div class="col">
+                <label class="control-label ">F. Unit Kerja *</label>
+                @Html.DropDownListFor(model => model.Kode_Unit_Kerja, new SelectList(string.Empty, "Value", "Text"), "", new { @id = "Kode_Unit_Kerja", @class = "custom-select2 form-control" })
+                @* @Html.DropDownListFor(model => model.Unit_Kerja, ViewBag.Unit_Kerja as SelectList, new { @class = "fstdropdown-select form-control", required = "required", @id = "Unit_Kerja" })*@
+            </div>
+        </div>
+        <div class="form-group row" style="display:none;">
+            <div class="col">
+                <label class="control-label ">Status *</label>
+                @Html.TextArea("UsulStatus", "1", new { @id = "UsulStatus", @class = "form-control", required = "required" })
 
-                </div>
             </div>
-            <div class="form-group row" id="LampiranSP">
-                <div class="col">
-                    <label class="control-label ">Lampiran Surat Pengantar *</label>
-                    @Html.TextBoxFor(model => model.LampiranSurat1, "", new { @type = "file", @id = "LampiranSurat1", @class = "form-control", accept = "application/pdf", required = "required" })
-                    @Html.ValidationMessageFor(model => model.LampiranSurat1, "Max : 1MB & Format File : PDF", new { @class = "text-danger" })
-                </div>
+        </div>
+        <div class="form-group row" id="LampiranSP">
+            <div class="col">
+                <label class="control-label ">G. Lampiran Surat Pengantar *</label>
+                @Html.TextBoxFor(model => model.LampiranSurat1, "", new { @type = "file", @id = "LampiranSurat1", @class = "form-control", accept = "application/pdf", required = "required" })
+                @Html.ValidationMessageFor(model => model.LampiranSurat1, "Max : 1MB & Format File : PDF", new { @class = "text-danger" })
             </div>
-            <div class="form-group row" id="LampiranBAP">
-                <div class="col">
-                    <label class="control-label" id="DokBAP">Lampiran BAP *</label>
-                    @Html.TextBoxFor(model => model.LampiranSurat2, "", new { @type = "file", @id = "LampiranSurat2", @class = "form-control", accept = "application/pdf" })
-                    @Html.ValidationMessageFor(model => model.LampiranSurat2, "Max : 5MB & Format File : PDF", new { @class = "text-danger" })
-                </div>
+        </div>
+        <div class="form-group row" id="LampiranBAP">
+            <div class="col">
+                <label class="control-label" id="DokBAP">H. Lampiran BAP *</label>
+                @Html.TextBoxFor(model => model.LampiranSurat2, "", new { @type = "file", @id = "LampiranSurat2", @class = "form-control", accept = "application/pdf" })
+                @Html.ValidationMessageFor(model => model.LampiranSurat2, "Max : 5MB & Format File : PDF", new { @class = "text-danger" })
             </div>
-            <div class="form-group row" id="LampiranSTP">
-                <div class="col">
-                    <label class="control-label ">Lampiran Surat Tugas Pemeriksaan *</label>
-                    @Html.TextBox("LampiranSurat3", "", new { @type = "file", @id = "LampiranSurat3", @class = "form-control", accept = "application/pdf" })
-                    @Html.ValidationMessageFor(model => model.LampiranSurat3, "Max : 5MB & Format File : PDF", new { @class = "text-danger" })
-                </div>
+        </div>
+        <div class="form-group row" id="LampiranSTP">
+            <div class="col">
+                <label class="control-label ">I. Lampiran Surat Tugas Pemeriksaan *</label>
+                @Html.TextBox("LampiranSurat3", "", new { @type = "file", @id = "LampiranSurat3", @class = "form-control", accept = "application/pdf" })
+                @Html.ValidationMessageFor(model => model.LampiranSurat3, "Max : 5MB & Format File : PDF", new { @class = "text-danger" })
             </div>
-            <div class="form-group row" id="LampiranSPanggilan">
-                <div class="col">
-                    <label class="control-label ">Lampiran Surat Panggilan *</label>
-                    @*<input type="file" name="LampiranSurat4" class="form-control" id="LampiranSurat4"/>*@
-                    @Html.TextBox("LampiranSurat4", "", new { @type = "file", @id = "LampiranSurat4", @class = "form-control", accept = "application/pdf" })
-                    @Html.ValidationMessageFor(model => model.LampiranSurat4, "Max : 5MB & Format File : PDF", new { @class = "text-danger" })
-                </div>
+        </div>
+        <div class="form-group row" id="LampiranSPanggilan">
+            <div class="col">
+                <label class="control-label ">J. Lampiran Surat Panggilan *</label>
+                @*<input type="file" name="LampiranSurat4" class="form-control" id="LampiranSurat4"/>*@
+                @Html.TextBox("LampiranSurat4", "", new { @type = "file", @id = "LampiranSurat4", @class = "form-control", accept = "application/pdf" })
+                @Html.ValidationMessageFor(model => model.LampiranSurat4, "Max : 5MB & Format File : PDF", new { @class = "text-danger" })
             </div>
-            <div class="form-group row" id="Lainnya">
-                <div class="col">
-                    <label class="control-label " id="DokLainnya">Lampiran Dokumen Pendukung Lainnya</label>
-                    @Html.TextBox("LampiranSurat5", "", new { @type = "file", @id = "LampiranSurat5", @class = "form-control", accept = "application/pdf" })
-                    @Html.ValidationMessageFor(model => model.LampiranSurat5, "Max : 5MB & Format File : PDF", new { @class = "text-danger" })
-                </div>
+        </div>
+        <div class="form-group row" id="LHP">
+            <div class="col">
+                <label class="control-label " id="DokLainnya">K. Lampiran Laporan Hasil Pemeriksaan *</label>
+                @Html.TextBox("LampiranLHP", "", new { @type = "file", @id = "LampiranLHP", @class = "form-control", accept = "application/pdf" })
+                @Html.ValidationMessageFor(model => model.LampiranLHP, "Max : 5MB & Format File : PDF", new { @class = "text-danger" })
             </div>
-            <div class="form-group row">
-                <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Simpan" class="btn btn-primary" style="width:100px;" />
-                    @*<button type="button" id="InsertData" class="btn btn-success" style="background-color:teal;"></button> | @Html.ActionLink("Back to List", "Index")*@
-                </div>
+        </div>
+        <div class="form-group row" id="SPTMJ">
+            <div class="col">
+                <label class="control-label " id="DokLainnya">L. Lampiran Surat Tanggung Jawab Mutlak *</label>
+                @Html.TextBox("LampiranSPTJM", "", new { @type = "file", @id = "LampiranSPTJM", @class = "form-control", accept = "application/pdf" })
+                @Html.ValidationMessageFor(model => model.LampiranLHP, "Max : 1MB & Format File : PDF", new { @class = "text-danger" })
             </div>
-        </form>
+        </div>
+        <div class="form-group row" id="Lainnya">
+            <div class="col">
+                <label class="control-label " id="DokLainnya">M. Lampiran Dokumen Pendukung Lainnya</label>
+                @Html.TextBox("LampiranSurat5", "", new { @type = "file", @id = "LampiranSurat5", @class = "form-control", accept = "application/pdf" })
+                @Html.ValidationMessageFor(model => model.LampiranSurat5, "Max : 5MB & Format File : PDF", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Simpan" class="btn btn-primary" style="width:100px;" />
+                @*<button type="button" id="InsertData" class="btn btn-success" style="background-color:teal;"></button> | @Html.ActionLink("Back to List", "Index")*@
+            </div>
+        </div>
+    </form>
     }
 </div>
 <script src="~/Scripts/jquery-3.6.0.min.js"></script>
@@ -109,18 +124,27 @@
         $('#AsalSurat').val(SatkerName);
         $('#KODE_SATUAN_KERJA').val(SatuanKerja);
         GetUnit(SatuanKerja);
-        $(function () {
-            $("#TanggalSurat").datepicker({
-                setDate: new Date(),
-                format: 'dd-mm-yyyy',
-                autoclose: true,
-                calendarWeeks: true,
-                clearBtn: true,
-                disableTouchKeyboard: true
-            })
-        });
-
     });
+    $('#LampiranSPTJM').on('change', function () {
+        for (var i = 0; i < $(this).get(0).files.length; ++i) {
+            var file1 = $(this).get(0).files[i].size;
+            if (file1) {
+                var file_size = $(this).get(0).files[i].size;
+                if (file_size > 1000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "Lampiran Surat Pernyataan Tanggung Jawab Mutlak File lebih dari 1MB!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $('#LampiranSPTJM').val('');
+                } else {
+
+                }
+            }
+        }
+    });
+    
     $('#LampiranSurat1').on('change', function () {
         for (var i = 0; i < $(this).get(0).files.length; ++i) {
             var file1 = $(this).get(0).files[i].size;
@@ -216,7 +240,7 @@
             }
         }
     });
-    $('#LampiranSurat_LHA').on('change', function () {
+    $('#LampiranSurat_LHP').on('change', function () {
         for (var i = 0; i < $(this).get(0).files.length; ++i) {
             var file1 = $(this).get(0).files[i].size;
             if (file1) {
@@ -224,11 +248,11 @@
                 if (file_size > 5000000) {
                     Swal.fire({
                         icon: 'error',
-                        title: "File upload size is larger than 5MB!",
+                        title: "Lampiran LHP File upload size is larger than 5MB!",
                         showConfirmButton: false,
                         timer: 3000
                     })
-                    $('#LampiranSurat_LHA').val('');
+                    $('#LampiranSurat_LHP').val('');
                 } else {
 
                 }

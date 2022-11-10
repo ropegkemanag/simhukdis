@@ -37,6 +37,8 @@ namespace SIMHUKDIS.Models
         public string Tanggal_Telaah { get; set; }
         public string Karopeg { get; set; }
         public string NIP_Karopeg { get; set; }
+        public string Konseptor { get; set; }
+        public string Proses { get; set; }
     }
 
     public class suratmasuk
@@ -192,6 +194,7 @@ namespace SIMHUKDIS.Models
                 return SuratMasuks;
             }
         }
+
         public List<clsTelaah> ListAll(int ID)
         {
             List<clsTelaah> lst = new List<clsTelaah>();
@@ -219,6 +222,38 @@ namespace SIMHUKDIS.Models
                     data.SATUAN_KERJA = rd["Satker"].ToString();
                     data.Status = "Telaah";
                     data.StatusProses = rd["StatusProses"].ToString();
+                    lst.Add(data);
+                }
+            }
+            return lst;
+        }
+        public List<clsTelaah> ListAtasan()
+        {
+            List<clsTelaah> lst = new List<clsTelaah>();
+            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                con.Open();
+                SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Telaah_Atasan_Sel", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                SqlDataReader rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    clsTelaah data = new clsTelaah();
+                    data.ID = Convert.ToInt32(rd["id"].ToString());
+                    data.NIP = rd["NIP"].ToString();
+                    data.NAMA_LENGKAP = rd["Fullname"].ToString();
+                    data.DasarBukti = rd["Dasar_dan_Bukti_Penunjang"].ToString();
+                    data.PelanggaranDisiplin = rd["Pelanggaran"].ToString();
+                    data.PasalPelanggaran = rd["Pasal_Pelanggaran"].ToString();
+                    data.RekomendasiHukdis = rd["Rekomendasi_Hukuman"].ToString();
+                    data.AnalisaPertimbangan = rd["Analisa_dan_Pertimbangan"].ToString();
+                    data.KeputusanSidangDPK = rd["Keputusan_Sidang_DPK"].ToString();
+                    data.FileTelaah = rd["FileTelaah"].ToString();
+                    data.SATUAN_KERJA = rd["Satker"].ToString();
+                    data.Status = "Telaah";
+                    data.StatusProses = rd["StatusProses"].ToString();
+                    data.Konseptor = rd["Konseptor"].ToString();
                     lst.Add(data);
                 }
             }
@@ -353,6 +388,7 @@ namespace SIMHUKDIS.Models
                 cmd.Parameters.AddWithValue("iNIP", t.NIP);
                 cmd.Parameters.AddWithValue("iCreated_User", t.CreatedUser);
                 cmd.Parameters.AddWithValue("iFileTelaah", t.FileTelaah);
+                cmd.Parameters.AddWithValue("Proses", t.Proses);
                 con.Open();
                 i = cmd.ExecuteNonQuery();
             }

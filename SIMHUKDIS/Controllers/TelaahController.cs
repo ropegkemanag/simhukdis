@@ -10,7 +10,6 @@ using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
 using SIMHUKDIS.Models;
-using SIMHUKDIS.Models;
 using Spire.Doc;
 
 namespace SIMHUKDIS.Controllers
@@ -153,6 +152,34 @@ namespace SIMHUKDIS.Controllers
             }
         }
         [HttpGet]
+        public ActionResult DetailAtasan()
+        {
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            try
+            {
+                string userlogin = Session["Fullname"].ToString();
+                string UserID = Session["UserID"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+                clsTelaahDB x = new clsTelaahDB();
+                List<clsTelaah> telaah = x.ListAtasan().ToList();
+                return View(telaah);
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
+                //return RedirectToAction("Error500", "Home");
+            }
+        }
+        [HttpGet]
         public ActionResult Edit(int ID, string NIP)
         {
             if (Session["Fullname"] == null)
@@ -255,6 +282,7 @@ namespace SIMHUKDIS.Controllers
                 telaah.CreatedUser = UserLogin;
                 telaah.ID = ID;
                 telaah.NIP = NIP;
+                telaah.Proses = "1";
                 if (FileTelaah == null)
                 {
                     telaah.FileTelaah = "";
@@ -335,6 +363,171 @@ namespace SIMHUKDIS.Controllers
             else
             {
                 return Json("No files selected.");
+            }
+        }
+        [HttpPost]
+        public ActionResult ProsesKeKonseptor(int ID, string NIP, string FileTelaah)
+        {
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            string strMsg;
+            try
+            {
+                string userlogin = Session["Fullname"].ToString();
+                string UserID = Session["UserID"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+                ViewBag.UserID = userlogin;
+
+                string FilePath = "";
+                string FileExt = "";
+                string GetDateTime = "";
+                string Ext = "";
+                string FileNameWithoutExtension = "";
+                string a;
+                GetDateTime = DateTime.Now.ToString("ddMMyyyy_hhmmss");
+
+                clsTelaah telaah = new clsTelaah();
+                string UserLogin = Session["Fullname"].ToString();
+                telaah.CreatedUser = UserLogin;
+                telaah.ID = ID;
+                telaah.NIP = NIP;
+                telaah.Proses = "0";
+                if (FileTelaah == null)
+                {
+                    telaah.FileTelaah = "";
+                }
+                else
+                {
+                    telaah.FileTelaah = FileTelaah;
+                }
+
+                clsTelaahDB db = new clsTelaahDB();
+                //db.Update(telaah);
+                db.UpdateStatus(ID, NIP, UserLogin);
+                db.UpdateTelaahStatus(telaah);
+                strMsg = "Success";
+                return Json(strMsg, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                strMsg = Error_Message;
+                return Json(strMsg, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpPost]
+        public ActionResult ProsesKeAtasan(int ID, string NIP, string FileTelaah)
+        {
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            string strMsg;
+            try
+            {
+                string userlogin = Session["Fullname"].ToString();
+                string UserID = Session["UserID"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+                ViewBag.UserID = userlogin;
+
+                string FilePath = "";
+                string FileExt = "";
+                string GetDateTime = "";
+                string Ext = "";
+                string FileNameWithoutExtension = "";
+                string a;
+                GetDateTime = DateTime.Now.ToString("ddMMyyyy_hhmmss");
+
+                clsTelaah telaah = new clsTelaah();
+                string UserLogin = Session["Fullname"].ToString();
+                telaah.CreatedUser = UserLogin;
+                telaah.ID = ID;
+                telaah.NIP = NIP;
+                telaah.Proses = "2";
+                if (FileTelaah == null)
+                {
+                    telaah.FileTelaah = "";
+                }
+                else
+                {
+                    telaah.FileTelaah = FileTelaah;
+                }
+
+                clsTelaahDB db = new clsTelaahDB();
+                //db.Update(telaah);
+                db.UpdateStatus(ID, NIP, UserLogin);
+                db.UpdateTelaahStatus(telaah);
+                strMsg = "Success";
+                return Json(strMsg, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                strMsg = Error_Message;
+                return Json(strMsg, JsonRequestBehavior.AllowGet);
+            }
+        }
+        [HttpPost]
+        public ActionResult PraDPK(int ID, string NIP, string FileTelaah)
+        {
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            string strMsg;
+            try
+            {
+                string userlogin = Session["Fullname"].ToString();
+                string UserID = Session["UserID"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+                ViewBag.UserID = userlogin;
+                string GetDateTime = "";
+                GetDateTime = DateTime.Now.ToString("ddMMyyyy_hhmmss");
+
+                clsTelaah telaah = new clsTelaah();
+                string UserLogin = Session["Fullname"].ToString();
+                telaah.CreatedUser = UserLogin;
+                telaah.ID = ID;
+                telaah.NIP = NIP;
+                telaah.Proses = "3";
+                if (FileTelaah == null)
+                {
+                    telaah.FileTelaah = "";
+                }
+                else
+                {
+                    telaah.FileTelaah = FileTelaah;
+                }
+
+                clsTelaahDB db = new clsTelaahDB();
+                //db.Update(telaah);
+                db.UpdateStatus(ID, NIP, UserLogin);
+                db.UpdateTelaahStatus(telaah);
+                strMsg = "Success";
+                return Json(strMsg, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                strMsg = Error_Message;
+                return Json(strMsg, JsonRequestBehavior.AllowGet);
             }
         }
 
@@ -507,7 +700,8 @@ namespace SIMHUKDIS.Controllers
         {
             string filepath = HttpContext.Request.PhysicalApplicationPath;
             string strTemplate = filepath + "Files/Template/Template_Telaah.docx";
-            string OutputPath = filepath + "Files/Result/Telaah/";
+            string OutputPath1 = filepath + "Files/Result/Telaah/";
+            string OutputPath2 = filepath + "Files/Upload/Telaah/";
             string GetDateTime = DateTime.Now.ToString("ddMMyyyy_hhmmss");
             string strFileNameDoc = "Telaah_" + NIP + "_" + GetDateTime + ".docx";
             string strFileNamePDF = "Telaah_" + NIP + "_" + GetDateTime + ".pdf";
@@ -527,7 +721,7 @@ namespace SIMHUKDIS.Controllers
                 ViewBag.SatuanKerja = SatuanKerja;
                 ViewBag.UserGroup = UserGroup;
                 ViewBag.UserID = userlogin;
-                ViewBag.NIP = NIP;
+                
                 string UserLogin = Session["Fullname"].ToString();
 
                 clsTelaah telaah = new clsTelaah();
@@ -569,10 +763,12 @@ namespace SIMHUKDIS.Controllers
                 {
                     doc.Replace(kvp.Key, kvp.Value, true, true);
                 }
-                //Save doc file.
-                doc.SaveToFile(OutputPath + strFileNameDoc, FileFormat.Docx);
-                //Convert to PDF
-                doc.SaveToFile(OutputPath + strFileNamePDF, FileFormat.PDF);
+                doc.SaveToFile(OutputPath1 + strFileNameDoc, FileFormat.Docx);
+                doc.SaveToFile(OutputPath1 + strFileNamePDF, FileFormat.PDF);
+
+                doc.SaveToFile(OutputPath2 + strFileNameDoc, FileFormat.Docx);
+                doc.SaveToFile(OutputPath2 + strFileNamePDF, FileFormat.PDF);
+
                 //ToViewFile(OutputPath + strFileNameDoc);
                 //ToViewFile(OutputPath + strFileNamePDF);
                 //ViewBag.strFileNameDoc = strFileNameDoc;
@@ -582,6 +778,13 @@ namespace SIMHUKDIS.Controllers
                 a.DocWord = strFileNameDoc;
                 a.Msg = "Success";
 
+                ViewBag.NIP = NIP;
+                ViewBag.ID = ID;
+                ViewBag.DocPDF = strFileNamePDF;
+                ViewBag.DocWord = strFileNameDoc;
+
+
+                strMsg = "Success";
                 return Json(a, JsonRequestBehavior.AllowGet);
             }
             catch (Exception ex)
@@ -590,7 +793,6 @@ namespace SIMHUKDIS.Controllers
                 return Json(strMsg, JsonRequestBehavior.AllowGet);
             }
         }
-
         public FileResult DownloadFile(string fileName)
         {
             try
@@ -610,6 +812,23 @@ namespace SIMHUKDIS.Controllers
                 return null;
             }
 
+        }
+        public FileResult DownloadResultFile(string fileName)
+        {
+            try
+            {
+                //Build the File Path.
+                string path = Server.MapPath("/Files/Upload/Telaah/") + fileName;
+                //Read the File data into Byte Array.
+                byte[] bytes = System.IO.File.ReadAllBytes(path);
+                //Send the File to Download.
+                return File(bytes, "application/octet-stream", fileName);
+            }
+            catch (Exception ex)
+            {
+                string strMsg = ex.Message.ToString();
+                return null;
+            }
         }
         private void ToViewFile(string fileName)
         {
@@ -717,7 +936,7 @@ namespace SIMHUKDIS.Controllers
                     dtl.MASAKERJA_BULAN = strMasaKerja;
                     dtl.TIPE_JABATAN = clsDataPegawai.data.TIPE_JABATAN;
                     dtl.KODE_JABATAN = clsDataPegawai.data.KODE_JABATAN;
-                    dtl.TAMPIL_JABATAN = clsDataPegawai.data.TAMPIL_JABATAN + " " + clsDataPegawai.data.SATUAN_KERJA;
+                    dtl.TAMPIL_JABATAN = clsDataPegawai.data.KETERANGAN;
                     dtl.TMT_JABATAN = clsDataPegawai.data.TMT_JABATAN;
                     dtl.KODE_SATKER_1 = clsDataPegawai.data.KODE_SATKER_1;
                     dtl.SATKER_1 = clsDataPegawai.data.SATKER_1;
