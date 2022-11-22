@@ -49,7 +49,7 @@ namespace SIMHUKDIS.Controllers
                     a.Status = 0;
                     ViewBag.Status = 0;                    
                 }
-                if (DateFrom == null)
+                if (DateFrom == null || DateFrom == "")
                 {
                     ViewBag.DateFrom = Convert.ToDateTime(DateTime.Today).ToString("yyyy-01-01");
                     a.DateFrom = Convert.ToDateTime(DateTime.Today).ToString("yyyy-01-01");
@@ -59,7 +59,7 @@ namespace SIMHUKDIS.Controllers
                     ViewBag.DateFrom = Convert.ToDateTime(DateFrom).ToString("yyyy-MM-dd");
                     a.DateFrom = Convert.ToDateTime(DateFrom).ToString("yyyy-MM-dd");
                 }
-                if (DateTo == null)
+                if (DateTo == null || DateTo == "")
                 {
                     ViewBag.DateTo = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
                     a.DateTo = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd");
