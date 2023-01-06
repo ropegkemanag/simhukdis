@@ -1288,7 +1288,7 @@ table.dataTable > tbody > tr.child ul.dtr-details .dtr-title {
 
 .table thead th {
     font-weight: 600;
-    font-size: 12px;
+    font-size: 15px;
     border-bottom: 0;
     padding-left: 1rem;
 }
@@ -1299,7 +1299,7 @@ table.dataTable > tbody > tr.child ul.dtr-details .dtr-title {
 }
 
 .table td {
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 500;
     padding: 1rem;
 }

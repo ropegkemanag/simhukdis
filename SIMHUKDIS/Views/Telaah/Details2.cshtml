@@ -6,6 +6,7 @@
 <div class="card-box mb-30">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">LAMPIRAN SURAT</h6>
+
     </div>
     <div class="card-body">
         <table class="table table-bordered text-wrap" style="width:100%;">
@@ -266,9 +267,19 @@
         <p style="text-align:right;">
             @foreach (dynamic a in Model.clsSuratMasuk)
             {
-                <button class="btn btn-primary" onclick="location.href = '@Url.Action("Create", "Telaah", new { ID = a.ID })'">
-                    <i class="glyphicon glyphicon-plus"></i>Tambah Pegawai
-                </button>
+                if (@a.RejectStatus == "1")
+                {
+                    <button class="btn btn-primary" onclick="location.href = '@Url.Action("Create", "Telaah", new { ID = a.ID })'" disabled>
+                        <i class="glyphicon glyphicon-plus"></i>Tambah Pegawai
+                    </button>
+                }
+                else
+                {
+                    <button class="btn btn-primary" onclick="location.href = '@Url.Action("Create", "Telaah", new { ID = a.ID })'">
+                        <i class="glyphicon glyphicon-plus"></i>Tambah Pegawai
+                    </button>
+                }
+
                 @*@Html.ActionLink("Buat Telaah", "Create", new { ID = a.ID })*@
             }
         </p>
@@ -428,7 +439,7 @@
                     <div class="form-group row">
                         <div class="col">
                             <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">File Telaah</label>
-                            @Html.TextBox("FileTelaah", "", new { @id = "FileTelaah", @class = "form-control", required = "required", Type = "file" })
+                            @Html.TextBox("FileTelaah1", "", new { @id = "FileTelaah1", @class = "form-control", required = "required", Type = "file" })
                             @Html.ValidationMessage("FileTelaah", "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -456,7 +467,7 @@
     }
     function PraDPK() {
         var InputID = '@ViewBag.ID';
-        var fileUpload = $("#FileTelaah").get(0);
+        var fileUpload = $("#FileTelaah1").get(0);
         var files = fileUpload.files;
 
         // Create FormData object

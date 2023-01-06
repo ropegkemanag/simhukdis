@@ -45,13 +45,13 @@
                 </div>
                 <div class="form-group row">
                     <div class="col">
-                        <label  class="control-label ">Satuan Kerja *</label>
-                        @Html.DropDownList("KODE_SATUAN_KERJA", ViewBag.Satker as SelectList, new { @class = "custom-select2 form-control", required = "required", @id = "KODE_SATUAN_KERJA", @onchange = "Satker()" })
+                        <label  class="control-label ">Satuan Kerja yang di Usulkan*</label>
+                        @Html.DropDownList("KODE_SATUAN_KERJA", ViewBag.Satker as SelectList, new { @class = "custom-select2 form-control", required = "required", @id = "KODE_SATUAN_KERJA", @onchange = "GetUnit()" })
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col">
-                        <label  class="control-label ">Unit Kerja *</label>
+                        <label class="control-label ">Unit Kerja yang di Usulkan*</label>
                         @Html.DropDownList("Kode_Unit_Kerja", ViewBag.Unit_Kerja as SelectList, new { @class = "custom-select2 form-control", @id = "Kode_Unit_Kerja" })
                         @*@Html.DropDownList("Kode_Unit_Kerja", ViewBag.Unit_Kerja as SelectList, new { @class = "form-control", required = "required", @id = "Kode_Unit_Kerja" })*@
                     </div>
@@ -66,7 +66,7 @@
                 <div class="form-group row" id="LHA">
                     <div class="col">
                         <label class="control-label " > Lampiran LHA/STL *</label>
-                        @Html.TextBox("LampiranSurat_LHA", "", new { @type = "file", @id = "LampiranSurat_LHA", @class = "form-control" })
+                        @Html.TextBox("LampiranSurat_LHA", "", new { @type = "file", @id = "LampiranSurat_LHA", @class = "form-control", accept = "application/pdf" })
                         @Html.ValidationMessage("LampiranSurat_LHA", "", new { @class = "text-danger" })
                         @if (Model.LampiranSurat_LHA == "")
                         {
@@ -76,14 +76,14 @@
                             <div style="width:5px;">
                                 <label></label>
                             </div>
-                            @Html.ActionLink(Model.LampiranSurat_LHA, "DownloadFile7", new { fileName = Model.LampiranSurat_LHA, @class = "form-control" })
+                            @Html.ActionLink(Model.LampiranSurat_LHA, "DownloadFile7", new { fileName = Model.LampiranSurat_LHA, @class = "form-control", accept = "application/pdf" })
                         }
                     </div>
                 </div>
                 <div class="form-group row" id="LampiranBAP">
                     <div class="col">
-                        <label class="control-label " >Lampiran BAP</label>
-                        @Html.TextBox("LampiranSurat2", "", new { @type = "file", @id = "LampiranSurat2", @class = "form-control" })
+                        <label class="control-label " >Lampiran BAP *</label>
+                        @Html.TextBox("LampiranSurat2", "", new { @type = "file", @id = "LampiranSurat2", @class = "form-control", accept = "application/pdf" })
                         @Html.ValidationMessage("LampiranSurat2", "", new { @class = "text-danger" })
                         @if (Model.LampiranSurat2 == "")
                         {
@@ -99,8 +99,8 @@
                 </div>
                 <div class="form-group row" id="Lainnya">
                     <div class="col">
-                        <label class="control-label ">Lampiran Dokumen Lainnya</label>
-                        @Html.TextBox("LampiranSurat5", "", new { @type = "file", @id = "LampiranSurat5", @class = "form-control" })
+                        <label class="control-label ">Lampiran Surat Tugas/Dokumen Pendukung Lainnya *</label>
+                        @Html.TextBox("LampiranSurat5", "", new { @type = "file", @id = "LampiranSurat5", @class = "form-control", accept = "application/pdf"})
                         @Html.ValidationMessage("LampiranSurat5", "", new { @class = "text-danger" })
                         @if (Model.LampiranSurat5 == "")
                         {
@@ -130,4 +130,148 @@
 <script type="text/javascript">
     $(document).ready(function () {
     });
+    $('#LampiranSurat1').on('change', function () {
+        for (var i = 0; i < $(this).get(0).files.length; ++i) {
+            var file1 = $(this).get(0).files[i].size;
+            if (file1) {
+                var file_size = $(this).get(0).files[i].size;
+                if (file_size > 1000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "File lebih dari 1MB!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $('#LampiranSurat1').val('');
+                } else {
+
+                }
+            }
+        }
+    });
+    $('#LampiranSurat2').on('change', function () {
+        for (var i = 0; i < $(this).get(0).files.length; ++i) {
+            var file1 = $(this).get(0).files[i].size;
+            if (file1) {
+                var file_size = $(this).get(0).files[i].size;
+                if (file_size > 20000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "File upload size is larger than 20MB!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $('#LampiranSurat2').val('');
+                } else {
+
+                }
+            }
+        }
+    });
+    $('#LampiranSurat3').on('change', function () {
+        for (var i = 0; i < $(this).get(0).files.length; ++i) {
+            var file1 = $(this).get(0).files[i].size;
+            if (file1) {
+                var file_size = $(this).get(0).files[i].size;
+                if (file_size > 5000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "File upload size is larger than 5MB!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $('#LampiranSurat3').val('');
+                } else {
+
+                }
+            }
+        }
+    });
+    $('#LampiranSurat4').on('change', function () {
+        for (var i = 0; i < $(this).get(0).files.length; ++i) {
+            var file1 = $(this).get(0).files[i].size;
+            if (file1) {
+                var file_size = $(this).get(0).files[i].size;
+                if (file_size > 5000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "File upload size is larger than 5MB!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $('#LampiranSurat4').val('');
+                } else {
+
+                }
+            }
+        }
+    });
+    $('#LampiranSurat5').on('change', function () {
+        for (var i = 0; i < $(this).get(0).files.length; ++i) {
+            var file1 = $(this).get(0).files[i].size;
+            if (file1) {
+                var file_size = $(this).get(0).files[i].size;
+                if (file_size > 5000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "File upload size is larger than 5MB!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $('#LampiranSurat5').val('');
+                } else {
+
+                }
+            }
+        }
+    });
+    $('#LampiranSurat_LHA').on('change', function () {
+        for (var i = 0; i < $(this).get(0).files.length; ++i) {
+            var file1 = $(this).get(0).files[i].size;
+            if (file1) {
+                var file_size = $(this).get(0).files[i].size;
+                if (file_size > 50000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "File upload size is larger than 50MB!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $('#LampiranSurat_LHA').val('');
+                } else {
+
+                }
+            }
+        }
+    });
+
+    function GetUnit() {
+        var SatuanKerja = $('#KODE_SATUAN_KERJA').val();
+        $.ajax({
+            type: "GET",
+            url: "/UsulHukdis/GetUnitKerja?",
+            dataType: "json",
+            data: { KodeSatker: SatuanKerja },
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.length > 0) {
+                    $('#Unit_Kerja').empty();
+                    //$("#Unit_Kerja").append('<option value="-1">Pilih Unit Kerja</option>');
+                    for (var i = 0; i < result.length; i++) {
+                        $("#Unit_Kerja").append('<option value="' + result[i].Kode_Unit_Kerja + '" >' + result[i].Unit_Kerja + '</option>');
+                        //options += '<option value="' + result[i].Kode_Unit_Kerja + '">' + result[i].Unit_Kerja + '</option>';
+                    }
+                }
+            },
+            error: function (errormessage) {
+                Swal.fire({
+                    icon: 'error',
+                    title: "Tidak ditemukan",
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        });
+    }
 </script>

@@ -66,5 +66,7 @@ namespace SIMHUKDIS.Models
         public string NPSN { get; set; }
         public string STATUS_PEGAWAI { get; set; }
         public string KETERANGAN { get; set; }
+        public object SATKER_KELOLA { get; set; }
+        public string KODE_GRUP_SATUAN_KERJA { get; set; }
     }
 }

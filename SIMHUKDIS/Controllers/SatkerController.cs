@@ -218,29 +218,30 @@ namespace SIMHUKDIS.Controllers
             }
             return token;
         }
-        public Satker GetMaster(string token)
-        {
+        //public Satker GetMaster(string token)
+        //{
 
-            var client = new HttpClient();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-            HttpResponseMessage resp = client.GetAsync(baseAddress + "master/satker").GetAwaiter().GetResult();
-            if (resp.IsSuccessStatusCode)
-            {
-                Satker Satker = new Satker();
-                var JsonContent = resp.Content.ReadAsStringAsync().Result;
-                Satker = JsonConvert.DeserializeObject<Satker>(JsonContent);
-                foreach (Datum i in Satker.data)
-                {
-                    db.InsertUpdate(i.KODE_SATUAN_KERJA, i.SATUAN_KERJA);
-                }
-                Console.WriteLine(Satker.data[0].KODE_SATUAN_KERJA);
-                return Satker;
-            }
-            else
-            {
-                return null;
-            }
-        }
+        //    var client = new HttpClient();
+        //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        //    client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        //    HttpResponseMessage resp = client.GetAsync(baseAddress + "master/satker").GetAwaiter().GetResult();
+        //    if (resp.IsSuccessStatusCode)
+        //    {
+        //        Satker Satker = new Satker();
+        //        var JsonContent = resp.Content.ReadAsStringAsync().Result;
+        //        Satker = JsonConvert.DeserializeObject<Satker>(JsonContent);
+        //        foreach (Datum i in Satker.data)
+        //        {
+        //            db.InsertUpdate(i.KODE_SATUAN_KERJA, i.SATUAN_KERJA);
+        //        }
+        //        Console.WriteLine(Satker.data[0].KODE_SATUAN_KERJA);
+        //        return Satker;
+        //    }
+        //    else
+        //    {
+        //        return null;
+        //    }
+        //}
+
     }
 }

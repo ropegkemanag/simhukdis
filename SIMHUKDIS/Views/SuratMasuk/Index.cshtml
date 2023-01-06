@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-sm-12 col-md-2 col-form-label">Date</label>
+            <label class="col-sm-12 col-md-2 col-form-label">Tanggal</label>
             <div class="col-md-3">
                 <input class="form-control date-picker" data-date-format="dd-MM-yyyy"
                        placeholder="Select Date"
@@ -56,6 +56,7 @@
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                 <a class="dropdown-item" href="@Url.Action("Create", "SuratMasuk")">Indisipliner</a>
                 <a class="dropdown-item" href="@Url.Action("CreateTindakPidana", "SuratMasuk")">Tindak Pidana</a>
+                @*<a class="dropdown-item" href="@Url.Action("CreatePS", "SuratMasuk")">Tindak Pidana</a>*@
             </div>
             <a type="button" class="btn btn-primary" href="@Url.Action("CreateSPTJM", "SuratMasuk")">Buat SPTJM</a>
         </div>

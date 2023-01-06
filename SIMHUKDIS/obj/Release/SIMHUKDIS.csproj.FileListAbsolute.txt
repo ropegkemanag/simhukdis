@@ -455,3 +455,4 @@ E:\simhukdis\SIMHUKDIS\obj\Release\SIMHUKDIS.csproj.CopyComplete
 E:\simhukdis\SIMHUKDIS\obj\Release\SIMHUKDIS.dll
 E:\simhukdis\SIMHUKDIS\obj\Release\SIMHUKDIS.pdb
 E:\simhukdis\SIMHUKDIS\obj\Release\SIMHUKDIS.csprojAssemblyReference.cache
+E:\simhukdis\SIMHUKDIS\bin\WhatsAppApi.dll

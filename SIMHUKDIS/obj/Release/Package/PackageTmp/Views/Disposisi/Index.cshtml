@@ -13,13 +13,10 @@
                         Aksi
                     </th>
                     @*<th>
-                ID
-            </th>*@
+            ID
+        </th>*@
                     <th>
                         No Surat
-                    </th>
-                    <th>
-                        Asal Surat
                     </th>
                     <th>
                         Tanggal Surat
@@ -29,6 +26,9 @@
                     </th>
                     <th>
                         Satuan Kerja
+                    </th>
+                    <th>
+                        Unit Kerja
                     </th>
                 </tr>
             </thead>
@@ -40,27 +40,27 @@
                 {
                     foreach (var r in Model)
                     {
-                        <tr class="table-bordered table-hover my-3">
-                            <td>
+                <tr class="table-bordered table-hover my-3">
+                    <td>
 
-                                <a href="#" onclick="getbyID('@r.ID')"><i class="icon-copy dw dw-check"></i>Proses</a>
-                            </td>
-                            <td>
-                                @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
-                            </td>
-                            <td>
-                                @r.AsalSurat
-                            </td>
-                            <td>
-                                @r.TanggalSurat
-                            </td>
-                            <td>
-                                @r.perihal
-                            </td>
-                            <td>
-                                @r.Unit_Kerja
-                            </td>
-                        </tr>
+                        <a href="#" onclick="getbyID('@r.ID','@r.tipe')"><i class="icon-copy dw dw-check"></i>Proses</a>
+                    </td>
+                    <td>
+                        @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
+                    </td>
+                    <td>
+                        @r.TanggalSurat
+                    </td>
+                    <td>
+                        @r.perihal
+                    </td>
+                    <td>
+                        @r.SATUAN_KERJA
+                    </td>
+                    <td>
+                        @r.Unit_Kerja
+                    </td>
+                </tr>
                     }
                 }
             </tbody>
@@ -112,6 +112,16 @@
                                 <td>
                                     <div class="form-group">
                                         <div class="col">
+                                            <label for="catatan">Tipe</label>
+                                            <textarea class="form-control" id="tipe" rows="5" name="tipe"></textarea>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr style="display:none;">
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col">
                                             <label for="catatan">ID</label>
                                             <textarea class="form-control" id="ID1" rows="5" name="ID1"></textarea>
                                         </div>
@@ -131,27 +141,31 @@
     </div>
 </div>
 <script type="text/javascript">
-    function getbyID(ID) {
-        $.ajax({
-            url: "/Disposisi/getbyID/" + ID,
-            typr: "GET",
-            contentType: "application/json;charset=UTF-8",
-            dataType: "json",
-            success: function (result) {
-                $('#ID1').val(result.ID);
-                $('#ProsesDisposisi').modal('show');
-            },
-            error: function (errormessage) {
-                alert(errormessage.responseText);
-            }
-        });
-        return false;
+    function getbyID(ID,tipe) {
+        $('#ID1').val(ID);
+        $('#tipe').val(tipe);
+        $('#ProsesDisposisi').modal('show');
+        //$.ajax({
+        //    url: "/Disposisi/getbyID/" + ID,
+        //    typr: "GET",
+        //    contentType: "application/json;charset=UTF-8",
+        //    dataType: "json",
+        //    success: function (result) {
+        //        $('#ID1').val(result.ID);
+        //        $('#ProsesDisposisi').modal('show');
+        //    },
+        //    error: function (errormessage) {
+        //        alert(errormessage.responseText);
+        //    }
+        //});
+        //return false;
     }
     function ProsesDisposisi() {
             var dpObj = {
             ID: $('#ID1').val(),
             Catatan1: $('#Catatan1').val(),
-                DisposisiStatus1 : $('#DisposisiStatus1').val()
+                DisposisiStatus1: $('#DisposisiStatus1').val(),
+                tipe: $('#tipe').val()
             };
             $.ajax({
                 url: "/Disposisi/Add",

@@ -102,7 +102,7 @@ namespace SIMHUKDIS.Controllers
                 }
                 if (hasil.Tembusan == null || hasil.Tembusan == "")
                 {
-                    hasil.Tembusan = db.GetTembusan(hasil.KODE_SATUAN_KERJA, hasil.UnitKerja);
+                    hasil.Tembusan = db.GetTembusan(hasil.KODE_SATUAN_KERJA, hasil.Kode_Unit_Kerja);
                 }
                 ViewBag.ID = ID;
                 ViewBag.NIP = NIP;

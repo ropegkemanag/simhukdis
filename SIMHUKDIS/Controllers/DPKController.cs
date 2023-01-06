@@ -102,12 +102,13 @@ namespace SIMHUKDIS.Controllers
             try
             {
                 string UserLogin = Session["Fullname"].ToString();
+                string UserID = Session["UserID"].ToString();
                 clsDPK PD = new clsDPK();
                 PD.ID = ID;
                 PD.NIP = NIP;
                 PD.KeputusanSidang = KeputusanSidang;
                 PD.Catatan_Sidang = Catatan;
-                PD.UserLogin = UserLogin;
+                PD.UserLogin = UserID;
                 PD.Tanggal_Sidang_DPK = Tanggal_Sidang_DPK;
                 PD.DasarBukti = "";
                 PD.PelanggaranDisiplin = "";
@@ -290,10 +291,11 @@ namespace SIMHUKDIS.Controllers
             try
             {
                 string UserLogin = Session["Fullname"].ToString();
+                string UserID = Session["UserID"].ToString();
                 clsDPK PD = new clsDPK();
                 PD.ID = ID;
                 PD.NIP = NIP;
-                PD.UserLogin = UserLogin;
+                PD.UserLogin = UserID;
 
                 db.UpdateStatus1(PD);
                 db.UpdateStatus2(PD);

@@ -1,0 +1,207 @@
+﻿@model IEnumerable<SIMHUKDIS.Models.clsPemberhentianSementara>
+
+@{
+    ViewBag.Title = "Usul PS/PK";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+<div class="card-box mb-30">
+    <div style="height:10px;">
+
+    </div>
+    <p style="text-align:left;">
+        <label style="width:10px;"></label>
+        <button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("Create", "PemberhentianSementara")'">
+            Tambah Data
+        </button>
+    </p>
+
+    <div style="height:10px;">
+
+    </div>
+    <div class="pb-20">
+        <table class="table hover data-table-export">
+            <thead class="table table-primary" style="white-space:nowrap;">
+                <tr>
+                    <th class="table-plus datatable-nosort">Aksi</th>
+                    <th>No Surat</th>
+                    <th>Perihal</th>
+                    <th>Satuan Kerja</th>
+                    <th>Unit Kerja</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model == null)
+                {
+
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                <tr>
+                    @if (@ViewBag.UserID == item.Create_User && (item.Status == 0 || item.Status == 88))
+                    {
+                        <td class="table-plus">
+                            @Html.ActionLink("Ubah", "Edit", new { ID = item.ID, KODE_SATUAN_KERJA = item.Kode_Satuan_Kerja, Kode_Unit_Kerja = item.Kode_Unit_Kerja, UsulStatus = item.UsulStatus })
+                            <br />
+                            <a href="#" onclick="Hapus('@item.ID')">Hapus</a>
+                            <br />
+                            <a href="#" onclick="Proses('@item.ID')">Proses</a>
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="table-plus">
+                            Ubah
+                            <br />
+                            Hapus
+                            <br />
+                            Proses
+                        </td>
+                    }
+                    @*<td>@Html.ActionLink(item.NoSurat, "Details", new { ID = item.ID })</td>*@
+                    <td>@Html.DisplayFor(modelItem => item.NoSurat)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Perihal)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Satuan_Kerja)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Unit_Kerja)</td>
+                </tr>
+                    }
+
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="DeletePS" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Apakah Anda yakin untuk menghapus data ini ?</div>
+            <div class="modal-footer">
+                <label id="ID" name="ID"></label>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <input class="btn btn-primary" onclick="HapusDataSM()" value="Hapus" type="button" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ProsesPS" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Apakah Anda yakin untuk mengirim data ini ?</div>
+            <div class="modal-footer">
+                <label id="ID" name="ID"></label>
+                <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                <input class="btn btn-success" onclick="KirimData()" value="Kirim" type="button" />
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Export Datatable End -->
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        
+    });
+    function Proses(ID) {
+        $('#ID').val(ID);
+        $('#ProsesPS').modal('show');
+    }
+    function Hapus(ID) {
+        $('#ID').val(ID);
+        $('#DeletePS').modal('show');
+    }
+    function KirimData() {
+        var dpObj = {
+            ID: $('#ID').val()
+            };
+        $.ajax({
+            url: "/PemberhentianSementara/Proses",
+            data: JSON.stringify(dpObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.toString() == "Success") {
+                    swal.fire({
+                        title: "Kirim Data Pemberhentian Sementara Berhasil!",
+                        icon: "success",
+                        button: "Ok",
+                        timer: 3000,
+                    });
+                    window.location = '@Url.Action("Index", "PemberhentianSementara")';
+                }
+                else {
+                    swal.fire({
+                        title: result.toString(),
+                        icon: "error",
+                        button: "Ok",
+                        timer: 3000,
+                    });
+                }
+            },
+            error: function (errormessage) {
+                swal.fire({
+                    title: errormessage.responseText,
+                    icon: "error",
+                    button: "Ok",
+                    timer: 3000,
+                });
+            }
+        });
+    }
+
+    function HapusDataSM() {
+        var dpObj = {
+            ID: $('#ID').val()
+            };
+        $.ajax({
+            url: "/PemberhentianSementara/Delete",
+            data: JSON.stringify(dpObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.toString() == "Success") {
+                    swal.fire({
+                        title: "Hapus Data Usul Pemberhentian Sementara Berhasil!",
+                        icon: "success",
+                        button: "Ok",
+                        timer: 3000,
+                    });
+                    window.location = '@Url.Action("Index", "PemberhentianSementara")';
+                }
+                else {
+                    swal.fire({
+                        title: result.toString(),
+                        icon: "error",
+                        button: "Ok",
+                        timer: 3000,
+                    });
+                }
+            },
+            error: function (errormessage) {
+                swal.fire({
+                    title: errormessage.responseText,
+                    icon: "error",
+                    button: "Ok",
+                    timer: 3000,
+                });
+            }
+        });
+    }
+</script>

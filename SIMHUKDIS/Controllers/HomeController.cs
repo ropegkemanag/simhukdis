@@ -37,6 +37,7 @@ namespace SIMHUKDIS.Controllers
                 ViewBag.UserGroup = UserGroup;
                 ViewBag.JumlahKasus = x.GetGrafik1(UserGroup, SatuanKerja, UserID);
                 ViewBag.JumlahKasus2 = x.GetGrafik2(UserGroup, SatuanKerja, UserID);
+                ViewBag.JumlahKasus3 = x.GetGrafik3(UserGroup, SatuanKerja, UserID);
                 return View();
             }
             catch (Exception ex)

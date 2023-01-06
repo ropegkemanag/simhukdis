@@ -43,6 +43,8 @@ namespace SIMHUKDIS.Models
         public string Satuan_Kerja { get; set; }
         public string LEVEL_JABATAN { get; set; }
         public string KodeStatusAdmin { get; set; }
+        public string PhoneNo { get; set; }
+        public string Email { get; set; }
     }
     public class clsUserLoginDB
     {
@@ -235,12 +237,14 @@ namespace SIMHUKDIS.Models
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "SIMHUKDIS.sp_User_Ins";
+                    string MySql = "sp_User_Ins";
                     SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;                    
                     cmd.Parameters.AddWithValue("@iUserName", "");
                     cmd.Parameters.AddWithValue("@iFullname", User.FullName);
-                    cmd.Parameters.AddWithValue("@iPassword", encrypt.Encrypt(User.Password,User.NIP));
+                    cmd.Parameters.AddWithValue("@iPassword", encrypt.Encrypt(User.Password.Trim(),User.NIP));
+                    cmd.Parameters.AddWithValue("@PhoneNo", User.PhoneNo);
+                    cmd.Parameters.AddWithValue("@Email", User.Email);
                     cmd.Parameters.AddWithValue("@iStatusAdmin", User.StatusAdmin);
                     cmd.Parameters.AddWithValue("@iGroupID", User.GroupID);
                     cmd.Parameters.AddWithValue("@iLastUser", User.LastUser);
@@ -267,13 +271,15 @@ namespace SIMHUKDIS.Models
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "SIMHUKDIS.sp_User_Upd";
+                    string MySql = "sp_User_Upd";
                     SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("@iUserID", User.UserID);
                     cmd.Parameters.AddWithValue("@iUserName", "");
                     cmd.Parameters.AddWithValue("@iFullname", User.FullName);
-                    cmd.Parameters.AddWithValue("@iPassword", encrypt.Encrypt(User.Password, User.NIP));
+                    cmd.Parameters.AddWithValue("@iPassword", encrypt.Encrypt(User.Password.Trim(), User.NIP));
+                    cmd.Parameters.AddWithValue("@PhoneNo", User.PhoneNo);
+                    cmd.Parameters.AddWithValue("@Email", User.Email);
                     cmd.Parameters.AddWithValue("@iStatusAdmin", User.StatusAdmin);
                     cmd.Parameters.AddWithValue("@iGroupID", User.GroupID);
                     cmd.Parameters.AddWithValue("@iLastUser", User.LastUser);

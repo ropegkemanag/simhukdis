@@ -59,7 +59,7 @@
             <div class="form-group row" id="LHA">
                 <div class="col">
                     <label class="control-label " >Lampiran LHA/STL *</label>
-                    @Html.TextBox("LampiranSurat_LHA", "", new { @type = "file", @id = "LampiranSurat_LHA", @class = "form-control", accept = "application/pdf", required = "required" })
+                    @Html.TextBoxFor(model => model.LampiranSurat_LHA, "", new { @type = "file", @id = "LampiranSurat_LHA", @class = "form-control", accept = "application/pdf", required = "required" })
                     @Html.ValidationMessageFor(model => model.LampiranSurat_LHA, "Max : 50MB & Format File : PDF", new { @class = "text-danger" })
                 </div>
             </div>
@@ -67,14 +67,14 @@
                 <div class="col">
                     <label class="control-label" id="DokBAP" >Lampiran BAP *</label>
                     @Html.TextBoxFor(model => model.LampiranSurat2, "", new { @type = "file", @id = "LampiranSurat2", @class = "form-control", accept = "application/pdf", required = "required" })
-                    @Html.ValidationMessageFor(model => model.LampiranSurat2, "Max : 5MB & Format File : PDF", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.LampiranSurat2, "Max : 20MB & Format File : PDF", new { @class = "text-danger" })
                 </div>
             </div>
 
             <div class="form-group row" id="Lainnya">
                 <div class="col">
                     <label class="control-label "  id="DokLainnya">Lampiran Surat Tugas/Dokumen Pendukung Lainnya *</label>
-                    @Html.TextBox("LampiranSurat5", "", new { @type = "file", @id = "LampiranSurat5", @class = "form-control", accept = "application/pdf", required = "required" })
+                    @Html.TextBoxFor(model => model.LampiranSurat5, "", new { @type = "file", @id = "LampiranSurat5", @class = "form-control", accept = "application/pdf", required = "required" })
                     @Html.ValidationMessageFor(model => model.LampiranSurat5, "Max : 5MB & Format File : PDF", new { @class = "text-danger" })
                 </div>
             </div>
@@ -98,17 +98,6 @@
         $('#AsalSurat').val(SatkerName);
         $('#KODE_SATUAN_KERJA').val(SatuanKerja);
         GetUnit(SatuanKerja);
-        //$(function () {
-        //    $("#TanggalSurat").datepicker({
-        //        setDate: new Date(),
-        //        format: 'dd-mm-yyyy',
-        //        autoclose: true,
-        //        calendarWeeks: true,
-        //        clearBtn: true,
-        //        disableTouchKeyboard: true
-        //    })
-        //});
-
     });
     $('#LampiranSurat1').on('change', function () {
         for (var i = 0; i < $(this).get(0).files.length; ++i) {
@@ -134,10 +123,10 @@
             var file1 = $(this).get(0).files[i].size;
             if (file1) {
                 var file_size = $(this).get(0).files[i].size;
-                if (file_size > 5000000) {
+                if (file_size > 20000000) {
                     Swal.fire({
                         icon: 'error',
-                        title: "File upload size is larger than 5MB!",
+                        title: "File upload size is larger than 20MB!",
                         showConfirmButton: false,
                         timer: 3000
                     })

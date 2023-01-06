@@ -21,7 +21,7 @@
             </div>
         </div>
         <div class="form-group row">
-            <label class="col-sm-12 col-md-2 col-form-label">Date</label>
+            <label class="col-sm-12 col-md-2 col-form-label">Tanggal</label>
             <div class="col-md-3">
                 <input class="form-control date-picker"
                        placeholder="Select Date"
@@ -83,40 +83,41 @@
                     {
                         foreach (var item in Model)
                         {
-                            <tr class="table-bordered table-hover my-3">
-                                @if (@ViewBag.UserID == item.CreateUser && item.Status == 0)
-                                {
-                                    <td>
-                                        @Html.ActionLink("Ubah", "Edit", new { ID = item.ID, KODE_SATUAN_KERJA = item.KODE_SATUAN_KERJA, Kode_Unit_Kerja = item.Kode_Unit_Kerja })
-                                        <br />
-                                        <a href="#" onclick="Hapus('@item.ID')">Hapus</a>
-                                        <br />
-                                        <a href="#" onclick="Proses('@item.ID')">Kirim</a>
-                                    </td>
-                                }
-                                else
-                                {
-                                    <td>
-                                        Edit
-                                        <br />
-                                        Hapus
-                                        <br />
-                                        Kirim
-                                    </td>
-                                }
-                                <td>
-                                    @Html.ActionLink(item.NoSurat, "Details", new { ID = item.ID })
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.perihal)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.SATUAN_KERJA)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Unit_Kerja)
-                                </td>
-                            </tr>
+                    <tr class="table-bordered table-hover my-3">
+                        @if (@ViewBag.UserID == item.CreateUser && item.Status == 0 || (item.Status == 5 && item.RejectStatus=="1"))
+                        {
+                            <td>
+                                @Html.ActionLink("Ubah", "Edit", new { ID = item.ID, KODE_SATUAN_KERJA = item.KODE_SATUAN_KERJA, Kode_Unit_Kerja = item.Kode_Unit_Kerja })
+                                <br />
+                                <a href="#" onclick="Hapus('@item.ID')">Hapus</a>
+                                <br />
+                                <a href="#" onclick="Proses('@item.ID')">Kirim</a>
+                            </td>
+                        }
+                        
+                        else
+                        {
+                        <td>
+                            Edit
+                            <br />
+                            Hapus
+                            <br />
+                            Kirim
+                        </td>
+                        }
+                        <td>
+                            @Html.ActionLink(item.NoSurat, "Details", new { ID = item.ID })
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.perihal)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SATUAN_KERJA)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Unit_Kerja)
+                        </td>
+                    </tr>
                         }
                     }
                 </tbody>

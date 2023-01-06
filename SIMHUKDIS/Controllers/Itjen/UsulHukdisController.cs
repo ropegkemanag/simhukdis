@@ -6,6 +6,9 @@ using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Mvc;
 
@@ -15,6 +18,8 @@ namespace SIMHUKDIS.Controllers
     public class UsulHukdisController : Controller
     {
         clsSuratMasukDB db = new clsSuratMasukDB();
+        string strToken = "vhTYPWC5jyz72sK4VDcjR2re7xPNYnEa516ysMJlpUlKvMgTKNHvdSW9wUDlnTay";
+        string baseAddress = "https://kudus.wablas.com/";
         // GET: SuratMasuk
         public ActionResult Index(int Status, string DateFrom, string DateTo)
         {
@@ -26,14 +31,15 @@ namespace SIMHUKDIS.Controllers
             string SatuanKerja = Session["Satker"].ToString();
             string StatusAdmin = Session["StatusAdmin"].ToString();
             string UserGroup = Session["UserGroup"].ToString();
-            ViewBag.UserID = userlogin;
+            string UserID = Session["UserID"].ToString();
+            ViewBag.UserID = UserID;
             ViewBag.SatuanKerja = SatuanKerja;
             ViewBag.UserGroup = UserGroup;
             try
             {
                 clsSuratMasukFilter a = new clsSuratMasukFilter();
                 a.GroupID = UserGroup;
-                a.UserLogin = userlogin;
+                a.UserLogin = UserID;
                 if (Status != null)
                 {
                     a.Status = Status;
@@ -147,6 +153,7 @@ namespace SIMHUKDIS.Controllers
             string SatuanKerja = Session["Satker"].ToString();
             string StatusAdmin = Session["StatusAdmin"].ToString();
             string UserGroup = Session["UserGroup"].ToString();
+            string UserID = Session["UserID"].ToString();
             ViewBag.UserID = userlogin;
             ViewBag.SatuanKerja = SatuanKerja;
             ViewBag.UserGroup = UserGroup;
@@ -206,7 +213,7 @@ namespace SIMHUKDIS.Controllers
                     Ext = Server.MapPath("/Files/Upload/Surat Masuk/2.BAP/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(b);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
-                    Request.Files[0].SaveAs(FilePath);
+                    Request.Files[1].SaveAs(FilePath);
                     sm.LampiranSurat2 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
 
                 }
@@ -249,7 +256,7 @@ namespace SIMHUKDIS.Controllers
                     Ext = Server.MapPath("/Files/Upload/Surat Masuk/5.Dokumen Lainnya/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(e);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
-                    Request.Files[0].SaveAs(FilePath);
+                    Request.Files[2].SaveAs(FilePath);
                     sm.LampiranSurat5 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                 }
                 else
@@ -284,7 +291,7 @@ namespace SIMHUKDIS.Controllers
                 {
                     sm.LampiranSurat_LHA = "";
                 }
-                sm.CreateUser = UserLogin;
+                sm.CreateUser = UserID;
                 db.Insert(sm);
 
                 int Status = 0;
@@ -370,6 +377,7 @@ namespace SIMHUKDIS.Controllers
             {
                 GetDateTime = DateTime.Now.ToString("ddMMyyyy_hhmmss");
                 string UserLogin = Session["Fullname"].ToString();
+                string UserID = Session["UserID"].ToString();
                 string FullPath = "";
                 clsSuratMasuk sm = new clsSuratMasuk();
                 clsSuratMasukDB db = new clsSuratMasukDB();
@@ -416,7 +424,7 @@ namespace SIMHUKDIS.Controllers
                     Ext = Server.MapPath("/Files/Upload/Surat Masuk/2.BAP/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(b);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
-                    Request.Files[0].SaveAs(FilePath);
+                    Request.Files[1].SaveAs(FilePath);
                     sm.LampiranSurat2 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                     FullPath = Ext + xx.LampiranSurat2;
                     if (System.IO.File.Exists(FullPath))
@@ -473,7 +481,7 @@ namespace SIMHUKDIS.Controllers
                     Ext = Server.MapPath("/Files/Upload/Surat Masuk/5.Dokumen Lainnya/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(e);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
-                    Request.Files[0].SaveAs(FilePath);
+                    Request.Files[2].SaveAs(FilePath);
                     sm.LampiranSurat5 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
 
                     FullPath = Ext + xx.LampiranSurat5;
@@ -526,7 +534,7 @@ namespace SIMHUKDIS.Controllers
                 {
                     sm.LampiranSurat_LHA = "";
                 }
-                sm.UpdatUser = UserLogin;
+                sm.UpdatUser = UserID;
                 db.Edit(sm);
 
                 int Status = 0;
@@ -716,6 +724,7 @@ namespace SIMHUKDIS.Controllers
             string SatuanKerja = Session["Satker"].ToString();
             string StatusAdmin = Session["StatusAdmin"].ToString();
             string UserGroup = Session["UserGroup"].ToString();
+            string UserID = Session["UserID"].ToString();
             ViewBag.UserID = userlogin;
             ViewBag.SatuanKerja = SatuanKerja;
             ViewBag.UserGroup = UserGroup;
@@ -723,8 +732,9 @@ namespace SIMHUKDIS.Controllers
             {
                 clsSuratMasuk a = new clsSuratMasuk();
                 a.ID = ID;
-                a.UpdatUser = userlogin;
+                a.UpdatUser = UserID;
                 db.Proses(a);
+                SendWaBlas(ID);
                 strMsg = "Success";
                 return Json(strMsg, JsonRequestBehavior.AllowGet);
             }
@@ -735,6 +745,48 @@ namespace SIMHUKDIS.Controllers
                 //return View();
             }
         }
+        public ActionResult SendWaBlas(int ID)
+        {
+            try
+            {
+                clsSuratMasukMsgInfo Msg = new clsSuratMasukMsgInfo();
+                clsSuratMasukDB r = new clsSuratMasukDB();
+                int StatusSM = 2;
+
+                Msg = r.GetMsgInfo(ID, StatusSM);
+
+                if (Msg.PhoneNo != "" || Msg.PhoneNo != null)
+                {
+                    var client = new HttpClient();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                   HttpResponseMessage resp = client.GetAsync(baseAddress + "api/send-message?source=postman&phone=" 
+                       + WebUtility.UrlEncode(Msg.PhoneNo) + "&message=" + WebUtility.UrlEncode(Msg.Pesan)
+                        + "&token=" + WebUtility.UrlEncode(strToken)).GetAwaiter().GetResult();
+                    if (resp.IsSuccessStatusCode)
+                    {
+                        return Json(null, JsonRequestBehavior.AllowGet);
+
+                    }
+                    else
+                    {
+                        return Json(null, JsonRequestBehavior.AllowGet);
+                    }
+
+                }
+                return Json(null, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult
+                {
+                    Data = new { ErrorMessage = ex.Message, Success = false },
+                    ContentEncoding = System.Text.Encoding.UTF8,
+                    JsonRequestBehavior = JsonRequestBehavior.DenyGet
+                };
+            }
+        }
+
         [HttpPost]
         public JsonResult UploadSuratPengantar()
         {

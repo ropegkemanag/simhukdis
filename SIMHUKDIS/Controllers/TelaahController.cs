@@ -24,7 +24,8 @@ namespace SIMHUKDIS.Controllers
         string Username = "agus@kemenag.go.id";
         string Password = "12345678";
         string baseAddress = "https://api.kemenag.go.id/v1/";
-
+        string strTokenWA = "vhTYPWC5jyz72sK4VDcjR2re7xPNYnEa516ysMJlpUlKvMgTKNHvdSW9wUDlnTay";
+        string baseAddressWA = "https://kudus.wablas.com/";
         public ActionResult Index()
         {
             if (Session["Fullname"] == null)
@@ -279,10 +280,12 @@ namespace SIMHUKDIS.Controllers
 
                 clsTelaah telaah = new clsTelaah();
                 string UserLogin = Session["Fullname"].ToString();
-                telaah.CreatedUser = UserLogin;
+
+                telaah.CreatedUser = UserID;
                 telaah.ID = ID;
                 telaah.NIP = NIP;
                 telaah.Proses = "1";
+                telaah.FileTelaah = FileTelaah;
                 if (FileTelaah == null)
                 {
                     telaah.FileTelaah = "";
@@ -294,7 +297,7 @@ namespace SIMHUKDIS.Controllers
 
                 clsTelaahDB db = new clsTelaahDB();
                 //db.Update(telaah);
-                db.UpdateStatus(ID, NIP,UserLogin);
+                db.UpdateStatus(ID, NIP,UserID);
                 db.UpdateTelaahStatus(telaah);
                 strMsg = "Success";
                 return Json(strMsg, JsonRequestBehavior.AllowGet);
@@ -395,7 +398,7 @@ namespace SIMHUKDIS.Controllers
 
                 clsTelaah telaah = new clsTelaah();
                 string UserLogin = Session["Fullname"].ToString();
-                telaah.CreatedUser = UserLogin;
+                telaah.CreatedUser = UserID;
                 telaah.ID = ID;
                 telaah.NIP = NIP;
                 telaah.Proses = "0";
@@ -452,7 +455,7 @@ namespace SIMHUKDIS.Controllers
 
                 clsTelaah telaah = new clsTelaah();
                 string UserLogin = Session["Fullname"].ToString();
-                telaah.CreatedUser = UserLogin;
+                telaah.CreatedUser = UserID;
                 telaah.ID = ID;
                 telaah.NIP = NIP;
                 telaah.Proses = "2";
@@ -503,7 +506,7 @@ namespace SIMHUKDIS.Controllers
 
                 clsTelaah telaah = new clsTelaah();
                 string UserLogin = Session["Fullname"].ToString();
-                telaah.CreatedUser = UserLogin;
+                telaah.CreatedUser = UserID;
                 telaah.ID = ID;
                 telaah.NIP = NIP;
                 telaah.Proses = "3";
@@ -573,7 +576,7 @@ namespace SIMHUKDIS.Controllers
                 telaah.RekomendasiHukdis = RekomendasiHukdis;
                 telaah.AnalisaPertimbangan = AnalisaPertimbangan;
                 telaah.KeputusanSidangDPK = KeputusanSidangDPK;
-                telaah.CreatedUser = UserLogin;
+                telaah.CreatedUser = UserID;
                 telaah.FileTelaah = "";
                 telaah.TelaahNo = TelaahNo;
                 telaah.Tanggal_Telaah = Tanggal_Telaah;
@@ -638,7 +641,7 @@ namespace SIMHUKDIS.Controllers
                 telaah.RekomendasiHukdis= RekomendasiHukdis;
                 telaah.AnalisaPertimbangan= AnalisaPertimbangan;
                 telaah.KeputusanSidangDPK = KeputusanSidangDPK;
-                telaah.CreatedUser = UserLogin;
+                telaah.CreatedUser = UserID;
                 telaah.Tanggal_Telaah = Tanggal_Telaah;
                 clsTelaahDB i = new clsTelaahDB();
                 int Bulan = DateTime.Now.Month;
@@ -741,7 +744,7 @@ namespace SIMHUKDIS.Controllers
                 telaah.RekomendasiHukdis = RekomendasiHukdis;
                 telaah.AnalisaPertimbangan = AnalisaPertimbangan;
                 telaah.KeputusanSidangDPK = KeputusanSidangDPK;
-                telaah.CreatedUser = UserLogin;
+                telaah.CreatedUser = UserID;
                 telaah.Tanggal_Telaah = Tanggal_Telaah;
 
                 clsPejabatMst pejabatMst = new clsPejabatMst();
@@ -796,9 +799,10 @@ namespace SIMHUKDIS.Controllers
         public FileResult DownloadFile(string fileName)
         {
             try
+
             {
                 //Build the File Path.
-                string path = Server.MapPath("/Files/Result/Telaah/") + fileName;
+                string path = Server.MapPath("/Files/Upload/Telaah/") + fileName;
 
                 //Read the File data into Byte Array.
                 byte[] bytes = System.IO.File.ReadAllBytes(path);
@@ -960,6 +964,8 @@ namespace SIMHUKDIS.Controllers
                     dtl.KODE_PANGKAT = clsDataPegawai.data.KODE_PANGKAT;
                     dtl.TMT_PENSIUN = clsDataPegawai.data.TMT_PENSIUN.Substring(0, 10);
                     dtl.TMT_PENSIUN = Convert.ToDateTime(dtl.TMT_PENSIUN).ToString("dd-MM-yyyy");
+                    dtl.NO_HP = clsDataPegawai.data.NO_HP;
+                    dtl.EMAIL = clsDataPegawai.data.EMAIL;
                     return Json(dtl, JsonRequestBehavior.AllowGet);
                 }
                 else
@@ -977,6 +983,78 @@ namespace SIMHUKDIS.Controllers
                 };
             }            
         }
+        public JsonResult Verifikasi(clsTelaahVerifikasi TV)
+        {
+            string strMsg = "";
+            string UserLogin = Session["Fullname"].ToString();
+            try
+            {
+                //clsTelaahVerifikasi TV = new clsTelaahVerifikasi();
+                clsTelaahDB x = new clsTelaahDB();
+                string UserID = Session["UserID"].ToString();
+                //TV.ID = ID;
+                //TV.Catatan = Catatan;
+                //TV.JenisVerifikasi = JenisVerifikasi;
+                TV.UpdateUser = UserID;
+
+                x.Verifikasi(TV);
+                if (TV.JenisVerifikasi=="1")
+                {
+                    SendWaBlas(Convert.ToInt16(TV.ID));
+                }
+                
+                strMsg = "Success";
+                return Json(strMsg, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                strMsg = ex.Message.ToString();
+                return Json(strMsg, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public ActionResult SendWaBlas(int ID)
+        {
+            try
+            {
+                clsSuratMasukMsgInfo Msg = new clsSuratMasukMsgInfo();
+                clsSuratMasukDB r = new clsSuratMasukDB();
+                int StatusSM = 5;
+
+                Msg = r.GetMsgInfo(ID, StatusSM);
+
+                if (Msg.PhoneNo != "" || Msg.PhoneNo != null)
+                {
+                    var client = new HttpClient();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    
+                    HttpResponseMessage resp = client.GetAsync(baseAddressWA + "api/send-message?source=postman&phone=" 
+                        + WebUtility.UrlEncode(Msg.PhoneNo) + "&message=" + WebUtility.UrlEncode(Msg.Pesan)
+                        + "&token=" + WebUtility.UrlEncode(strTokenWA)).GetAwaiter().GetResult();
+                    if (resp.IsSuccessStatusCode)
+                    {
+                        return Json(null, JsonRequestBehavior.AllowGet);
+
+                    }
+                    else
+                    {
+                        return Json(null, JsonRequestBehavior.AllowGet);
+                    }
+
+                }
+                return Json(null, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult
+                {
+                    Data = new { ErrorMessage = ex.Message, Success = false },
+                    ContentEncoding = System.Text.Encoding.UTF8,
+                    JsonRequestBehavior = JsonRequestBehavior.DenyGet
+                };
+            }
+        }
+
         //public JsonResult GetPekerjaan(string NIP)
         //{
         //    try

@@ -6,6 +6,7 @@ using System.Configuration;
 using System.Data;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Web;
@@ -18,6 +19,8 @@ namespace SIMHUKDIS.Controllers
     {
         // GET: Disposisi
         clsDisposisi3DB db = new clsDisposisi3DB();
+        string strToken = "vhTYPWC5jyz72sK4VDcjR2re7xPNYnEa516ysMJlpUlKvMgTKNHvdSW9wUDlnTay";
+        string baseAddress = "https://kudus.wablas.com/";
         public ActionResult Index()
         {
             if (Session["Fullname"] == null)
@@ -30,6 +33,8 @@ namespace SIMHUKDIS.Controllers
                 string SatuanKerja = Session["Satker"].ToString();
                 string StatusAdmin = Session["StatusAdmin"].ToString();
                 string UserGroup = Session["UserGroup"].ToString();
+                string UserID = Session["UserID"].ToString();
+
                 ViewBag.StatusAdmin = StatusAdmin;
                 ViewBag.UserID = userlogin;
                 ViewBag.SatuanKerja = SatuanKerja;
@@ -59,10 +64,12 @@ namespace SIMHUKDIS.Controllers
         {
             string strMsg = "";
             string UserLogin = Session["Fullname"].ToString();
+            string UserID = Session["UserID"].ToString();
             try
             {
-                disp.UpdateUser = UserLogin;
+                disp.UpdateUser = UserID;
                 db.Edit(disp);
+                SendWaBlas(Convert.ToInt16(disp.ID), Convert.ToInt16(disp.tipe));
                 strMsg = "Success";
                 return Json(strMsg, JsonRequestBehavior.AllowGet);
             }
@@ -131,7 +138,8 @@ namespace SIMHUKDIS.Controllers
             try
             {
                 string UserLogin = Session["Fullname"].ToString();
-                
+                string UserID = Session["UserID"].ToString();
+
                 clsDisposisi dp = new clsDisposisi();
 
                 if(Catatan == "")
@@ -143,10 +151,12 @@ namespace SIMHUKDIS.Controllers
                 {
                     dp.ID = ID;
                     dp.Catatan1 = Catatan;
-                    dp.UpdateUser = UserLogin;
+                    dp.UpdateUser = UserID;
                     dp.StatusDisposisi = StatusDisposisi;
                     clsDisposisi3DB db = new clsDisposisi3DB();
                     db.Edit(dp);
+                    SendWaBlas(Convert.ToInt16(dp.ID), Convert.ToInt16(dp.tipe));
+
                     Msg = "Success";
                     return Json(Msg, JsonRequestBehavior.AllowGet);
                 }
@@ -305,6 +315,54 @@ namespace SIMHUKDIS.Controllers
             {
                 string strMsg = ex.Message.ToString();
                 return null;
+            }
+        }
+        public ActionResult SendWaBlas(int ID, int tipe)
+        {
+            try
+            {
+                clsSuratMasukMsgInfo Msg = new clsSuratMasukMsgInfo();
+                clsSuratMasukDB r = new clsSuratMasukDB();
+                int StatusSM = 4;
+
+                if (tipe == 1)
+                {
+                    Msg = r.GetMsgInfo(ID, StatusSM);
+                }
+                else
+                {
+                    Msg = r.GetPSMsgInfo(ID, StatusSM);
+                }
+
+                if (Msg.PhoneNo != "" || Msg.PhoneNo != null)
+                {
+                    var client = new HttpClient();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    
+                    HttpResponseMessage resp = client.GetAsync(baseAddress + "api/send-message?source=postman&phone=" 
+                        + WebUtility.UrlEncode(Msg.PhoneNo) + "&message=" + WebUtility.UrlEncode(Msg.Pesan)
+                        + "&token=" + WebUtility.UrlEncode(strToken)).GetAwaiter().GetResult();
+                    if (resp.IsSuccessStatusCode)
+                    {
+                        return Json(null, JsonRequestBehavior.AllowGet);
+
+                    }
+                    else
+                    {
+                        return Json(null, JsonRequestBehavior.AllowGet);
+                    }
+
+                }
+                return Json(null, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult
+                {
+                    Data = new { ErrorMessage = ex.Message, Success = false },
+                    ContentEncoding = System.Text.Encoding.UTF8,
+                    JsonRequestBehavior = JsonRequestBehavior.DenyGet
+                };
             }
         }
 

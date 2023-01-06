@@ -203,6 +203,7 @@
     <Compile Include="Controllers\HukdisController.cs" />
     <Compile Include="Controllers\SatkerKonseptorController.cs" />
     <Compile Include="Controllers\Satker\MonitoringSatkerController.cs" />
+    <Compile Include="Controllers\Satker\PemberhentianSementaraController.cs" />
     <Compile Include="Controllers\Satker\PembuatanSKController.cs" />
     <Compile Include="Controllers\Satker\SuratMasukController.cs" />
     <Compile Include="Controllers\TelaahController.cs" />
@@ -223,6 +224,7 @@
     <Compile Include="Models\clsMonitoring.cs" />
     <Compile Include="Models\clsFormatPenomoran.cs" />
     <Compile Include="Models\clsPejabatMst.cs" />
+    <Compile Include="Models\clsPemberhentianSementara.cs" />
     <Compile Include="Models\clsPraDPK.cs" />
     <Compile Include="Models\ClsSatker.cs" />
     <Compile Include="Models\clsSatkerKonseptor.cs" />
@@ -770,7 +772,6 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\Gambar\Background_Simhukdis.jpg" />
-    <Content Include="Content\Gambar\Background_Simhukdiss.jpg" />
     <Content Include="Content\Gambar\Background_Simhukdis.png" />
     <Content Include="Content\Gambar\Header Simhukdis.png" />
     <Content Include="Content\Gambar\Logo Simhukdis.png" />
@@ -1062,7 +1063,6 @@
     <Content Include="Images\Background_Simhukdiss.png" />
     <Content Include="Images\kemenag.ico" />
     <Content Include="Images\Login.jpg" />
-    <Content Include="Images\Background_Simhukdis.jpg" />
     <Content Include="kemenag.ico" />
     <Content Include="Scripts\bootstrap-datepicker.js" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
@@ -1391,6 +1391,9 @@
     <Content Include="Views\PembuatanSK\BuatPTPST.cshtml" />
     <Content Include="Views\SuratMasuk\CreateSPTJM.cshtml" />
     <Content Include="Views\Telaah\DetailAtasan.cshtml" />
+    <Content Include="Views\PemberhentianSementara\Index.cshtml" />
+    <Content Include="Views\PemberhentianSementara\Create.cshtml" />
+    <Content Include="Views\PemberhentianSementara\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -1401,6 +1404,8 @@
     <Folder Include="Files\Result\Telaah\" />
     <Folder Include="Files\Upload\BAP SATKER\" />
     <Folder Include="Files\Upload\BAP YBS\" />
+    <Folder Include="Files\Upload\PS\DokumenPendukung\" />
+    <Folder Include="Files\Upload\PS\SP\" />
     <Folder Include="Files\Upload\SK\" />
     <Folder Include="Files\Upload\Surat Masuk\1.Surat Pengantar\" />
     <Folder Include="Files\Upload\Surat Masuk\2.BAP\" />

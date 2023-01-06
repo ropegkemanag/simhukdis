@@ -158,5 +158,25 @@ namespace SIMHUKDIS.Models
                 return a;
             }
         }
+        public int GetGrafik3(string UserGroup, string SatuanKerja, string UserID)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            int a = 0;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                string q = "sp_Dashboard_Grafik3_Sel";
+                SqlCommand cmd = new SqlCommand(q, con);
+                cmd.Parameters.AddWithValue("@iSatker", SatuanKerja);
+                cmd.Parameters.AddWithValue("@iGroupUser", UserGroup);
+                cmd.Parameters.AddWithValue("@UserLogin", UserID);
+                con.Open();
+                SqlDataReader rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    a = Convert.ToInt16(rd["JUMLAH"]);
+                }
+                return a;
+            }
+        }
     }
 }

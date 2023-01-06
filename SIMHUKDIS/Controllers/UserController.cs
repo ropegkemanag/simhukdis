@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.IO;
-using System.Linq;
+using System.Text;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -120,17 +120,21 @@ namespace SIMHUKDIS.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Create(string UserName, string Fullname, string Password, string StatusAdmin, string GroupID, string NIP, string satker, string LEVEL_JABATAN)
+        public ActionResult Create(string UserName, string Fullname, string Password, string PhoneNo,string Email,
+            string StatusAdmin, string GroupID, string NIP, string satker, string LEVEL_JABATAN)
         {
             string strMsg = "";
             try
             {
                 string UserLogin = Session["Fullname"].ToString();
+                string UserID = Session["UserID"].ToString();
                 clsUserLogin users = new clsUserLogin();
                 users.UserName = UserName;
                 users.FullName = Fullname;
                 users.Password = Password;
-                users.LastUser = UserLogin;
+                users.PhoneNo = PhoneNo;
+                users.Email = Email;
+                users.LastUser = UserID;
                 users.NIP = NIP;
                 users.StatusAdmin = StatusAdmin;
                 users.Satker = satker;
@@ -191,22 +195,26 @@ namespace SIMHUKDIS.Controllers
         }
 
         [HttpPost]
-        public ActionResult Ubah(string UserID, string UserName, string Fullname, string Password, string StatusAdmin, string GroupID, string NIP, string LEVEL_JABATAN, string satker)
+        public ActionResult Ubah(string UserID, string UserName, string Fullname, string Password, string PhoneNo, string Email
+            ,string StatusAdmin, string GroupID, string NIP, string LEVEL_JABATAN, string satker)
         {
             string strMsg = "";
             string UserLogin = "";
             try
             {
                 UserLogin = Session["Fullname"].ToString();
+                string UserIDx = Session["UserID"].ToString();
                 clsUserLogin users = new clsUserLogin();
                 users.UserID = UserID;
                 users.UserName = UserName;
                 users.FullName = Fullname;
                 users.Password = Password;
+                users.PhoneNo = PhoneNo;
+                users.Email = Email;
                 users.NIP = NIP;
                 users.StatusAdmin = StatusAdmin;
                 users.GroupID = GroupID;
-                users.LastUser = UserLogin;
+                users.LastUser = UserIDx;
                 users.LEVEL_JABATAN = LEVEL_JABATAN;
                 users.Satker = satker;
                 db.Edit(users);

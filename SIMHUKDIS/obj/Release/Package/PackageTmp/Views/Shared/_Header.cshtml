@@ -148,7 +148,7 @@
                     <span class="user-name">@Session["Fullname"]</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                    <a class="dropdown-item" href="@Url.Action("ChangePassword", "User")"><i class="dw dw-settings2"></i>Ubah Password</a>
+                   @* <a class="dropdown-item" href="@Url.Action("ChangePassword", "User")"><i class="dw dw-settings2"></i>Ubah Password</a>*@
                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal"><i class="dw dw-logout"></i>Log Out</a>
                 </div>
             </div>
@@ -312,12 +312,22 @@
                             <span class="micon bi bi-check2-square"></span><span class="mtext">Usulan Hukdis</span>
                         </a>
                     </li>
+                    <li>
+                        <a class="dropdown-toggle no-arrow" href="@Url.Action("Index", "PemberhentianSementara")">
+                            <span class="micon bi bi-check2-square"></span><span class="mtext">Usulan PS/PK</span>
+                        </a>
+                    </li>
                 }
                 @if (ViewBag.UserGroup == "07")
                 {
                     <li>
                         <a class="dropdown-toggle no-arrow" href="@Url.Action("Index", "UsulHukdis", new { Status = 0, DateFrom = "", DateTo = "" })">
                             <span class="micon bi bi-check2-square"></span><span class="mtext">Usulan Hukdis</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-toggle no-arrow" href="@Url.Action("Index", "PemberhentianSementara")">
+                            <span class="micon bi bi-check2-square"></span><span class="mtext">Usulan PS/PK</span>
                         </a>
                     </li>
                     <li>
@@ -331,6 +341,11 @@
                     <li>
                         <a class="dropdown-toggle no-arrow" href="@Url.Action("Index", "UsulHukdis", new { Status = 0, DateFrom = "", DateTo = "" })">
                             <span class="micon bi bi-check2-square"></span><span class="mtext">Usulan Hukdis Itjen</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a class="dropdown-toggle no-arrow" href="@Url.Action("Index", "PemberhentianSementara")">
+                            <span class="micon bi bi-check2-square"></span><span class="mtext">Usulan PS/PK</span>
                         </a>
                     </li>
                 }
@@ -411,11 +426,11 @@
                 }
                 @if (ViewBag.UserGroup == "03")
                 {
-                    <li>
+                    @*<li>
                         <a href="@Url.Action("Index", "PembuatanSK")" class="dropdown-toggle no-arrow">
                             <span class="micon bi bi-check2-square"></span><span class="mtext">Pembuatan SK</span>
                         </a>
-                    </li>
+                    </li>*@
                 }
                 @if (ViewBag.UserGroup == "01" || ViewBag.UserGroup == "02" || ViewBag.UserGroup == "04" || ViewBag.UserGroup == "05" || ViewBag.UserGroup == "06")
                 {

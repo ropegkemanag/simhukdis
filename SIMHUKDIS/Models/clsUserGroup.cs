@@ -106,7 +106,7 @@ namespace SIMHUKDIS.Models
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "SIMHUKDIS.sp_UserGroup_Ins";
+                    string MySql = "sp_UserGroup_Ins";
                     SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("iGroupID", User.GroupID);

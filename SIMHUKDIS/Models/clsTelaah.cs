@@ -39,8 +39,17 @@ namespace SIMHUKDIS.Models
         public string NIP_Karopeg { get; set; }
         public string Konseptor { get; set; }
         public string Proses { get; set; }
+        public string RejectStatus { get; set; }
+        public string RejectReason { get; set; }
     }
-
+    public class clsTelaahVerifikasi
+    {
+        public int ID { get; set; }
+        public string UpdateDate { get; set; }
+        public string UpdateUser { get; set; }
+        public string Catatan { get; set; }
+        public string JenisVerifikasi { get; set; }
+    }
     public class suratmasuk
     {
         [Key]
@@ -119,6 +128,8 @@ namespace SIMHUKDIS.Models
         [DisplayName("Tanggal Disposisi Koordinator Sub Bagian")]
         public string DisposisiDate3 { get; set; }
         public int Status { get; set; }
+        public string RejectStatus { get; set; }
+        public string RejectReason { get; set; }
     }
     public class clsDocument
     {
@@ -189,6 +200,9 @@ namespace SIMHUKDIS.Models
                     data.DisposisiDate1 = rd["Disposisi1_Date"].ToString();
                     data.DisposisiDate2 = rd["Disposisi2_Date"].ToString();
                     data.DisposisiDate3 = rd["Disposisi3_Date"].ToString();
+
+                    data.RejectStatus = rd["RejectStatus"].ToString();
+                    data.RejectReason = rd["RejectReason"].ToString();
                     SuratMasuks.Add(data);
                 }
                 return SuratMasuks;
@@ -478,6 +492,8 @@ namespace SIMHUKDIS.Models
                     data.DisposisiDate1 = rd["Disposisi1_Date"].ToString();
                     data.DisposisiDate2 = rd["Disposisi2_Date"].ToString();
                     data.DisposisiDate3 = rd["Disposisi3_Date"].ToString();
+                    data.RejectStatus = rd["RejectStatus"].ToString();
+                    data.RejectReason = rd["RejectReason"].ToString();
                 }
                 return data;
             }
@@ -545,6 +561,8 @@ namespace SIMHUKDIS.Models
                         data.DisposisiDate1 = rd["Disposisi1_Date"].ToString();
                         data.DisposisiDate2 = rd["Disposisi2_Date"].ToString();
                         data.DisposisiDate3 = rd["Disposisi3_Date"].ToString();
+                        data.RejectStatus = rd["RejectStatus"].ToString();
+                        data.RejectReason = rd["RejectReason"].ToString();
                         SuratMasuks.Add(data);
                     }
                     return SuratMasuks;
@@ -611,6 +629,8 @@ namespace SIMHUKDIS.Models
                         data.DisposisiDate1 = rd["Disposisi1_Date"].ToString();
                         data.DisposisiDate2 = rd["Disposisi2_Date"].ToString();
                         data.DisposisiDate3 = rd["Disposisi3_Date"].ToString();
+                        data.RejectStatus = rd["RejectStatus"].ToString();
+                        data.RejectReason = rd["RejectReason"].ToString();
                         sm.Add(data);
                     }
                     rd.Close();
@@ -647,6 +667,23 @@ namespace SIMHUKDIS.Models
                 rd.Close();
             }
             return TelaahNo;
+        }
+        public int Verifikasi(clsTelaahVerifikasi t)
+        {
+            int i;
+            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                SqlCommand cmd = new SqlCommand("sp_Telaah_Verifikasi", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ID", t.ID);
+                cmd.Parameters.AddWithValue("@Reject", t.JenisVerifikasi);
+                cmd.Parameters.AddWithValue("@RejectReason", t.Catatan);
+                cmd.Parameters.AddWithValue("@UpdateUser", t.UpdateUser);
+                con.Open();
+                i = cmd.ExecuteNonQuery();
+            }
+            return i;
         }
     }
 }

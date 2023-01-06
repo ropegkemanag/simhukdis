@@ -85,6 +85,7 @@ namespace SIMHUKDIS.Controllers
                 string StatusAdmin = Session["StatusAdmin"].ToString();
                 string UserGroup = Session["UserGroup"].ToString();
                 string userlogin = Session["Fullname"].ToString();
+
                 ViewBag.UserID = userlogin;
                 ViewBag.SatuanKerja = SatuanKerja;
                 ViewBag.UserGroup = UserGroup;
@@ -284,11 +285,12 @@ namespace SIMHUKDIS.Controllers
             try
             {
                 string UserLogin = Session["Fullname"].ToString();
+                string UserID = Session["UserID"].ToString();
                 clsPraDPK PD = new clsPraDPK();
                 PD.ID = ID;
                 PD.NIP = NIP;
                 PD.Catatan = Catatan;
-                PD.UserLogin = UserLogin;
+                PD.UserLogin = UserID;
                 PD.Tanggal_Sidang = Tanggal_Sidang;
                 PD.JenisPelanggaran = Kode_JenisPelanggaran;
                 if (db.GetDataExist(ID,NIP) == true)

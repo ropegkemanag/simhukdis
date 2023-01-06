@@ -3,6 +3,7 @@ using System.Text;
 using System.Data;
 using System.Configuration;
 using System.Security.Cryptography;
+using System;
 
 namespace SIMHUKDIS.Models
 {
@@ -10,7 +11,7 @@ namespace SIMHUKDIS.Models
     {
         public string Encrypt(string clearText, string EncryptionKey)
         {
-            EncryptionKey = EncryptionKey + "SIMHUKDIS2022";
+            EncryptionKey =  "ropegxedis";
             byte[] clearBytes = Encoding.Unicode.GetBytes(clearText);
             using (Aes encryptor = Aes.Create())
             {
@@ -24,7 +25,7 @@ namespace SIMHUKDIS.Models
                         cs.Write(clearBytes, 0, clearBytes.Length);
                         cs.Close();
                     }
-                    clearText = System.Convert.ToBase64String(ms.ToArray());
+                    clearText = Convert.ToBase64String(ms.ToArray());
                 }
             }
             return clearText;
@@ -36,8 +37,8 @@ namespace SIMHUKDIS.Models
             {
                 return cipherText;
             }
-            EncryptionKey = EncryptionKey + "SIMHUKDIS2022";
-            byte[] cipherBytes = System.Convert.FromBase64String(cipherText);
+            EncryptionKey = "ropegxedis";
+            byte[] cipherBytes = Convert.FromBase64String(cipherText);
             using (Aes encryptor = Aes.Create())
             {
                 Rfc2898DeriveBytes pdb = new Rfc2898DeriveBytes(EncryptionKey, new byte[] { 0x49, 0x76, 0x61, 0x6e, 0x20, 0x4d, 0x65, 0x64, 0x76, 0x65, 0x64, 0x65, 0x76 });

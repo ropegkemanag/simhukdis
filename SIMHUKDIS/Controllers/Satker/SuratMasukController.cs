@@ -20,6 +20,8 @@ namespace SIMHUKDIS.Controllers
     public class SuratMasukController : Controller
     {
         clsSuratMasukDB db = new clsSuratMasukDB();
+        string strToken = "vhTYPWC5jyz72sK4VDcjR2re7xPNYnEa516ysMJlpUlKvMgTKNHvdSW9wUDlnTay";
+        string baseAddress = "https://kudus.wablas.com/";
         // GET: SuratMasuk
         public ActionResult Index(int Status, string DateFrom, string DateTo)
         {
@@ -31,14 +33,15 @@ namespace SIMHUKDIS.Controllers
             string SatuanKerja = Session["Satker"].ToString();
             string StatusAdmin = Session["StatusAdmin"].ToString();
             string UserGroup = Session["UserGroup"].ToString();
-            ViewBag.UserID = userlogin;
+            string UserID = Session["UserID"].ToString();
+            ViewBag.UserID = UserID;
             ViewBag.SatuanKerja = SatuanKerja;
             ViewBag.UserGroup = UserGroup;
             try
             {
                 clsSuratMasukFilter a = new clsSuratMasukFilter();
                 a.GroupID = UserGroup;
-                a.UserLogin = userlogin;
+                a.UserLogin = UserID;
                 if (Status != null)
                 {
                     a.Status = Status;
@@ -91,7 +94,9 @@ namespace SIMHUKDIS.Controllers
                 string SatuanKerja = Session["Satker"].ToString();
                 string StatusAdmin = Session["StatusAdmin"].ToString();
                 string UserGroup = Session["UserGroup"].ToString();
-                ViewBag.UserID = userlogin;
+                string UserID = Session["UserID"].ToString();
+
+                ViewBag.UserID = UserID;
                 ViewBag.SatuanKerja = SatuanKerja;
                 ViewBag.UserGroup = UserGroup;
                 return View();
@@ -199,6 +204,35 @@ namespace SIMHUKDIS.Controllers
                 
             }
         }
+        public ActionResult CreatePS()
+        {
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            try
+            {
+                string userlogin = Session["Fullname"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                string UserID = Session["UserID"].ToString();
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+                ClsSatkerDB x = new ClsSatkerDB();
+                ViewBag.SatuanKerjaName = x.GetName(SatuanKerja);
+                clsSuratMasuk sm = new clsSuratMasuk();
+                ViewBag.Satker = new SelectList(db.GetListSatker(), "KODE_SATUAN_KERJA", "SATUAN_KERJA", SatuanKerja);
+                return View();
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
+
+            }
+        }
         [HttpGet]
         public ActionResult Create()
         {
@@ -280,6 +314,8 @@ namespace SIMHUKDIS.Controllers
                 string SatuanKerja = Session["Satker"].ToString();
                 string StatusAdmin = Session["StatusAdmin"].ToString();
                 string UserGroup = Session["UserGroup"].ToString();
+                string UserID = Session["UserID"].ToString();
+
                 ViewBag.UserID = userlogin;
                 ViewBag.SatuanKerja = SatuanKerja;
                 ViewBag.UserGroup = UserGroup;
@@ -329,7 +365,7 @@ namespace SIMHUKDIS.Controllers
                     Ext = Server.MapPath("/Files/Upload/Surat Masuk/2.BAP/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(b);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
-                    Request.Files[0].SaveAs(FilePath);
+                    Request.Files[1].SaveAs(FilePath);
                     sm.LampiranSurat2 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
 
                 }
@@ -344,7 +380,7 @@ namespace SIMHUKDIS.Controllers
                     Ext = Server.MapPath("/Files/Upload/Surat Masuk/3.Surat Tugas Pemeriksaan/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(c);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
-                    Request.Files[0].SaveAs(FilePath);
+                    Request.Files[2].SaveAs(FilePath);
                     sm.LampiranSurat3 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                 }
                 else
@@ -358,7 +394,7 @@ namespace SIMHUKDIS.Controllers
                     Ext = Server.MapPath("/Files/Upload/Surat Masuk/4.Surat Panggilan/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(d);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
-                    Request.Files[0].SaveAs(FilePath);
+                    Request.Files[3].SaveAs(FilePath);
                     sm.LampiranSurat4 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                 }
                 else
@@ -372,7 +408,7 @@ namespace SIMHUKDIS.Controllers
                     Ext = Server.MapPath("/Files/Upload/Surat Masuk/5.Dokumen Lainnya/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(e);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
-                    Request.Files[0].SaveAs(FilePath);
+                    Request.Files[6].SaveAs(FilePath);
                     sm.LampiranSurat5 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                 }
                 else
@@ -414,7 +450,7 @@ namespace SIMHUKDIS.Controllers
                     Ext = Server.MapPath("/Files/Upload/Surat Masuk/8.LHP/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(h);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
-                    Request.Files[0].SaveAs(FilePath);
+                    Request.Files[4].SaveAs(FilePath);
                     sm.LampiranLHP = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                 }
                 else
@@ -429,14 +465,14 @@ namespace SIMHUKDIS.Controllers
                     Ext = Server.MapPath("/Files/Upload/Surat Masuk/9.SPTJM/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(i);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
-                    Request.Files[0].SaveAs(FilePath);
+                    Request.Files[5].SaveAs(FilePath);
                     sm.LampiranSPTJM = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                 }
                 else
                 {
                     sm.LampiranSPTJM = "";
                 }
-                sm.CreateUser = UserLogin;
+                sm.CreateUser = UserID;
                 sm.UsulStatus = UsulStatus;
                 db.Insert(sm);
 
@@ -450,6 +486,204 @@ namespace SIMHUKDIS.Controllers
                 var Error_Message = "Error Catch ! (" + ex.Message + ")";
                 return RedirectToAction("Error500", "Home", new { Error_Message });
                 
+            }
+        }
+
+        [HttpPost]
+        public ActionResult CreateTindakPidana(string NoAgenda, string NoSurat, string AsalSurat, string TanggalSurat,
+            string perihal, string KODE_SATUAN_KERJA, string Kode_Unit_Kerja, HttpPostedFileBase LampiranSurat1,
+            HttpPostedFileBase LampiranSurat2, HttpPostedFileBase LampiranSurat3,
+            HttpPostedFileBase LampiranSurat4,
+            HttpPostedFileBase LampiranSurat5,
+            HttpPostedFileBase LampiranSurat6,
+            HttpPostedFileBase LampiranSurat_LHA,
+            HttpPostedFileBase LampiranLHP,
+            HttpPostedFileBase LampiranSPTJM,
+            string UsulStatus)
+        {
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+
+            try
+            {
+                string userlogin = Session["Fullname"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                string UserID = Session["UserID"].ToString();
+
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+
+                String FilePath = "";
+                String FileExt = "";
+                String GetDateTime = "";
+                String Ext = "";
+                String FileNameWithoutExtension = "";
+                string a, b, c, d, e, f, g, h, i;
+                GetDateTime = DateTime.Now.ToString("ddMMyyyy_hhmmss");
+                string UserLogin = Session["Fullname"].ToString();
+                clsSuratMasuk sm = new clsSuratMasuk();
+                sm.NoAgenda = "";
+                sm.NoSurat = NoSurat;
+                sm.AsalSurat = AsalSurat;
+                sm.TanggalSurat = TanggalSurat;
+                sm.perihal = perihal;
+                sm.Kode_Unit_Kerja = Kode_Unit_Kerja;
+
+                if (KODE_SATUAN_KERJA == null && UserGroup == "03")
+                {
+                    sm.SATUAN_KERJA = SatuanKerja;
+                }
+                else
+                {
+                    sm.SATUAN_KERJA = KODE_SATUAN_KERJA;
+                }
+                if (LampiranSurat1 != null)
+                {
+                    a = LampiranSurat1.FileName;
+                    FileExt = Path.GetExtension(a);
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/1.Surat Pengantar/");
+                    FileNameWithoutExtension = Path.GetFileNameWithoutExtension(a);
+                    FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    Request.Files[0].SaveAs(FilePath);
+                    sm.LampiranSurat1 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                }
+                else
+                {
+                    sm.LampiranSurat1 = "";
+                }
+                if (LampiranSurat2 != null)
+                {
+                    b = LampiranSurat2.FileName;
+                    FileExt = Path.GetExtension(b);
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/2.BAP/");
+                    FileNameWithoutExtension = Path.GetFileNameWithoutExtension(b);
+                    FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    Request.Files[1].SaveAs(FilePath);
+                    sm.LampiranSurat2 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+
+                }
+                else
+                {
+                    sm.LampiranSurat2 = "";
+                }
+                if (LampiranSurat3 != null)
+                {
+                    c = LampiranSurat3.FileName;
+                    FileExt = Path.GetExtension(c);
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/3.Surat Tugas Pemeriksaan/");
+                    FileNameWithoutExtension = Path.GetFileNameWithoutExtension(c);
+                    FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    Request.Files[2].SaveAs(FilePath);
+                    sm.LampiranSurat3 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                }
+                else
+                {
+                    sm.LampiranSurat3 = "";
+                }
+                if (LampiranSurat4 != null)
+                {
+                    d = LampiranSurat4.FileName;
+                    FileExt = Path.GetExtension(d);
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/4.Surat Panggilan/");
+                    FileNameWithoutExtension = Path.GetFileNameWithoutExtension(d);
+                    FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    Request.Files[3].SaveAs(FilePath);
+                    sm.LampiranSurat4 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                }
+                else
+                {
+                    sm.LampiranSurat4 = "";
+                }
+                if (LampiranSurat5 != null)
+                {
+                    e = LampiranSurat5.FileName;
+                    FileExt = Path.GetExtension(e);
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/5.Dokumen Lainnya/");
+                    FileNameWithoutExtension = Path.GetFileNameWithoutExtension(e);
+                    FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    Request.Files[6].SaveAs(FilePath);
+                    sm.LampiranSurat5 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                }
+                else
+                {
+                    sm.LampiranSurat5 = "";
+                }
+                if (LampiranSurat6 != null)
+                {
+                    f = LampiranSurat6.FileName;
+                    FileExt = Path.GetExtension(f);
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/6.Surat Putusan Pengadilan/");
+                    FileNameWithoutExtension = Path.GetFileNameWithoutExtension(f);
+                    FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    Request.Files[1].SaveAs(FilePath);
+                    sm.LampiranSurat6 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                }
+                else
+                {
+                    sm.LampiranSurat6 = "";
+                }
+                if (LampiranSurat_LHA != null)
+                {
+                    g = LampiranSurat_LHA.FileName;
+                    FileExt = Path.GetExtension(g);
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/7.LHA/");
+                    FileNameWithoutExtension = Path.GetFileNameWithoutExtension(g);
+                    FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    Request.Files[0].SaveAs(FilePath);
+                    sm.LampiranSurat_LHA = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                }
+                else
+                {
+                    sm.LampiranSurat_LHA = "";
+                }
+                if (LampiranLHP != null)
+                {
+                    h = LampiranLHP.FileName;
+                    FileExt = Path.GetExtension(h);
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/8.LHP/");
+                    FileNameWithoutExtension = Path.GetFileNameWithoutExtension(h);
+                    FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    Request.Files[4].SaveAs(FilePath);
+                    sm.LampiranLHP = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                }
+                else
+                {
+                    sm.LampiranLHP = "";
+                }
+
+                if (LampiranSPTJM != null)
+                {
+                    i = LampiranSPTJM.FileName;
+                    FileExt = Path.GetExtension(i);
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/9.SPTJM/");
+                    FileNameWithoutExtension = Path.GetFileNameWithoutExtension(i);
+                    FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    Request.Files[5].SaveAs(FilePath);
+                    sm.LampiranSPTJM = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                }
+                else
+                {
+                    sm.LampiranSPTJM = "";
+                }
+                sm.CreateUser = UserID;
+                sm.UsulStatus = UsulStatus;
+                db.Insert(sm);
+
+                int Status = 0;
+                string DateFrom = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-01");
+                string DateTo = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd"); ;
+                return RedirectToAction("Index", "SuratMasuk", new { Status, DateFrom, DateTo });
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
+
             }
         }
         [HttpGet]
@@ -468,6 +702,7 @@ namespace SIMHUKDIS.Controllers
                 string StatusAdmin = Session["StatusAdmin"].ToString();
                 string UserGroup = Session["UserGroup"].ToString();
                 string userlogin = Session["Fullname"].ToString();
+                string UserID = Session["UserID"].ToString();
                 ViewBag.UserID = userlogin;
                 ViewBag.SatuanKerja = SatuanKerja;
                 ViewBag.UserGroup = UserGroup;
@@ -545,6 +780,8 @@ namespace SIMHUKDIS.Controllers
                 clsSuratMasukDB db = new clsSuratMasukDB();
                 GetDateTime = DateTime.Now.ToString("ddMMyyyy_hhmmss");
                 string UserLogin = Session["Fullname"].ToString();
+                string UserID = Session["UserID"].ToString();
+
                 clsSuratMasuk sm = new clsSuratMasuk();
                 sm.ID = ID;
                 sm.NoAgenda = NoAgenda;
@@ -584,7 +821,7 @@ namespace SIMHUKDIS.Controllers
                     Ext = Server.MapPath("/Files/Upload/Surat Masuk/2.BAP/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(b);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
-                    Request.Files[0].SaveAs(FilePath);
+                    Request.Files[1].SaveAs(FilePath);
                     sm.LampiranSurat2 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
 
                     FullPath = Ext + xx.LampiranSurat2;
@@ -604,7 +841,7 @@ namespace SIMHUKDIS.Controllers
                     Ext = Server.MapPath("/Files/Upload/Surat Masuk/3.Surat Tugas Pemeriksaan/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(c);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
-                    Request.Files[0].SaveAs(FilePath);
+                    Request.Files[2].SaveAs(FilePath);
                     sm.LampiranSurat3 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
 
                     FullPath = Ext + xx.LampiranSurat3;
@@ -624,7 +861,7 @@ namespace SIMHUKDIS.Controllers
                     Ext = Server.MapPath("/Files/Upload/Surat Masuk/4.Surat Panggilan/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(d);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
-                    Request.Files[0].SaveAs(FilePath);
+                    Request.Files[3].SaveAs(FilePath);
                     sm.LampiranSurat4 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
 
                     FullPath = Ext + xx.LampiranSurat4;
@@ -644,7 +881,7 @@ namespace SIMHUKDIS.Controllers
                     Ext = Server.MapPath("/Files/Upload/Surat Masuk/5.Dokumen Lainnya/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(e);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
-                    Request.Files[0].SaveAs(FilePath);
+                    Request.Files[6].SaveAs(FilePath);
                     sm.LampiranSurat5 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
 
                     FullPath = Ext + xx.LampiranSurat5;
@@ -704,7 +941,7 @@ namespace SIMHUKDIS.Controllers
                     Ext = Server.MapPath("/Files/Upload/Surat Masuk/8.LHP/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(h);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
-                    Request.Files[0].SaveAs(FilePath);
+                    Request.Files[4].SaveAs(FilePath);
                     sm.LampiranLHP = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
 
                     FullPath = Ext + xx.LampiranLHP;
@@ -724,7 +961,7 @@ namespace SIMHUKDIS.Controllers
                     Ext = Server.MapPath("/Files/Upload/Surat Masuk/9.SPTJM/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(i);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
-                    Request.Files[0].SaveAs(FilePath);
+                    Request.Files[5].SaveAs(FilePath);
                     sm.LampiranSPTJM = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
 
                     FullPath = Ext + xx.LampiranSPTJM;
@@ -738,7 +975,7 @@ namespace SIMHUKDIS.Controllers
                     sm.LampiranSPTJM = "";
                 }
 
-                sm.UpdatUser = UserLogin;                
+                sm.UpdatUser = UserID;                
                 db.Edit(sm);
 
                 int Status = 0;
@@ -751,6 +988,244 @@ namespace SIMHUKDIS.Controllers
                 var Error_Message = "Error Catch ! (" + ex.Message + ")";
                 return RedirectToAction("Error500", "Home", new { Error_Message});
                 
+            }
+        }
+        [HttpPost]
+        public ActionResult EditTindakPidana(int ID, string NoAgenda, string NoSurat, string AsalSurat, string TanggalSurat,
+           string perihal, string KODE_SATUAN_KERJA, string Kode_Unit_Kerja, HttpPostedFileBase LampiranSurat1,
+           HttpPostedFileBase LampiranSurat2, HttpPostedFileBase LampiranSurat3,
+           HttpPostedFileBase LampiranSurat4,
+           HttpPostedFileBase LampiranSurat5,
+           HttpPostedFileBase LampiranSurat6,
+           HttpPostedFileBase LampiranSurat_LHA,
+           HttpPostedFileBase LampiranLHP,
+           HttpPostedFileBase LampiranSPTJM,
+           string UsulStatus)
+        {
+            string FilePath = "";
+            string FileExt = "";
+            string GetDateTime = "";
+            string Ext = "";
+            string FileNameWithoutExtension = "";
+            string a, b, c, d, e, f, g, h, i;
+
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            try
+            {
+                clsSuratMasukDB db = new clsSuratMasukDB();
+                GetDateTime = DateTime.Now.ToString("ddMMyyyy_hhmmss");
+                string UserLogin = Session["Fullname"].ToString();
+                string UserID = Session["UserID"].ToString();
+
+                clsSuratMasuk sm = new clsSuratMasuk();
+                sm.ID = ID;
+                sm.NoAgenda = NoAgenda;
+                sm.NoSurat = NoSurat;
+                sm.AsalSurat = AsalSurat;
+                sm.TanggalSurat = TanggalSurat;
+                sm.perihal = perihal;
+                sm.SATUAN_KERJA = KODE_SATUAN_KERJA;
+                sm.Kode_Unit_Kerja = Kode_Unit_Kerja;
+                sm.UsulStatus = UsulStatus;
+                clsSuratMasuk xx = db.GetList(ID);
+                string FullPath = "";
+                if (LampiranSurat1 != null)
+                {
+                    a = LampiranSurat1.FileName;
+                    FileExt = Path.GetExtension(a);
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/1.Surat Pengantar/");
+                    FileNameWithoutExtension = Path.GetFileNameWithoutExtension(a);
+                    FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    Request.Files[0].SaveAs(FilePath);
+                    sm.LampiranSurat1 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+
+                    FullPath = Ext + xx.LampiranSurat1;
+                    if (System.IO.File.Exists(FullPath))
+                    {
+                        System.IO.File.Delete(FullPath);
+                    }
+                }
+                else
+                {
+                    sm.LampiranSurat1 = "";
+                }
+                if (LampiranSurat2 != null)
+                {
+                    b = LampiranSurat2.FileName;
+                    FileExt = Path.GetExtension(b);
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/2.BAP/");
+                    FileNameWithoutExtension = Path.GetFileNameWithoutExtension(b);
+                    FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    Request.Files[1].SaveAs(FilePath);
+                    sm.LampiranSurat2 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+
+                    FullPath = Ext + xx.LampiranSurat2;
+                    if (System.IO.File.Exists(FullPath))
+                    {
+                        System.IO.File.Delete(FullPath);
+                    }
+                }
+                else
+                {
+                    sm.LampiranSurat2 = "";
+                }
+                if (LampiranSurat3 != null)
+                {
+                    c = LampiranSurat3.FileName;
+                    FileExt = Path.GetExtension(c);
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/3.Surat Tugas Pemeriksaan/");
+                    FileNameWithoutExtension = Path.GetFileNameWithoutExtension(c);
+                    FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    Request.Files[2].SaveAs(FilePath);
+                    sm.LampiranSurat3 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+
+                    FullPath = Ext + xx.LampiranSurat3;
+                    if (System.IO.File.Exists(FullPath))
+                    {
+                        System.IO.File.Delete(FullPath);
+                    }
+                }
+                else
+                {
+                    sm.LampiranSurat3 = "";
+                }
+                if (LampiranSurat4 != null)
+                {
+                    d = LampiranSurat4.FileName;
+                    FileExt = Path.GetExtension(d);
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/4.Surat Panggilan/");
+                    FileNameWithoutExtension = Path.GetFileNameWithoutExtension(d);
+                    FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    Request.Files[3].SaveAs(FilePath);
+                    sm.LampiranSurat4 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+
+                    FullPath = Ext + xx.LampiranSurat4;
+                    if (System.IO.File.Exists(FullPath))
+                    {
+                        System.IO.File.Delete(FullPath);
+                    }
+                }
+                else
+                {
+                    sm.LampiranSurat4 = "";
+                }
+                if (LampiranSurat5 != null)
+                {
+                    e = LampiranSurat5.FileName;
+                    FileExt = Path.GetExtension(e);
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/5.Dokumen Lainnya/");
+                    FileNameWithoutExtension = Path.GetFileNameWithoutExtension(e);
+                    FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    Request.Files[6].SaveAs(FilePath);
+                    sm.LampiranSurat5 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+
+                    FullPath = Ext + xx.LampiranSurat5;
+                    if (System.IO.File.Exists(FullPath))
+                    {
+                        System.IO.File.Delete(FullPath);
+                    }
+                }
+                else
+                {
+                    sm.LampiranSurat5 = "";
+                }
+                if (LampiranSurat6 != null)
+                {
+                    f = LampiranSurat6.FileName;
+                    FileExt = Path.GetExtension(f);
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/6.Surat Putusan Pengadilan/");
+                    FileNameWithoutExtension = Path.GetFileNameWithoutExtension(f);
+                    FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    Request.Files[1].SaveAs(FilePath);
+                    sm.LampiranSurat6 = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+
+                    FullPath = Ext + xx.LampiranSurat6;
+                    if (System.IO.File.Exists(FullPath))
+                    {
+                        System.IO.File.Delete(FullPath);
+                    }
+                }
+                else
+                {
+                    sm.LampiranSurat6 = "";
+                }
+                if (LampiranSurat_LHA != null)
+                {
+                    g = LampiranSurat_LHA.FileName;
+                    FileExt = Path.GetExtension(g);
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/7.LHA/");
+                    FileNameWithoutExtension = Path.GetFileNameWithoutExtension(g);
+                    FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    Request.Files[0].SaveAs(FilePath);
+                    sm.LampiranSurat_LHA = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+
+                    FullPath = Ext + xx.LampiranSurat_LHA;
+                    if (System.IO.File.Exists(FullPath))
+                    {
+                        System.IO.File.Delete(FullPath);
+                    }
+                }
+                else
+                {
+                    sm.LampiranSurat_LHA = "";
+                }
+                if (LampiranLHP != null)
+                {
+                    h = LampiranLHP.FileName;
+                    FileExt = Path.GetExtension(h);
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/8.LHP/");
+                    FileNameWithoutExtension = Path.GetFileNameWithoutExtension(h);
+                    FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    Request.Files[4].SaveAs(FilePath);
+                    sm.LampiranLHP = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+
+                    FullPath = Ext + xx.LampiranLHP;
+                    if (System.IO.File.Exists(FullPath))
+                    {
+                        System.IO.File.Delete(FullPath);
+                    }
+                }
+                else
+                {
+                    sm.LampiranLHP = "";
+                }
+                if (LampiranSPTJM != null)
+                {
+                    i = LampiranSPTJM.FileName;
+                    FileExt = Path.GetExtension(i);
+                    Ext = Server.MapPath("/Files/Upload/Surat Masuk/9.SPTJM/");
+                    FileNameWithoutExtension = Path.GetFileNameWithoutExtension(i);
+                    FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    Request.Files[5].SaveAs(FilePath);
+                    sm.LampiranSPTJM = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+
+                    FullPath = Ext + xx.LampiranSPTJM;
+                    if (System.IO.File.Exists(FullPath))
+                    {
+                        System.IO.File.Delete(FullPath);
+                    }
+                }
+                else
+                {
+                    sm.LampiranSPTJM = "";
+                }
+
+                sm.UpdatUser = UserID;
+                db.Edit(sm);
+
+                int Status = 0;
+                string DateFrom = Convert.ToDateTime(DateTime.Today).ToString("yyyy-01-01");
+                string DateTo = Convert.ToDateTime(DateTime.Today).ToString("yyyy-MM-dd"); ;
+                return RedirectToAction("Index", "SuratMasuk", new { Status, DateFrom, DateTo });
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
+
             }
         }
         public FileResult DownloadFileSPTJM(string fileName)
@@ -985,15 +1460,22 @@ namespace SIMHUKDIS.Controllers
             string SatuanKerja = Session["Satker"].ToString();
             string StatusAdmin = Session["StatusAdmin"].ToString();
             string UserGroup = Session["UserGroup"].ToString();
+            string UserID = Session["UserID"].ToString();
             ViewBag.UserID = userlogin;
             ViewBag.SatuanKerja = SatuanKerja;
             ViewBag.UserGroup = UserGroup;
             try
             {
                 clsSuratMasuk a = new clsSuratMasuk();
+                clsSuratMasukMsgInfo b = new clsSuratMasukMsgInfo();
+
                 a.ID = ID;
-                a.UpdatUser = userlogin;
+                a.UpdatUser = UserID;
                 db.Proses(a);
+
+                clsSuratMasuk xx = db.GetList(ID);
+                SendWaBlas(ID);
+
                 strMsg = "Success";
                 return Json(strMsg, JsonRequestBehavior.AllowGet);
             }
@@ -1329,8 +1811,7 @@ namespace SIMHUKDIS.Controllers
                     JsonRequestBehavior = JsonRequestBehavior.DenyGet
                 };
             }
-        }
-        
+        } 
         Dictionary<string, string> ReplaceWord(clsSPTMJ a)
         {
             Dictionary<string, string> replaceDict = new Dictionary<string, string>();
@@ -1344,6 +1825,44 @@ namespace SIMHUKDIS.Controllers
             replaceDict.Add("*Tanggal_pembuatan_surat*", a.Tanggal_Surat);
 
             return replaceDict;
+        }
+        public ActionResult SendWaBlas(int ID)
+        {
+            try
+            {
+                clsSuratMasukMsgInfo Msg = new clsSuratMasukMsgInfo();
+                int StatusSM = 1;
+                Msg = db.GetMsgInfo(ID, StatusSM);
+                if (Msg.PhoneNo != "" || Msg.PhoneNo != null)
+                {
+                    var client = new HttpClient();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    HttpResponseMessage resp = client.GetAsync(baseAddress + "api/send-message?source=postman&phone=" 
+                        + WebUtility.UrlEncode(Msg.PhoneNo) + "&message=" + WebUtility.UrlEncode(Msg.Pesan)
+                        + "&token=" + WebUtility.UrlEncode(strToken)).GetAwaiter().GetResult();
+                    if (resp.IsSuccessStatusCode)
+                    {
+                        return Json(null, JsonRequestBehavior.AllowGet);
+
+                    }
+                    else
+                    {
+                        return Json(null, JsonRequestBehavior.AllowGet);
+                    }
+
+                }
+                return Json(null, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult
+                {
+                    Data = new { ErrorMessage = ex.Message, Success = false },
+                    ContentEncoding = System.Text.Encoding.UTF8,
+                    JsonRequestBehavior = JsonRequestBehavior.DenyGet
+                };
+            }
         }
     }
 }

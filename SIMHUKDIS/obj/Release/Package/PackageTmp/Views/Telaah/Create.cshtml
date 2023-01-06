@@ -284,7 +284,7 @@
 
                 <div class="form-group row">
                     <div class="col-md-offset-2 col-md-10">
-                        <input type="submit" value="Simpan" class="btn btn-primary" onclick="GenerateWord()" /> | @Html.ActionLink("Back to List", "Index")
+                        <input type="submit" value="Simpan" class="btn btn-primary" onclick="Simpan()" /> | @Html.ActionLink("Back to List", "Index")
                         @*<button type="button" id="InsertData" class="btn btn-success" style="background-color:teal;"></button> | @Html.ActionLink("Back to List", "Index")*@
                     </div>
                 </div>
@@ -375,6 +375,11 @@
         });
         return false;
     }
+    function Simpan() {
+        var InputID = $('#ID').val();
+        GenerateWord()
+        window.location.href = '@Url.Action("Details2", "Telaah")?ID=' + InputID;
+    }
     function GenerateWord()
     {
         var InputID = $('#ID').val();
@@ -415,6 +420,7 @@
                         showConfirmButton: false,
                         timer: 3000
                     })
+                    
                 }
                 else {
                     Swal.fire({
@@ -424,6 +430,7 @@
                         timer: 3000
                     })
                 }
+                
             },
             error: function (errormessage) {
                 Swal.fire({

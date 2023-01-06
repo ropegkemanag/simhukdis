@@ -12,9 +12,9 @@
         <table class="table hover data-table-export">
             <thead class="table table-primary" style="white-space:nowrap;">
                 <tr>
-                    @*<th>
-                Aksi
-            </th>*@
+                    <th>
+                        Verifikasi
+                    </th>
                     <th>
                         @Html.DisplayNameFor(model => model.NoSurat)
                     </th>
@@ -39,9 +39,10 @@
                     foreach (var item in Model)
                     {
                         <tr class="table-bordered table-hover my-3">
-                            @*<td>
-                            @Html.ActionLink("Buat Telaah", "Create", new { ID = item.ID})
-                        </td>*@
+                            <td>
+                                <a class="btn btn-danger" href="#" onclick="getbyID(@item.ID)">Verifikasi</a>
+                            </td>
+
                             <td>
                                 @Html.ActionLink(item.NoSurat, "Details2", new { ID = item.ID })
                             </td>
@@ -61,3 +62,97 @@
         </table>
     </div>
 </div>
+
+<div class="modal fade" id="VerifikasiKasus" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Verifikasi Usul</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="Form">
+                    <fieldset id="SubmitForm">
+                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <table style="border:0px solid black; width:100%">
+                            <tr style="display:none;">
+                                <td>
+                                    <label id="ID2" name="ID2"></label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col">
+                                            <label for="Disposisi_Status">Proses</label>
+                                            @Html.DropDownList("JenisVerifikasi", new List<SelectListItem>
+                                                                                                {
+                                                                                                    new SelectListItem{ Text = "Terima", Value = "0" },
+                                                                                                    new SelectListItem{ Text = "Kembalikan/Tolak", Value = "1" }
+                                                                                                }, htmlAttributes: new { @class = "form-control", @id = "JenisVerifikasi" }
+                                                                                            )
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col">
+                                            <label for="catatan">Catatan</label>
+                                            <textarea class="form-control" id="Catatan" rows="5" name="Catatan"></textarea>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" onclick="ProsesVerifikasi()">Verifikasi</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function getbyID(ID) {
+        $('#ID2').val(ID);
+        $('#VerifikasiKasus').modal('show');
+    }
+    function ProsesVerifikasi() {
+        var dpObj = {
+        ID: $('#ID2').val(),
+            Catatan: $('#Catatan').val(),
+            JenisVerifikasi: $('#JenisVerifikasi').val()
+        };
+        $.ajax({
+            url: "/Telaah/Verifikasi",
+            data: JSON.stringify(dpObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Verifikasi berhasil !',
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+                window.location.href = '@Url.Action("Index", "Telaah")'
+            },
+            error: function (errormessage) {
+                Swal.fire({
+                    icon: 'error',
+                    title: errormessage.responseText,
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        });
+    }
+</script>

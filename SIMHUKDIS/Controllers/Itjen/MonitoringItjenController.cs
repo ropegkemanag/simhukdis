@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using SIMHUKDIS.Models;
-using SIMHUKDIS.Models;
 using System;
 using System.Collections.Generic;
 using System.Configuration;

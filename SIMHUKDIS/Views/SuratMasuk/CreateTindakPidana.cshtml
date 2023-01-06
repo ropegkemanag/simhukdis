@@ -4,7 +4,7 @@
 }
 
 <div class="pd-20 card-box mb-30">
-    @using (Html.BeginForm("Create", "SuratMasuk", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    @using (Html.BeginForm("CreateTindakPidana", "SuratMasuk", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {
         @Html.AntiForgeryToken()
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })

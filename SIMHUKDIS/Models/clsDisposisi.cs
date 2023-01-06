@@ -69,6 +69,7 @@ namespace SIMHUKDIS.Models
         public string Kode_Unit_Kerja { get; set; }
         public string Unit_Kerja { get; set; }
         public string UsulStatus { get; set; }
+        public string tipe { get; set; }
     }
     public class clsDisposisiDB
     {
@@ -144,7 +145,7 @@ namespace SIMHUKDIS.Models
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     Int32 pNom = 0;
-                    string q = "SIMHUKDIS.sp_Disposisi1_Sel";
+                    string q = "sp_Disposisi1_Sel";
                     SqlCommand cmd = new SqlCommand(q, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
@@ -158,17 +159,12 @@ namespace SIMHUKDIS.Models
                         data.NoSurat = rd["nomor_surat"].ToString();
                         data.AsalSurat = rd["asal_surat"].ToString();
                         data.TanggalSurat = rd["tanggal_surat"].ToString();
-                        //if (!Convert.IsDBNull(rd["tanggal_surat"]))
-                        //{
-                        //    data.TanggalSurat = Convert.ToDateTime(rd["tanggal_surat"].ToString());
-                        //}
                         data.perihal = rd["perihal"].ToString();
-                        data.Konseptor = rd["konseptor"].ToString();
-                        data.UserID = rd["UserID"].ToString();
                         data.KODE_SATUAN_KERJA = rd["KODE_SATUAN_KERJA"].ToString();
                         data.SATUAN_KERJA = rd["SatuanKerja"].ToString();
                         data.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
                         data.Unit_Kerja = rd["Unit_Kerja"].ToString();
+                        data.tipe = rd["TIPE"].ToString();
                         DP.Add(data);
                     }
                     return DP;
@@ -205,14 +201,15 @@ namespace SIMHUKDIS.Models
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "SIMHUKDIS.sp_Disposisi1_Upd";
+                    string MySql = "sp_Disposisi1_Upd";
                     SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("i_id", disposisi.ID);
-                    cmd.Parameters.AddWithValue("iStatus", 2);
-                    cmd.Parameters.AddWithValue("iDisposisi_By", disposisi.UpdateUser);
-                    cmd.Parameters.AddWithValue("iDisposisi_Note", disposisi.Catatan1);
-                    cmd.Parameters.AddWithValue("iDisposisi_Status", disposisi.DisposisiStatus1);
+                    cmd.Parameters.AddWithValue("@id", disposisi.ID);
+                    cmd.Parameters.AddWithValue("@Status", 2);
+                    cmd.Parameters.AddWithValue("@Disposisi_By", disposisi.UpdateUser);
+                    cmd.Parameters.AddWithValue("@Disposisi_Note", disposisi.Catatan1);
+                    cmd.Parameters.AddWithValue("@Disposisi_Status", disposisi.DisposisiStatus1);
+                    cmd.Parameters.AddWithValue("@tipe", disposisi.tipe);
                     con.Open();
                     i = cmd.ExecuteNonQuery();
                 }
@@ -300,42 +297,12 @@ namespace SIMHUKDIS.Models
                         data.NoSurat = rd["nomor_surat"].ToString();
                         data.AsalSurat = rd["asal_surat"].ToString();
                         data.TanggalSurat = rd["tanggal_surat"].ToString();
-                        //if (!Convert.IsDBNull(rd["tanggal_surat"]))
-                        //{
-                        //    data.TanggalSurat = Convert.ToDateTime(rd["tanggal_surat"].ToString());
-                        //}
                         data.perihal = rd["perihal"].ToString();
-                        data.Konseptor = rd["konseptor"].ToString();
-                        data.UserID = rd["UserID"].ToString();
                         data.KODE_SATUAN_KERJA = rd["KODE_SATUAN_KERJA"].ToString();
                         data.SATUAN_KERJA = rd["SatuanKerja"].ToString();
-                        data.Catatan1 = rd["Disposisi1_Notes"].ToString();
-                        data.Catatan2 = rd["Disposisi2_Notes"].ToString();
-                        data.Catatan3 = rd["Disposisi3_Notes"].ToString();
-                        data.DisposisiStatus1 = rd["Disposisi1_Status"].ToString();
-                        data.DisposisiStatus2 = rd["Disposisi2_Status"].ToString();
-                        data.DisposisiStatus3 = rd["Disposisi3_Status"].ToString();
-                        data.DisposisiBy1 = rd["Disposisi1_By"].ToString();
-                        data.DisposisiBy2 = rd["Disposisi2_By"].ToString();
-                        data.DisposisiBy3 = rd["Disposisi3_By"].ToString();
-                        data.DisposisiDate1 = rd["Disposisi1_Date"].ToString();
-                        data.DisposisiDate2 = rd["Disposisi2_Date"].ToString();
-                        data.DisposisiDate3 = rd["Disposisi3_Date"].ToString();
-                        data.Dokumen_Yang_Akan_Dibuat = rd["Dokumen_Yang_Akan_Dibuat"].ToString();
                         data.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
                         data.Unit_Kerja = rd["Unit_Kerja"].ToString();
-                        //if (!Convert.IsDBNull(rd["Disposisi1_Date"]))
-                        //{
-                        //    data.DisposisiDate1 = Convert.ToDateTime(rd["Disposisi1_Date"].ToString());
-                        //}
-                        //if (!Convert.IsDBNull(rd["Disposisi2_Date"]))
-                        //{
-                        //    data.DisposisiDate2 = Convert.ToDateTime(rd["Disposisi2_Date"].ToString());
-                        //}
-                        //if (!Convert.IsDBNull(rd["Disposisi3_Date"]))
-                        //{
-                        //    data.DisposisiDate3 = Convert.ToDateTime(rd["Disposisi3_Date"].ToString());
-                        //}
+                        data.tipe = rd["TIPE"].ToString();
                         DP.Add(data);
                     }
                     return DP;
@@ -372,7 +339,7 @@ namespace SIMHUKDIS.Models
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "SIMHUKDIS.sp_Disposisi2_Upd";
+                    string MySql = "sp_Disposisi2_Upd";
                     SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("i_id", disposisi.ID);
@@ -380,6 +347,7 @@ namespace SIMHUKDIS.Models
                     cmd.Parameters.AddWithValue("iDisposisi_By", disposisi.UpdateUser);
                     cmd.Parameters.AddWithValue("iDisposisi_Note", disposisi.Catatan2);
                     cmd.Parameters.AddWithValue("iDisposisi_Status", disposisi.DisposisiStatus2);
+                    cmd.Parameters.AddWithValue("@tipe", disposisi.tipe);
                     con.Open();
                     i = cmd.ExecuteNonQuery();
                 }
@@ -523,6 +491,7 @@ namespace SIMHUKDIS.Models
                         data.Dokumen_Yang_Akan_Dibuat = rd["Dokumen_Yang_Akan_Dibuat"].ToString();
                         data.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
                         data.Unit_Kerja = rd["Unit_Kerja"].ToString();
+                        data.tipe = rd["TIPE"].ToString();
                         DP.Add(data);
                     }
                     return DP;
@@ -546,16 +515,17 @@ namespace SIMHUKDIS.Models
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "SIMHUKDIS.sp_Disposisi3_Upd";
+                    string MySql = "sp_Disposisi3_Upd";
                     SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("i_id", disposisi.ID);
-                    cmd.Parameters.AddWithValue("iStatus", iStatus);
-                    cmd.Parameters.AddWithValue("iDisposisi_By", disposisi.UpdateUser);
-                    cmd.Parameters.AddWithValue("iDisposisi_Note", disposisi.Catatan3);
-                    cmd.Parameters.AddWithValue("iDisposisi_Status", disposisi.DisposisiStatus3);
-                    cmd.Parameters.AddWithValue("iKonseptor", disposisi.Konseptor);
-                    cmd.Parameters.AddWithValue("iDokumen_Yang_Akan_Dibuat", disposisi.Dokumen_Yang_Akan_Dibuat);
+                    cmd.Parameters.AddWithValue("@i_id", disposisi.ID);
+                    cmd.Parameters.AddWithValue("@iStatus", iStatus);
+                    cmd.Parameters.AddWithValue("@iDisposisi_By", disposisi.UpdateUser);
+                    cmd.Parameters.AddWithValue("@iDisposisi_Note", disposisi.Catatan3);
+                    cmd.Parameters.AddWithValue("@iDisposisi_Status", disposisi.DisposisiStatus3);
+                    cmd.Parameters.AddWithValue("@iKonseptor", disposisi.Konseptor);
+                    cmd.Parameters.AddWithValue("@iDokumen_Yang_Akan_Dibuat", disposisi.Dokumen_Yang_Akan_Dibuat);
+                    cmd.Parameters.AddWithValue("@tipe", disposisi.tipe);
                     con.Open();
                     i = cmd.ExecuteNonQuery();
                 }

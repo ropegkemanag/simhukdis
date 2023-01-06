@@ -11,7 +11,7 @@
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     @Html.HiddenFor(model => model.ID)
     <div class="card-body">
-        @using (Html.BeginForm("Edit", "SuratMasuk", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        @using (Html.BeginForm("EditTindakPidana", "SuratMasuk", FormMethod.Post, new { enctype = "multipart/form-data" }))
         {
             @Html.AntiForgeryToken()
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })

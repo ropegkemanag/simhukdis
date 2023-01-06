@@ -94,6 +94,9 @@ namespace SIMHUKDIS.Models
         public string Unit_Kerja { get; set; }
         public string Kode_Unit_Kerja { get; set; }
         public string UsulStatus { get; set; }
+        public string RejectStatus { get; set; }
+        public string RejectReason { get; set; }
+        public string Tipe { get; set; }
     }
     public class clsSPTMJ
     {
@@ -110,6 +113,8 @@ namespace SIMHUKDIS.Models
         public string Created_User { get; set; }
         public string Updated_Date { get; set; }
         public string Updated_User { get; set; }
+        public string RejectStatus { get; set; }
+        public string RejectReason { get; set; }
     }
     public class clsLampiranSurat
     {
@@ -123,6 +128,11 @@ namespace SIMHUKDIS.Models
         public string LampiranSurat4 { get; set; }
         [DisplayName("Lampiran Surat 5")]
         public string LampiranSurat5 { get; set; }
+    }
+    public class clsSuratMasukMsgInfo
+    {
+        public string PhoneNo { get; set; }
+        public string Pesan { get; set; }
     }
     public class clsSuratMasukFilter
     {
@@ -438,6 +448,7 @@ namespace SIMHUKDIS.Models
                     data.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
                     data.Unit_Kerja = rd["Unit_Kerja"].ToString();
                     data.UsulStatus = rd["UsulStatus"].ToString();
+                    data.Tipe = rd["TIPE"].ToString();
                 }
                 return data;
                 }
@@ -660,5 +671,48 @@ namespace SIMHUKDIS.Models
             }
             return s;
         }
+        public clsSuratMasukMsgInfo GetMsgInfo(int ID, int status)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            clsSuratMasukMsgInfo data = new clsSuratMasukMsgInfo();
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                string q = "sp_SuratMasuk_Proses_WABlas";
+                SqlCommand cmd = new SqlCommand(q, con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@STATUS", status);
+                cmd.Parameters.AddWithValue("@ID", ID);
+                con.Open();
+                SqlDataReader rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    data.PhoneNo = rd["PhoneNo"].ToString();
+                    data.Pesan = rd["Pesan"].ToString();
+                }
+                return data;
+            }
+        }
+        public clsSuratMasukMsgInfo GetPSMsgInfo(int ID, int status)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            clsSuratMasukMsgInfo data = new clsSuratMasukMsgInfo();
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                string q = "sp_PemberhentianSementara_Proses_WABlas";
+                SqlCommand cmd = new SqlCommand(q, con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@STATUS", status);
+                cmd.Parameters.AddWithValue("@ID", ID);
+                con.Open();
+                SqlDataReader rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    data.PhoneNo = rd["PhoneNo"].ToString();
+                    data.Pesan = rd["Pesan"].ToString();
+                }
+                return data;
+            }
+        }
+
     }
 }

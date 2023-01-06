@@ -30,7 +30,7 @@
             <div class="col-md-3">
                 <label class="control-label col">Nama Lengkap *</label>
             </div>
-            
+
             <div class="col">
                 @Html.EditorFor(model => model.FullName, new { htmlAttributes = new { @class = "form-control", @id = "Fullname", required = "required", @readonly = "True" } })
                 @Html.ValidationMessageFor(model => model.FullName, "", new { @class = "text-danger" })
@@ -40,9 +40,9 @@
             <div class="col-md-3">
                 <label class="control-label col">Jabatan *</label>
             </div>
-            
+
             <div class="col">
-                @Html.EditorFor(model => model.LEVEL_JABATAN, new { htmlAttributes = new { @class = "form-control", @id = "LEVEL_JABATAN", required = "required", @readonly = "True", rows=3 } })
+                @Html.EditorFor(model => model.LEVEL_JABATAN, new { htmlAttributes = new { @class = "form-control", @id = "LEVEL_JABATAN", required = "required", @readonly = "True", rows = 3 } })
                 @Html.ValidationMessage("LEVEL_JABATAN", "", new { @class = "text-danger" })
             </div>
         </div>
@@ -50,7 +50,7 @@
             <div class="col-md-3">
                 <label class="control-label col">Satuan Kerja *</label>
             </div>
-            
+
             <div class="col">
                 @Html.DropDownList("KODE_SATUAN_KERJA", ViewBag.Satker as SelectList, new { @class = "custom-select2  form-control", required = "required", @id = "KODE_SATUAN_KERJA" })
             </div>
@@ -59,7 +59,7 @@
             <div class="col-md-3">
                 <label class="control-label col">Password *</label>
             </div>
-            
+
             <div class="col">
                 @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control password", @id = "Password", required = "required" } })
                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
@@ -72,6 +72,26 @@
             </div>
             <div class="col">
                 <input type="checkbox" onclick="ShowPassword()"> Lihat Password
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label class="control-label col">No HP *</label>
+            </div>
+
+            <div class="col">
+                @Html.EditorFor(model => model.PhoneNo, new { htmlAttributes = new { @class = "form-control", @id = "PhoneNo", required = "required" } })
+                @Html.ValidationMessageFor(model => model.PhoneNo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label class="control-label col">Email *</label>
+            </div>
+
+            <div class="col">
+                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control", @id = "Email", required = "required" } })
+                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group row">
@@ -125,6 +145,8 @@
                 success: function (result) {
                     $('#Fullname').val(result.NAMA_LENGKAP);
                     $('#LEVEL_JABATAN').val(result.TAMPIL_JABATAN);
+                    $('#PhoneNo').val(result.NO_HP);
+                    $('#Email').val(result.EMAIL);
                 },
                 error: function (errormessage) {
                     Swal.fire({
@@ -153,6 +175,8 @@
             UserName: $('#UserName').val(),
             Fullname: $('#Fullname').val(),
             Password: $('#Password').val(),
+            PhoneNo: $('#PhoneNo').val(),
+            Email: $('#Email').val(),
             StatusAdmin: $('#StatusAdmin').val(),
             GroupID: $('#GroupID').val(),
             NIP: $('#NIP').val(),
