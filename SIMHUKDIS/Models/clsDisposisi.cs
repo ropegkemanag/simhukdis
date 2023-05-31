@@ -283,7 +283,7 @@ namespace SIMHUKDIS.Models
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     Int32 pNom = 0;
-                    string q = "SIMHUKDIS.sp_Disposisi2_Sel";
+                    string q = "sp_Disposisi2_Sel";
                     SqlCommand cmd = new SqlCommand(q, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
@@ -303,6 +303,18 @@ namespace SIMHUKDIS.Models
                         data.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
                         data.Unit_Kerja = rd["Unit_Kerja"].ToString();
                         data.tipe = rd["TIPE"].ToString();
+                        data.Catatan1 = rd["Disposisi1_Notes"].ToString();
+                        data.Catatan2 = rd["Disposisi2_Notes"].ToString();
+                        data.Catatan3 = rd["Disposisi3_Notes"].ToString();
+                        data.DisposisiStatus1 = rd["Disposisi1_Status"].ToString();
+                        data.DisposisiStatus2 = rd["Disposisi2_Status"].ToString();
+                        data.DisposisiStatus3 = rd["Disposisi3_Status"].ToString();
+                        data.DisposisiBy1 = rd["Disposisi1_By"].ToString();
+                        data.DisposisiBy2 = rd["Disposisi2_By"].ToString();
+                        data.DisposisiBy3 = rd["Disposisi3_By"].ToString();
+                        data.DisposisiDate1 = rd["Disposisi1_Date"].ToString();
+                        data.DisposisiDate2 = rd["Disposisi2_Date"].ToString();
+                        data.DisposisiDate3 = rd["Disposisi3_Date"].ToString();
                         DP.Add(data);
                     }
                     return DP;
@@ -342,11 +354,11 @@ namespace SIMHUKDIS.Models
                     string MySql = "sp_Disposisi2_Upd";
                     SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("i_id", disposisi.ID);
-                    cmd.Parameters.AddWithValue("iStatus", 3);
-                    cmd.Parameters.AddWithValue("iDisposisi_By", disposisi.UpdateUser);
-                    cmd.Parameters.AddWithValue("iDisposisi_Note", disposisi.Catatan2);
-                    cmd.Parameters.AddWithValue("iDisposisi_Status", disposisi.DisposisiStatus2);
+                    cmd.Parameters.AddWithValue("id", disposisi.ID);
+                    cmd.Parameters.AddWithValue("Status", 3);
+                    cmd.Parameters.AddWithValue("Disposisi_By", disposisi.UpdateUser);
+                    cmd.Parameters.AddWithValue("Disposisi_Note", disposisi.Catatan2);
+                    cmd.Parameters.AddWithValue("Disposisi_Status", disposisi.DisposisiStatus2);
                     cmd.Parameters.AddWithValue("@tipe", disposisi.tipe);
                     con.Open();
                     i = cmd.ExecuteNonQuery();
@@ -388,7 +400,7 @@ namespace SIMHUKDIS.Models
             using (SqlConnection con = new SqlConnection(constr))
             {
                 Int32 pNom = 0;
-                string q = "SIMHUKDIS.sp_Disposisi3_Sel";
+                string q = "sp_Disposisi3_Sel";
                 SqlCommand cmd = new SqlCommand(q, con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 con.Open();
@@ -453,7 +465,7 @@ namespace SIMHUKDIS.Models
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     Int32 pNom = 0;
-                    string q = "SIMHUKDIS.sp_Disposisi3_Sel";
+                    string q = "sp_Disposisi3_Sel";
                     SqlCommand cmd = new SqlCommand(q, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     con.Open();
@@ -473,7 +485,7 @@ namespace SIMHUKDIS.Models
                         //}
                         data.perihal = rd["perihal"].ToString();
                         data.Konseptor = rd["konseptor"].ToString();
-                        data.UserID = rd["UserID"].ToString();
+                        //data.UserID = rd["UserID"].ToString();
                         data.KODE_SATUAN_KERJA = rd["KODE_SATUAN_KERJA"].ToString();
                         data.SATUAN_KERJA = rd["SatuanKerja"].ToString();
                         data.Catatan1 = rd["Disposisi1_Notes"].ToString();

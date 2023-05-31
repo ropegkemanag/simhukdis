@@ -305,6 +305,7 @@ p {
 
 .mb-30 {
     margin-bottom: 30px;
+    width: auto;
 }
 
 .mb-20 {
@@ -822,7 +823,7 @@ p {
     }
 
 textarea.form-control {
-    height: 180px;
+    height: 100px;
 }
 
 .custom-file-input:focus,
@@ -1295,12 +1296,12 @@ table.dataTable > tbody > tr.child ul.dtr-details .dtr-title {
 
 .table td,
 .table th {
-    vertical-align: middle;
+    vertical-align: top;
 }
 
 .table td {
     font-size: 12pt;
-    font-weight: 500;
+    font-weight: 400;
     padding: 1rem;
 }
 
@@ -1915,7 +1916,7 @@ table.dataTable.dtr-inline.collapsed > tbody > tr.parent > th:first-child:before
     .sidebar-menu .dropdown-toggle {
         display: block;
         padding: 14px 15px 14px 67px;
-        font-size: 12pt;
+        font-size: 10pt;
         color: #fff;
         font-weight: 500;
         position: relative;

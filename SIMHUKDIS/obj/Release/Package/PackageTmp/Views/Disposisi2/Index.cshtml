@@ -28,14 +28,14 @@
                         Perihal
                     </th>
                     <th>
-                        Satker
+                        Satuan Kerja
                     </th>
                     <th>
                         Tanggal Disposisi Kepala Biro
                     </th>
-                    <th>
+                    @*<th>
                         Status Disposisi Kepala Biro
-                    </th>
+                    </th>*@
                     <th>
                         Catatan Disposisi Kepala Biro
                     </th>
@@ -51,7 +51,11 @@
                     {
                         <tr class="table-bordered table-hover my-3">
                             <td>
-                                <a href="#" onclick="getbyID2('@r.ID')"><i class="icon-copy dw dw-check"></i>Proses</a>
+                                <button class="btn btn-primary" onclick="getbyID2('@r.ID','@r.tipe')">
+                                    <i class="glyphicon glyphicon-check"></i>Proses
+                                </button>
+                                @*<a href="#" onclick="getbyID('@r.ID','@r.tipe')"><i class="icon-copy dw dw-check"></i>Proses</a>*@
+                                @*<a href="#" onclick="getbyID2('@r.ID')"><i class="icon-copy dw dw-check"></i>Proses</a>*@
                             </td>
                             <td>
                                 @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
@@ -72,9 +76,9 @@
                             <td>
                                 @r.DisposisiDate1
                             </td>
-                            <td>
+                            @*<td>
                                 @r.DisposisiStatus1
-                            </td>
+                            </td>*@
                             <td>
                                 @r.Catatan1
                             </td>
@@ -131,6 +135,16 @@
                                     </div>
                                 </td>
                             </tr>
+                            <tr style="display:none;">
+                                <td>
+                                    <div class="form-group">
+                                        <div class="col">
+                                            <label for="catatan">Tipe</label>
+                                            <textarea class="form-control" id="tipe" rows="5" name="tipe"></textarea>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
                         </table>
                     </fieldset>
                 </form>
@@ -144,27 +158,31 @@
 </div>
 
 <script type="text/javascript">
-    function getbyID2(ID) {
-        $.ajax({
-            url: "/Disposisi2/getbyID/" + ID,
-            typr: "GET",
-            contentType: "application/json;charset=UTF-8",
-            dataType: "json",
-            success: function (result) {
-                $('#ID2').val(result.ID);
-                $('#ProsesDisposisi2').modal('show');
-            },
-            error: function (errormessage) {
-                alert(errormessage.responseText);
-            }
-        });
-        return false;
+    function getbyID2(ID, tipe) {
+        $('#ID2').val(ID);
+        $('#tipe').val(tipe);
+        $('#ProsesDisposisi2').modal('show');
+        //$.ajax({
+        //    url: "/Disposisi2/getbyID/" + ID,
+        //    typr: "GET",
+        //    contentType: "application/json;charset=UTF-8",
+        //    dataType: "json",
+        //    success: function (result) {
+        //        $('#ID2').val(result.ID);
+        //        $('#ProsesDisposisi2').modal('show');
+        //    },
+        //    error: function (errormessage) {
+        //        alert(errormessage.responseText);
+        //    }
+        //});
+        //return false;
     }
     function ProsesDisposisi2() {
         var dpObj = {
             ID: $('#ID2').val(),
             Catatan2: $('#Catatan2').val(),
-            DisposisiStatus2: $('#DisposisiStatus2').val()
+            DisposisiStatus2: $('#DisposisiStatus2').val(),
+            tipe: $('#tipe').val()
         };
         $.ajax({
             url: "/Disposisi2/Add",

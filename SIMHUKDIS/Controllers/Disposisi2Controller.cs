@@ -196,12 +196,21 @@ namespace SIMHUKDIS.Controllers
                 return View();
             }
         }
-        public FileResult DownloadFile1(string fileName)
+        public FileResult DownloadFile1(string fileName, string tipe)
         {
             try
             {
+                string path;
                 //Build the File Path.
-                string path = Server.MapPath("/Files/Upload/Surat Masuk/1.Surat Pengantar/") + fileName;
+                if (tipe == "1")
+                {
+                    path = Server.MapPath("/Files/Upload/Surat Masuk/1.Surat Pengantar/") + fileName;
+                }
+                else
+                {
+                    path = Server.MapPath("/Files/Upload/PS/SP/") + fileName;
+                }
+
 
                 //Read the File data into Byte Array.
                 byte[] bytes = System.IO.File.ReadAllBytes(path);
@@ -216,12 +225,21 @@ namespace SIMHUKDIS.Controllers
             }
 
         }
-        public FileResult DownloadFile2(string fileName)
+        public FileResult DownloadFile2(string fileName, string tipe)
         {
             try
             {
+                string path;
                 //Build the File Path.
-                string path = Server.MapPath("/Files/Upload/Surat Masuk/2.BAP/") + fileName;
+                if (tipe == "1")
+                {
+                    path = Server.MapPath("/Files/Upload/Surat Masuk/2.BAP/") + fileName;
+                }
+                else
+                {
+                    path = Server.MapPath("/Files/Upload/PS/DokumenPendukung/") + fileName;
+                }
+                //Build the File Path.
 
                 //Read the File data into Byte Array.
                 byte[] bytes = System.IO.File.ReadAllBytes(path);
@@ -235,6 +253,7 @@ namespace SIMHUKDIS.Controllers
                 return null;
             }
         }
+
         public FileResult DownloadFile3(string fileName)
         {
             try

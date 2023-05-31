@@ -47,6 +47,12 @@ namespace SIMHUKDIS.Models
         public string Tanggal_Telaah { get; set; }
         public string Tanggal_PraDPK { get; set; }
         public string Tanggal_DPK { get; set; }
+        public string tipe { get; set; }
+        public string Tanggal_SK { get; set; }
+        public string Tanggal_Input { get; set; }
+        public string NIP { get; set; }
+        public string Konseptor { get; set; }
+        public string TelaahNo { get; set; }
     }
     public class clsMonitoringDB
     {
@@ -56,8 +62,7 @@ namespace SIMHUKDIS.Models
                 List<clsMonitoring> cm = new List<clsMonitoring>();
                 using (SqlConnection con = new SqlConnection(constr))
                 {
-                    Int32 pNom = 0;
-                    string q = "SIMHUKDIS.sp_Kasus_Monitoring_Sel";
+                    string q = "sp_Kasus_Monitoring_Sel";
                     SqlCommand cmd = new SqlCommand(q, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("iGroupID", UserGroup);
@@ -81,11 +86,16 @@ namespace SIMHUKDIS.Models
                         data.DisposisiDate1 = rd["Disposisi1_Date"].ToString();
                         data.DisposisiDate2 = rd["Disposisi2_Date"].ToString();
                         data.DisposisiDate3 = rd["Disposisi3_Date"].ToString();
-
-                        data.DisposisiStatus1 = rd["Disposisi1_Status"].ToString();
+                    data.Konseptor = rd["KONSEPTOR"].ToString();
+                    data.DisposisiStatus1 = rd["Disposisi1_Status"].ToString();
                         data.DisposisiStatus2 = rd["Disposisi2_Status"].ToString();
                         data.DisposisiStatus3 = rd["Disposisi3_Status"].ToString();
-                        cm.Add(data);
+                        data.tipe = rd["TIPE"].ToString();
+                        data.Tanggal_SK = rd["SKDATE"].ToString();
+                        data.NIP = rd["NIP"].ToString();
+                        data.Tanggal_Input = rd["Tanggal_Input"].ToString();
+                        data.TelaahNo = rd["TelaahNo"].ToString();
+                    cm.Add(data);
                     }
                     return cm;
                 }

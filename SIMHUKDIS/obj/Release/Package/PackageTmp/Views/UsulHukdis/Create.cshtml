@@ -67,7 +67,7 @@
                 <div class="col">
                     <label class="control-label" id="DokBAP" >Lampiran BAP *</label>
                     @Html.TextBoxFor(model => model.LampiranSurat2, "", new { @type = "file", @id = "LampiranSurat2", @class = "form-control", accept = "application/pdf", required = "required" })
-                    @Html.ValidationMessageFor(model => model.LampiranSurat2, "Max : 20MB & Format File : PDF", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(model => model.LampiranSurat2, "Max : 25MB & Format File : PDF", new { @class = "text-danger" })
                 </div>
             </div>
 
@@ -123,10 +123,10 @@
             var file1 = $(this).get(0).files[i].size;
             if (file1) {
                 var file_size = $(this).get(0).files[i].size;
-                if (file_size > 20000000) {
+                if (file_size > 25000000) {
                     Swal.fire({
                         icon: 'error',
-                        title: "File upload size is larger than 20MB!",
+                        title: "File upload size is larger than 25MB!",
                         showConfirmButton: false,
                         timer: 3000
                     })
@@ -259,6 +259,9 @@
                         $("#Kode_Unit_Kerja").append('<option value="' + result[i].Kode_Unit_Kerja + '" >' + result[i].Unit_Kerja + '</option>');
                         //options += '<option value="' + result[i].Kode_Unit_Kerja + '">' + result[i].Unit_Kerja + '</option>';
                     }
+                }
+                else {
+                    $('#Kode_Unit_Kerja').empty();
                 }
             },
             error: function (errormessage) {

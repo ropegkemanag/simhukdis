@@ -64,9 +64,11 @@ namespace SIMHUKDIS.Models
         public string Kode_Unit_Kerja { get; set; }
         public string TEMPAT_LAHIR { get; set; }
         public string TANGGAL_LAHIR { get; set; }
-        public string MASAKERJA_TAHUN { get; set; }
+        public string MK_TAHUN { get; set; }
         public string TMT_PENSIUN { get; set; }
         public string Jabatan_Konseptor { get; set; }
+        public string Jabatan_subkoor { get; set; }
+        public string Jabatan_koor { get; set; }
         public string Tanggal_SK { get; set; }
         public string NO_SK { get; set; }
         public string FILE_SK { get; set; }
@@ -79,6 +81,11 @@ namespace SIMHUKDIS.Models
         public string Penerima_YBS { get; set; }
         public string BAP_Penerima { get; set; }
         public string Keterangan_Penerima { get; set; }
+        public string TMTDate { get; set; }
+        public string TEMBUSAN1 { get; set; }
+        public string TASPEN { get; set; }
+        public string KPPN { get; set; }
+        public string Kode_Satker1 { get; set; }
     }
     public class HasilSidangDtl
     {
@@ -113,7 +120,7 @@ namespace SIMHUKDIS.Models
         public string LampiranSurat6 { get; set; }
         [DisplayName("Lampiran LHA")]
         public string LampiranSurat_LHA { get; set; }
-
+        public string TMTDate { get; set; }
         [DisplayName("Dokumen yang akan di buat Konseptor")]
         public string Dokumen_Yang_Akan_Dibuat { get; set; }
 
@@ -188,7 +195,7 @@ namespace SIMHUKDIS.Models
         public string Kode_Unit_Kerja { get; set; }
         public string TEMPAT_LAHIR { get; set; }
         public string TANGGAL_LAHIR { get; set; }
-        public string MASAKERJA_TAHUN { get; set; }
+        public string MK_TAHUN { get; set; }
         public string TMT_PENSIUN { get; set; }
         public string Jabatan_Konseptor { get; set; }
         public string Tanggal_SK { get; set; }
@@ -203,6 +210,16 @@ namespace SIMHUKDIS.Models
         public string Penerima_YBS { get; set; }
         public string BAP_Penerima { get; set; }
         public string Keterangan_Penerima { get; set; }
+    }
+    public class clsKirimSurat
+    {
+        public string ID { get; set; }
+        public string NIP { get; set; }
+        public string FileSKS { get; set; }
+        public string NoSurat { get; set; }
+        public string TanggalSurat { get; set; }
+        public string UserID { get; set; }
+        public string Tipe { get; set; }
     }
     public class clsHasilSidangDB
     {
@@ -260,32 +277,37 @@ namespace SIMHUKDIS.Models
                     data.Keterangan_Penerima = rd["Keterangan_Penerima"].ToString();
                     clsPraDPKDB x = new clsPraDPKDB();
                     List<clsDataPegawaiDtl> y = new List<clsDataPegawaiDtl>();
-                    y = x.GetPegawai(data.NIP);
-                    int z = 1;
-                    foreach (var item in y)
+                    if (data.NIP != "")
                     {
-                        if (z == 1)
-                        {
-                            data.GOL_RUANG = item.GOL_RUANG;
-                            data.LEVEL_JABATAN = item.LEVEL_JABATAN;
-                            data.UnitKerja = item.SATUAN_KERJA;
-                            data.TEMPAT_LAHIR = item.TEMPAT_LAHIR;
-                            data.TANGGAL_LAHIR = item.TANGGAL_LAHIR;
-                            data.MASAKERJA_TAHUN = item.MASAKERJA_TAHUN;
-                            data.TMT_PENSIUN = item.TMT_PENSIUN;
-                            data.SATKER_1  = item.SATKER_1;
-                            data.SATKER_2  = item.SATKER_2;
-                            data.SATKER_3  = item.SATKER_3;
-                            data.SATKER_4  = item.SATKER_4;
-                            data.SATKER_5 = item.SATKER_5;
-                        }
-                        z = z + 1;
+                        //y = x.GetPegawai(data.NIP);
+                        //int z = 1;
+                        //foreach (var item in y)
+                        //{
+                        //    if (z == 1)
+                        //    {
+                        //        data.GOL_RUANG = item.GOL_RUANG;
+                        //        data.LEVEL_JABATAN = item.LEVEL_JABATAN;
+                        //        data.UnitKerja = item.KETERANGAN_SATUAN_KERJA;
+                        //        data.TEMPAT_LAHIR = item.TEMPAT_LAHIR;
+                        //        data.TANGGAL_LAHIR = item.TANGGAL_LAHIR;
+                        //        data.MK_TAHUN = item.MK_TAHUN;
+                        //        data.TMT_PENSIUN = item.TMT_PENSIUN;
+                        //        data.SATKER_1 = item.SATKER_1;
+                        //        data.SATKER_2 = item.SATKER_2;
+                        //        data.SATKER_3 = item.SATKER_3;
+                        //        data.SATKER_4 = item.SATKER_4;
+                        //        data.SATKER_5 = item.SATKER_5;
+                        //    }
+                        //    z = z + 1;
+                        //}
                     }
+                    
                     DP.Add(data);
                 }
                 return DP;
             }
         }
+        
         public string GetPasalPelanggaran()
         {
             int a = 0;
@@ -337,10 +359,7 @@ namespace SIMHUKDIS.Models
                     data.NoSurat = rd["nomor_surat"].ToString();
                     data.AsalSurat = rd["asal_surat"].ToString();
                     data.TanggalSurat = rd["tanggal_surat"].ToString();
-                    //if (!Convert.IsDBNull(rd["tanggal_surat"]))
-                    //{
-                    //    data.TanggalSurat = Convert.ToDateTime(rd["tanggal_surat"].ToString());
-                    //}
+                    
                     data.perihal = rd["perihal"].ToString();
                     data.SATUAN_KERJA = rd["SatuanKerja"].ToString();
                     data.KODE_SATUAN_KERJA = rd["KODE_SATUAN_KERJA"].ToString();
@@ -405,39 +424,138 @@ namespace SIMHUKDIS.Models
                     data.Penerima_YBS = rd["Penerima_YBS"].ToString();
                     data.BAP_Penerima = rd["BAP_Penerima"].ToString();
                     data.Keterangan_Penerima = rd["Keterangan_Penerima"].ToString();
-                    clsPraDPKDB x = new clsPraDPKDB();
-                    List<clsDataPegawaiDtl> y = new List<clsDataPegawaiDtl>();
-                    y = x.GetPegawai(data.NIP);
-                    int z = 1;
-                    foreach (var item in y)
-                    {
-                        if (z == 1)
-                        {
-                            data.FullName = item.NAMA_LENGKAP;
-                            data.GOL_RUANG = item.PANGKAT;
-                            data.LEVEL_JABATAN = item.LEVEL_JABATAN;
-                            data.UnitKerja = item.SATUAN_KERJA;
-                            data.TEMPAT_LAHIR = item.TEMPAT_LAHIR;
-                            data.TANGGAL_LAHIR = item.TANGGAL_LAHIR;
-                            data.MASAKERJA_TAHUN = item.MASAKERJA_TAHUN;
-                            data.TMT_PENSIUN = item.TMT_PENSIUN;
-                            data.SATKER_1 = item.SATKER_1;
-                            data.SATKER_2 = item.SATKER_2;
-                            data.SATKER_3 = item.SATKER_3;
-                            data.SATKER_4 = item.SATKER_4;
-                            data.SATKER_5 = item.SATKER_5;
+                    data.TMTDate = rd["TMTDate"].ToString();
 
-                            k = item.SATKER_3;
-                        }
-                        z = z + 1;
-                    }
-                    clsHasilSidangDB p = new clsHasilSidangDB();
-                    if (data.Tembusan == "" || data.Tembusan == null)
+
+                    clsPegawaiDB x = new clsPegawaiDB();
+                    List<clsDataPegawaiDtl> y = new List<clsDataPegawaiDtl>();
+                    y = x.ListPegawai(data.NIP);
+                    int z = 1;
+                    if (y != null)
                     {
-                        data.Tembusan = p.GetTembusan(data.KODE_SATUAN_KERJA, data.Kode_Unit_Kerja);
+                        foreach (var item in y)
+                        {
+                            if (z == 1)
+                            {
+                                data.FullName = item.NAMA_LENGKAP;
+                                data.GOL_RUANG = item.PANGKAT;
+                                data.LEVEL_JABATAN = item.TAMPIL_JABATAN;
+                                data.SATUAN_KERJA = item.KETERANGAN_SATUAN_KERJA;
+                                data.UnitKerja = item.KETERANGAN_SATUAN_KERJA;
+                                data.TEMPAT_LAHIR = item.TEMPAT_LAHIR;
+                                data.TANGGAL_LAHIR = item.TANGGAL_LAHIR;
+                                data.MK_TAHUN = item.MK_TAHUN;
+                                data.TMT_PENSIUN = item.TMT_PENSIUN;
+                                data.SATKER_1 = item.SATKER_1;
+                                data.SATKER_2 = item.SATKER_2;
+                                data.SATKER_3 = item.SATKER_3;
+                                data.SATKER_4 = item.SATKER_4;
+                                data.SATKER_5 = item.SATKER_5;
+                                k = item.SATKER_3;
+                            }
+                            z = z + 1;
+                        }
                     }                    
+                    clsHasilSidangDB p = new clsHasilSidangDB();
+                    //if (data.Tembusan == "" || data.Tembusan == null)
+                    //{
+                    //    data.Tembusan = p.GetTembusan(data.KODE_SATUAN_KERJA, data.Kode_Unit_Kerja);
+                    //}                    
                 }
                 return data;
+            }
+        }
+        public clsHasilSidang DBList(int ID, string NIP)
+        {
+            int a = 1;
+            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            clsHasilSidang DP = new clsHasilSidang();
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                string q = "SP_SK_TanpaSidangDPK_SEL";
+                SqlCommand cmd = new SqlCommand(q, con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ID", ID);
+                cmd.Parameters.AddWithValue("@NIP", NIP);
+                con.Open();
+                SqlDataReader rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    if(a==1)
+                    {
+                        DP.No = a;
+                        DP.ID = rd["id"].ToString();
+                        DP.AsalSurat = rd["asal_surat"].ToString();
+                        DP.perihal = rd["perihal"].ToString();
+                        DP.NIP = rd["NIP"].ToString();
+                        DP.DasarBukti = rd["Mengingat"].ToString();
+                        DP.KeputusanSidang = rd["KeputusanSidang"].ToString();
+                        DP.menag = rd["Menag"].ToString();
+                        DP.sekjend = rd["Sekjend"].ToString();
+                        DP.karopeg = rd["karopeg"].ToString();
+                        DP.nip_karopeg = rd["nip_karopeg"].ToString();
+                        DP.koor = rd["koor"].ToString();
+                        DP.nip_koor = rd["nip_koor"].ToString();
+                        DP.subkoor = rd["subkoor"].ToString();
+                        DP.nip_subkoor = rd["nip_subkoor"].ToString();
+                        DP.konseptor = rd["konseptor"].ToString();
+                        DP.nip_konseptor = rd["nip_konseptor"].ToString();
+                        DP.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
+                        DP.Unit_Kerja = rd["Unit_Kerja"].ToString();
+                        DP.TMTDate = rd["TMTDate"].ToString();
+                        DP.Tembusan = rd["tembusan"].ToString();
+                        clsPegawaiDB x = new clsPegawaiDB();
+                        List<clsDataPegawaiDtl> y = new List<clsDataPegawaiDtl>();
+                        y = x.ListPegawai(NIP);
+                        int z = 1;
+                        if (y != null)
+                        {
+                            foreach (var item in y)
+                            {
+                                if (z == 1)
+                                {
+                                    DP.FullName = item.NAMA_LENGKAP;
+                                    DP.GOL_RUANG = item.GOL_RUANG;
+                                    DP.LEVEL_JABATAN = item.TAMPIL_JABATAN;
+                                    DP.UnitKerja = item.KETERANGAN_SATUAN_KERJA;
+                                    DP.TEMPAT_LAHIR = item.TEMPAT_LAHIR;
+                                    DP.TANGGAL_LAHIR = item.TANGGAL_LAHIR;
+                                    DP.MK_TAHUN = item.MK_TAHUN;
+                                    DP.TMT_PENSIUN = item.TMT_PENSIUN;
+                                    DP.SATKER_1 = item.SATKER_1;
+                                    DP.SATKER_2 = item.SATKER_2;
+                                    DP.SATKER_3 = item.SATKER_3;
+                                    DP.SATKER_4 = item.SATKER_4;
+                                    DP.SATKER_5 = item.SATKER_5;
+                                    DP.TEMBUSAN1 = item.TEMBUSAN1;
+                                    DP.KPPN = item.KPPN;
+                                    DP.TASPEN = item.TASPEN;
+                                }
+                                z = z + 1;
+                            }
+                        }
+
+                        z = 1;
+                        y = x.ListPegawai(DP.nip_subkoor);
+                        foreach (var item in y)
+                        {
+                            DP.Jabatan_subkoor = item.TAMPIL_JABATAN;
+                        }
+                        y = x.ListPegawai(DP.nip_koor);
+                        foreach (var item in y)
+                        {
+                            DP.Jabatan_koor = item.TAMPIL_JABATAN;
+                        }
+                        y = x.ListPegawai(DP.nip_konseptor);
+                        foreach (var item in y)
+                        {
+                            DP.Jabatan_Konseptor = item.TAMPIL_JABATAN;
+                        }
+                        //clsHasilSidangDB p = new clsHasilSidangDB();
+                        //DP.Tembusan = p.GetTembusan(DP.SATUAN_KERJA, k);
+                    }
+                }
+                return DP;
             }
         }
         public clsHasilSidang ListAll(int ID, string NIP)
@@ -492,6 +610,8 @@ namespace SIMHUKDIS.Models
                         DP.Unit_Kerja = rd["Unit_Kerja"].ToString();
                         DP.Tembusan = rd["Tembusan"].ToString();
                         DP.Jabatan_Konseptor = rd["Jabatan_Konseptor"].ToString();
+                        DP.Jabatan_koor = rd["Jabatan_Koor"].ToString();
+                        DP.Jabatan_subkoor = rd["Jabatan_Subkoor"].ToString();
                         DP.NO_SK = rd["NO_SK"].ToString();
                         DP.Tanggal_SK = rd["Tanggal_SK"].ToString();
                         DP.FILE_SK = rd["FILE_SK"].ToString();
@@ -504,29 +624,58 @@ namespace SIMHUKDIS.Models
                         DP.Penerima_YBS = rd["Penerima_YBS"].ToString();
                         DP.BAP_Penerima = rd["BAP_Penerima"].ToString();
                         DP.Keterangan_Penerima = rd["Keterangan_Penerima"].ToString();
-                        clsPraDPKDB x = new clsPraDPKDB();
+                        clsPegawaiDB x = new clsPegawaiDB();
                         List<clsDataPegawaiDtl> y = new List<clsDataPegawaiDtl>();
-                        y = x.GetPegawai(DP.NIP);
+                        y = x.ListPegawai(NIP);
                         int z = 1;
                         foreach (var item in y)
                         {
                             if (z == 1)
                             {
                                 DP.FullName = item.NAMA_LENGKAP;
-                                DP.GOL_RUANG = item.PANGKAT + ", " + item.GOL_RUANG;
-                                DP.LEVEL_JABATAN = item.LEVEL_JABATAN;
-                                DP.UnitKerja = item.SATUAN_KERJA;
+                                DP.GOL_RUANG = item.GOL_RUANG;
+                                DP.LEVEL_JABATAN = item.TAMPIL_JABATAN + " " + item.SATKER_1;
+                                DP.UnitKerja = item.SATKER_4;
                                 DP.TEMPAT_LAHIR = item.TEMPAT_LAHIR;
                                 DP.TANGGAL_LAHIR = item.TANGGAL_LAHIR;
-                                DP.MASAKERJA_TAHUN = item.MASAKERJA_TAHUN;
+                                DP.MK_TAHUN = item.MK_TAHUN;
                                 DP.TMT_PENSIUN = item.TMT_PENSIUN;
                                 DP.SATKER_1 = item.SATKER_1;
                                 DP.SATKER_2 = item.SATKER_2;
                                 DP.SATKER_3 = item.SATKER_3;
                                 DP.SATKER_4 = item.SATKER_4;
                                 DP.SATKER_5 = item.SATKER_5;
+                                DP.TEMBUSAN1 = item.TEMBUSAN1;
+                                DP.KPPN = item.KPPN;
+                                DP.TASPEN = item.TASPEN;
+                                DP.Kode_Satker1 = item.KODE_SATUAN_KERJA;
                             }
                             z = z + 1;
+                        }
+                        y = x.ListPegawai(DP.nip_subkoor);
+                        //y = x.GetPegawai(DP.nip_subkoor);
+                        foreach (var item in y)
+                        {
+                            if (z == 1)
+                            {
+                                DP.Jabatan_subkoor = item.TAMPIL_JABATAN;
+                            }
+                        }
+                        y = x.ListPegawai(DP.nip_koor);
+                        foreach (var item in y)
+                        {
+                            if (z == 1)
+                            {
+                                DP.Jabatan_koor = item.TAMPIL_JABATAN;
+                            }
+                        }
+                        y = x.ListPegawai(DP.nip_konseptor);
+                        foreach (var item in y)
+                        {
+                            if (z == 1)
+                            {
+                                DP.Jabatan_Konseptor = item.TAMPIL_JABATAN;
+                            }
                         }
                         //clsHasilSidangDB p = new clsHasilSidangDB();
                         //DP.Tembusan = p.GetTembusan(DP.SATUAN_KERJA, k);
@@ -534,6 +683,28 @@ namespace SIMHUKDIS.Models
                 }
                 return DP;
             }
+        }
+        public List<clsKirimSurat> GetSuratNo(String UserID)
+        {
+            List<clsKirimSurat> SuratNo = new List<clsKirimSurat>();
+            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                SqlCommand cmd = new SqlCommand("sp_GetNoSurat_Sel", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@UserID", UserID);
+                con.Open();
+                SqlDataReader rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    clsKirimSurat s = new clsKirimSurat();
+                    s.ID = rd["ID"].ToString();
+                    s.NoSurat = rd["NoSurat"].ToString();
+                    SuratNo.Add(s);
+                }
+                rd.Close();
+            }
+            return SuratNo;
         }
         public string GetTembusan(string KodeSatker, string Satker3)
         {
@@ -683,25 +854,24 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                Encryption encrypt = new Encryption();
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "SIMHUKDIS.sp_DPK_Ins";
+                    string MySql = "sp_DPK_Ins";
                     string TanggalSidang = Convert.ToDateTime(PD.Tanggal_Sidang_DPK).ToString("yyyy-MM-dd");
                     SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("iid", PD.ID);
                     cmd.Parameters.AddWithValue("iNIP", PD.NIP);
-                    cmd.Parameters.AddWithValue("iCatatan_Sidang", PD.Catatan_Sidang);
-                    cmd.Parameters.AddWithValue("iCreate_User", PD.UserLogin);
-                    cmd.Parameters.AddWithValue("iTanggal_Sidang", TanggalSidang);
-                    cmd.Parameters.AddWithValue("iKeputusanSidang", PD.KeputusanSidang);
-                    cmd.Parameters.AddWithValue("iDasar_Bukti", PD.DasarBukti);
-                    cmd.Parameters.AddWithValue("iPelanggaran", PD.PelanggaranDisiplin);
-                    cmd.Parameters.AddWithValue("iPasal_Pelanggaran", PD.PasalPelanggaran);
-                    cmd.Parameters.AddWithValue("iMengingat", PD.Mengingat); 
-                    cmd.Parameters.AddWithValue("iTembusan", PD.Tembusan);
+                    cmd.Parameters.AddWithValue("iCatatan_Sidang", PD.Catatan_Sidang ?? "");
+                    cmd.Parameters.AddWithValue("iCreate_User", PD.UserLogin ?? "");
+                    cmd.Parameters.AddWithValue("iTanggal_Sidang", TanggalSidang ?? "");
+                    cmd.Parameters.AddWithValue("iKeputusanSidang", PD.KeputusanSidang ?? "");
+                    cmd.Parameters.AddWithValue("iDasar_Bukti", PD.DasarBukti ?? "");
+                    cmd.Parameters.AddWithValue("iPelanggaran", PD.PelanggaranDisiplin ?? "");
+                    cmd.Parameters.AddWithValue("iPasal_Pelanggaran", PD.PasalPelanggaran ?? "");
+                    cmd.Parameters.AddWithValue("iMengingat", PD.Mengingat ?? ""); 
+                    cmd.Parameters.AddWithValue("iTembusan", PD.Tembusan ?? "");
                     con.Open();
                     i = cmd.ExecuteNonQuery();
                 }
@@ -717,7 +887,6 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                Encryption encrypt = new Encryption();
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
@@ -752,6 +921,37 @@ namespace SIMHUKDIS.Models
                 throw ex;
             }
         }
+
+        public int KirimSKS(clsKirimSurat SKS)
+        {
+            try
+            {
+                int i = 0;
+                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                using (SqlConnection con = new SqlConnection(constr))
+                {
+                    string MySql = "SP_HASILSIDANG_INS";
+                    SqlCommand cmd = new SqlCommand(MySql, con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID", SKS.ID);
+                    cmd.Parameters.AddWithValue("@NIP", SKS.NIP);
+                    cmd.Parameters.AddWithValue("@NOSK", SKS.NoSurat);
+                    cmd.Parameters.AddWithValue("@TANGGALSK", SKS.TanggalSurat);
+                    cmd.Parameters.AddWithValue("@FILESK", SKS.FileSKS);
+                    cmd.Parameters.AddWithValue("@Tipe", SKS.Tipe);
+                    cmd.Parameters.AddWithValue("@USERID", SKS.UserID);
+                    
+                    con.Open();
+                    i = cmd.ExecuteNonQuery();
+                }
+                return i;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public bool GetDataExist(string ID, string NIP)
         {
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
@@ -780,7 +980,6 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                Encryption encrypt = new Encryption();
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
@@ -815,30 +1014,62 @@ namespace SIMHUKDIS.Models
                 throw ex;
             }
         }
+        public int InsertSK(clsHasilSidang PD)
+        {
+            try
+            {
+                int i = 0;
+                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                using (SqlConnection con = new SqlConnection(constr))
+                {
+                    string MySql = "SP_SK_TanpaSidangDPK_Ins";
+                    SqlCommand cmd = new SqlCommand(MySql, con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@ID", PD.ID);
+                    cmd.Parameters.AddWithValue("@NIP", PD.NIP);
+                    cmd.Parameters.AddWithValue("@Dasar_Bukti", PD.Mengingat ?? "");
+                    cmd.Parameters.AddWithValue("@Keputusan_Sidang", PD.KeputusanSidang ?? "");
+                    cmd.Parameters.AddWithValue("@UserID", PD.UserLogin ?? "");
+
+                    DateTime dParse = DateTime.ParseExact(PD.TMTDate, "dd MMMM yyyy", null);
+                    PD.TMTDate = dParse.ToString("yyyy-MM-dd");
+                    cmd.Parameters.AddWithValue("@TMTDate", PD.TMTDate ?? "");
+                    cmd.Parameters.AddWithValue("@tembusan", PD.Tembusan ?? "");
+
+                    con.Open();
+                    i = cmd.ExecuteNonQuery();
+                }
+                return i;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public int Update(clsHasilSidang PD)
         {
             try
             {
                 int i = 0;
-                Encryption encrypt = new Encryption();
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "SIMHUKDIS.sp_DPK_Upd";
+
                     string TanggalSidang = Convert.ToDateTime(PD.Tanggal_Sidang_DPK).ToString("yyyy-MM-dd");
                     SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("iid", PD.ID);
                     cmd.Parameters.AddWithValue("iNIP", PD.NIP);
-                    cmd.Parameters.AddWithValue("iCatatan_Sidang", PD.Catatan_Sidang);
-                    cmd.Parameters.AddWithValue("iCreate_User", PD.UserLogin);
+                    cmd.Parameters.AddWithValue("iCatatan_Sidang", PD.Catatan_Sidang ?? "");
+                    cmd.Parameters.AddWithValue("iCreate_User", PD.UserLogin ?? "" );
                     cmd.Parameters.AddWithValue("iTanggal_Sidang", TanggalSidang);
-                    cmd.Parameters.AddWithValue("iKeputusanSidang", PD.KeputusanSidang);
-                    cmd.Parameters.AddWithValue("iDasar_Bukti", PD.DasarBukti);
-                    cmd.Parameters.AddWithValue("iPelanggaran", PD.PelanggaranDisiplin);
-                    cmd.Parameters.AddWithValue("iPasal_Pelanggaran", PD.PasalPelanggaran);
-                    cmd.Parameters.AddWithValue("iMengingat", PD.Mengingat);
-                    cmd.Parameters.AddWithValue("iTembusan", PD.Tembusan);
+                    cmd.Parameters.AddWithValue("iKeputusanSidang", PD.KeputusanSidang ?? "");
+                    cmd.Parameters.AddWithValue("iDasar_Bukti", PD.DasarBukti ?? "");
+                    cmd.Parameters.AddWithValue("iPelanggaran", PD.PelanggaranDisiplin ?? "");
+                    cmd.Parameters.AddWithValue("iPasal_Pelanggaran", PD.PasalPelanggaran ?? "");
+                    cmd.Parameters.AddWithValue("iMengingat", PD.Mengingat ?? "");
+                    cmd.Parameters.AddWithValue("iTembusan", PD.Tembusan ?? "");
                     con.Open();
                     i = cmd.ExecuteNonQuery();
                 }

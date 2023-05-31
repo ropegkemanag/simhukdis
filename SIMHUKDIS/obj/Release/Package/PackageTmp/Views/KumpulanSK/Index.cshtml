@@ -1,0 +1,168 @@
+﻿@model IEnumerable<SIMHUKDIS.Models.clsKumpulanSK>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card-box mb-30">
+    <div style="height:10px;">
+
+    </div>
+    <p style="align-content:flex-end;">
+        <label style="width:10px;"></label>
+        @if (ViewBag.UserGroup == "03" || ViewBag.UserGroup == "07")
+        {
+            <button class="btn btn-primary" type="button" onclick="location.href='@Url.Action("Create", "KumpulanSK")'">
+                Tambah Data
+            </button>
+        }
+    </p>
+
+    <div style="height:10px;">
+
+    </div>
+    <div class="pb-20">
+        <table class="table hover data-table-export">
+            <thead class="table table-primary" style="white-space:nowrap;">
+                <tr>
+                    <th class="table-plus datatable-nosort">Aksi</th>
+                    <th>No SK</th>
+                    <th>Tanggal Surat/SK</th>
+                    <th>NIP</th>
+                    <th>Jenis Surat/SK</th>
+                    <th>Satuan Kerja</th>
+                    <th>Unit Kerja</th>
+                    <th>Keterangan</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @if (Model == null)
+                {
+
+                }
+                else
+                {
+                    if (@ViewBag.UserGroup == "01" || @ViewBag.UserGroup == "02" || @ViewBag.UserGroup == "04" || @ViewBag.UserGroup == "05" || @ViewBag.UserGroup == "06")
+                    {
+
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="table-plus">
+                                    @Html.ActionLink(
+                                    "Lihat",
+                                    "DownloadFile1",                         // controller action
+                                    "KumpulanSK",        // controller
+                                    new { fileName =  item.FILE_SK },         // action parameters aka route values
+                                    new { @class = "btn btn-primary" })
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.NO_SK)</td>
+                                <td>@Html.DisplayFor(modelItem => item.TANGGAL_SK)</td>
+                                <td>@Html.DisplayFor(modelItem => item.NIP)</td>
+                                <td>@Html.DisplayFor(modelItem => item.JENIS_SK)</td>
+                                <td>@Html.DisplayFor(modelItem => item.SATUAN_KERJA)</td>
+                                <td>@Html.DisplayFor(modelItem => item.UNIT_KERJA)</td>
+                                <td>@Html.DisplayFor(modelItem => item.KETERANGAN)</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="table-plus">
+                                    @Html.ActionLink("Ubah", "Edit", new { ID = item.ID, KODE_SATUAN_KERJA = item.KODE_SATUAN_KERJA, KODE_UNIT_KERJA = item.KODE_UNIT_KERJA, KODE_JENIS_SK = item.KODE_JENIS_SK })
+                                    <br />
+                                    <a href="#" onclick="Hapus('@item.ID')">Hapus</a>
+                                </td>
+                                <td>@Html.DisplayFor(modelItem => item.NO_SK)</td>
+                                <td>@Html.DisplayFor(modelItem => item.TANGGAL_SK)</td>
+                                <td>@Html.DisplayFor(modelItem => item.NIP)</td>
+                                <td>@Html.DisplayFor(modelItem => item.JENIS_SK)</td>
+                                <td>@Html.DisplayFor(modelItem => item.SATUAN_KERJA)</td>
+                                <td>@Html.DisplayFor(modelItem => item.UNIT_KERJA)</td>
+                                <td>@Html.DisplayFor(modelItem => item.KETERANGAN)</td>
+                            </tr>
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="DeleteKumpulanSK" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Apakah Anda yakin untuk menghapus data ini ?</div>
+            <div class="modal-footer">
+                <label id="ID" name="ID"></label>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <input class="btn btn-primary" onclick="HapusDataKumpulanSK()" value="Hapus" type="button" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+
+    });
+    function Hapus(ID) {
+        $('#ID').val(ID);
+        $('#DeleteKumpulanSK').modal('show');
+    }
+    
+    function HapusDataKumpulanSK() {
+        var dpObj = {
+            ID: $('#ID').val()
+            };
+        $.ajax({
+            url: "/KumpulanSK/Delete",
+            data: JSON.stringify(dpObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.toString() == "Success") {
+                    swal.fire({
+                        title: "Hapus Data Inventaris Surat Berhasil!",
+                        icon: "success",
+                        button: "Ok",
+                        timer: 3000,
+                    });
+                    window.location = '@Url.Action("Index", "KumpulanSK")';
+                }
+                else {
+                    swal.fire({
+                        title: result.toString(),
+                        icon: "error",
+                        button: "Ok",
+                        timer: 3000,
+                    });
+                }
+            },
+            error: function (errormessage) {
+                swal.fire({
+                    title: errormessage.responseText,
+                    icon: "error",
+                    button: "Ok",
+                    timer: 3000,
+                });
+            }
+        });
+    }
+</script>
+
+

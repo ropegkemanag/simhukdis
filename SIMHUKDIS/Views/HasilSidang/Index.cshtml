@@ -8,11 +8,11 @@
 
 <div class="card-box mb-30">
     <div class="pd-20">
-        <p style="text-align:right;">
+        @*<p style="text-align:right;">
             <button id="GridLoad" class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal" value="New" onclick="location.href='@Url.Action("BuatSK", "HasilSidang")'">
                 Tambah Data
             </button>
-        </p>
+        </p>*@
         <table class="table hover data-table-export">
             <thead class="table table-primary" style="white-space:nowrap;">
                 <tr>
@@ -20,26 +20,26 @@
                         Aksi
                     </th>
                     @*<th>
-                    No
-                </th>*@
+                            No
+                        </th>*@
                     <th>
                         Identitas
                     </th>
                     @*<th>
-                    Pasal Pelanggaran
-                </th>
-                <th>
-                    Uraian Pelanggaran
-                </th>
-                <th>
-                    Rekomendasi Hukdis
-                </th>*@
+                            Pasal Pelanggaran
+                        </th>
+                        <th>
+                            Uraian Pelanggaran
+                        </th>
+                        <th>
+                            Rekomendasi Hukdis
+                        </th>*@
                     @*<th>
-                    Tanggal Pra Sidang DPK
-                </th>
-                <th>
-                    Catatan Pra Sidang DPK
-                </th>*@
+                            Tanggal Pra Sidang DPK
+                        </th>
+                        <th>
+                            Catatan Pra Sidang DPK
+                        </th>*@
                     <th>
                         Tanggal Sidang DPK
                     </th>
@@ -57,44 +57,44 @@
 
                     <tr>
                         <td>
-                            @Html.ActionLink("BUAT SK", "Create", new { ID = item.ID, NIP = item.NIP })
-                            @Html.ActionLink("Penyampaian Hasil", "KirimData", new { ID = item.ID, NIP = item.NIP })
+                            <div class="dropdown">
+                                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Tambah Data
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    @Html.ActionLink("Pembuatan SK", "Create", new { ID = item.ID, NIP = item.NIP }, new { @class = "dropdown-item" })
+                                    <a class = "dropdown-item" href="#" onclick="KirimA('@item.ID','@item.NIP')">Kewenangan Satker</a>
+                                    @*<a class="dropdown-item" onclick="KirimA(item.ID, item.NIP)">Kewenangan Satker</a>*@
+                                    @*<a class="dropdown-item" href="@Url.Action("CreatePS", "SuratMasuk")">Tindak Pidana</a>*@
+                                </div>
+                            </div>
+                            @*@Html.ActionLink("BUAT SK", "Create", new { ID = item.ID, NIP = item.NIP })
+                                @Html.ActionLink("Penyampaian Hasil", "KirimData", new { ID = item.ID, NIP = item.NIP })*@
 
                         </td>
                         @*<td>
-                        @Html.DisplayFor(modelItem => item.No)
-                    </td>*@
+                                @Html.DisplayFor(modelItem => item.No)
+                            </td>*@
                         <td>
-                            @Html.DisplayFor(modelItem => item.FullName)
-                            <br />
                             @Html.DisplayFor(modelItem => item.NIP)
-                            @*<br />
-                        @Html.DisplayFor(modelItem => item.GOL_RUANG)
-                        <br />
-                        @Html.DisplayFor(modelItem => item.LEVEL_JABATAN)
-                        <br />
-                        @Html.DisplayFor(modelItem => item.AsalSurat)
-                        <br />
-                        @Html.DisplayFor(modelItem => item.DasarBukti)
-                        <br />
-                        @Html.DisplayFor(modelItem => item.perihal)
-                        <br />*@
+                            <br />
+                            @Html.DisplayFor(modelItem => item.FullName)
                         </td>
                         @*<td>
-                        @Html.DisplayFor(modelItem => item.PasalPelanggaran)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PelanggaranDisiplin)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.RekomendasiHukdis)
-                    </td>*@
+                                @Html.DisplayFor(modelItem => item.PasalPelanggaran)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PelanggaranDisiplin)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.RekomendasiHukdis)
+                            </td>*@
                         @*<td>
-                        @Html.DisplayFor(modelItem => item.Tanggal_Sidang_Pra_DPK)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Catatan_Pra_DPK)
-                    </td>*@
+                                @Html.DisplayFor(modelItem => item.Tanggal_Sidang_Pra_DPK)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Catatan_Pra_DPK)
+                            </td>*@
                         <td>
                             @Html.DisplayFor(modelItem => item.Tanggal_Sidang_DPK)
                         </td>
@@ -111,3 +111,157 @@
         </table>
     </div>
 </div>
+
+<div class="modal fade" id="KirimSuratKS" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Kirim Surat Kewenangan Satuan Kerja</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="modal-body" style="margin-left:20px;">
+                <form id="Form">
+                    <div class="form-group row" style="display:none;">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">ID</label>
+                            @Html.TextBox("ID", "", new { @id = "IDs", @class = "form-control", required = "required" })
+                            @Html.ValidationMessage("ID", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-6">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">NIP</label>
+                            @Html.TextBox("NIP", "", new { @id = "NIPs", @class = "form-control", required = "required" })
+                            @Html.ValidationMessage("NIP", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">No Surat</label>
+                            @Html.TextBox("NoSurat", "", new { @id = "NoSurat", @class = "form-control", required = "required" })
+                            @Html.ValidationMessage("NoSurat", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">Tanggal Surat</label>
+                            @Html.TextBox("TanggalSurat", "", new { @type = "text", @id = "TanggalSurat", @class = "form-control date-picker", required = "required" })
+                            @Html.ValidationMessage("TanggalSurat", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">File Surat</label>
+                            @Html.TextBox("FileSKS", "", new { @id = "FileSKS", @class = "form-control", required = "required", Type = "file", accept = "application/pdf" })
+                            @Html.ValidationMessage("FileSKS", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                <input type="submit" value="Proses" class="btn btn-primary" style="width:100px;" onclick="KirimSurat()" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(function () {
+            $("#TanggalSurat").datepicker({
+                setDate: new Date(),
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                calendarWeeks: true,
+                clearBtn: true,
+                disableTouchKeyboard: true
+            })
+        });
+    });
+    function BuatSK() {
+        window.location = '@Url.Action("Create", "HasilSidang")?fileName=' + fileName1;
+    }
+    function KirimA(ID, NIP) {
+        $('#IDs').val(ID);
+        $('#NIPs').val(NIP);
+        $('#KirimSuratKS').modal('show');
+    }
+    function KirimSurat() {
+        var InputID = '@ViewBag.ID';
+        var fileUpload = $("#FileSKS").get(0);
+        var files = fileUpload.files;
+
+        // Create FormData object
+        var fileData = new FormData();
+
+        // Looping over all files and add it to FormData object
+        for (var i = 0; i < files.length; i++) {
+            fileData.append(files[i].name, files[i]);
+        }
+        $.ajax({
+            url: '/HasilSidang/UploadFilesKewenanganSatker',
+            type: "POST",
+            contentType: false, // Not to set any content header
+            processData: false, // Not to process data
+            data: fileData,
+            success: function (result) {
+                var dpObj = {
+                    ID: $('#IDs').val(),
+                    NIP: $('#NIPs').val(),
+                    NoSurat: $('#NoSurat').val(),
+                    TanggalSurat: $('#TanggalSurat').val(),
+                    FileSKS: result
+                };
+                $.ajax({
+                    url: "/HasilSidang/KirimSurat",
+                    data: JSON.stringify(dpObj),
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.toString() == "Success") {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Proses berhasil !',
+                                showConfirmButton: false,
+                                timer: 3000
+                            })
+                            window.location.href = '@Url.Action("Index", "HasilSidang")';
+                        }
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: result.toString(),
+                                showConfirmButton: false,
+                                timer: 3000
+                            })
+                        }
+                    },
+                    error: function (errormessage) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: result.toString(),
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                    }
+                });
+            },
+            error: function (err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: result.toString(),
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        });
+    }
+</script>

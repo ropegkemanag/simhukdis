@@ -12,14 +12,6 @@
         <table class="table table-bordered text-wrap" style="width:100%;">
             @foreach (dynamic a in Model.clsSuratMasuk)
             {
-                @*<tr>
-                        <td width="25%">
-                            No Agenda
-                        </td>
-                        <td width="75%">
-                            @a.NoAgenda
-                        </td>
-                    </tr>*@
                 <tr>
                     <td>
                         No Surat
@@ -70,7 +62,12 @@
                         }
                         else
                         {
-                            <a href="@Url.Action("DownloadFile1", "SuratMasuk", new { fileName = a.LampiranSurat1 })">@a.LampiranSurat1</a>
+                            @Html.ActionLink(
+                                        "Lihat",
+                                        "DownloadFile1",                         // controller action
+                                        "SuratMasuk",        // controller
+                                        new { fileName =  a.LampiranSurat1 },         // action parameters aka route values
+                                        new { @class = "btn btn-primary" })
                         }
                     </td>
                 </tr>
@@ -79,13 +76,25 @@
                         Lampiran BAP
                     </td>
                     <td>
-                        @if (@a.LampiranSurat2 == "")
+                        @if (a.LampiranSurat2 == "" || a.LampiranSurat2 == null)
                         {
                         }
                         else
                         {
-                            <a href="@Url.Action("DownloadFile2", "SuratMasuk", new { fileName = a.LampiranSurat2 })">@a.LampiranSurat2</a>
+                            @Html.ActionLink(
+                                        "Lihat",
+                                        "DownloadFile2",                         // controller action
+                                        "SuratMasuk",        // controller
+                                        new { fileName =  a.LampiranSurat2 },         // action parameters aka route values
+                                        new { @class = "btn btn-primary" })// html attributes
                         }
+                        @*@if (@a.LampiranSurat2 == "")
+        {
+        }
+        else
+        {
+            <a href="@Url.Action("DownloadFile2", "SuratMasuk", new { fileName = a.LampiranSurat2 })">@a.LampiranSurat2</a>
+        }*@
                     </td>
                 </tr>
                 <tr>
@@ -93,12 +102,17 @@
                         Lampiran Surat Tugas Pemeriksaan
                     </td>
                     <td>
-                        @if (@a.LampiranSurat3 == "")
+                        @if (a.LampiranSurat3 == "" || a.LampiranSurat3 == null)
                         {
                         }
                         else
                         {
-                            <a href="@Url.Action("DownloadFile3", "SuratMasuk", new { fileName = a.LampiranSurat3 })">@a.LampiranSurat3</a>
+                            @Html.ActionLink(
+                                        "Lihat",
+                                        "DownloadFile3",                         // controller action
+                                        "SuratMasuk",        // controller
+                                        new { fileName =  a.LampiranSurat3 },         // action parameters aka route values
+                                        new { @class = "btn btn-primary" })// html attributes
                         }
                     </td>
                 </tr>
@@ -107,12 +121,17 @@
                         Lampiran Surat Panggilan
                     </td>
                     <td>
-                        @if (@a.LampiranSurat4 == "")
+                        @if (a.LampiranSurat4 == "" || a.LampiranSurat4 == null)
                         {
                         }
                         else
                         {
-                            <a href="@Url.Action("DownloadFile4", "SuratMasuk", new { fileName = a.LampiranSurat4 })">@a.LampiranSurat4</a>
+                            @Html.ActionLink(
+                                        "Lihat",
+                                        "DownloadFile4",                         // controller action
+                                        "SuratMasuk",        // controller
+                                        new { fileName =  a.LampiranSurat4 },         // action parameters aka route values
+                                        new { @class = "btn btn-primary" })// html attributes
                         }
                     </td>
                 </tr>
@@ -121,12 +140,17 @@
                         Lampiran Surat Dokumen Lainnya
                     </td>
                     <td>
-                        @if (@a.LampiranSurat5 == "")
+                        @if (a.LampiranSurat5 == "" || a.LampiranSurat5 == null)
                         {
                         }
                         else
                         {
-                            <a href="@Url.Action("DownloadFile5", "SuratMasuk", new { fileName = a.LampiranSurat5 })">@a.LampiranSurat5</a>
+                            @Html.ActionLink(
+                                        "Lihat",
+                                        "DownloadFile5",                         // controller action
+                                        "SuratMasuk",        // controller
+                                        new { fileName =  a.LampiranSurat5 },         // action parameters aka route values
+                                        new { @class = "btn btn-primary" })// html attributes
                         }
                     </td>
                 </tr>
@@ -135,12 +159,17 @@
                         Lampiran Putusan Pengadilan
                     </td>
                     <td>
-                        @if (@a.LampiranSurat6 == "")
+                        @if (a.LampiranSurat6 == "" || a.LampiranSurat6 == null)
                         {
                         }
                         else
                         {
-                            <a href="@Url.Action("DownloadFile6", "SuratMasuk", new { fileName = a.LampiranSurat6 })">@a.LampiranSurat6</a>
+                            @Html.ActionLink(
+                                        "Lihat",
+                                        "DownloadFile6",                         // controller action
+                                        "SuratMasuk",        // controller
+                                        new { fileName =  a.LampiranSurat6 },         // action parameters aka route values
+                                        new { @class = "btn btn-primary" })// html attributes
                         }
                     </td>
                 </tr>
@@ -149,12 +178,17 @@
                         Lampiran LHA
                     </td>
                     <td>
-                        @if (@a.LampiranSurat_LHA == "")
+                        @if (a.LampiranSurat_LHA == "" || a.LampiranSurat_LHA == null)
                         {
                         }
                         else
                         {
-                            <a href="@Url.Action("DownloadFile7", "SuratMasuk", new { fileName = a.LampiranSurat_LHA })">@a.LampiranSurat_LHA</a>
+                            @Html.ActionLink(
+                                        "Lihat",
+                                        "DownloadFile7",                         // controller action
+                                        "SuratMasuk",        // controller
+                                        new { fileName =  a.LampiranSurat_LHA },         // action parameters aka route values
+                                        new { @class = "btn btn-primary" })// html attributes
                         }
                     </td>
                 </tr>
@@ -286,7 +320,7 @@
         <hr />
 
         <div class="pb-20">
-            <table class="table hover data-table-export nowrap">
+            <table class="table table-striped table-hover table-bordered">
                 <thead class="table table-primary">
                     <tr>
                         <th>
@@ -316,9 +350,9 @@
                                 <br />
                                 <br />
                                 <a class="btn btn-outline-danger" href="#" onclick="Hapus('@b.ID','@b.NIP')"><i class="micon bi-trash"></i>Hapus</a>
+                                @*<br />
                                 <br />
-                                <br />
-                                <a class="btn btn-outline-success" href="#" onclick="Proses('@b.ID','@b.NIP')"><i class="micon bi-arrow-bar-up"></i>Proses Ke Atasan</a>
+                                <a class="btn btn-outline-success" href="#" onclick="Proses('@b.ID','@b.NIP')"><i class="micon bi-arrow-bar-up"></i>Proses Ke Atasan</a>*@
                                 <br />
                                 <br />
                                 <a class="btn btn-outline-warning" href="#" onclick="ProsesPraSidang('@b.ID','@b.NIP')"><i class="micon bi-send"></i>Kirim Ke Pra Sidang</a>
@@ -333,7 +367,19 @@
                                 @b.SATUAN_KERJA
                             </td>
                             <td>
-                                <a class="btn btn-outline-primary" onclick="location.href='@Url.Action("DownloadFile","Telaah", new { @fileName = b.FileTelaah})'">File Telaah</a>
+                                @if (b.FileTelaah == "" || b.FileTelaah == null)
+                                {
+                                }
+                                else
+                                {
+                                    @Html.ActionLink(
+                                                "Lihat",
+                                                "DownloadFile",                         // controller action
+                                                "Telaah",        // controller
+                                                new { fileName =  b.FileTelaah },         // action parameters aka route values
+                                                new { @class = "btn btn-primary" })// html attributes
+                                }
+                                @*<a class="btn btn-outline-primary" onclick="location.href='@Url.Action("DownloadFile","Telaah", new { @fileName = b.FileTelaah})'">File Telaah</a>*@
                             </td>
                         </tr>
                     }
@@ -439,7 +485,7 @@
                     <div class="form-group row">
                         <div class="col">
                             <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">File Telaah</label>
-                            @Html.TextBox("FileTelaah1", "", new { @id = "FileTelaah1", @class = "form-control", required = "required", Type = "file" })
+                            @Html.TextBox("FileTelaah1", "", new { @id = "FileTelaah1", @class = "form-control", required = "required", Type = "file", accept = "application/pdf" })
                             @Html.ValidationMessage("FileTelaah", "", new { @class = "text-danger" })
                         </div>
                     </div>

@@ -118,18 +118,18 @@ namespace SIMHUKDIS.Models
                     data.Tanggal_Sidang = rd["Tanggal_Sidang"].ToString();
                     data.JenisPelanggaran = rd["Jenis_Pelanggaran"].ToString();
                     data.Kode_JenisPelanggaran = rd["Kode_JenisPelanggaran"].ToString();
-                    
-                    clsPraDPKDB x = new clsPraDPKDB();
+
+                    clsPegawaiDB x = new clsPegawaiDB();
                     List<clsDataPegawaiDtl> y = new List<clsDataPegawaiDtl>();
-                    y = x.GetPegawai(data.NIP);
+                    y = x.ListPegawai(data.NIP);
                     int z = 1;
                     foreach (var item in y)
                     {
                         if (z==1)
                         {
                             data.GOL_RUANG = item.GOL_RUANG;
-                            data.LEVEL_JABATAN = item.LEVEL_JABATAN;
-                            data.UnitKerja = item.SATUAN_KERJA;
+                            data.LEVEL_JABATAN = item.TAMPIL_JABATAN;
+                            data.UnitKerja = item.KETERANGAN_SATUAN_KERJA;
                         }
                         z = z + 1;
                     }
@@ -172,17 +172,17 @@ namespace SIMHUKDIS.Models
                     data.JenisPelanggaran = rd["Jenis_Pelanggaran"].ToString();
                     data.Kode_JenisPelanggaran = rd["Kode_JenisPelanggaran"].ToString();
 
-                    clsPraDPKDB x = new clsPraDPKDB();
+                    clsPegawaiDB x = new clsPegawaiDB();
                     List<clsDataPegawaiDtl> y = new List<clsDataPegawaiDtl>();
-                    y = x.GetPegawai(data.NIP);
+                    y = x.ListPegawai(data.NIP);
                     int z = 1;
                     foreach (var item in y)
                     {
                         if (z == 1)
                         {
                             data.GOL_RUANG = item.GOL_RUANG;
-                            data.LEVEL_JABATAN = item.LEVEL_JABATAN;
-                            data.UnitKerja = item.SATUAN_KERJA;
+                            data.LEVEL_JABATAN = item.TAMPIL_JABATAN;
+                            data.UnitKerja = item.KETERANGAN_SATUAN_KERJA;
                         }
                         z = z + 1;
                     }
@@ -269,101 +269,12 @@ namespace SIMHUKDIS.Models
                 return x;
             }
         }
-        public List<clsDataPegawaiDtl> GetPegawai(string NIP)
-        {
-            string strToken = "";
-            string Username = "agus@kemenag.go.id";
-            string Password = "12345678";
-            string baseAddress = "https://api.kemenag.go.id/v1/";
-            try
-            {
-                var client = new HttpClient();
-                List<clsDataPegawaiDtl> pegawai = new List<clsDataPegawaiDtl>();
-                clsDataPegawaiDtl dtl = new clsDataPegawaiDtl();
-                clsToken db = new clsToken();
-                strToken = db.GetAccessToken(Username, Password);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", strToken);
-                HttpResponseMessage resp = client.GetAsync(baseAddress + "pegawai/profil/" + WebUtility.UrlEncode(NIP)).GetAwaiter().GetResult();
-                if (resp.IsSuccessStatusCode)
-                {
-                    clsDataPegawai clsDataPegawai = new clsDataPegawai();
-                    var JsonContent = resp.Content.ReadAsStringAsync().Result;
-                    clsDataPegawai = JsonConvert.DeserializeObject<clsDataPegawai>(JsonContent);
-                    int x = 0;
-                    dtl.NIP = clsDataPegawai.data.NIP;
-                    dtl.NIP_BARU = clsDataPegawai.data.NIP_BARU;
-                    dtl.NAMA = clsDataPegawai.data.NAMA;
-                    dtl.NAMA_LENGKAP = clsDataPegawai.data.NAMA_LENGKAP;
-                    dtl.AGAMA = clsDataPegawai.data.AGAMA;
-                    dtl.TEMPAT_LAHIR = clsDataPegawai.data.TEMPAT_LAHIR;
-                    dtl.TANGGAL_LAHIR = clsDataPegawai.data.TANGGAL_LAHIR.Substring(0, 10);
-                    dtl.JENIS_KELAMIN = clsDataPegawai.data.JENIS_KELAMIN;
-                    dtl.PENDIDIKAN = clsDataPegawai.data.PENDIDIKAN;
-                    dtl.KODE_LEVEL_JABATAN = clsDataPegawai.data.KODE_LEVEL_JABATAN;
-                    dtl.LEVEL_JABATAN = clsDataPegawai.data.LEVEL_JABATAN;
-
-                    string strPangkat = clsDataPegawai.data.PANGKAT;
-                    string strGolRuang = clsDataPegawai.data.GOL_RUANG;
-                    string strPangkatGolRuang = strPangkat + ", " + strGolRuang;
-
-
-                    dtl.PANGKAT = strPangkatGolRuang;
-                    dtl.GOL_RUANG = strPangkatGolRuang;
-
-                    dtl.TMT_CPNS = clsDataPegawai.data.TMT_CPNS;
-                    dtl.TMT_PANGKAT = clsDataPegawai.data.TMT_PANGKAT;
-
-                    string strMasaKerjaThn = clsDataPegawai.data.MASAKERJA_TAHUN.ToString();
-                    string strMasaKerjaBln = clsDataPegawai.data.MASAKERJA_BULAN.ToString();
-                    string strMasaKerja = strMasaKerjaThn + " Tahun " + strMasaKerjaBln + " Bulan";
-
-                    dtl.MASAKERJA_TAHUN = strMasaKerja;
-                    dtl.MASAKERJA_BULAN = strMasaKerja;
-                    dtl.TIPE_JABATAN = clsDataPegawai.data.TIPE_JABATAN;
-                    dtl.KODE_JABATAN = clsDataPegawai.data.KODE_JABATAN;
-                    dtl.TAMPIL_JABATAN = clsDataPegawai.data.TAMPIL_JABATAN;
-                    dtl.TMT_JABATAN = clsDataPegawai.data.TMT_JABATAN;
-                    dtl.KODE_SATKER_1 = clsDataPegawai.data.KODE_SATKER_1;
-                    dtl.SATKER_1 = clsDataPegawai.data.SATKER_1;
-                    dtl.KODE_SATKER_2 = clsDataPegawai.data.KODE_SATKER_2;
-                    dtl.SATKER_2 = clsDataPegawai.data.SATKER_2;
-                    dtl.KODE_SATKER_3 = clsDataPegawai.data.KODE_SATKER_3;
-                    dtl.SATKER_3 = clsDataPegawai.data.SATKER_3;
-                    dtl.KODE_SATKER_4 = clsDataPegawai.data.KODE_SATKER_4;
-                    dtl.SATKER_4 = clsDataPegawai.data.SATKER_4;
-                    dtl.KODE_SATKER_5 = clsDataPegawai.data.KODE_SATKER_5;
-                    dtl.SATKER_5 = clsDataPegawai.data.SATKER_5;
-                    dtl.SATUAN_KERJA = clsDataPegawai.data.SATUAN_KERJA;
-                    dtl.STATUS_KAWIN = clsDataPegawai.data.STATUS_KAWIN;
-                    dtl.ALAMAT_1 = clsDataPegawai.data.ALAMAT_1;
-                    dtl.ALAMAT_2 = clsDataPegawai.data.ALAMAT_2;
-                    dtl.TELEPON = clsDataPegawai.data.TELEPON;
-                    dtl.KAB_KOTA = clsDataPegawai.data.KAB_KOTA;
-                    dtl.PROVINSI = clsDataPegawai.data.PROVINSI;
-                    dtl.KODE_POS = clsDataPegawai.data.KODE_POS;
-                    dtl.KODE_LOKASI = clsDataPegawai.data.KODE_LOKASI;
-                    dtl.KODE_PANGKAT = clsDataPegawai.data.KODE_PANGKAT;
-                    //return Json(dtl, JsonRequestBehavior.AllowGet);
-                    pegawai.Add(dtl);
-                }
-                else
-                {
-                    return null;
-                }
-                return pegawai;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+        
         public int Insert(clsPraDPK PD)
         {
             try
             {
                 int i = 0;
-                Encryption encrypt = new Encryption();
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
@@ -392,19 +303,21 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                Encryption encrypt = new Encryption();
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "SIMHUKDIS.sp_PraDPK_Upd";
-                    string TanggalSidang = Convert.ToDateTime(PD.Tanggal_Sidang).ToString("yyyy-MM-dd");
+
+                    DateTime dParse = DateTime.ParseExact(PD.Tanggal_Sidang, "dd-MM-yyyy", null); //Convert.ToDateTime(Data.EstimateDate); 
+                    PD.Tanggal_Sidang = dParse.ToString("yyyy-MM-dd");
+
                     SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("iid", PD.ID);
                     cmd.Parameters.AddWithValue("iNIP", PD.NIP);
                     cmd.Parameters.AddWithValue("iCatatan", PD.Catatan);
                     cmd.Parameters.AddWithValue("iCreate_User", PD.UserLogin);
-                    cmd.Parameters.AddWithValue("iTanggal_Sidang", TanggalSidang);
+                    cmd.Parameters.AddWithValue("iTanggal_Sidang", PD.Tanggal_Sidang);
                     cmd.Parameters.AddWithValue("iJenisPelanggaran", PD.JenisPelanggaran);
                     con.Open();
                     i = cmd.ExecuteNonQuery();
@@ -421,7 +334,6 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                Encryption encrypt = new Encryption();
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
@@ -446,7 +358,6 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                Encryption encrypt = new Encryption();
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {

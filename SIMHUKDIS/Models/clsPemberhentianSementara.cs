@@ -99,8 +99,8 @@ namespace SIMHUKDIS.Models
                 cmd.Parameters.AddWithValue("@Asal_Surat", PS.AsalSurat ?? "");
                 cmd.Parameters.AddWithValue("@Tanggal_Surat", Convert.ToDateTime(PS.TanggalSurat).ToString("yyyy-MM-dd"));
                 cmd.Parameters.AddWithValue("@Perihal", PS.Perihal ?? "");
-                cmd.Parameters.AddWithValue("@Satuan_Kerja", PS.Satuan_Kerja);
-                cmd.Parameters.AddWithValue("@Unit_Kerja", PS.Kode_Unit_Kerja);
+                cmd.Parameters.AddWithValue("@Satuan_Kerja", PS.Satuan_Kerja ?? "");
+                cmd.Parameters.AddWithValue("@Unit_Kerja", PS.Kode_Unit_Kerja ?? "");
                 cmd.Parameters.AddWithValue("@Usul_Status", PS.UsulStatus);
                 cmd.Parameters.AddWithValue("@Status", PS.Status);
                 cmd.Parameters.AddWithValue("@Lampiran_SuratPengantar", PS.Lampiran_SuratPengantar ?? "");

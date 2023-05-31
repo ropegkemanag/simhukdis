@@ -148,7 +148,7 @@
                     <span class="user-name">@Session["Fullname"]</span>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list">
-                   @* <a class="dropdown-item" href="@Url.Action("ChangePassword", "User")"><i class="dw dw-settings2"></i>Ubah Password</a>*@
+                    <a class="dropdown-item" href="@Url.Action("ChangePassword", "User")"><i class="dw dw-settings2"></i>Ubah Password</a>
                     <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal"><i class="dw dw-logout"></i>Log Out</a>
                 </div>
             </div>
@@ -305,6 +305,8 @@
     <div class="menu-block customscroll">
         <div class="sidebar-menu">
             <ul id="accordion-menu">
+
+                @*Satuan Kerja*@
                 @if (ViewBag.UserGroup == "03")
                 {
                     <li>
@@ -317,7 +319,23 @@
                             <span class="micon bi bi-check2-square"></span><span class="mtext">Usulan PS/PK</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="@Url.Action("Index", "MonitoringSatker")" class="dropdown-toggle no-arrow">
+                            <span class="micon bi bi-check2-square"></span><span class="mtext">Monitoring</span>
+                        </a>
+                    </li>
                 }
+                <li>
+                    <a class="dropdown-toggle no-arrow" href="@Url.Action("Index", "KumpulanSK")">
+                        <span class="micon bi bi-check2-square"></span><span class="mtext">Arsip</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Index", "PenyampaianSKBiro")" class="dropdown-toggle no-arrow">
+                        <span class="micon bi bi-check2-square"></span><span class="mtext">Penyampaian Surat/SK PPK</span>
+                    </a>
+                </li>
+                @*auditor itjen*@
                 @if (ViewBag.UserGroup == "07")
                 {
                     <li>
@@ -336,7 +354,8 @@
                         </a>
                     </li>
                 }
-                @if (ViewBag.UserGroup == "01" || ViewBag.UserGroup == "02")
+                @*admin*@
+                @if (ViewBag.UserGroup == "01")
                 {
                     <li>
                         <a class="dropdown-toggle no-arrow" href="@Url.Action("Index", "UsulHukdis", new { Status = 0, DateFrom = "", DateTo = "" })">
@@ -344,112 +363,20 @@
                         </a>
                     </li>
                     <li>
-                        <a class="dropdown-toggle no-arrow" href="@Url.Action("Index", "PemberhentianSementara")">
-                            <span class="micon bi bi-check2-square"></span><span class="mtext">Usulan PS/PK</span>
-                        </a>
-                    </li>
-                }
-                @if (ViewBag.UserGroup == "01" || ViewBag.UserGroup == "02")
-                {
-                    <li>
                         <a class="dropdown-toggle no-arrow" href="@Url.Action("Index", "SuratMasuk", new { Status = 0, DateFrom = "", DateTo = "" })">
                             <span class="micon bi bi-check2-square"></span><span class="mtext">Usulan Hukdis Satker</span>
                         </a>
                     </li>
-                }
-                @if (ViewBag.UserGroup == "01")
-                {
-                    <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon bi bi-check2-square"></span><span class="mtext">Disposisi</span>
-                        </a>
-                        <ul class="submenu">
-                            <li><a href="@Url.Action("Index","Disposisi")">Disposisi Kepala Biro</a></li>
-                            <li><a href="@Url.Action("Index","Disposisi2")">Disposisi Koordinator</a></li>
-                            <li><a href="@Url.Action("Index","Disposisi3")">Disposisi SubKoordinator</a></li>
-                        </ul>
-                    </li>
-                }
-
-                @if (ViewBag.UserGroup == "04")
-                {
                     <li>
-                        <a class="dropdown-toggle no-arrow" href="@Url.Action("Index","Disposisi")">
-                            <span class="micon bi bi-check2-square"></span><span class="mtext">Disposisi</span>
+                        <a class="dropdown-toggle no-arrow" href="@Url.Action("Index", "PemberhentianSementara")">
+                            <span class="micon bi bi-check2-square"></span><span class="mtext">Usulan PS/PK</span>
                         </a>
                     </li>
-                }
-                @if (ViewBag.UserGroup == "05")
-                {
-                    <li>
-                        <a class="dropdown-toggle no-arrow" href="@Url.Action("Index","Disposisi2")">
-                            <span class="micon bi bi-check2-square"></span><span class="mtext">Disposisi</span>
-                        </a>
-                    </li>
-                }
-                @if (ViewBag.UserGroup == "06")
-                {
-                    <li>
-                        <a class="dropdown-toggle no-arrow" href="@Url.Action("Index","Disposisi3")">
-                            <span class="micon bi bi-check2-square"></span><span class="mtext">Disposisi</span>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("DetailAtasan","Telaah")" class="dropdown-toggle no-arrow">
-                            <span class="micon bi bi-pencil-square"></span><span class="mtext">Telaah</span>
-                        </a>
-                    </li>
-                }
-                @if (ViewBag.UserGroup == "02" || ViewBag.UserGroup == "01" || ViewBag.UserGroup == "04" || ViewBag.UserGroup == "05")
-                {
-                    <li>
-                        <a href="@Url.Action("Index","Telaah")" class="dropdown-toggle no-arrow">
-                            <span class="micon bi bi-pencil-square"></span><span class="mtext">Telaah</span>
-                        </a>
-                    </li>
-
-
-                    <li class="dropdown">
-                        <a href="javascript:;" class="dropdown-toggle">
-                            <span class="micon bi bi-check2-square"></span><span class="mtext">Sidang</span>
-                        </a>
-                        <ul class="submenu">
-                            <li><a href="@Url.Action("Index","PraDPK")">Pra Sidang</a></li>
-                            <li><a href="@Url.Action("Index","DPK")">Sidang DPK</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="@Url.Action("Index","HasilSidang")" class="dropdown-toggle no-arrow">
-                            <span class="micon bi bi-check2-square"></span><span class="mtext">Hasil Sidang</span>
-                        </a>
-                    </li>
-                }
-                @if (ViewBag.UserGroup == "03")
-                {
-                    @*<li>
-                        <a href="@Url.Action("Index", "PembuatanSK")" class="dropdown-toggle no-arrow">
-                            <span class="micon bi bi-check2-square"></span><span class="mtext">Pembuatan SK</span>
-                        </a>
-                    </li>*@
-                }
-                @if (ViewBag.UserGroup == "01" || ViewBag.UserGroup == "02" || ViewBag.UserGroup == "04" || ViewBag.UserGroup == "05" || ViewBag.UserGroup == "06")
-                {
                     <li>
                         <a href="@Url.Action("Index", "Monitoring")" class="dropdown-toggle no-arrow">
                             <span class="micon bi bi-check2-square"></span><span class="mtext">Monitoring</span>
                         </a>
                     </li>
-                }
-                @if (ViewBag.UserGroup == "03")
-                {
-                    <li>
-                        <a href="@Url.Action("Index", "MonitoringSatker")" class="dropdown-toggle no-arrow">
-                            <span class="micon bi bi-check2-square"></span><span class="mtext">Monitoring</span>
-                        </a>
-                    </li>
-                }
-                @if (ViewBag.UserGroup == "01")
-                {
                     <li>
                         <div class="sidebar-small-cap">Master</div>
                     </li>
@@ -484,7 +411,101 @@
                             <span class="micon bi bi-journal-check"></span><span class="mtext">Pejabat Penandatangan</span>
                         </a>
                     </li>
+
                 }
+
+                @if (ViewBag.UserGroup == "04")
+                {
+                    <li>
+                        <a class="dropdown-toggle no-arrow" href="@Url.Action("Index","Disposisi")">
+                            <span class="micon bi bi-check2-square"></span><span class="mtext">Disposisi</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index", "Monitoring")" class="dropdown-toggle no-arrow">
+                            <span class="micon bi bi-check2-square"></span><span class="mtext">Monitoring</span>
+                        </a>
+                    </li>
+                }
+                @if (ViewBag.UserGroup == "05")
+                {
+                    <li>
+                        <a class="dropdown-toggle no-arrow" href="@Url.Action("Index","Disposisi2")">
+                            <span class="micon bi bi-check2-square"></span><span class="mtext">Disposisi</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index", "Monitoring")" class="dropdown-toggle no-arrow">
+                            <span class="micon bi bi-check2-square"></span><span class="mtext">Monitoring</span>
+                        </a>
+                    </li>
+                }
+                @if (ViewBag.UserGroup == "06")
+                {
+                    <li>
+                        <a class="dropdown-toggle no-arrow" href="@Url.Action("Index","Disposisi3")">
+                            <span class="micon bi bi-check2-square"></span><span class="mtext">Disposisi</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("DetailAtasan","Telaah")" class="dropdown-toggle no-arrow">
+                            <span class="micon bi bi-pencil-square"></span><span class="mtext">Telaah</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index", "Monitoring")" class="dropdown-toggle no-arrow">
+                            <span class="micon bi bi-check2-square"></span><span class="mtext">Monitoring</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="micon bi bi-check2-square"></span><span class="mtext">Sidang</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="@Url.Action("Index","PraDPK")">Pra Sidang</a></li>
+                            <li><a href="@Url.Action("Index","DPK")">Sidang DPK</a></li>
+                        </ul>
+                    </li>
+                }
+                @if (ViewBag.UserGroup == "02")
+                {
+                    <li>
+                        <a href="@Url.Action("Index","Telaah")" class="dropdown-toggle no-arrow">
+                            <span class="micon bi bi-pencil-square"></span><span class="mtext">Telaah</span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="@Url.Action("Index","SKPS")" class="dropdown-toggle no-arrow">
+                            <span class="micon bi bi-pencil-square"></span><span class="mtext">Pembuatan SK PS/PK</span>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="javascript:;" class="dropdown-toggle">
+                            <span class="micon bi bi-check2-square"></span><span class="mtext">Sidang</span>
+                        </a>
+                        <ul class="submenu">
+                            <li><a href="@Url.Action("Index","PraDPK")">Pra Sidang</a></li>
+                            <li><a href="@Url.Action("Index","DPK")">Sidang DPK</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index","SKHukdisTanpaSidang")" class="dropdown-toggle no-arrow">
+                            <span class="micon bi bi-check2-square"></span><span class="mtext">SK Tanpa Sidang DPK</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index","HasilSidang")" class="dropdown-toggle no-arrow">
+                            <span class="micon bi bi-check2-square"></span><span class="mtext">Hasil Sidang(Surat/SK)</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="@Url.Action("Index", "Monitoring")" class="dropdown-toggle no-arrow">
+                            <span class="micon bi bi-check2-square"></span><span class="mtext">Monitoring</span>
+                        </a>
+                    </li>
+                }
+
             </ul>   
         </div>
     </div>

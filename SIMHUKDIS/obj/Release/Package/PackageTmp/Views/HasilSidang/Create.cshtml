@@ -70,8 +70,8 @@
                 <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <label class="control-label ">Masa Kerja</label>
-                        @Html.TextBoxFor(model => model.MASAKERJA_TAHUN, "", new { @id = "MASAKERJA_TAHUN", @class = "form-control", required = "required", @readonly = "True" })
-                        @Html.ValidationMessage("MASAKERJA_TAHUN", "", new { @class = "text-danger" })
+                        @Html.TextBoxFor(model => model.MK_TAHUN, "", new { @id = "MK_TAHUN", @class = "form-control", required = "required", @readonly = "True" })
+                        @Html.ValidationMessage("MK_TAHUN", "", new { @class = "text-danger" })
                     </div>
                     <div class="col-sm-6" style="display:none;">
                         <label>TMT Pensiun</label>
@@ -158,42 +158,42 @@
                         @Html.ValidationMessageFor(model => model.PelanggaranDisiplin, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group row">
+                @*<div class="form-group row">
                     <div class="col">
                         <label class="control-label">D. TERBUKTI MELANGGAR PASAL</label>
                         @Html.TextAreaFor(model => model.PasalPelanggaran, new { @type = "text", @id = "PasalPelanggaran", @class = "form-control", required = "required", rows = 5 })
                         @Html.ValidationMessageFor(model => model.PasalPelanggaran, "", new { @class = "text-danger" })
                     </div>
-                </div>
+                </div>*@
                 <div class="form-group row">
                     <div class="col">
-                        <label class="control-label">E. KEPUTUSAN</label>
+                        <label class="control-label">D. KEPUTUSAN</label>
                         @Html.DropDownListFor(model => model.KeputusanSidang, ViewBag.Hukdis as SelectList, new { @class = "mdb-select form-control", required = "required", @id = "KeputusanSidang", rows = 5 })
                         @Html.ValidationMessageFor(model => model.KeputusanSidang, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col">
-                        <label class="control-label">F. CATATAN SIDANG</label>
+                        <label class="control-label">E. CATATAN SIDANG</label>
                         @*<textarea class="form-control" id="Catatan_Sidang" rows="5" name="Catatan_Sidang"></textarea>*@
                         @Html.TextAreaFor(model => model.Catatan_Sidang, new { @type = "text", @id = "Catatan_Sidang", @class = "form-control", @readonly = true, rows = 5 })
                         @Html.ValidationMessageFor(model => model.Catatan_Sidang, "", new { @class = "text-danger" })
                     </div>
                 </div>
-                <div class="form-group row">
+                @*<div class="form-group row">
                     <div class="col">
                         <label class="control-label">G. MENGINGAT</label>
                         @Html.TextAreaFor(model => model.Mengingat, new { @class = "mdb-select form-control", required = "required", @id = "Mengingat", rows = 10 })
                         @Html.ValidationMessageFor(model => model.Mengingat, "", new { @class = "text-danger" })
                     </div>
-                </div>
-                <div class="form-group row">
+                </div>*@
+                @*<div class="form-group row" style="display:none;">
                     <div class="col">
                         <label class="control-label">H. TEMBUSAN</label>
                         @Html.TextAreaFor(model => model.Tembusan, new { @class = "mdb-select form-control", required = "required", @id = "Tembusan", rows = 10 })
                         @Html.ValidationMessageFor(model => model.Tembusan, "", new { @class = "text-danger" })
                     </div>
-                </div>
+                </div>*@
             </form>
             <div class="form-group row">
                 <div class="col">
@@ -214,6 +214,7 @@
                 var satkerx = '@ViewBag.SatuanKerja';
                 getData('@ViewBag.NIP');*@
                 //getTembusan();
+                getData($('#NIP'));
                 $(function () {
                     $("#TMT_Pensiun").datepicker({
                         setDate: new Date(),
@@ -292,11 +293,11 @@
                 success: function (result) {
                     $('#NAMA_LENGKAP').val(result.NAMA_LENGKAP);
                     $('#GOL_RUANG').val(result.GOL_RUANG);
-                    $('#LEVEL_JABATAN').val(result.LEVEL_JABATAN);
-                    $('#Satker').val(result.SATUAN_KERJA);
+                    $('#LEVEL_JABATAN').val(result.TAMPIL_JABATAN);
+                    $('#Satker').val(result.SATKER_3);
                     $('#TEMPAT_LAHIR').val(result.TEMPAT_LAHIR);
                     $('#TANGGAL_LAHIR').val(result.TANGGAL_LAHIR);
-                    $('#MASAKERJA_TAHUN').val(result.MASAKERJA_TAHUN);
+                    $('#MK_TAHUN').val(result.MK_TAHUN);
                     var satker3 = result.SATKER_3;
                 },
                 error: function (errormessage) {
@@ -315,7 +316,6 @@
             GenerateWord();
         }
             function UbahData() {
-                alert("UbahData");
                 var dpObj = {
                     ID: $('#ID').val(),
                     NIP: $('#NIP').val(),
@@ -367,7 +367,9 @@
     {
         var dpObj = {
             ID: $('#ID').val(),
-            NIP: $('#NIP').val()
+            NIP: $('#NIP').val(),
+            NAMA_LENGKAP: $('#NAMA_LENGKAP').val(),
+            KeputusanSidang: $('#KeputusanSidang').val()
         };
         $.ajax({
             url: "/HasilSidang/GenerateWord",

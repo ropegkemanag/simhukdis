@@ -31,12 +31,13 @@ namespace SIMHUKDIS.Controllers
                 string UserGroup = Session["UserGroup"].ToString();
                 string SatuanKerja = Session["Satker"].ToString();
                 string StatusAdmin = Session["StatusAdmin"].ToString();
+                string userID = Session["UserID"].ToString();
 
                 ViewBag.StatusAdmin = StatusAdmin;
                 ViewBag.UserID = userlogin;
                 ViewBag.SatuanKerja = SatuanKerja;
                 ViewBag.UserGroup = UserGroup;
-                List<clsMonitoring> monitoring = db.MonitoringList(UserGroup, userlogin).ToList();
+                List<clsMonitoring> monitoring = db.MonitoringList(UserGroup, userID).ToList();
                 return View(monitoring);
             }
             catch (Exception ex)

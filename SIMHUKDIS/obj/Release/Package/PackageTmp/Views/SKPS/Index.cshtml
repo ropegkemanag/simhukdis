@@ -1,0 +1,128 @@
+﻿@model IEnumerable<SIMHUKDIS.Models.clsSKPS>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="pd-20 card-box mb-30">
+    <div class="pb-20">
+        <table class="table hover data-table-export">
+            <thead class="table table-primary" style="white-space:nowrap;">
+                <tr>
+                    <th>
+                        Verifikasi
+                    </th>
+                    <th>
+                        Submit
+                    </th>
+                    <th>
+                        No Surat
+                    </th>
+                    <th>
+                        Tanggal Surat
+                    </th>
+                    <th>
+                        Perihal
+                    </th>
+                    <th>
+                        Satuan Kerja
+                    </th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @if (Model == null)
+                {
+                }
+                else
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr class="table-bordered table-hover my-3">
+                            <td>
+                                <a class="btn btn-primary" href="#" onclick="getbyID(@item.ID)">Verifikasi</a>
+                            </td>
+                            <td>
+                                <div class="dropdown">
+                                    <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Kirim
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                        <a class="dropdown-item" href="">Kirim Ke Atasan</a>
+                                        <a class="dropdown-item" onclick="ProsesPraSidang('@item','@item')">Kirim Ke Satker</a>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                @Html.ActionLink(item.NoSurat, "Details", new { ID = item.ID })
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.TanggalSurat)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Perihal)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Satuan_Kerja)
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="modal fade" id="KirimSKPS" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Kirim Ke Satker</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="modal-body" style="margin-left:20px;">
+                <form id="Form">
+                    <div class="form-group row" style="display:none;">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">ID</label>
+                            @Html.TextBox("ID", "", new { @id = "ID", @class = "form-control", required = "required" })
+                            @Html.ValidationMessage("ID", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-6">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">NIP</label>
+                            @Html.TextBox("NIP", "", new { @id = "NIPx", @class = "form-control", required = "required" })
+                            @Html.ValidationMessage("NIP", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">File Telaah</label>
+                            @Html.TextBox("FileSKPS", "", new { @id = "FileSKPS", @class = "form-control", required = "required", Type = "file", accept = "application/pdf" })
+                            @Html.ValidationMessage("FileTelaah", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                <input type="submit" value="Proses" class="btn btn-primary" style="width:100px;" onclick="KirimSKJadi()" />
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function ProsesPraSidang(ID, NIP) {
+        $('#ID').val(ID);
+        $('#NIPx').val(NIP);
+        $('#KirimSKPS').modal('show');
+    }
+    function KirimSKJadi() {
+
+    }
+</Script>

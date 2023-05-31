@@ -62,8 +62,8 @@
                 <div class="form-group row">
                     <div class="col-sm-6 mb-3 mb-sm-0">
                         <label class="control-label ">Masa Kerja</label>
-                        @Html.TextBox("MASAKERJA_TAHUN", "", new { @id = "MASAKERJA_TAHUN", @class = "form-control", required = "required" })
-                        @Html.ValidationMessage("MASAKERJA_TAHUN", "", new { @class = "text-danger" })
+                        @Html.TextBox("MK_TAHUN", "", new { @id = "MK_TAHUN", @class = "form-control", required = "required" })
+                        @Html.ValidationMessage("MK_TAHUN", "", new { @class = "text-danger" })
                     </div>
                     <div class="col-sm-6">
                         <label>TMT Pensiun</label>
@@ -126,59 +126,31 @@
 
     <div class="card-box mb-30">
         <div class="card-header py-3">
-            <h6 class="m-0 font-weight-bold text-primary">2.DATA KEPUTUSAN SIDANG DPK</h6>
+            <h6 class="m-0 font-weight-bold text-primary">2.DATA KEPUTUSAN</h6>
         </div>
         <div class="card-body">
             <form>
                 <div class="form-group row">
                     <div class="col">
-                        <label class="control-label">A. TANGGAL SIDANG DPK</label>
-                        @Html.TextBox("Tanggal_Sidang_DPK", "", new { @type = "text", @id = "Tanggal_Sidang_DPK", @class = "form-control date-picker", required = "required" })
-                        @Html.ValidationMessage("Tanggal_Sidang_DPK", "", new { @class = "text-danger" })
+                        <label class="control-label">A. NO SURAT</label>
+                        @Html.DropDownList("NoSurat", ViewBag.SuratNo as SelectList, new { @class = "custom-select2 form-control", required = "required", @id = "NoSurat", onchange = "getMengingat()" })
+                        @Html.ValidationMessage("NoSurat", "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col">
-                        <label class="control-label">B. DASAR BUKTI</label>
+                        <label class="control-label">B. MENGINGAT POIN A</label>
                         @Html.TextArea("DasarBukti", new { @type = "text", @id = "DasarBukti", @class = "form-control", required = "required", rows = 5 })
                         @Html.ValidationMessage("DasarBukti", "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col">
-                        <label class="control-label">C. TERBUKTI MELAKUKAN PELANGGARAN</label>
-                        @Html.TextArea("PelanggaranDisiplin", new { @type = "text", @id = "PelanggaranDisiplin", @class = "form-control", required = "required", rows = 5 })
-                        @Html.ValidationMessage("PelanggaranDisiplin", "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col">
-                        <label class="control-label">D. TERBUKTI MELANGGAR PASAL</label>
-                        @Html.TextArea("PasalPelanggaran", new { @type = "text", @id = "PasalPelanggaran", @class = "form-control", required = "required", rows = 5 })
-                        @Html.ValidationMessage("PasalPelanggaran", "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col">
-                        <label class="control-label">E. KEPUTUSAN</label>
+                        <label class="control-label">C. KEPUTUSAN</label>
                         @Html.Label("Keputusan Sidang", htmlAttributes: new { @class = "control-label" })
+
                         @Html.DropDownList("KeputusanSidang", ViewBag.Hukdis as SelectList, new { @class = "custom-select2 form-control", required = "required", @id = "KeputusanSidang" })
                         @Html.ValidationMessage("KeputusanSidang", "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                
-                <div class="form-group row">
-                    <div class="col">
-                        <label class="control-label">F. MENGINGAT</label>
-                        @Html.TextArea("Mengingat", new { @class = "mdb-select form-control", required = "required", @id = "Mengingat", rows = 10 })
-                        @Html.ValidationMessage("Mengingat", "", new { @class = "text-danger" })
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col">
-                        <label class="control-label">G. TEMBUSAN</label>
-                        @Html.TextArea("Tembusan", new { @class = "mdb-select form-control", required = "required", @id = "Tembusan", rows = 10 })
-                        @Html.ValidationMessage("Tembusan", "", new { @class = "text-danger" })
                     </div>
                 </div>
             </form>
@@ -196,151 +168,100 @@
 }
 <script src="/Scripts/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
-            $(document).ready(function () {
-                @*var NIP = @ViewBag.NIP;
-                var satkerx = '@ViewBag.SatuanKerja';
-                getData('@ViewBag.NIP');*@
-                //getTembusan();
-                //$(function () {
-                //    $("#TMT_Pensiun").datepicker({
-                //        setDate: new Date(),
-                //        format: 'dd-mm-yyyy',
-                //        autoclose: true,
-                //        calendarWeeks: true,
-                //        clearBtn: true,
-                //        disableTouchKeyboard: true
-                //    })
-                //});
-                //$(function () {
-                //    $("#Tanggal_Telaah").datepicker({
-                //        setDate: new Date(),
-                //        format: 'dd-mm-yyyy',
-                //        autoclose: true,
-                //        calendarWeeks: true,
-                //        clearBtn: true,
-                //        disableTouchKeyboard: true
-                //    })
-                //});
-                //$(function () {
-                //    $("#Tanggal_Sidang_DPK").datepicker({
-                //        setDate: new Date(),
-                //        format: 'dd-mm-yyyy',
-                //        autoclose: true,
-                //        calendarWeeks: true,
-                //        clearBtn: true,
-                //        disableTouchKeyboard: true
-                //    })
-                //});
-            });
+    $(document).ready(function () {
+                
+    });
+    function AllowOnlyNumbers(e) {
 
-        function AllowOnlyNumbers(e) {
+        e = (e) ? e : window.event;
+        var clipboardData = e.clipboardData ? e.clipboardData : window.clipboardData;
+        var key = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
+        var str = (e.type && e.type == "paste") ? clipboardData.getData('Text') : String.fromCharCode(key);
 
-            e = (e) ? e : window.event;
-            var clipboardData = e.clipboardData ? e.clipboardData : window.clipboardData;
-            var key = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
-            var str = (e.type && e.type == "paste") ? clipboardData.getData('Text') : String.fromCharCode(key);
-
-            return (/^\d+$/.test(str));
-            }
-            function getTembusan() {
-                var satkerx = '@ViewBag.SatuanKerja';
-                var satker3 = $("#SATKER_3").val();
-                alert(satker3);
-                $.ajax({
-                    type: "GET",
-                    url: "/HasilSidang/GetTembusan?",
-                    cache: false,
-                    data: ({ Satker: satkerx, Satker3: satker3 }),
-                    contentType: "application/json;charset=UTF-8",
-                    dataType: "json",
-                    success: function (result) {
-                        $('#Tembusan').val(result.Tembusan);
-                    },
-                    error: function (errormessage) {
-                        Swal.fire({
-                            icon: 'error',
-                            title: "Tembusan tidak ditemukan",
-                            showConfirmButton: false,
-                            timer: 3000
-                        })
-                    }
-                });
-                return false;
-            }
-        function getData() {
-            var NIP = $('#NIP').val();
-            $.ajax({
-                type: "GET",
-                url: "/Telaah/GetPegawai?",
-                cache: false,
-                data: ({ NIP: NIP }),
-                contentType: "application/json;charset=UTF-8",
-                dataType: "json",
-                success: function (result) {
-                    $('#NAMA_LENGKAP').val(result.NAMA_LENGKAP);
-                    $('#GOL_RUANG').val(result.GOL_RUANG);
-                    $('#LEVEL_JABATAN').val(result.TAMPIL_JABATAN);
-                    $('#Satker').val(result.SATUAN_KERJA);
-                    $('#TEMPAT_LAHIR').val(result.TEMPAT_LAHIR);
-                    $('#TANGGAL_LAHIR').val(result.TANGGAL_LAHIR);
-                    $('#MASAKERJA_TAHUN').val(result.MASAKERJA_TAHUN);
-                    $('#TMT_PENSIUN').val(result.TMT_PENSIUN);
-                    var satker3 = result.SATKER_3;
-                },
-                error: function (errormessage) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: "NIP tidak ditemukan",
-                        showConfirmButton: false,
-                        timer: 3000
-                    })
-                }
-            });
-            return false;
-            }
-        function BuatSK() {
-            UbahData();
-            GenerateWord();
-        }
-            function UbahData() {
-                alert("UbahData");
-                var dpObj = {
-                    ID: $('#ID').val(),
-                    NIP: $('#NIP').val(),
-                    KeputusanSidang: $('#KeputusanSidang').val(),
-                    Tanggal_Sidang: $('#Tanggal_Sidang_DPK').val(),
-                    Catatan_Sidang: $('#Catatan_Sidang').val(),
-                    DasarBukti: $('#DasarBukti').val(),
-                    Pelanggaran: $('#PelanggaranDisiplin').val(),
-                    PasalPelanggaran: $('#PasalPelanggaran').val(),
-                    Mengingat: $('#Mengingat').val(),
-                    Tembusan: $('#Tembusan').val()
-                };
-            $.ajax({
-            url: "/HasilSidang/UbahData",
-            data: JSON.stringify(dpObj),
-            type: "POST",
-            contentType: "application/json;charset=utf-8",
+        return (/^\d+$/.test(str));
+    }
+    @*function getTembusan() {
+        var satkerx = '@ViewBag.SatuanKerja';
+        var satker3 = $("#SATKER_3").val();
+        alert(satker3);
+        $.ajax({
+            type: "GET",
+            url: "/HasilSidang/GetTembusan?",
+            cache: false,
+            data: ({ Satker: satkerx, Satker3: satker3 }),
+            contentType: "application/json;charset=UTF-8",
             dataType: "json",
             success: function (result) {
-                if (result.toString() == "Success") {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Simpan Data berhasil !',
-                        showConfirmButton: false,
-                        timer: 3000
-                    })
-                }
-                else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: result.toString(),
-                        showConfirmButton: false,
-                        timer: 3000
-                    })
-                }
+                $('#Tembusan').val(result.Tembusan);
             },
             error: function (errormessage) {
+                Swal.fire({
+                    icon: 'error',
+                    title: "Tembusan tidak ditemukan",
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        });
+        return false;
+    }*@
+    function getData() {
+    var NIP = $('#NIP').val();
+    $.ajax({
+        type: "GET",
+        url: "/Telaah/GetPegawai?",
+        cache: false,
+        data: ({ NIP: NIP }),
+        contentType: "application/json;charset=UTF-8",
+        dataType: "json",
+        success: function (result) {
+            $('#NAMA_LENGKAP').val(result.NAMA_LENGKAP);
+            $('#GOL_RUANG').val(result.GOL_RUANG);
+            $('#LEVEL_JABATAN').val(result.TAMPIL_JABATAN);
+            $('#Satker').val(result.SATKER_3);
+            $('#TEMPAT_LAHIR').val(result.TEMPAT_LAHIR);
+            $('#TANGGAL_LAHIR').val(result.TANGGAL_LAHIR);
+            $('#MK_TAHUN').val(result.MK_TAHUN);
+            $('#TMT_PENSIUN').val(result.TMT_PENSIUN);
+            var satker3 = result.SATKER_3;
+        },
+        error: function (errormessage) {
+            Swal.fire({
+                icon: 'error',
+                title: "NIP tidak ditemukan",
+                showConfirmButton: false,
+                timer: 3000
+            })
+        }
+    });
+    return false;
+    }
+    function BuatSK() {
+        UbahData();
+        //GenerateSK();
+    }
+    function UbahData() {
+        //alert("UbahData");
+        var dpObj = {
+            NIP: $('#NIP').val(),
+            KeputusanSidang: $('#KeputusanSidang').val(),
+            Mengingat: $('#DasarBukti').val(),
+            NoSurat: $('#NoSurat').val(),
+            NAMA_LENGKAP: $('#NAMA_LENGKAP').val()
+        };
+        $.ajax({
+        url: "/HasilSidang/Insert",
+        data: JSON.stringify(dpObj),
+        type: "POST",
+        contentType: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            if (result.toString() == "Success") {
+                GenerateSK();
+                //GenerateWord();
+                //alert(result.toString());
+            }
+            else {
                 Swal.fire({
                     icon: 'error',
                     title: result.toString(),
@@ -348,17 +269,31 @@
                     timer: 3000
                 })
             }
+        },
+        error: function (errormessage) {
+            Swal.fire({
+                icon: 'error',
+                title: result.toString(),
+                showConfirmButton: false,
+                timer: 3000
+            })
+        }
         });
-            }
+    }
 
-    function GenerateWord()
+    function GenerateSK()
     {
         var dpObj = {
-            ID: $('#ID').val(),
-            NIP: $('#NIP').val()
+            ID: $('#NoSurat').val(),
+            NIP: $('#NIP').val(),
+            NAMA_LENGKAP: $('#NAMA_LENGKAP').val(),
+            KeputusanSidang: $('#KeputusanSidang').val(),
+            GOL_RUANG: $('#GOL_RUANG').val(),
+            LEVEL_JABATAN: $('#LEVEL_JABATAN').val(),
+            Satker: $('#Satker').val()
         };
         $.ajax({
-            url: "/HasilSidang/GenerateWord",
+            url: "/HasilSidang/GenerateSK",
             data: JSON.stringify(dpObj),
             type: "POST",
             contentType: "application/json;charset=utf-8",
@@ -385,7 +320,7 @@
             error: function (errormessage) {
                 Swal.fire({
                     icon: 'error',
-                    title: result.toString(),
+                    title: errormessage,
                     showConfirmButton: false,
                     timer: 3000
                 })

@@ -42,8 +42,10 @@
                     {
                 <tr class="table-bordered table-hover my-3">
                     <td>
-
-                        <a href="#" onclick="getbyID('@r.ID','@r.tipe')"><i class="icon-copy dw dw-check"></i>Proses</a>
+                        <button class="btn btn-primary" onclick="getbyID('@r.ID','@r.tipe')">
+                            <i class="glyphicon glyphicon-check"></i>Proses
+                        </button>
+                        @*<a href="#" onclick="getbyID('@r.ID','@r.tipe')"><i class="icon-copy dw dw-check"></i>Proses</a>*@
                     </td>
                     <td>
                         @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })

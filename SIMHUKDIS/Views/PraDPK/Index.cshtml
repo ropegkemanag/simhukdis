@@ -8,41 +8,12 @@
 <div class="pd-20 card-box mb-30">
     @Html.ValidationSummary(true)
     <div class="card-body">
-        @*<table>
-                <tr>
-                    <td>
-                        <label style="color:cornflowerblue;" class="control-label ">Tanggal Sidang</label>
-                    </td>
-                    <td style="width:20px;"> </td>
-                    <td>
-                        <input id="TanggalSidang" class="form-control" value="@string.Format("{0:dd-MM-yyyy}", ViewBag.TanggalSidang)" type="date" />
-                    </td>
-                    <td style="width:20px;"> </td>
-                    <td>
-                        <button class="btn btn-primary" type="button" id="GridLoad">
-                            Cari
-                        </button>
-                    </td>
-                    <td style="width:20px;"> </td>
-                    <td>
-                        <button id="downloadtoexcel" class="btn btn-primary" type="button" name="action:DownloadToExcel">
-                            Download to Excel
-                        </button>
-                    </td>
-
-                </tr>
-            </table>*@
-        <div class="card-body">
-        </div>
         <table class="table hover data-table-export">
             <thead class="table table-primary" style="white-space:nowrap;">
                 <tr>
                     <th>
                         Aksi
                     </th>
-                    @*<th>
-                            No
-                        </th>*@
                     <th>
                         Identitas
                     </th>
@@ -64,30 +35,6 @@
                     <th>
                         Catatan Pra Sidang DPK
                     </th>
-                    @*<th>
-                            @Html.DisplayNameFor(model => model.PelanggaranDisiplin)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.PasalPelanggaran)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.RekomendasiHukdis)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.NoSurat)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.AsalSurat)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.TanggalSurat)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.perihal)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.SATUAN_KERJA)
-                        </th>*@
                 </tr>
             </thead>
             <tbody>
@@ -113,10 +60,10 @@
                             @Html.DisplayFor(modelItem => item.GOL_RUANG)
                             <br />
                             @Html.DisplayFor(modelItem => item.LEVEL_JABATAN)
-                            <br />
-                            @Html.DisplayFor(modelItem => item.AsalSurat)
+                            @Html.DisplayFor(modelItem => item.SATUAN_KERJA)
                             <br />
                             @Html.DisplayFor(modelItem => item.DasarBukti)
+
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.PasalPelanggaran)

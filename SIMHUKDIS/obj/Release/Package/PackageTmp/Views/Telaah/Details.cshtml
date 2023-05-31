@@ -12,13 +12,13 @@
     <div class="card-body">
         <table class="table table-bordered text-wrap" style="width:100%;">
             @*<tr>
-                <td>
-                    @Html.DisplayNameFor(model => model.NoAgenda)
-                </td>
-                <td>
-                    @Html.DisplayFor(model => model.NoAgenda)
-                </td>
-            </tr>*@
+            <td>
+                @Html.DisplayNameFor(model => model.NoAgenda)
+            </td>
+            <td>
+                @Html.DisplayFor(model => model.NoAgenda)
+            </td>
+        </tr>*@
             <tr>
                 <td>
                     @Html.DisplayNameFor(model => model.NoSurat)
@@ -61,30 +61,76 @@
             </tr>
             <tr>
                 <td>
-                    @Html.DisplayNameFor(model => model.LampiranSurat1)
+                    @Html.DisplayNameFor(model => model.LampiranSPTJM)
                 </td>
                 <td>
-                    @if (Model.LampiranSurat1 == "")
+                    @if (Model.LampiranSPTJM == "" || Model.LampiranSPTJM == null)
                     {
                     }
                     else
                     {
-                        @Html.ActionLink(Model.LampiranSurat1, "DownloadFile1", new { fileName = Model.LampiranSurat1 })
+                        @Html.ActionLink(
+                                    "Lihat",
+                                    "DownloadFileSPTJM",                         // controller action
+                                    "SuratMasuk",        // controller
+                                    new { fileName =  Model.LampiranSPTJM },         // action parameters aka route values
+                                    new { @class = "btn btn-primary" })// html attributes
                     }
+
                 </td>
             </tr>
+
+            <tr>
+                <td>
+                    @Html.DisplayNameFor(model => model.LampiranSurat1)
+                </td>
+                <td>
+                    @if (Model.LampiranSurat1 == "" || Model.LampiranSurat1 == null)
+                    {
+                    }
+                    else
+                    {
+                        @Html.ActionLink(
+                                    "Lihat",
+                                    "DownloadFile1",                         // controller action
+                                    "Telaah",        // controller
+                                    new { fileName =  Model.LampiranSurat1 },         // action parameters aka route values
+                                    new { @class = "btn btn-primary" })// html attributes
+                    }
+                    @*@if (Model.LampiranSurat1 == "")
+                {
+                }
+                else
+                {
+                    @Html.ActionLink(Model.LampiranSurat1, "DownloadFile1", new { fileName = Model.LampiranSurat1 })
+                }*@
+                </td>
+            </tr>
+
             <tr>
                 <td>
                     @Html.DisplayNameFor(model => model.LampiranSurat2)
                 </td>
                 <td>
-                    @if (Model.LampiranSurat2 == "")
+                    @if (Model.LampiranSurat2 == "" || Model.LampiranSurat2 == null)
                     {
                     }
                     else
                     {
-                        @Html.ActionLink(Model.LampiranSurat2, "DownloadFile2", new { fileName = Model.LampiranSurat2 })
+                        @Html.ActionLink(
+                                    "Lihat",
+                                    "DownloadFile2",                         // controller action
+                                    "Telaah",        // controller
+                                    new { fileName =  Model.LampiranSurat2 },         // action parameters aka route values
+                                    new { @class = "btn btn-primary" })// html attributes
                     }
+                    @*@if (Model.LampiranSurat2 == "")
+                {
+                }
+                else
+                {
+                    @Html.ActionLink(Model.LampiranSurat2, "DownloadFile2", new { fileName = Model.LampiranSurat2 })
+                }*@
                 </td>
             </tr>
             <tr>

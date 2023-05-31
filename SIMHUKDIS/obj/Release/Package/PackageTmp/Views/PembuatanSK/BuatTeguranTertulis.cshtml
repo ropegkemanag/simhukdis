@@ -63,8 +63,8 @@
             <div class="form-group row">
                 <div class="col-sm-6 mb-3 mb-sm-0">
                     <label class="control-label ">Masa Kerja</label>
-                    @Html.TextBox("MASAKERJA_TAHUN", "", new { @id = "MASAKERJA_TAHUN", @class = "form-control", required = "required", @readonly = "True" })
-                    @Html.ValidationMessage("MASAKERJA_TAHUN", "", new { @class = "text-danger" })
+                    @Html.TextBox("MK_TAHUN", "", new { @id = "MK_TAHUN", @class = "form-control", required = "required", @readonly = "True" })
+                    @Html.ValidationMessage("MK_TAHUN", "", new { @class = "text-danger" })
                 </div>
                 <div class="col-sm-6">
                     <label>TMT Pensiun</label>
@@ -227,7 +227,7 @@
                 $('#Satker').val(result.SATUAN_KERJA);
                 $('#TEMPAT_LAHIR').val(result.TEMPAT_LAHIR);
                 $('#TANGGAL_LAHIR').val(result.TANGGAL_LAHIR);
-                $('#MASAKERJA_TAHUN').val(result.MASAKERJA_TAHUN);
+                $('#MK_TAHUN').val(result.MK_TAHUN);
                 $('#TMT_PENSIUN').val(result.TMT_PENSIUN);
             },
             error: function (errormessage) {
@@ -278,7 +278,7 @@
             SATUAN_KERJA: $('#SATUAN_KERJA').val(),
             TEMPAT_LAHIR: $('#TEMPAT_LAHIR').val(),
             TANGGAL_LAHIR: $('#TANGGAL_LAHIR').val(),
-            MASAKERJA_TAHUN: $('#MASAKERJA_TAHUN').val(),
+            MK_TAHUN: $('#MK_TAHUN').val(),
             TANGGAL_LAHIR: $('#TANGGAL_LAHIR').val(),
             TMT_PENSIUN: $('#TMT_PENSIUN').val(),
             DasarBukti: $('#DasarBukti').val(),

@@ -1,0 +1,269 @@
+﻿@model IEnumerable<SIMHUKDIS.Models.clsHasilSidang>
+
+@{
+    ViewBag.Title = "Data Hasil Sidang";
+    Layout = "/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="card-box mb-30">
+    <div class="pd-20">
+        <p style="text-align:right;">
+                <button id="GridLoad" class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal" value="New" onclick="location.href='@Url.Action("BuatSK", "SKHukdisTanpaSidang")'">
+                    Tambah Data
+                </button>
+            </p>
+        <table class="table hover data-table-export">
+            <thead class="table table-primary" style="white-space:nowrap;">
+                <tr>
+                    <th>
+                        Aksi
+                    </th>
+                    <th>
+                        Identitas
+                    </th>
+                    <th>
+                        Dasar Bukti
+                    </th>
+                    <th>
+                        Hukuman
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+
+                <tr>
+                    <td><a class="btn btn-primary" href="@Url.Action("Edit", "SKHukdisTanpaSidang", new { ID = item.ID, NIP = item.NIP })">Ubah</a>
+                        <a class="btn btn-danger" onclick="Hapus('@item.ID','@item.NIP')">Hapus</a>
+                    </td>
+                    <td>@item.NIP</td>
+                    <td>@item.DasarBukti</td>
+                    <td>@item.hukuman</td>
+                </tr>
+                }
+            </tbody>
+
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="KirimSuratKS" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Kirim Surat Kewenangan Satuan Kerja</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="modal-body" style="margin-left:20px;">
+                <form id="Form">
+                    <div class="form-group row" style="display:none;">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">ID</label>
+                            @Html.TextBox("ID", "", new { @id = "IDs", @class = "form-control", required = "required" })
+                            @Html.ValidationMessage("ID", "", new { @class = "text-danger" })
+                        </div>
+                        <div class="col-sm-6">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">NIP</label>
+                            @Html.TextBox("NIP", "", new { @id = "NIPs", @class = "form-control", required = "required" })
+                            @Html.ValidationMessage("NIP", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">No Surat</label>
+                            @Html.TextBox("NoSurat", "", new { @id = "NoSurat", @class = "form-control", required = "required" })
+                            @Html.ValidationMessage("NoSurat", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">Tanggal Surat</label>
+                            @Html.TextBox("TanggalSurat", "", new { @type = "text", @id = "TanggalSurat", @class = "form-control date-picker", required = "required" })
+                            @Html.ValidationMessage("TanggalSurat", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">File Surat</label>
+                            @Html.TextBox("FileSKS", "", new { @id = "FileSKS", @class = "form-control", required = "required", Type = "file", accept = "application/pdf" })
+                            @Html.ValidationMessage("FileSKS", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                <input type="submit" value="Proses" class="btn btn-primary" style="width:100px;" onclick="KirimSurat()" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="DeleteSK" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Apakah Anda yakin untuk menghapus data ini ?</div>
+            <div class="modal-footer">
+                <label id="ID" name="ID"></label>
+                <label id="NIPx" name="NIPx"></label>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <input class="btn btn-primary" onclick="HapusDataSK()" value="Hapus" type="button" />
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(function () {
+            $("#TanggalSurat").datepicker({
+                setDate: new Date(),
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                calendarWeeks: true,
+                clearBtn: true,
+                disableTouchKeyboard: true
+            })
+        });
+    });
+    function BuatSK() {
+        window.location = '@Url.Action("Create", "HasilSidang")?fileName=' + fileName1;
+    }
+    function Hapus(ID,NIP) {
+        $('#ID').val(ID);
+        $('#NIPx').val(NIP);
+        $('#DeleteSK').modal('show');
+    }
+    function KirimA(ID, NIP) {
+        alert(ID);
+        $('#IDs').val(ID);
+        $('#NIPs').val(NIP);
+        $('#KirimSuratKS').modal('show');
+    }
+    function HapusDataSK() {
+        var dpObj = {
+            ID: $('#ID').val(),
+            NIP: $('#NIPx').val()
+            };
+        $.ajax({
+            url: "/SKHukdisTanpaSidang/Delete",
+            data: JSON.stringify(dpObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.toString() == "Success") {
+                    swal.fire({
+                        title: "Hapus Data Usul Berhasil!",
+                        icon: "success",
+                        button: "Ok",
+                        timer: 3000,
+                    });
+                    window.location = '@Url.Action("Index", "SKHukdisTanpaSidang")';
+                }
+                else {
+                    swal.fire({
+                        title: result.toString(),
+                        icon: "error",
+                        button: "Ok",
+                        timer: 3000,
+                    });
+                }
+            },
+            error: function (errormessage) {
+                swal.fire({
+                    title: errormessage.responseText,
+                    icon: "error",
+                    button: "Ok",
+                    timer: 3000,
+                });
+            }
+        });
+    }
+    function KirimSurat() {
+        var InputID = '@ViewBag.ID';
+        var fileUpload = $("#FileSKS").get(0);
+        var files = fileUpload.files;
+
+        // Create FormData object
+        var fileData = new FormData();
+
+        // Looping over all files and add it to FormData object
+        for (var i = 0; i < files.length; i++) {
+            fileData.append(files[i].name, files[i]);
+        }
+        $.ajax({
+            url: '/HasilSidang/UploadFiles',
+            type: "POST",
+            contentType: false, // Not to set any content header
+            processData: false, // Not to process data
+            data: fileData,
+            success: function (result) {
+                var dpObj = {
+                    ID: $('#IDs').val(),
+                    NIP: $('#NIPs').val(),
+                    NoSurat: $('#NoSurat').val(),
+                    TanggalSurat: $('#TanggalSurat').val(),
+                    FileSKS: result
+                };
+                $.ajax({
+                    url: "/HasilSidang/KirimSurat",
+                    data: JSON.stringify(dpObj),
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.toString() == "Success") {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Proses berhasil !',
+                                showConfirmButton: false,
+                                timer: 3000
+                            })
+                            window.location.href = '@Url.Action("Index", "HasilSidang")';
+                        }
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: result.toString(),
+                                showConfirmButton: false,
+                                timer: 3000
+                            })
+                        }
+                    },
+                    error: function (errormessage) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: result.toString(),
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                    }
+                });
+            },
+            error: function (err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: result.toString(),
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        });
+    }
+</script>

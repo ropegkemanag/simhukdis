@@ -42,11 +42,11 @@
                     @if (@ViewBag.UserID == item.Create_User && (item.Status == 0))
                     {
                         <td class="table-plus">
-                            @Html.ActionLink("Ubah", "Edit", new { ID = item.ID, KODE_SATUAN_KERJA = item.Kode_Satuan_Kerja, Kode_Unit_Kerja = item.Kode_Unit_Kerja, UsulStatus = item.UsulStatus })
+                            @Html.ActionLink("Ubah", "Edit", new { ID = item.ID, KODE_SATUAN_KERJA = item.Kode_Satuan_Kerja, Kode_Unit_Kerja = item.Kode_Unit_Kerja, UsulStatus = item.UsulStatus, @class="btn btn-primary" })
                             <br />
-                            <a href="#" onclick="Hapus('@item.ID')">Hapus</a>
+                            <a class="btn btn-danger" onclick="Hapus('@item.ID')">Hapus</a>
                             <br />
-                            <a href="#" onclick="Proses('@item.ID')">Proses</a>
+                            <a class="btn btn-success" onclick="Proses('@item.ID')">Proses</a>
                         </td>
                     }
 
@@ -60,8 +60,17 @@
                             Proses
                         </td>
                     }
+                        <td>
+                            @Html.ActionLink(
+                                       item.NoSurat,
+                                       "Details",                         // controller action
+                                       "SuratMasuk",        // controller
+                                       new { ID = item.ID },         // action parameters aka route values
+                                       new { @class = "btn btn-primary" })
+                        </td>
+                    
                     @*<td>@Html.ActionLink(item.NoSurat, "Details", new { ID = item.ID })</td>*@
-                    <td>@Html.DisplayFor(modelItem => item.NoSurat)</td>
+                    @*<td>@Html.DisplayFor(modelItem => item.NoSurat)</td>*@
                     <td>@Html.DisplayFor(modelItem => item.Perihal)</td>
                     <td>@Html.DisplayFor(modelItem => item.Satuan_Kerja)</td>
                     <td>@Html.DisplayFor(modelItem => item.Unit_Kerja)</td>

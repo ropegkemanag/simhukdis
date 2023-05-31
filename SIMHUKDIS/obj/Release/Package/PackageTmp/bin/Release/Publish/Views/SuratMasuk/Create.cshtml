@@ -1,0 +1,274 @@
+﻿@model simhukdis.Models.clsSuratMasuk
+
+@{
+                /**/
+
+                ViewBag.Title = "Create";
+                Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Tambah Surat Masuk</h6>
+    </div>
+    <div class="card-body">
+        @using (Html.BeginForm("Create", "SuratMasuk", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <form>
+                <div class="form-group row">
+                    @*<div class="col-sm-6 mb-3 mb-sm-0">
+                        <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">No. Agenda *</label>
+                        @Html.TextBox("NoAgenda", "", new { @id = "NoAgenda", @class = "form-control form-control-user", required = "required" })
+                        @Html.ValidationMessage("NoAgenda", "", new { @class = "text-danger" })
+                    </div>*@
+                    <div class="col">
+                        <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">No. Surat *</label>
+                        @Html.TextBox("NoSurat", "", new { @id = "NoSurat", @class = "form-control form-control-user", required = "required" })
+                        @Html.ValidationMessage("NoSurat", "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">Asal Surat *</label>
+                        @Html.TextBox("AsalSurat", "", new { @id = "AsalSurat", @class = "form-control form-control-user", required = "required" })
+                        @Html.ValidationMessage("AsalSurat", "", new { @class = "text-danger" })
+                    </div>
+                    <div class="col-sm-6">
+                        <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">Tanggal Surat *</label>
+                        @Html.TextBoxFor(model => model.TanggalSurat, "", new { @type = "text", @id = "TanggalSurat", @class = "form-control form-control-user", required = "required" })
+                        @Html.ValidationMessageFor(model => model.TanggalSurat, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col">
+                        <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">Perihal *</label>
+                        @Html.TextArea("perihal", "", new { @id = "perihal", @class = "form-control form-control-user", required = "required" })
+                        @Html.ValidationMessageFor(model => model.perihal, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col">
+                        <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">Satuan Kerja *</label>
+                        @Html.DropDownListFor(model => model.KODE_SATUAN_KERJA, ViewBag.Satker as SelectList, new { @class = "form-control", required = "required", @id = "KODE_SATUAN_KERJA" })
+                        @*@Html.TextBox("Satker", "", new { @id = "Satker", @class = "form-control form-control-user" })
+                            @Html.ValidationMessage("Satker", "", new { @class = "text-danger" })*@
+                    </div>
+                </div>
+                <div class="form-group row" id="LampiranSP">
+                    <div class="col">
+                        <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">Lampiran Surat Pengantar *</label>
+                        @Html.TextBoxFor(model => model.LampiranSurat1, "", new { @type = "file", @id = "LampiranSurat1", @class = "form-control", accept = "application/pdf"  })
+                    </div>
+                </div>
+                <div class="form-group row" id="LampiranBAP">
+                    <div class="col">
+                        <label class="control-label ">Lampiran BAP</label>
+                        @Html.TextBoxFor(model => model.LampiranSurat2, "", new { @type = "file", @id = "LampiranSurat2", @class = "form-control", accept = "application/pdf" })
+                    </div>
+                </div>
+                <div class="form-group row" id="LampiranSTP">
+                    <div class="col">
+                        <label class="control-label ">Lampiran Surat Tugas Pemeriksaan</label>
+                        @Html.TextBox("LampiranSurat3", "", new { @type = "file", @id = "LampiranSurat3", @class = "form-control form-control-user", accept = "application/pdf" })
+                        @Html.ValidationMessage("LampiranSurat3", "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row" id="LampiranSPanggilan">
+                    <div class="col">
+                        <label class="control-label ">Lampiran Surat Panggilan</label>
+                        @*<input type="file" name="LampiranSurat4" class="form-control" id="LampiranSurat4"/>*@
+                        @Html.TextBox("LampiranSurat4", "", new { @type = "file", @id = "LampiranSurat4", @class = "form-control form-control-user", accept = "application/pdf" })
+                        @Html.ValidationMessage("LampiranSurat4", "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row" id="Lainnya">
+                    <div class="col">
+                        <label class="control-label ">Lampiran Dokumen Lainnya</label>
+                        @Html.TextBox("LampiranSurat5", "", new { @type = "file", @id = "LampiranSurat5", @class = "form-control form-control-user", accept = "application/pdf" })
+                        @Html.ValidationMessage("LampiranSurat5", "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row" id="LHA">
+                    <div class="col">
+                        <label class="control-label ">Lampiran LHA</label>
+                        @Html.TextBox("LampiranSurat_LHA", "", new { @type = "file", @id = "LampiranSurat_LHA", @class = "form-control form-control-user", accept = "application/pdf" })
+                        @Html.ValidationMessage("LampiranSurat_LHA", "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row" id="DokumenisLampiranSurat6">
+                    <div class="col">
+                        <label>Apakah ada Putusan Pengadilan ?</label>
+                        @Html.DropDownList("isLampiranSurat6", new List<SelectListItem>
+                                                                            {
+                                                                                new SelectListItem{ Text = "Tidak", Value = "0" },
+                                                                                new SelectListItem{ Text = "Ya", Value = "1" }
+                                                                            }, htmlAttributes: new { @class = "form-control", @id = "isLampiranSurat6" ,@onchange= "LampiranPP()" }
+                                                                 )
+                        @*@Html.EditorFor(model => model.StatusAdmin, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessage(model => model.StatusAdmin, "", new { @class = "text-danger" })*@
+                    </div>
+                </div>
+                <div class="form-group row" id="LampiranSuratPP" name="LampiranSuratPP">
+                    <div class="col">
+                        <label class="control-label ">Lampiran Putusan Pengadilan</label>
+                        @Html.TextBox("LampiranSurat6", "", new { @type = "file", @id = "LampiranSurat6", @class = "form-control form-control-user", accept = "application/pdf" })
+                        @Html.ValidationMessage("LampiranSurat6", "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Simpan" class="btn btn-primary" style="width:100px;"/> 
+                        @*<button type="button" id="InsertData" class="btn btn-success" style="background-color:teal;"></button> | @Html.ActionLink("Back to List", "Index")*@
+                    </div>
+                </div>
+            </form>
+        }
+    </div>
+</div>
+
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {     
+        HideBox();
+        var SatuanKerja = '@ViewBag.SatuanKerja';
+        var SatkerName = '@ViewBag.SatuanKerjaName';
+        $('#AsalSurat').val(SatkerName);
+        Satker(SatuanKerja);
+        $(function () {
+            $("#TanggalSurat").datepicker({
+                setDate: new Date(),
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                calendarWeeks: true,
+                clearBtn: true,
+                disableTouchKeyboard: true
+            })
+        });        
+    });
+    function HideBox()
+    {        
+        $("#DokumenisLampiranSurat6").hide();
+        $("#LampiranSP").hide();
+        $("#LampiranBAP").hide();
+        $("#LampiranSTP").hide();
+        $("#LampiranSPanggilan").hide();
+        $("#Lainnya").hide();
+        $("#LampiranSuratPP").hide();
+        $("#LampiranSurat6").prop('disabled', true);
+        $("#LHA").hide();
+    }
+    function Satker(SatuanKerja)
+    {        
+        if (SatuanKerja == 143) {
+            $("#KODE_SATUAN_KERJA").prop('disabled', false);
+            $("#LampiranSP").show();
+            $("#LHA").show();
+            $("#Lainnya").show();
+            $("#LampiranSurat_LHA").prop('required', true);
+            $("#DokumenisLampiranSurat6").show();
+            $("#LampiranSuratPP").show();
+        }
+        else
+        {            
+            $("#KODE_SATUAN_KERJA").prop('disabled', true);
+            $("#DokumenisLampiranSurat6").show();
+            $("#LampiranSP").show();
+            $("#LampiranBAP").show();
+            $("#LampiranSTP").show();
+            $("#LampiranSPanggilan").show();
+            $("#Lainnya").show();
+            $("#LampiranSuratPP").show();
+            $("#LampiranSurat6").prop('disabled', true);
+            $("#LHA").hide();
+            $("#LampiranSurat_LHA").prop('required', false);
+        }
+    }
+    function LampiranPP()
+    {
+        if ($(isLampiranSurat6).val() == 1) {
+            $("#LampiranSurat6").prop('disabled', false);
+            $("#LampiranSurat6").prop('required', true);
+        }
+        else
+        {
+            $("#LampiranSurat6").prop('disabled', true);
+            $("#LampiranSurat6").prop('required', false);
+        }
+    }
+</script>
+@*<script type="text/javascript">
+    //string NoAgenda, string NoSurat, string AsalSurat, DateTime TanggalSurat,
+    //    string perihal, string Satker, HttpPostedFileBase LampiranSurat1,
+    //        HttpPostedFileBase LampiranSurat2, HttpPostedFileBase LampiranSurat3,
+    //            HttpPostedFileBase LampiranSurat4, HttpPostedFileBase LampiranSurat5, HttpPostedFileBase LampiranSurat6
+    function TambahSM() {
+        var dpObj = {
+            NoAgenda: $('#NoAgenda').val(),
+            NoSurat: $('#NoSurat').val(),
+            AsalSurat: $('#AsalSurat').val(),
+            TanggalSurat: $('#TanggalSurat').val(),
+            perihal: $('#perihal').val(),
+            Satker: $('#Satker').val(),
+            LampiranSurat1: $('#LampiranSurat1').val(),
+            LampiranSurat2: $('#LampiranSurat2').val(),
+            LampiranSurat3: $('#LampiranSurat3').val(),
+            LampiranSurat4: $('#LampiranSurat4').val(),
+            LampiranSurat5: $('#LampiranSurat5').val(),
+            LampiranSurat6: $('#LampiranSurat6').val()
+            };
+            $.ajax({
+                url: "/SuratMasuk/Create",
+                data: JSON.stringify(dpObj),
+                type: "POST",
+                contentType: "application/json;charset=utf-8",
+                dataType: "json",
+                success: function (result) {
+                    if (result.toString() == "Success") {
+                        swal({
+                            title: "Login Berhasil!",
+                            icon: "success",
+                            button: "Ok",
+                            timer: 3000,
+                        });
+                        window.location.href = '@Url.Action("Index", "Home")'
+                    }
+                    else {
+                        if (result.toString() == "Please input NIP!") {
+                            $("#NIP").val("");
+                            $("#NIP").focus();
+                            swal({
+                                title: "Please input NIP!",
+                                icon: "error",
+                                button: "Ok",
+                                timer: 3000,
+                            });
+                        }
+                        else if (result.toString() == "Please input Password!") {
+                            $("#Password").val("");
+                            $("#Password").focus();
+                            swal({
+                                title: "Please input Password!",
+                                icon: "error",
+                                button: "Ok",
+                                timer: 3000,
+                            });
+                        }
+                        else {
+                            swal({
+                                title: result.toString(),
+                                icon: "error",
+                                button: "Ok",
+                                timer: 3000,
+                            });
+                        }
+
+                    }
+
+                },
+                error: function (errormessage) {
+                    alert(errormessage.responseText);
+                }
+            });
+    }
+</script>*@

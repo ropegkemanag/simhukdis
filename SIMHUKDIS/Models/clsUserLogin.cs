@@ -50,12 +50,11 @@ namespace SIMHUKDIS.Models
     {
         public List<clsUserLogin> Users()
         {
-            Encryption encrypt = new Encryption();
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             List<clsUserLogin> Users = new List<clsUserLogin>();
             using (SqlConnection con = new SqlConnection(constr))
             {
-                string q = "simhukdis.sp_User_sel";
+                string q = "sp_User_sel";
                 SqlCommand cmd = new SqlCommand(q, con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 con.Open();
@@ -66,7 +65,7 @@ namespace SIMHUKDIS.Models
                     User.UserID = rd["UserID"].ToString();
                     User.UserName = rd["UserName"].ToString();
                     User.FullName = rd["FullName"].ToString();
-                    string Pwd = encrypt.Decrypt(rd["Password"].ToString(), rd["NIP"].ToString());
+                    string Pwd = rd["Password"].ToString();
                     //User.Password = encrypt.Decrypt(rd["Password"].ToString(), rd["NIP"].ToString());
                     User.Password = Pwd;
                     User.GroupID = rd["GroupID"].ToString();
@@ -181,15 +180,14 @@ namespace SIMHUKDIS.Models
         }
         public int CheckUserLogin(clsUserLogin User)
         {
-            Encryption encrypt = new Encryption();
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
-                string q = "sp_User_sel";
+                string q = "[sp_User_Check]";
                 SqlCommand cmd = new SqlCommand(q, con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@NIP", User.NIP);
-                cmd.Parameters.AddWithValue("@Password", encrypt.Encrypt(User.Password, User.NIP));
+                cmd.Parameters.AddWithValue("@Password", User.Password);
                 //cmd.Parameters.AddWithValue("Password", User.Password);
                 con.Open();
                 return Convert.ToInt32(cmd.ExecuteScalar());
@@ -197,7 +195,6 @@ namespace SIMHUKDIS.Models
         }
         public clsUserLogin GetData(string NIP)
         {
-            Encryption encrypt = new Encryption();
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -223,7 +220,7 @@ namespace SIMHUKDIS.Models
                     user.Satker = dt.Rows[0]["Satker"].ToString();
                     user.GroupID = dt.Rows[0]["GroupID"].ToString();
                     user.UserID = dt.Rows[0]["UserID"].ToString();
-                    //user.Password = encrypt.Decrypt(dt.Rows[0]["Password"].ToString(), dt.Rows[0]["NIP"].ToString());
+                    user.Password = dt.Rows[0]["Password"].ToString();
                     return user;
                 }
             }
@@ -233,7 +230,6 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                Encryption encrypt = new Encryption();
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
@@ -242,7 +238,7 @@ namespace SIMHUKDIS.Models
                     cmd.CommandType = CommandType.StoredProcedure;                    
                     cmd.Parameters.AddWithValue("@iUserName", "");
                     cmd.Parameters.AddWithValue("@iFullname", User.FullName);
-                    cmd.Parameters.AddWithValue("@iPassword", encrypt.Encrypt(User.Password.Trim(),User.NIP));
+                    cmd.Parameters.AddWithValue("@iPassword", User.Password.Trim());
                     cmd.Parameters.AddWithValue("@PhoneNo", User.PhoneNo);
                     cmd.Parameters.AddWithValue("@Email", User.Email);
                     cmd.Parameters.AddWithValue("@iStatusAdmin", User.StatusAdmin);
@@ -267,7 +263,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                Encryption encrypt = new Encryption();
+                
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
@@ -277,7 +273,7 @@ namespace SIMHUKDIS.Models
                     cmd.Parameters.AddWithValue("@iUserID", User.UserID);
                     cmd.Parameters.AddWithValue("@iUserName", "");
                     cmd.Parameters.AddWithValue("@iFullname", User.FullName);
-                    cmd.Parameters.AddWithValue("@iPassword", encrypt.Encrypt(User.Password.Trim(), User.NIP));
+                    cmd.Parameters.AddWithValue("@iPassword", User.Password.Trim());
                     cmd.Parameters.AddWithValue("@PhoneNo", User.PhoneNo);
                     cmd.Parameters.AddWithValue("@Email", User.Email);
                     cmd.Parameters.AddWithValue("@iStatusAdmin", User.StatusAdmin);
@@ -301,15 +297,15 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                Encryption encrypt = new Encryption();
+                
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
-                    string MySql = "SIMHUKDIS.sp_User_ChangePassword";
+                    string MySql = "sp_User_ChangePassword";
                     SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("iUserID", User.UserID);
-                    cmd.Parameters.AddWithValue("iPassword", encrypt.Encrypt(User.Password, User.NIP));
+                    cmd.Parameters.AddWithValue("iPassword", User.Password);
                     cmd.Parameters.AddWithValue("iLastUser", User.LastUser);
                     cmd.Parameters.AddWithValue("iNIP", User.NIP);
                     con.Open();
@@ -322,7 +318,7 @@ namespace SIMHUKDIS.Models
                 throw ex;
             }
         }
-        public int UpdateLastLogin(string NIP)
+        public int UpdateLastLogin(clsUserLogin Login)
         {
             try
             {
@@ -333,7 +329,8 @@ namespace SIMHUKDIS.Models
                     string MySql = "sp_UserLogin_Upd_LastLogin";
                     SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
-                    cmd.Parameters.AddWithValue("@iNIP", NIP);
+                    cmd.Parameters.AddWithValue("@iNIP", Login.NIP);
+                    cmd.Parameters.AddWithValue("@USERID", Login.UserID);
                     con.Open();
                     i = cmd.ExecuteNonQuery();
                 }
@@ -370,7 +367,6 @@ namespace SIMHUKDIS.Models
         }
         public clsUserLogin UbahData(string NIP)
         {
-            Encryption encrypt = new Encryption();
             string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -389,14 +385,16 @@ namespace SIMHUKDIS.Models
                 }
                 else
                 {
-                    string PWD = encrypt.Decrypt(dt.Rows[0]["Password"].ToString(), dt.Rows[0]["NIP"].ToString());
                     user.NIP = dt.Rows[0]["NIP"].ToString();
                     user.StatusAdmin = Convert.ToInt16(dt.Rows[0]["StatusAdmin"]).ToString();
                     user.FullName = dt.Rows[0]["FullName"].ToString();
                     user.Satker = dt.Rows[0]["Satker"].ToString();
                     user.GroupID = dt.Rows[0]["GroupID"].ToString();
                     user.UserID = dt.Rows[0]["UserID"].ToString();
-                    user.Password = encrypt.Decrypt(dt.Rows[0]["Password"].ToString(), dt.Rows[0]["NIP"].ToString());
+                    user.Password = dt.Rows[0]["Password"].ToString();
+                    user.LEVEL_JABATAN = dt.Rows[0]["Jabatan"].ToString();
+                    user.PhoneNo = dt.Rows[0]["PhoneNo"].ToString();
+                    user.Email = dt.Rows[0]["Email"].ToString();
                     return user;
                 }
             }

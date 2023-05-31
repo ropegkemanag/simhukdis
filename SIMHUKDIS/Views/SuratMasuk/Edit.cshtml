@@ -332,6 +332,9 @@
                         //options += '<option value="' + result[i].Kode_Unit_Kerja + '">' + result[i].Unit_Kerja + '</option>';
                     }
                 }
+                else {
+                    $('#Kode_Unit_Kerja').empty();
+                }
             },
             error: function (errormessage) {
                 Swal.fire({

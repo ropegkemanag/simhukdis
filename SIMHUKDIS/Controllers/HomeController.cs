@@ -77,13 +77,14 @@ namespace SIMHUKDIS.Controllers
                     {
                         message = "Success";
                         Session["LogUserID"] = User.NIP.ToString();
-                        UserLogin.UpdateLastLogin(User.NIP);
+                        
                         clsUserLogin cUser = UserLogin.GetData(User.NIP.ToString());
                         Session["StatusAdmin"] = cUser.StatusAdmin.ToString();
                         Session["UserID"] = cUser.UserID.ToString();
                         Session["Fullname"] = cUser.FullName.ToString();
                         Session["Satker"] = cUser.Satker.ToString();
                         Session["UserGroup"] = cUser.GroupID.ToString();
+                        UserLogin.UpdateLastLogin(cUser);
                         ViewBag.Fullname = cUser.FullName.ToString();
                     }
                     else

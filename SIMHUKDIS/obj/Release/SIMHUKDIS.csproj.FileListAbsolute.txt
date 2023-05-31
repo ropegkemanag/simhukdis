@@ -391,24 +391,12 @@ E:\simhukdis\SIMHUKDIS\bin\roslyn\vbc.exe.config
 E:\simhukdis\SIMHUKDIS\bin\roslyn\vbc.rsp
 E:\simhukdis\SIMHUKDIS\bin\roslyn\VBCSCompiler.exe
 E:\simhukdis\SIMHUKDIS\bin\roslyn\VBCSCompiler.exe.config
-E:\simhukdis\SIMHUKDIS\bin\Antlr3.Runtime.dll
-E:\simhukdis\SIMHUKDIS\bin\BouncyCastle.Crypto.dll
-E:\simhukdis\SIMHUKDIS\bin\EPPlus.dll
-E:\simhukdis\SIMHUKDIS\bin\Google.Protobuf.dll
-E:\simhukdis\SIMHUKDIS\bin\K4os.Compression.LZ4.dll
-E:\simhukdis\SIMHUKDIS\bin\K4os.Compression.LZ4.Streams.dll
-E:\simhukdis\SIMHUKDIS\bin\K4os.Hash.xxHash.dll
-E:\simhukdis\SIMHUKDIS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
-E:\simhukdis\SIMHUKDIS\bin\Microsoft.IO.RecyclableMemoryStream.dll
-E:\simhukdis\SIMHUKDIS\bin\Microsoft.Web.Infrastructure.dll
-E:\simhukdis\SIMHUKDIS\bin\Newtonsoft.Json.dll
 E:\simhukdis\SIMHUKDIS\bin\Spire.Doc.dll
 E:\simhukdis\SIMHUKDIS\bin\Spire.License.dll
 E:\simhukdis\SIMHUKDIS\bin\Syncfusion.Compression.Base.dll
 E:\simhukdis\SIMHUKDIS\bin\Syncfusion.Licensing.dll
 E:\simhukdis\SIMHUKDIS\bin\Syncfusion.XlsIO.Base.dll
 E:\simhukdis\SIMHUKDIS\bin\System.Buffers.dll
-E:\simhukdis\SIMHUKDIS\bin\System.Data.SqlClient.dll
 E:\simhukdis\SIMHUKDIS\bin\System.Memory.dll
 E:\simhukdis\SIMHUKDIS\bin\System.Numerics.Vectors.dll
 E:\simhukdis\SIMHUKDIS\bin\System.Runtime.CompilerServices.Unsafe.dll
@@ -422,37 +410,83 @@ E:\simhukdis\SIMHUKDIS\bin\System.Web.WebPages.Razor.dll
 E:\simhukdis\SIMHUKDIS\bin\WebGrease.dll
 E:\simhukdis\SIMHUKDIS\bin\Spire.Pdf.dll
 E:\simhukdis\SIMHUKDIS\bin\Microsoft.mshtml.dll
-E:\simhukdis\SIMHUKDIS\bin\EPPlus.xml
-E:\simhukdis\SIMHUKDIS\bin\Google.Protobuf.pdb
-E:\simhukdis\SIMHUKDIS\bin\Google.Protobuf.xml
-E:\simhukdis\SIMHUKDIS\bin\K4os.Compression.LZ4.xml
-E:\simhukdis\SIMHUKDIS\bin\K4os.Compression.LZ4.Streams.xml
-E:\simhukdis\SIMHUKDIS\bin\K4os.Hash.xxHash.xml
-E:\simhukdis\SIMHUKDIS\bin\Microsoft.IO.RecyclableMemoryStream.xml
-E:\simhukdis\SIMHUKDIS\bin\Spire.Doc.xml
-E:\simhukdis\SIMHUKDIS\bin\Spire.License.xml
-E:\simhukdis\SIMHUKDIS\bin\Syncfusion.Compression.Base.xml
-E:\simhukdis\SIMHUKDIS\bin\Syncfusion.Licensing.xml
-E:\simhukdis\SIMHUKDIS\bin\Syncfusion.XlsIO.Base.xml
-E:\simhukdis\SIMHUKDIS\bin\System.Buffers.xml
-E:\simhukdis\SIMHUKDIS\bin\System.Data.SqlClient.xml
-E:\simhukdis\SIMHUKDIS\bin\System.Memory.xml
-E:\simhukdis\SIMHUKDIS\bin\System.Numerics.Vectors.xml
-E:\simhukdis\SIMHUKDIS\bin\System.Runtime.CompilerServices.Unsafe.xml
-E:\simhukdis\SIMHUKDIS\bin\System.Web.Helpers.xml
-E:\simhukdis\SIMHUKDIS\bin\System.Web.Mvc.xml
-E:\simhukdis\SIMHUKDIS\bin\System.Web.Optimization.xml
-E:\simhukdis\SIMHUKDIS\bin\System.Web.Razor.xml
-E:\simhukdis\SIMHUKDIS\bin\System.Web.WebPages.xml
-E:\simhukdis\SIMHUKDIS\bin\System.Web.WebPages.Deployment.xml
-E:\simhukdis\SIMHUKDIS\bin\System.Web.WebPages.Razor.xml
-E:\simhukdis\SIMHUKDIS\bin\Newtonsoft.Json.xml
-E:\simhukdis\SIMHUKDIS\bin\Antlr3.Runtime.pdb
-E:\simhukdis\SIMHUKDIS\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
-E:\simhukdis\SIMHUKDIS\bin\Spire.Pdf.xml
 E:\simhukdis\SIMHUKDIS\obj\Release\SIMHUKDIS.csproj.CoreCompileInputs.cache
 E:\simhukdis\SIMHUKDIS\obj\Release\SIMHUKDIS.csproj.CopyComplete
 E:\simhukdis\SIMHUKDIS\obj\Release\SIMHUKDIS.dll
 E:\simhukdis\SIMHUKDIS\obj\Release\SIMHUKDIS.pdb
 E:\simhukdis\SIMHUKDIS\obj\Release\SIMHUKDIS.csprojAssemblyReference.cache
-E:\simhukdis\SIMHUKDIS\bin\WhatsAppApi.dll
+E:\simhukdis\SIMHUKDIS\bin\Spire.XLS.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\SIMHUKDIS.dll.config
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\SIMHUKDIS.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\SIMHUKDIS.pdb
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\csc.exe
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\csc.exe.config
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\csc.rsp
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\csi.exe
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\csi.exe.config
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\csi.rsp
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\System.AppContext.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\System.Console.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\System.IO.Compression.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\System.IO.Pipes.AccessControl.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\System.IO.Pipes.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\System.Security.AccessControl.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\System.Security.Claims.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\System.Security.Principal.Windows.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\System.ValueTuple.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\System.Xml.XPath.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\vbc.exe
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\vbc.exe.config
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\vbc.rsp
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\VBCSCompiler.exe
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\Spire.Doc.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\Spire.License.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\Spire.XLS.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\Syncfusion.Compression.Base.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\Syncfusion.Licensing.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\Syncfusion.XlsIO.Base.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\System.Buffers.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\System.Memory.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\System.Numerics.Vectors.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\System.Web.Helpers.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\System.Web.Mvc.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\System.Web.Optimization.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\System.Web.Razor.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\System.Web.WebPages.Deployment.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\System.Web.WebPages.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\System.Web.WebPages.Razor.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\WebGrease.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\Spire.Pdf.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\bin\Microsoft.mshtml.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\obj\Release\SIMHUKDIS.csprojAssemblyReference.cache
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\obj\Release\SIMHUKDIS.csproj.CoreCompileInputs.cache
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\obj\Release\SIMHUKDIS.csproj.CopyComplete
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\obj\Release\SIMHUKDIS.dll
+C:\Users\User\ownCloud - debby@ropegdrive3.kemenag.go.id\Source Code\simhukdis\SIMHUKDIS\obj\Release\SIMHUKDIS.pdb

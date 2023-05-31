@@ -113,7 +113,7 @@ namespace SIMHUKDIS.Controllers
                string Satker, string NIP_USUL, string NAMA_LENGKAP_USUL, string Tanggal_Surat)
         {
             string filepath = HttpContext.Request.PhysicalApplicationPath;
-            string strTemplate = filepath + "Files/Template/SPTJM Atasan.docx";
+            string strTemplate = filepath + "Files/Template/TEMPLATE SPTJM ATASAN.docx";
             string OutputPath = filepath + "Files/Result/SPTJM/";
             string GetDateTime = DateTime.Now.ToString("ddMMyyyy_hhmmss");
             string strFileNameDoc = "SPTJM Atasan" + NIP + "_" + GetDateTime + ".docx";

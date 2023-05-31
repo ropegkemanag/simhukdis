@@ -21,7 +21,7 @@ namespace SIMHUKDIS.Models
         public string SATUAN_KERJA { get; set; }
         public string TEMPAT_LAHIR { get; set; }
         public string TANGGAL_LAHIR { get; set; }
-        public string MASAKERJA_TAHUN { get; set; }
+        public string MK_TAHUN { get; set; }
         public string TMT_Pensiun { get; set; }
         public string DasarBukti { get; set; }
         public string PelanggaranDisiplin { get; set; }
@@ -130,6 +130,7 @@ namespace SIMHUKDIS.Models
         public int Status { get; set; }
         public string RejectStatus { get; set; }
         public string RejectReason { get; set; }
+        public string Tipe { get; set; }
     }
     public class clsDocument
     {
@@ -326,7 +327,12 @@ namespace SIMHUKDIS.Models
                 cmd.Parameters.AddWithValue("iCreated_User", t.CreatedUser);
                 cmd.Parameters.AddWithValue("iFullname", t.NAMA_LENGKAP);
                 cmd.Parameters.AddWithValue("iTelaahNo", t.TelaahNo);
-                cmd.Parameters.AddWithValue("iTanggalTelaah", Convert.ToDateTime(t.Tanggal_Telaah).ToString("yyyy-MM-dd"));
+
+                DateTime dParse = DateTime.ParseExact(t.Tanggal_Telaah, "dd MMMM yyyy", null); //Convert.ToDateTime(Data.EstimateDate); 
+                t.Tanggal_Telaah = dParse.ToString();
+
+                cmd.Parameters.AddWithValue("iTanggalTelaah", t.Tanggal_Telaah);
+
                 con.Open();
                 i = cmd.ExecuteNonQuery();
             }
@@ -368,7 +374,10 @@ namespace SIMHUKDIS.Models
                 cmd.Parameters.AddWithValue("iFileTelaah", t.FileTelaah);
                 cmd.Parameters.AddWithValue("iFullname", t.NAMA_LENGKAP);
                 cmd.Parameters.AddWithValue("iTelaahNo", t.TelaahNo);
-                cmd.Parameters.AddWithValue("iTanggalTelaah", Convert.ToDateTime(t.Tanggal_Telaah).ToString("yyyy-MM-dd"));
+                DateTime dParse = DateTime.ParseExact(t.Tanggal_Telaah, "dd-MM-yyyy", null); //Convert.ToDateTime(Data.EstimateDate); 
+                t.Tanggal_Telaah = dParse.ToString();
+                cmd.Parameters.AddWithValue("iTanggalTelaah", t.Tanggal_Telaah);
+                //cmd.Parameters.AddWithValue("iTanggalTelaah", Convert.ToDateTime(t.Tanggal_Telaah).ToString("yyyy-MM-dd"));
                 con.Open();
                 i = cmd.ExecuteNonQuery();
             }
@@ -454,10 +463,9 @@ namespace SIMHUKDIS.Models
                     data.NoSurat = rd["nomor_surat"].ToString();
                     data.AsalSurat = rd["asal_surat"].ToString();
                     data.TanggalSurat = rd["tanggal_surat"].ToString();
-                    //if (!Convert.IsDBNull(rd["tanggal_surat"]))
-                    //{
-                    //    data.TanggalSurat = Convert.ToDateTime(rd["tanggal_surat"].ToString());
-                    //}
+                    DateTime TanggalSurat = DateTime.ParseExact(data.TanggalSurat, "dd-MM-yyyy", null);
+
+                    data.TanggalSurat = TanggalSurat.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("id-ID"));
                     data.perihal = rd["perihal"].ToString();
                     data.SATUAN_KERJA = rd["SatuanKerja"].ToString();
                     data.KODE_SATUAN_KERJA = rd["KODE_SATUAN_KERJA"].ToString();
@@ -494,6 +502,7 @@ namespace SIMHUKDIS.Models
                     data.DisposisiDate3 = rd["Disposisi3_Date"].ToString();
                     data.RejectStatus = rd["RejectStatus"].ToString();
                     data.RejectReason = rd["RejectReason"].ToString();
+                    data.Tipe = rd["TIPE"].ToString();
                 }
                 return data;
             }
@@ -522,7 +531,9 @@ namespace SIMHUKDIS.Models
                         data.NoAgenda = rd["nomor_agenda"].ToString();
                         data.NoSurat = rd["nomor_surat"].ToString();
                         data.AsalSurat = rd["asal_surat"].ToString();
-                        data.TanggalSurat = rd["tanggal_surat"].ToString();
+                        DateTime TanggalSurat = DateTime.ParseExact(rd["tanggal_surat"].ToString(), "dd-MM-yyyy", null);
+
+                        data.TanggalSurat = TanggalSurat.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("id-ID"));
                         //if (!Convert.IsDBNull(rd["tanggal_surat"]))
                         //{
                         //    data.TanggalSurat = Convert.ToDateTime(rd["tanggal_surat"].ToString());

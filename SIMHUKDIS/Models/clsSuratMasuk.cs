@@ -97,6 +97,12 @@ namespace SIMHUKDIS.Models
         public string RejectStatus { get; set; }
         public string RejectReason { get; set; }
         public string Tipe { get; set; }
+
+        public string TelaahNo { get; set; }
+        public string TelaahDate { get; set; }
+        public string FileTelaah { get; set; }
+        public string Konseptor { get; set; }
+
     }
     public class clsSPTMJ
     {
@@ -449,6 +455,11 @@ namespace SIMHUKDIS.Models
                     data.Unit_Kerja = rd["Unit_Kerja"].ToString();
                     data.UsulStatus = rd["UsulStatus"].ToString();
                     data.Tipe = rd["TIPE"].ToString();
+
+                    data.TelaahNo = rd["TelaahNo"].ToString();
+                    data.TelaahDate = rd["TelaahDate"].ToString();
+                    data.FileTelaah = rd["FileTelaah"].ToString();
+                    data.Konseptor= rd["konseptor"].ToString();
                 }
                 return data;
                 }
@@ -476,11 +487,11 @@ namespace SIMHUKDIS.Models
                 cmd.Parameters.AddWithValue("iLampiranSurat6", suratMasuk.LampiranSurat6 ?? "");
                 cmd.Parameters.AddWithValue("iLampiranLHP", suratMasuk.LampiranLHP ?? "");
                 cmd.Parameters.AddWithValue("iLampiranSPTJM", suratMasuk.LampiranSPTJM ?? "");
-                cmd.Parameters.AddWithValue("iSatuanKerja", suratMasuk.SATUAN_KERJA);
-                cmd.Parameters.AddWithValue("icreate_user", suratMasuk.CreateUser);
-                cmd.Parameters.AddWithValue("iLampiran_LHA", suratMasuk.LampiranSurat_LHA);
-                cmd.Parameters.AddWithValue("iUnit_Kerja", suratMasuk.Kode_Unit_Kerja);
-                cmd.Parameters.AddWithValue("iUsulStatus", suratMasuk.UsulStatus);
+                cmd.Parameters.AddWithValue("iSatuanKerja", suratMasuk.SATUAN_KERJA ?? "");
+                cmd.Parameters.AddWithValue("icreate_user", suratMasuk.CreateUser ?? "");
+                cmd.Parameters.AddWithValue("iLampiran_LHA", suratMasuk.LampiranSurat_LHA ?? "");
+                cmd.Parameters.AddWithValue("iUnit_Kerja", suratMasuk.Kode_Unit_Kerja ?? "");
+                cmd.Parameters.AddWithValue("iUsulStatus", suratMasuk.UsulStatus ?? "");
                 con.Open();
                 i = cmd.ExecuteNonQuery();
             }
@@ -556,21 +567,21 @@ namespace SIMHUKDIS.Models
 
                 cmd.Parameters.AddWithValue("iid", suratMasuk.ID);
                 cmd.Parameters.AddWithValue("inomor_agenda", "");
-                cmd.Parameters.AddWithValue("inomor_surat", suratMasuk.NoSurat);
-                cmd.Parameters.AddWithValue("iasal_surat", suratMasuk.AsalSurat);
+                cmd.Parameters.AddWithValue("inomor_surat", suratMasuk.NoSurat ?? "");
+                cmd.Parameters.AddWithValue("iasal_surat", suratMasuk.AsalSurat ?? "");
                 cmd.Parameters.AddWithValue("itanggal_surat", Convert.ToDateTime(suratMasuk.TanggalSurat).ToString("yyyy-MM-dd"));
-                cmd.Parameters.AddWithValue("iperihal", suratMasuk.perihal);
-                cmd.Parameters.AddWithValue("iLampiranSurat1", suratMasuk.LampiranSurat1);
-                cmd.Parameters.AddWithValue("iLampiranSurat2", suratMasuk.LampiranSurat2);
-                cmd.Parameters.AddWithValue("iLampiranSurat3", suratMasuk.LampiranSurat3);
-                cmd.Parameters.AddWithValue("iLampiranSurat4", suratMasuk.LampiranSurat4);
-                cmd.Parameters.AddWithValue("iLampiranSurat5", suratMasuk.LampiranSurat5);
-                cmd.Parameters.AddWithValue("iLampiranSurat6", suratMasuk.LampiranSurat6);
-                cmd.Parameters.AddWithValue("iLampiranLHP", suratMasuk.LampiranLHP);
-                cmd.Parameters.AddWithValue("iLampiranSPTJM", suratMasuk.LampiranSPTJM);
-                cmd.Parameters.AddWithValue("iSatuanKerja", suratMasuk.SATUAN_KERJA);
-                cmd.Parameters.AddWithValue("iupdate_user", suratMasuk.UpdatUser);
-                cmd.Parameters.AddWithValue("iLampiran_LHA", suratMasuk.LampiranSurat_LHA);
+                cmd.Parameters.AddWithValue("iperihal", suratMasuk.perihal ?? "");
+                cmd.Parameters.AddWithValue("iLampiranSurat1", suratMasuk.LampiranSurat1 ?? "");
+                cmd.Parameters.AddWithValue("iLampiranSurat2", suratMasuk.LampiranSurat2 ?? "");
+                cmd.Parameters.AddWithValue("iLampiranSurat3", suratMasuk.LampiranSurat3 ?? "");
+                cmd.Parameters.AddWithValue("iLampiranSurat4", suratMasuk.LampiranSurat4 ?? "");
+                cmd.Parameters.AddWithValue("iLampiranSurat5", suratMasuk.LampiranSurat5 ?? "");
+                cmd.Parameters.AddWithValue("iLampiranSurat6", suratMasuk.LampiranSurat6 ?? "");
+                cmd.Parameters.AddWithValue("iLampiranLHP", suratMasuk.LampiranLHP ?? "");
+                cmd.Parameters.AddWithValue("iLampiranSPTJM", suratMasuk.LampiranSPTJM ?? "");
+                cmd.Parameters.AddWithValue("iSatuanKerja", suratMasuk.SATUAN_KERJA ?? "");
+                cmd.Parameters.AddWithValue("iupdate_user", suratMasuk.UpdatUser ?? "");
+                cmd.Parameters.AddWithValue("iLampiran_LHA", suratMasuk.LampiranSurat_LHA ?? "");
                 cmd.Parameters.AddWithValue("iUnit_Kerja", suratMasuk.Kode_Unit_Kerja ?? "");
                 con.Open();
                 i = cmd.ExecuteNonQuery();

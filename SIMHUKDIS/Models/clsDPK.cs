@@ -91,20 +91,23 @@ namespace SIMHUKDIS.Models
                     data.hukuman = rd["hukuman"].ToString();
                     data.Catatan_Sidang = rd["Catatan_Sidang"].ToString();
 
-                    clsPraDPKDB x = new clsPraDPKDB();
+                    clsPegawaiDB x = new clsPegawaiDB();
                     List<clsDataPegawaiDtl> y = new List<clsDataPegawaiDtl>();
-                    y = x.GetPegawai(data.NIP);
+                    y = x.ListPegawai(data.NIP);
                     int z = 1;
-                    foreach (var item in y)
+                    if (y != null)
                     {
-                        if (z == 1)
+                        foreach (var item in y)
                         {
-                            data.GOL_RUANG = item.GOL_RUANG;
-                            data.LEVEL_JABATAN = item.LEVEL_JABATAN;
-                            data.UnitKerja = item.SATUAN_KERJA;
+                            if (z == 1)
+                            {
+                                data.GOL_RUANG = item.GOL_RUANG;
+                                data.LEVEL_JABATAN = item.LEVEL_JABATAN;
+                                data.UnitKerja = item.KETERANGAN_SATUAN_KERJA;
+                            }
+                            z = z + 1;
                         }
-                        z = z + 1;
-                    }
+                    }                    
                     DP.Add(data);
                 }
                 return DP;
@@ -146,17 +149,17 @@ namespace SIMHUKDIS.Models
                     data.hukuman = rd["hukuman"].ToString();
                     data.Catatan_Sidang = rd["Catatan_Sidang"].ToString();
 
-                    clsPraDPKDB x = new clsPraDPKDB();
+                    clsPegawaiDB x = new clsPegawaiDB();
                     List<clsDataPegawaiDtl> y = new List<clsDataPegawaiDtl>();
-                    y = x.GetPegawai(data.NIP);
+                    y = x.ListPegawai(data.NIP);
                     int z = 1;
                     foreach (var item in y)
                     {
                         if (z == 1)
                         {
                             data.GOL_RUANG = item.GOL_RUANG;
-                            data.LEVEL_JABATAN = item.LEVEL_JABATAN;
-                            data.UnitKerja = item.SATUAN_KERJA;
+                            data.LEVEL_JABATAN = item.TAMPIL_JABATAN;
+                            data.UnitKerja = item.KETERANGAN_SATUAN_KERJA;
                         }
                         z = z + 1;
                     }
@@ -193,7 +196,6 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                Encryption encrypt = new Encryption();
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
@@ -241,7 +243,6 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                Encryption encrypt = new Encryption();
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
@@ -273,22 +274,25 @@ namespace SIMHUKDIS.Models
         }
         public int Update(clsDPK PD)
         {
+
             try
             {
                 int i = 0;
-                Encryption encrypt = new Encryption();
                 string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "SIMHUKDIS.sp_DPK_Upd";
-                    string TanggalSidang = Convert.ToDateTime(PD.Tanggal_Sidang_DPK).ToString("yyyy-MM-dd");
+                    //string TanggalSidang = Convert.ToDateTime(PD.Tanggal_Sidang_DPK).ToString("yyyy-MM-dd");
+
+                    
+
                     SqlCommand cmd = new SqlCommand(MySql, con);
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.Parameters.AddWithValue("iid", PD.ID);
                     cmd.Parameters.AddWithValue("iNIP", PD.NIP);
                     cmd.Parameters.AddWithValue("iCatatan_Sidang", PD.Catatan_Sidang);
                     cmd.Parameters.AddWithValue("iCreate_User", PD.UserLogin);
-                    cmd.Parameters.AddWithValue("iTanggal_Sidang", TanggalSidang);
+                    cmd.Parameters.AddWithValue("iTanggal_Sidang", PD.Tanggal_Sidang_DPK);
                     cmd.Parameters.AddWithValue("iKeputusanSidang", PD.KeputusanSidang);
                     cmd.Parameters.AddWithValue("iDasar_Bukti", PD.DasarBukti);
                     cmd.Parameters.AddWithValue("iPelanggaran", PD.PelanggaranDisiplin);

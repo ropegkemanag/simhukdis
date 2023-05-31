@@ -16,14 +16,22 @@ namespace SIMHUKDIS.Models
         public string Karopeg { get; set; }
         public string Koordinator { get; set; }
         public string SubKoordinator { get; set; }
+        public string Konseptor { get; set; }
 
         public string NIP_Karopeg { get; set; }
         public string NIP_Koordinator { get; set; }
         public string NIP_SubKoordinator { get; set; }
+        public string NIP_Konseptor { get; set; }
 
         public string Nama_Karopeg { get; set; }
         public string Nama_Koordinator { get; set; }
         public string Nama_SubKoordinator { get; set; }
+        public string Nama_Konseptor { get; set; }
+
+        public string Jabatan_Karopeg { get; set; }
+        public string Jabatan_Koordinator { get; set; }
+        public string Jabatan_SubKoordinator { get; set; }
+        public string Jabatan_Konseptor { get; set; }
 
         [DisplayName("Create Date")]
         public string CreateDate { get; set; }
@@ -65,10 +73,14 @@ namespace SIMHUKDIS.Models
                     data.NIP_Koordinator = rd["NIP_Koordinator"].ToString();
                     data.NIP_Karopeg = rd["NIP_Karopeg"].ToString();
                     data.NIP_SubKoordinator = rd["NIP_SubKoordinator"].ToString();
-
+                    
                     data.Nama_Koordinator = rd["Nama_Koordinator"].ToString();
                     data.Nama_Karopeg = rd["Nama_Karopeg"].ToString();
                     data.Nama_SubKoordinator = rd["Nama_SubKoordinator"].ToString();
+
+                    data.Jabatan_Koordinator = rd["Jabatan_Koordinator"].ToString();
+                    data.Jabatan_Karopeg = rd["Jabatan_Karopeg"].ToString();
+                    data.Jabatan_SubKoordinator = rd["Jabatan_SubKoordinator"].ToString();
                 }
                 return data;
             }

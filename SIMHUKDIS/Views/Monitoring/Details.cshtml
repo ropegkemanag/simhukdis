@@ -6,9 +6,9 @@
 }
 
 <div class="pd-20 card-box mb-30">
-    <p style="text-align:right;">
+    @*<p style="text-align:right;">
         <button id="DownloadWord" type="button" class="btn btn-primary">Download Detail</button>
-    </p>
+    </p>*@
 
     <form>
         <div class="form-group row" style="display:none;">
@@ -69,174 +69,286 @@
                 @Html.TextBoxFor(model => model.Unit_Kerja, "", new { @type = "text", @id = "Unit_Kerja", @class = "form-control", disabled = "disabled" })
             </div>
         </div>
-        @if (Model.UsulStatus == "1")
+        @if (Model.Tipe == "2")
         {
             <div class="form-group row">
                 <div class="col-md-3">
                     <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat1)</label>
                 </div>
                 <div class="col">
-                    <text class="form-control" id="LampiranSurat1" disabled>
+                    @if (Model.LampiranSurat1 == "" || Model.LampiranSurat1 == null)
+                    {
+                    }
+                    else
+                    {
+                        @Html.ActionLink(
+                                    "Lihat",
+                                    "DownloadFile1",                         // controller action
+                                    "PemberhentianSementara",        // controller
+                                    new { fileName =  Model.LampiranSurat1 },         // action parameters aka route values
+                                    new { @class = "btn btn-primary" })// html attributes
+                    }
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label class="control-label "> Lampiran Putusan Pengadilan / SK Pengangkatan</label>
+                </div>
+                <div class="col">
+                    @if (Model.LampiranSurat2 == "" || Model.LampiranSurat2 == null)
+                    {
+                    }
+                    else
+                    {
+                        @Html.ActionLink(
+                                    "Lihat",
+                                    "DownloadFile2",                         // controller action
+                                    "PemberhentianSementara",        // controller
+                                    new { fileName =  Model.LampiranSurat2 },         // action parameters aka route values
+                                    new { @class = "btn btn-primary" })// html attributes
+                    }
+                </div>
+            </div>
+        }
+        else
+        {
+            if (Model.UsulStatus == "1")
+            {
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat1)</label>
+                    </div>
+                    <div class="col">
                         @if (Model.LampiranSurat1 == "" || Model.LampiranSurat1 == null)
                         {
                         }
                         else
                         {
-                            @Html.ActionLink(Model.LampiranSurat1, "DownloadFile1", new { fileName = Model.LampiranSurat1 })
+                            @Html.ActionLink(
+                                        "Lihat",
+                                        "DownloadFile1",                         // controller action
+                                        "SuratMasuk",        // controller
+                                        new { fileName =  Model.LampiranSurat1 },         // action parameters aka route values
+                                        new { @class = "btn btn-primary" })// html attributes
                         }
-                    </text>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-md-3">
-                    <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat2)</label>
-                </div>
-                <div class="col">
-                    <text class="form-control" id="LampiranSurat2" disabled>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat2)</label>
+                    </div>
+                    <div class="col">
                         @if (Model.LampiranSurat2 == "" || Model.LampiranSurat2 == null)
                         {
                         }
                         else
                         {
-                            @Html.ActionLink(Model.LampiranSurat2, "DownloadFile2", new { fileName = Model.LampiranSurat2 })
+                            @Html.ActionLink(
+                                        "Lihat",
+                                        "DownloadFile2",                         // controller action
+                                        "SuratMasuk",        // controller
+                                        new { fileName =  Model.LampiranSurat2 },         // action parameters aka route values
+                                        new { @class = "btn btn-primary" })// html attributes
                         }
-                    </text>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-md-3">
-                    <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat3)</label>
-                </div>
-                <div class="col">
-                    <text class="form-control" id="LampiranSurat3" disabled>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat3)</label>
+                    </div>
+                    <div class="col">
                         @if (Model.LampiranSurat3 == "" || Model.LampiranSurat3 == null)
                         {
                         }
                         else
                         {
-                            @Html.ActionLink(Model.LampiranSurat3, "DownloadFile3", new { fileName = Model.LampiranSurat3 })
+                            @Html.ActionLink(
+                                        "Lihat",
+                                        "DownloadFile3",                         // controller action
+                                        "SuratMasuk",        // controller
+                                        new { fileName =  Model.LampiranSurat3 },         // action parameters aka route values
+                                        new { @class = "btn btn-primary" })// html attributes
                         }
-                    </text>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-md-3">
-                    <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat4)</label>
-                </div>
-                <div class="col">
-                    <text class="form-control" id="LampiranSurat4" disabled>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat4)</label>
+                    </div>
+                    <div class="col">
                         @if (Model.LampiranSurat4 == "" || Model.LampiranSurat4 == null)
                         {
                         }
                         else
                         {
-                            @Html.ActionLink(Model.LampiranSurat4, "DownloadFile4", new { fileName = Model.LampiranSurat4 })
+                            @Html.ActionLink(
+                                        "Lihat",
+                                        "DownloadFile4",                         // controller action
+                                        "SuratMasuk",        // controller
+                                        new { fileName =  Model.LampiranSurat4 },         // action parameters aka route values
+                                        new { @class = "btn btn-primary" })// html attributes
                         }
-                    </text>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-md-3">
-                    <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat5)</label>
-                </div>
-                <div class="col">
-                    <text class="form-control" id="LampiranSurat5" disabled>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat5)</label>
+                    </div>
+                    <div class="col">
                         @if (Model.LampiranSurat5 == "" || Model.LampiranSurat5 == null)
                         {
                         }
                         else
                         {
-                            @Html.ActionLink(Model.LampiranSurat5, "DownloadFile5", new { fileName = Model.LampiranSurat5 })
+                            @Html.ActionLink(
+                                        "Lihat",
+                                        "DownloadFile5",                         // controller action
+                                        "SuratMasuk",        // controller
+                                        new { fileName =  Model.LampiranSurat5 },         // action parameters aka route values
+                                        new { @class = "btn btn-primary" })// html attributes
                         }
-                    </text>
+                    </div>
                 </div>
-            </div>
-        }
-        @if (Model.UsulStatus == "2")
-        {
-            <div class="form-group row">
-                <div class="col-md-3">
-                    <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat1)</label>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranLHP)</label>
+                    </div>
+                    <div class="col">
+                        @if (Model.LampiranLHP == "" || Model.LampiranLHP == null)
+                        {
+                        }
+                        else
+                        {
+                            @Html.ActionLink(
+                                        "Lihat",
+                                        "DownloadFile8",                         // controller action
+                                        "SuratMasuk",        // controller
+                                        new { fileName =  Model.LampiranLHP },         // action parameters aka route values
+                                        new { @class = "btn btn-primary" })// html attributes
+                        }
+                    </div>
                 </div>
-                <div class="col">
-                    <text class="form-control" id="LampiranSurat1" disabled>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSPTJM)</label>
+                    </div>
+                    <div class="col">
+                        @if (Model.LampiranSPTJM == "" || Model.LampiranSPTJM == null)
+                        {
+                        }
+                        else
+                        {
+                            @Html.ActionLink(
+                                        "Lihat",
+                                        "DownloadFileSPTJM",                         // controller action
+                                        "SuratMasuk",        // controller
+                                        new { fileName =  Model.LampiranSPTJM },         // action parameters aka route values
+                                        new { @class = "btn btn-primary" })// html attributes
+                        }
+                    </div>
+                </div>
+            }
+            if (Model.UsulStatus == "2")
+            {
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat1)</label>
+                    </div>
+                    <div class="col">
                         @if (Model.LampiranSurat1 == "" || Model.LampiranSurat1 == null)
                         {
                         }
                         else
                         {
-                            @Html.ActionLink(Model.LampiranSurat1, "DownloadFile1", new { fileName = Model.LampiranSurat1 })
+                            @Html.ActionLink(
+                                        "Lihat",
+                                        "DownloadFile1",                         // controller action
+                                        "SuratMasuk",        // controller
+                                        new { fileName =  Model.LampiranSurat1 },         // action parameters aka route values
+                                        new { @class = "btn btn-primary" })// html attributes
                         }
-                    </text>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-md-3">
-                    <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat6)</label>
-                </div>
-                <div class="col">
-                    <text class="form-control" id="LampiranSurat6" disabled>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat6)</label>
+                    </div>
+                    <div class="col">
                         @if (Model.LampiranSurat6 == "" || Model.LampiranSurat6 == null)
                         {
                         }
                         else
                         {
-                            @Html.ActionLink(Model.LampiranSurat6, "DownloadFile6", new { fileName = Model.LampiranSurat6 })
+                            @Html.ActionLink(
+                                        "Lihat",
+                                        "DownloadFile6",                         // controller action
+                                        "SuratMasuk",        // controller
+                                        new { fileName =  Model.LampiranSurat6 },         // action parameters aka route values
+                                        new { @class = "btn btn-primary" })// html attributes
                         }
-                    </text>
+                    </div>
                 </div>
-            </div>
-        }
-        @if (Model.UsulStatus == "3")
-        {
-            <div class="form-group row">
-                <div class="col-md-3">
-                    <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat_LHA)</label>
-                </div>
-                <div class="col">
-                    <text class="form-control" id="LampiranSurat6" disabled>
+            }
+            if (Model.UsulStatus == "3")
+            {
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat_LHA)</label>
+                    </div>
+                    <div class="col">
                         @if (Model.LampiranSurat_LHA == "" || Model.LampiranSurat_LHA == null)
                         {
                         }
                         else
                         {
-                            @Html.ActionLink(Model.LampiranSurat_LHA, "DownloadFile7", new { fileName = Model.LampiranSurat_LHA })
+                            @Html.ActionLink(
+                                        "Lihat",
+                                        "DownloadFile7",                         // controller action
+                                        "SuratMasuk",        // controller
+                                        new { fileName =  Model.LampiranSurat_LHA },         // action parameters aka route values
+                                        new { @class = "btn btn-primary" })// html attributes
                         }
-                    </text>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-md-3">
-                    <label class="control-label "> Lampiran BAP</label>
-                </div>
-                <div class="col">
-                    <text class="form-control" id="LampiranSurat2" disabled>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label class="control-label "> Lampiran BAP</label>
+                    </div>
+                    <div class="col">
                         @if (Model.LampiranSurat2 == "" || Model.LampiranSurat2 == null)
                         {
                         }
                         else
                         {
-                            @Html.ActionLink(Model.LampiranSurat2, "DownloadFile2", new { fileName = Model.LampiranSurat2 })
+                            @Html.ActionLink(
+                                        "Lihat",
+                                        "DownloadFile2",                         // controller action
+                                        "SuratMasuk",        // controller
+                                        new { fileName =  Model.LampiranSurat2 },         // action parameters aka route values
+                                        new { @class = "btn btn-primary" })// html attributes
                         }
-                    </text>
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <div class="col-md-3">
-                    <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat5)</label>
-                </div>
-                <div class="col">
-                    <text class="form-control" id="LampiranSurat5" disabled>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label class="control-label "> @Html.DisplayNameFor(model => model.LampiranSurat5)</label>
+                    </div>
+                    <div class="col">
                         @if (Model.LampiranSurat5 == "" || Model.LampiranSurat5 == null)
                         {
                         }
                         else
                         {
-                            @Html.ActionLink(Model.LampiranSurat5, "DownloadFile5", new { fileName = Model.LampiranSurat5 })
+                            @Html.ActionLink(
+                                        "Lihat",
+                                        "DownloadFile5",                         // controller action
+                                        "SuratMasuk",        // controller
+                                        new { fileName =  Model.LampiranSurat5 },         // action parameters aka route values
+                                        new { @class = "btn btn-primary" })// html attributes
                         }
-                    </text>
+                    </div>
                 </div>
-            </div>
+            }
         }
         @if (ViewBag.UserGroup == "01" || ViewBag.UserGroup == "02" || ViewBag.UserGroup == "04" || ViewBag.UserGroup == "05" || ViewBag.UserGroup == "06" || ViewBag.UserGroup == "07")
         {
@@ -311,7 +423,7 @@
                     <label class="control-label ">Disposisi 3 Oleh</label>
                 </div>
                 <div class="col">
-                    @Html.TextBoxFor(model => model.DisposisiBy2, "", new { @type = "text", @id = "DisposisiBy2", @class = "form-control", disabled = "disabled" })
+                    @Html.TextBoxFor(model => model.DisposisiBy3, "", new { @type = "text", @id = "DisposisiBy3", @class = "form-control", disabled = "disabled" })
                 </div>
             </div>
             <div class="form-group row">
@@ -338,8 +450,53 @@
                     @Html.TextAreaFor(model => model.Catatan3, new { @type = "text", @id = "Catatan3", @class = "form-control", disabled = "disabled" })
                 </div>
             </div>
+            <div class="form-group row">
+                <div class="col-md-3">
+                    <label class="control-label ">Konseptor</label>
+                </div>
+                <div class="col">
+                    @Html.TextBoxFor(model => model.Konseptor, new { @type = "text", @id = "Konseptor", @class = "form-control", disabled = "disabled" })
+                </div>
+            </div>
+            if (Model.TelaahNo != "")
+            {
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label class="control-label ">Telaah No</label>
+                    </div>
+                    <div class="col">
+                        @Html.TextBoxFor(model => model.TelaahNo, "", new { @type = "text", @id = "TelaahNo", @class = "form-control", disabled = "disabled" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label class="control-label ">Tanggal Telaah</label>
+                    </div>
+                    <div class="col">
+                        @Html.TextBoxFor(model => model.TelaahDate, "", new { @type = "text", @id = "TelaahDate", @class = "form-control", disabled = "disabled" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3">
+                        <label class="control-label ">File Telaah</label>
+                    </div>
+                    <div class="col">
+                        @if (Model.FileTelaah == "" || Model.FileTelaah == null)
+                        {
+                        }
+                        else
+                        {
+                            @Html.ActionLink(
+                                        "Lihat",
+                                        "DownloadFile",                         // controller action
+                                        "Telaah",        // controller
+                                        new { fileName =  Model.FileTelaah },         // action parameters aka route values
+                                        new { @class = "btn btn-primary" })// html attributes
+                        }
+                    </div>
+                </div>
+            }
         }
-
     </form>
 </div>
 <script src="~/Scripts/jquery-3.6.0.min.js"></script>

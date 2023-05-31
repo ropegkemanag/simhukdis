@@ -1,0 +1,205 @@
+﻿@model SIMHUKDIS.Models.clsKumpulanSK
+@{
+    ViewBag.Title = "TAMBAH SURAT/SK";
+}
+
+<div class="pd-20 card-box mb-30">
+    @using (Html.BeginForm("Create", "PenyampaianSKBiro", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <form>
+            <div class="form-group row">
+                <div class="col">
+                    <label class="control-label ">No. Surat/SK *</label>
+                    @Html.TextBox("NO_SK", "", new { @id = "NO_SK", @class = "form-control", required = "required" })
+                    @Html.ValidationMessage("NO_SK", "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col">
+                    <label class="control-label ">NIP *</label>
+                    @Html.TextBox("NIP", "", new { @id = "NIP", @class = "form-control", required = "required", onchange = "getData()", onkeypress = "AllowOnlyNumbers()" })
+                    @Html.ValidationMessageFor(model => model.NIP, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    <label class="control-label ">Nama Lengkap *</label>
+                    @Html.TextBox("NAMA_LENGKAP", "", new { @id = "NAMA_LENGKAP", @class = "form-control", required = "required" })
+                    @Html.ValidationMessageFor(model => model.NAMA_LENGKAP, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    <label class="control-label ">Satuan Kerja *</label>
+                    @Html.DropDownListFor(model => model.KODE_SATUAN_KERJA, ViewBag.Satker as SelectList, new { @class = "custom-select2 form-control", required = "required", @id = "KODE_SATUAN_KERJA", @onchange = "GetUnit()" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    <label class="control-label ">Unit Kerja *</label>
+                    @Html.DropDownList("Kode_Unit_Kerja", new SelectList(string.Empty, "Value", "Text"), "", new { @id = "Kode_Unit_Kerja", @class = "custom-select2 form-control" })
+                    @*  @Html.DropDownListFor(model => model.Kode_Unit_Kerja, new SelectList(string.Empty, "Value", "Text"), "", new { @id = "Kode_Unit_Kerja", @class = "custom-select2 form-control", @name = "Kode_Unit_Kerja" })*@
+                    @*@Html.DropDownList("Kode_Unit_Kerja", new SelectList(string.Empty, "Value", "Text"), "", new { @id = "Kode_Unit_Kerja", @class = "custom-select2 form-control" })*@
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    <label class="control-label ">Jenis Surat *</label>
+                    @Html.DropDownList("JENIS_SK", new List<SelectListItem>
+                                                                        {
+                                                                            new SelectListItem{ Text = "SK Kewenangan PPK", Value = "6" },
+                                                                            new SelectListItem{ Text = "Surat Tanggapan PPK", Value = "7" },
+                                                                            new SelectListItem{ Text = "Surat Tindak Lanjut Kasus Kepegawaian", Value = "8" },
+                                                                            new SelectListItem{ Text = "Lainnya", Value = "5" }
+                                                                        }, htmlAttributes: new { @class = "custom-select2 form-control", @id = "JENIS_SK", required = "required" }
+                                                                    )
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-6">
+                    <label class="control-label ">Tanggal SK *</label>
+                    @Html.TextBoxFor(model => model.TANGGAL_SK, "{0:dd MM yyyy}", new { @type = "text", @id = "TANGGAL_SK", @class = "form-control date-picker", required = "required" })
+                    @Html.ValidationMessageFor(model => model.TANGGAL_SK, "", new { @class = "text-danger" })
+                </div>
+                <div class="col-sm-6">
+                    <label class="control-label ">TMT SK *</label>
+                    @Html.TextBoxFor(model => model.TMT_SK, "{0:dd MM yyyy}", new { @type = "text", @id = "TMT_SK", @class = "form-control date-picker" })
+                    @Html.ValidationMessageFor(model => model.TMT_SK, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row" id="LampiranSP">
+                <div class="col">
+                    <label class="control-label ">File *</label>
+                    @Html.TextBoxFor(model => model.FILE_SK, "", new { @type = "file", @id = "FILE_SK", @class = "form-control", accept = "application/pdf", required = "required" })
+                    @Html.ValidationMessageFor(model => model.FILE_SK, "Max : 1MB & Format File : PDF", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col">
+                    <label class="control-label ">Keterangan</label>
+                    @Html.TextBoxFor(model => model.KETERANGAN, "", new { @type = "text", @id = "KETERANGAN", @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.KETERANGAN, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Simpan" class="btn btn-primary" style="width:100px;" />
+                    @*<button type="button" id="InsertData" class="btn btn-success" style="background-color:teal;"></button> | @Html.ActionLink("Back to List", "Index")*@
+                </div>
+            </div>
+        </form>
+    }
+</div>
+<script src="~/Scripts/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function () {
+        GetUnit();
+        $(function () {
+            $("#TANGGAL_SK").datepicker({
+                setDate: new Date(),
+                format: 'dd-mm-yyyy',
+                autoclose: true,
+                calendarWeeks: true,
+                clearBtn: true,
+                disableTouchKeyboard: true
+            })
+        });
+
+    });
+    $('#FILE_SK').on('change', function () {
+        for (var i = 0; i < $(this).get(0).files.length; ++i) {
+            var file1 = $(this).get(0).files[i].size;
+            if (file1) {
+                var file_size = $(this).get(0).files[i].size;
+                if (file_size > 1000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "File lebih dari 1MB!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $('#FILE_SK').val('');
+                } else {
+
+                }
+            }
+        }
+    });
+
+    function GetUnit() {
+        var SatuanKerja = $('#KODE_SATUAN_KERJA').val();
+        //alert(SatuanKerja);
+        $.ajax({
+            type: "GET",
+            url: "/UsulHukdis/GetUnitKerja?",
+            dataType: "json",
+            data: { KodeSatker: SatuanKerja },
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.length > 0) {
+                    $('#Kode_Unit_Kerja').empty();
+                    $("#Kode_Unit_Kerja").append('<option value="-1">Pilih Unit Kerja</option>');
+                    for (var i = 0; i < result.length; i++) {
+                        $("#Kode_Unit_Kerja").append('<option value="' + result[i].Kode_Unit_Kerja + '" >' + result[i].Unit_Kerja + '</option>');
+                        //options += '<option value="' + result[i].Kode_Unit_Kerja + '">' + result[i].Unit_Kerja + '</option>';
+                    }
+                }
+                else {
+                    $('#Kode_Unit_Kerja').empty();
+                }
+            },
+            error: function (errormessage) {
+                Swal.fire({
+                    icon: 'error',
+                    title: "Tidak ditemukan",
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        });
+    }
+    function AllowOnlyNumbers(e) {
+
+    e = (e) ? e : window.event;
+    var clipboardData = e.clipboardData ? e.clipboardData : window.clipboardData;
+    var key = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
+    var str = (e.type && e.type == "paste") ? clipboardData.getData('Text') : String.fromCharCode(key);
+
+    return (/^\d+$/.test(str));
+    }
+
+    function getData() {
+    var NIP = $('#NIP').val();
+    $.ajax({
+        type: "GET",
+        url: "/Telaah/GetPegawai?",
+        cache: false,
+        data: ({ NIP: NIP }),
+        contentType: "application/json;charset=UTF-8",
+        dataType: "json",
+        success: function (result) {
+            $('#NAMA_LENGKAP').val(result.NAMA_LENGKAP);
+            //$('#GOL_RUANG').val(result.GOL_RUANG);
+            //$('#LEVEL_JABATAN').val(result.LEVEL_JABATAN);
+            //$('#Satker').val(result.SATUAN_KERJA);
+            //$('#TEMPAT_LAHIR').val(result.TEMPAT_LAHIR);
+            //$('#TANGGAL_LAHIR').val(result.TANGGAL_LAHIR);
+            //$('#MK_TAHUN').val(result.MK_TAHUN);
+            //var satker3 = result.SATKER_3;
+        },
+        error: function (errormessage) {
+            Swal.fire({
+                icon: 'error',
+                title: "NIP tidak ditemukan",
+                showConfirmButton: false,
+                timer: 3000
+            })
+        }
+    });
+    return false;
+    }
+</script>
