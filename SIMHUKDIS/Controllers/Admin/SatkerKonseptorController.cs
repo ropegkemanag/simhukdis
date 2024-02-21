@@ -47,7 +47,7 @@ namespace SIMHUKDIS.Controllers
         public ActionResult Create()
         {
             string statusAdmin = Session["StatusAdmin"] + "";
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             ViewBag.Satker = new SelectList(db.GetListSatker(), "KODE_SATUAN_KERJA", "SATUAN_KERJA");
             ViewBag.Konseptor = new SelectList(db.GetKonseptorList(), "UserID", "Fullname");
             try

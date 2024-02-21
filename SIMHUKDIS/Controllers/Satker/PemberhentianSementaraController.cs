@@ -15,7 +15,7 @@ namespace SIMHUKDIS.Controllers.Satker
     {
         // GET: PemberhentianSementara
         clsPemberhentianSementaraDB db = new clsPemberhentianSementaraDB();
-        string strToken = "vhTYPWC5jyz72sK4VDcjR2re7xPNYnEa516ysMJlpUlKvMgTKNHvdSW9wUDlnTay";
+        string strToken = "oaRYeMTcOSI4SM81dsSaos6oSPIltIwxJhybwi2Zd5d26RdmqGghELJQgnDn32K1";
         string baseAddress = "https://kudus.wablas.com/";
         public ActionResult Index()
         {
@@ -62,6 +62,7 @@ namespace SIMHUKDIS.Controllers.Satker
                 ViewBag.UserGroup = UserGroup;
                 ClsSatkerDB x = new ClsSatkerDB();
                 ViewBag.SatuanKerjaName = x.GetName(SatuanKerja);
+                ViewBag.Pimpinan = x.getPimpinan(SatuanKerja);
                 clsSuratMasukDB sm = new clsSuratMasukDB();
                 ViewBag.Satker = new SelectList(sm.GetListSatker(), "Kode_Satuan_Kerja", "SATUAN_KERJA", SatuanKerja);
                 ViewBag.Unit_Kerja = new SelectList(sm.GetUnit(SatuanKerja), "Kode_Unit_Kerja", "Unit_Kerja");
@@ -76,7 +77,9 @@ namespace SIMHUKDIS.Controllers.Satker
         [HttpPost]
         public ActionResult Create(string NoSurat, string AsalSurat, string TanggalSurat,
             string Perihal, string Kode_Satuan_Kerja, string Kode_Unit_Kerja, HttpPostedFileBase Lampiran_SuratPengantar,
-            HttpPostedFileBase Lampiran_DokumenPendukung, string UsulStatus)
+            HttpPostedFileBase Lampiran_DokumenPendukung,
+            HttpPostedFileBase Lampiran_SKPemberhentian,
+            string UsulStatus)
         {
             try
             {
@@ -96,11 +99,11 @@ namespace SIMHUKDIS.Controllers.Satker
                     ViewBag.SatuanKerja = SatuanKerja;
                     ViewBag.UserGroup = UserGroup;
 
-                    String FilePath = "";
-                    String FileExt = "";
-                    String GetDateTime = "";
-                    String Ext = "";
-                    String FileNameWithoutExtension = "";
+                    string FilePath = "";
+                    string FileExt = "";
+                    string GetDateTime = "";
+                    string Ext = "";
+                    string FileNameWithoutExtension = "";
                     string a, b;
                     GetDateTime = DateTime.Now.ToString("ddMMyyyy_hhmmss");
                     string UserLogin = Session["Fullname"].ToString();
@@ -148,7 +151,20 @@ namespace SIMHUKDIS.Controllers.Satker
                     {
                         PS.Lampiran_DokumenPendukung = "";
                     }
-                    
+                    if (Lampiran_SKPemberhentian != null)
+                    {
+                        a = Lampiran_SKPemberhentian.FileName;
+                        FileExt = Path.GetExtension(a);
+                        Ext = Server.MapPath("/Files/Upload/PS/SK_PS/");
+                        FileNameWithoutExtension = Path.GetFileNameWithoutExtension(a);
+                        FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                        Request.Files[2].SaveAs(FilePath);
+                        PS.Lampiran_SKPemberhentian = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    }
+                    else
+                    {
+                        PS.Lampiran_SKPemberhentian = "";
+                    }
                     PS.Create_User = UserID;
                     PS.UsulStatus = UsulStatus;
                     PS.Status = 0;
@@ -204,7 +220,9 @@ namespace SIMHUKDIS.Controllers.Satker
         [HttpPost]
         public ActionResult Edit(int ID, string NoSurat, string AsalSurat, string TanggalSurat,
             string perihal, string Kode_Satuan_Kerja, string Kode_Unit_Kerja, HttpPostedFileBase Lampiran_SuratPengantar,
-            HttpPostedFileBase Lampiran_DokumenPendukung, string UsulStatus)
+            HttpPostedFileBase Lampiran_DokumenPendukung,
+            HttpPostedFileBase Lampiran_SKPemberhentian,
+            string UsulStatus)
         {
             string FilePath = "";
             string FileExt = "";
@@ -277,6 +295,26 @@ namespace SIMHUKDIS.Controllers.Satker
                 else
                 {
                     PS.Lampiran_DokumenPendukung = "";
+                }
+                if (Lampiran_SKPemberhentian != null)
+                {
+                    b = Lampiran_SKPemberhentian.FileName;
+                    FileExt = Path.GetExtension(b);
+                    Ext = Server.MapPath("/Files/Upload/PS/SK_PS/");
+                    FileNameWithoutExtension = Path.GetFileNameWithoutExtension(b);
+                    FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    Request.Files[2].SaveAs(FilePath);
+                    PS.Lampiran_SKPemberhentian = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+
+                    FullPath = Ext + xx.Lampiran_SKPemberhentian;
+                    if (System.IO.File.Exists(FullPath))
+                    {
+                        System.IO.File.Delete(FullPath);
+                    }
+                }
+                else
+                {
+                    PS.Lampiran_SKPemberhentian = "";
                 }
                 PS.Update_User = UserID;
                 db.Update(PS);
@@ -401,7 +439,7 @@ namespace SIMHUKDIS.Controllers.Satker
             {
                 clsSuratMasukMsgInfo Msg = new clsSuratMasukMsgInfo();
                 clsSuratMasukDB db = new clsSuratMasukDB();
-                int StatusSM = 6;
+                int StatusSM = 11;
                 Msg = db.GetMsgInfo(ID, StatusSM);
                 if (Msg.PhoneNo != "" || Msg.PhoneNo != null)
                 {
@@ -409,7 +447,7 @@ namespace SIMHUKDIS.Controllers.Satker
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                     HttpResponseMessage resp = client.GetAsync(baseAddress + "api/send-message?source=postman&phone="
-                        + WebUtility.UrlEncode(Msg.PhoneNo) + "&message=" + WebUtility.UrlEncode(Msg.Pesan)
+                        + WebUtility.UrlEncode(Msg.PhoneNo) + "&message=" + Msg.Pesan
                         + "&token=" + WebUtility.UrlEncode(strToken)).GetAwaiter().GetResult();
                     if (resp.IsSuccessStatusCode)
                     {

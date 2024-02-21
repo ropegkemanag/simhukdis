@@ -1,0 +1,76 @@
+﻿@model IEnumerable<SIMHUKDIS.Models.clsView>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card-box mb-30">
+    <div class="col-md-3">
+        <label></label>
+    </div>
+    @Html.ValidationSummary(true)
+    <div class="pb-20">
+
+        <table class="table data-table-export" id="TableID">
+            <thead class="table table-primary">
+                <tr>
+                    <th style="white-space: nowrap; text-align: center; width:5%;">
+                        Upload File
+                    </th>
+                    <th style="white-space: nowrap; text-align: center; width:5%;">
+                        No Surat
+                    </th>
+                    <th style="white-space: nowrap; text-align: center;width:5%;">
+                        NIP / Nama Lengkap
+                    </th>
+                    <th style="white-space: nowrap; text-align: center;width:5%;">
+                        Satuan Kerja
+                    </th>
+                    <th style="white-space: nowrap; text-align: center;width:5%;">
+                        Konseptor
+                    </th>
+                    <th style="white-space: nowrap; text-align: center;width:5%;">
+                        Nomor Telaah
+                    </th>
+                    <th style="white-space: nowrap; text-align: center;width:5%;">
+                        File Telaah
+                    </th>
+                </tr>
+            <tbody>
+                @foreach (var r in Model)
+                {
+                <tr>
+                    <td>
+                        <button class="btn btn-primary">Upload</button>
+                    </td>
+                    <td>
+                        @r.NoSurat
+                    </td>
+                    <td>
+                        @r.NIP / @r.Nama_Lengkap
+                    </td>
+                    <td>
+                        @r.SatKer
+                    </td>
+                    <td>
+                        @r.Konseptor
+                    </td>
+                    <td>
+                        @r.TelaahNo
+                    </td>
+                    <td>
+                        @r.FileTelaah
+                    </td>                    
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+<script src="/Scripts/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $('#TableID').dataTable({
+        "scrollX": true
+    });
+</script>

@@ -32,6 +32,8 @@ namespace SIMHUKDIS.Models
         public string Lampiran_SuratPengantar { get; set; }
         [DisplayName("Lampiran Dokumen Pendukung")]
         public string Lampiran_DokumenPendukung { get; set; }
+        [DisplayName("Lampiran SK Pemberhentian")]
+        public string Lampiran_SKPemberhentian { get; set; }
         [DisplayName("Create Date")]
         public string Create_Date { get; set; }
         [DisplayName("Create User")]
@@ -49,7 +51,7 @@ namespace SIMHUKDIS.Models
     {
         public List<clsPemberhentianSementara> PS (string userid)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             List<clsPemberhentianSementara> PemberhentianSementara = new List<clsPemberhentianSementara>();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -90,7 +92,7 @@ namespace SIMHUKDIS.Models
         public int Insert(clsPemberhentianSementara PS)
         {
             int i;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("sp_PemberhentianSementara_Ins", con);
@@ -105,6 +107,7 @@ namespace SIMHUKDIS.Models
                 cmd.Parameters.AddWithValue("@Status", PS.Status);
                 cmd.Parameters.AddWithValue("@Lampiran_SuratPengantar", PS.Lampiran_SuratPengantar ?? "");
                 cmd.Parameters.AddWithValue("@Lampiran_DokumenPendukung", PS.Lampiran_DokumenPendukung ?? "");
+                cmd.Parameters.AddWithValue("@Lampiran_SKPS", PS.Lampiran_SKPemberhentian ?? "");
                 cmd.Parameters.AddWithValue("@Created_User", PS.Create_User);
                 con.Open();
                 i = cmd.ExecuteNonQuery();
@@ -114,7 +117,7 @@ namespace SIMHUKDIS.Models
         public int Update(clsPemberhentianSementara PS)
         {
             int i;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("sp_PemberhentianSementara_Upd", con);
@@ -139,7 +142,7 @@ namespace SIMHUKDIS.Models
         public int Proses(clsPemberhentianSementara PS)
         {
             int i;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("sp_PemberhentianSementara_Proses", con);
@@ -154,7 +157,7 @@ namespace SIMHUKDIS.Models
         public int Delete(int ID)
         {
             int i;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("sp_PemberhentianSementara_Del", con);
@@ -167,7 +170,7 @@ namespace SIMHUKDIS.Models
         }
         public clsPemberhentianSementara GetList(int ID)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             clsPemberhentianSementara data = new clsPemberhentianSementara();
             using (SqlConnection con = new SqlConnection(constr))
             {

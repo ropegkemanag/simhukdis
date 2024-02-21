@@ -116,10 +116,10 @@
             var file1 = $(this).get(0).files[i].size;
             if (file1) {
                 var file_size = $(this).get(0).files[i].size;
-                if (file_size > 1000000) {
+                if (file_size > 15000000) {
                     Swal.fire({
                         icon: 'error',
-                        title: "File lebih dari 1MB!",
+                        title: "File lebih dari 15MB!",
                         showConfirmButton: false,
                         timer: 3000
                     })
@@ -178,13 +178,13 @@
     var NIP = $('#NIP').val();
     $.ajax({
         type: "GET",
-        url: "/Telaah/GetPegawai?",
+        url: "/SKHukdisTanpaSidang/GetDataPegawai?",
         cache: false,
         data: ({ NIP: NIP }),
         contentType: "application/json;charset=UTF-8",
         dataType: "json",
         success: function (result) {
-            $('#NAMA_LENGKAP').val(result.NAMA_LENGKAP);
+            $('#NAMA_LENGKAP').val(result[0].NAMA_LENGKAP);
         },
         error: function (errormessage) {
             Swal.fire({

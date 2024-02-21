@@ -129,16 +129,16 @@
             var NIP = $('#NIP').val();
             $.ajax({
                 type: "GET",
-                url: "/Telaah/GetPegawai?",
+                url: "/SKHukdisTanpaSidang/GetDataPegawai?",
                 cache: false,
                 data: ({ NIP: NIP }),
                 contentType: "application/json;charset=UTF-8",
                 dataType: "json",
                 success: function (result) {
-                    $('#Fullname').val(result.NAMA_LENGKAP);
-                    $('#LEVEL_JABATAN').val(result.TAMPIL_JABATAN);
-                    $('#PhoneNo').val(result.NO_HP);
-                    $('#Email').val(result.EMAIL);
+                    $('#Fullname').val(result[0].NAMA_LENGKAP);
+                    $('#LEVEL_JABATAN').val(result[0].TAMPIL_JABATAN);
+                    $('#PhoneNo').val(result[0].NO_HP);
+                    $('#Email').val(result[0].TAMPIL_JABATAN);
                 },
                 error: function (errormessage) {
                     Swal.fire({

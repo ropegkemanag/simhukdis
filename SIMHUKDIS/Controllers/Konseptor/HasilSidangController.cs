@@ -4,6 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Mvc;
 
@@ -15,6 +18,8 @@ namespace SIMHUKDIS.Controllers
         // GET: HasilSidang
         clsHasilSidangDB db = new clsHasilSidangDB();
         string strTemplate;
+        string strToken = "oaRYeMTcOSI4SM81dsSaos6oSPIltIwxJhybwi2Zd5d26RdmqGghELJQgnDn32K1";
+        string baseAddress = "https://kudus.wablas.com/";
         public ActionResult Index()
         {
             if (Session["Fullname"] == null)
@@ -190,12 +195,14 @@ namespace SIMHUKDIS.Controllers
                 if (FILE_SK != null)
                 {
                     a = FILE_SK.FileName;
+                    a = a.Replace(" ", "_");
                     FileExt = Path.GetExtension(a);
                     Ext = Server.MapPath("/Files/Upload/SK/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(a);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                     Request.Files[0].SaveAs(FilePath);
                     sm.FILE_SK = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    //sm.FILE_SK = sm.FILE_SK.Replace(" ","_");
                 }
                 else
                 {
@@ -210,7 +217,7 @@ namespace SIMHUKDIS.Controllers
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                     Request.Files[0].SaveAs(FilePath);
                     sm.BAP_Satker = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
-
+                    sm.BAP_Satker = sm.BAP_Satker.Replace(" ", "_");
                 }
                 else
                 {
@@ -225,6 +232,7 @@ namespace SIMHUKDIS.Controllers
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                     Request.Files[0].SaveAs(FilePath);
                     sm.BAP_Penerima = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                    sm.BAP_Penerima = sm.BAP_Penerima.Replace(" ", "_");
                 }
                 else
                 {
@@ -321,7 +329,6 @@ namespace SIMHUKDIS.Controllers
                 return Json(strMsg, JsonRequestBehavior.AllowGet);
             }
         }
-
         public ActionResult Insert(string NIP, string KeputusanSidang,
             string Mengingat, string ID, string NAMA_LENGKAP, string TMTDate, string Tembusan)
         {
@@ -361,7 +368,6 @@ namespace SIMHUKDIS.Controllers
                 return Json(strMsg, JsonRequestBehavior.AllowGet);
             }
         }
-
         [HttpPost]
         public ActionResult KirimSurat(string ID, string NIP, string NoSurat, string TanggalSurat, string FileSKS)
         {
@@ -449,7 +455,7 @@ namespace SIMHUKDIS.Controllers
                         FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                         fname = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
 
-                        FileName = fname;
+                        FileName = fname.Replace(" ","_");
                         fname = Path.Combine(Server.MapPath("/Files/Upload/SK/"), fname);
                         file.SaveAs(fname);
                     }
@@ -523,7 +529,6 @@ namespace SIMHUKDIS.Controllers
                 return Json("No files selected.");
             }
         }
-
         public ActionResult GenerateSK(int ID,string NIP, string NAMA_LENGKAP, string KeputusanSidang, string GOL_RUANG, string LEVEL_JABATAN, string Satker,
             string Tembusan)
         {
@@ -554,7 +559,7 @@ namespace SIMHUKDIS.Controllers
             }
             else if (KeputusanSidang == "7")
             {
-                strTemplate = filepath + "Files/Template/Template_Hukuman_Dengan_Sidang_DPK.docx";
+                strTemplate = filepath + "Files/Template/TEMPLATE PJ 12 BULAN.docx";
             }
             else if (KeputusanSidang == "8")
             {
@@ -591,8 +596,12 @@ namespace SIMHUKDIS.Controllers
 
             string OutputPath = filepath + "Files/Result/SK/";
             string GetDateTime = DateTime.Now.ToString("ddMMyyyy_hhmmss");
-            string strFileNameDoc = "SK a.n " + NAMA_LENGKAP + " NIP " + NIP + "_" + GetDateTime + ".docx";
-            string strFileNamePDF = "SK a.n " + NAMA_LENGKAP + " NIP " + NIP + "_" + GetDateTime + ".pdf";
+            string strFileNameDoc = "SK_a.n_" + NAMA_LENGKAP + "_NIP_" + NIP + "_" + GetDateTime + ".docx";
+            string strFileNamePDF = "SK_a.n_" + NAMA_LENGKAP + "_NIP_" + NIP + "_" + GetDateTime + ".pdf";
+
+            strFileNameDoc = strFileNameDoc.Replace(" ","_");
+            strFileNamePDF = strFileNamePDF.Replace(" ","_");
+
             string strMsg = "";
             try
             {
@@ -626,7 +635,7 @@ namespace SIMHUKDIS.Controllers
                 //Save doc file.
                 doc.SaveToFile(OutputPath + strFileNameDoc, FileFormat.Docx);
                 //Convert to PDF
-                doc.SaveToFile(OutputPath + strFileNamePDF, FileFormat.PDF);
+                doc.SaveToFile(OutputPath + strFileNamePDF.Replace(" ","_"), FileFormat.PDF);
                 //Insert Table
                 //ToViewFile(OutputPath + strFileNameDoc);
                 //strMsg = "Success";
@@ -713,6 +722,8 @@ namespace SIMHUKDIS.Controllers
             string GetDateTime = DateTime.Now.ToString("ddMMyyyy_hhmmss");
             string strFileNameDoc = "SK a.n "+ NAMA_LENGKAP + " NIP " + NIP + "_" + GetDateTime + ".docx";
             string strFileNamePDF = "SK a.n " + NAMA_LENGKAP + " NIP " + NIP + "_" + GetDateTime + ".pdf";
+            strFileNameDoc = strFileNameDoc.Replace(" ", "_");
+            strFileNamePDF = strFileNamePDF.Replace(" ", "_");
             string strMsg = "";
             try
             {
@@ -860,8 +871,6 @@ namespace SIMHUKDIS.Controllers
             //replaceDict.Add("*TMT*", a.TMTDate);
             return replaceDict;
         }
-        
-
         public JsonResult GetPasalPelanggaran(string NIP)
         {
             try
@@ -896,5 +905,183 @@ namespace SIMHUKDIS.Controllers
                 };
             }
         }
+        public ActionResult SendtoMenag(string ID, string NIP, string NO_SK, string Tanggal_SK)
+        {
+            string strMsg = "";
+            try
+            {
+                string UserLogin = Session["Fullname"].ToString();
+                clsSKHukdisTanpaSidang PD = new clsSKHukdisTanpaSidang();
+                PD.ID = ID;
+                PD.NIP = NIP;
+                PD.NO_SK = NO_SK;
+                PD.Tanggal_SK = Tanggal_SK;
+                PD.Create_User = UserLogin;
+                db.Update(PD);
+                strMsg = "Success";
+                return Json(strMsg, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                return RedirectToAction("Error500", "Home", new { Error_Message });
+            }
+        }
+        [HttpPost]
+        public ActionResult UploadSK()
+        {
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            string userlogin = Session["Fullname"].ToString();
+            string UserID = Session["UserID"].ToString();
+            string SatuanKerja = Session["Satker"].ToString();
+            string StatusAdmin = Session["StatusAdmin"].ToString();
+            string UserGroup = Session["UserGroup"].ToString();
+            ViewBag.UserID = userlogin;
+            ViewBag.SatuanKerja = SatuanKerja;
+            ViewBag.UserGroup = UserGroup;
+            ViewBag.UserID = userlogin;
+
+            if (Request.Files.Count > 0)
+            {
+                try
+                {
+                    string FilePath = "";
+                    string FileExt = "";
+                    string GetDateTime = "";
+                    string Ext = "";
+                    string FileNameWithoutExtension = "";
+                    string fname, FileName = "";
+                    GetDateTime = DateTime.Now.ToString("ddMMyyyy_hhmmss");
+                    HttpFileCollectionBase files = Request.Files;
+                    for (int i = 0; i < files.Count; i++)
+                    {
+                        string path = AppDomain.CurrentDomain.BaseDirectory + "Uploads/";
+                        string filename = Path.GetFileName(Request.Files[i].FileName);
+
+                        HttpPostedFileBase file = files[i];
+
+                        fname = file.FileName;
+                        fname = fname.Replace(" ","_");
+                        FileExt = Path.GetExtension(fname);
+                        FileNameWithoutExtension = Path.GetFileNameWithoutExtension(fname);
+                        FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                        fname = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+
+                        FileName = fname;
+                        fname = Path.Combine(Server.MapPath("/Files/Upload/SK/"), fname);
+                        file.SaveAs(fname);
+                    }
+
+                    return Json(FileName, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception ex)
+                {
+                    return Json("Error occurred. Error details: " + ex.Message);
+                }
+            }
+            else
+            {
+                return Json("No files selected.");
+            }
+        }
+        public ActionResult Selesai(string ID, string FileSK, string NIP, string NO_SK,string Tanggal_SK)
+        {
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            string strMsg;
+            try
+            {
+                string userlogin = Session["Fullname"].ToString();
+                string UserID = Session["UserID"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+                ViewBag.UserID = userlogin;
+                string GetDateTime = "";
+                GetDateTime = DateTime.Now.ToString("ddMMyyyy_hhmmss");
+
+                clsSKHukdisTanpaSidang PS = new clsSKHukdisTanpaSidang();
+                string UserLogin = Session["Fullname"].ToString();
+                PS.Create_User = UserID;
+                PS.ID = ID;
+                PS.NIP = NIP;
+                PS.Tanggal_SK = Tanggal_SK;
+                PS.NO_SK = NO_SK;
+                if (FileSK == null)
+                {
+                    PS.FILE_SK = "";
+                }
+                else
+                {
+                    PS.FILE_SK = FileSK;
+                }
+
+                clsHasilSidangDB db = new clsHasilSidangDB();
+                //db.Update(telaah);
+                db.Selesai(PS);
+
+                SendWaBlas(Convert.ToInt16(ID), NIP, 0);
+                SendWaBlas(Convert.ToInt16(ID), NIP, 1);
+                SendWaBlas(Convert.ToInt16(ID), NIP, 2);
+                SendWaBlas(Convert.ToInt16(ID), NIP, 3);
+                SendWaBlas(Convert.ToInt16(ID), NIP, 4);
+                SendWaBlas(Convert.ToInt16(ID), NIP, 5);
+                SendWaBlas(Convert.ToInt16(ID), NIP, 6);
+
+                strMsg = "Success";
+                return Json(strMsg, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                strMsg = Error_Message;
+                return Json(strMsg, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public ActionResult SendWaBlas(int ID, string NIP, int tipe)
+        {
+            try
+            {
+                clsSuratMasukMsgInfo Msg = new clsSuratMasukMsgInfo();
+                clsSKHukdisTanpaSidangDB r = new clsSKHukdisTanpaSidangDB();
+                Msg = r.GetMsgInfo(ID, tipe, NIP);
+                if (Msg.PhoneNo != "" || Msg.PhoneNo != null)
+                {
+                    //Msg.PhoneNo = "082172999095";
+                    var client = new HttpClient();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    HttpResponseMessage resp = client.GetAsync(baseAddress + "api/send-message?source=postman&phone="
+                        + WebUtility.UrlEncode(Msg.PhoneNo) + "&message=" + Msg.Pesan
+                        + "&token=" + WebUtility.UrlEncode(strToken)).GetAwaiter().GetResult();
+                    if (resp.IsSuccessStatusCode)
+                    {
+                        return Json(null, JsonRequestBehavior.AllowGet);
+                    }
+                    else
+                    {
+                        return Json(null, JsonRequestBehavior.AllowGet);
+                    }
+                }
+                return Json(null, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult
+                {
+                    Data = new { ErrorMessage = ex.Message, Success = false },
+                    ContentEncoding = System.Text.Encoding.UTF8,
+                    JsonRequestBehavior = JsonRequestBehavior.DenyGet
+                };
+            }
+        }
+
     }
 }

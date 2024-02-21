@@ -26,7 +26,7 @@ namespace SIMHUKDIS.Models
             get
             {
 
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 List<clsSatkerKonseptor> SK = new List<clsSatkerKonseptor>();
                 using (SqlConnection con = new SqlConnection(constr))
                 {
@@ -54,7 +54,7 @@ namespace SIMHUKDIS.Models
         {
             clsSatkerKonseptorDB db = new clsSatkerKonseptorDB();
             List<clsSatkerKonseptor> SK = new List<clsSatkerKonseptor>();
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Satker_Sel", con);
@@ -76,7 +76,7 @@ namespace SIMHUKDIS.Models
         {
             clsSatkerKonseptorDB db = new clsSatkerKonseptorDB();
             List<clsSatkerKonseptor> SK = new List<clsSatkerKonseptor>();
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Konseptor_Sel", con);
@@ -100,7 +100,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "SIMHUKDIS.sp_Satker_Konseptor_Ins";
@@ -124,7 +124,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "SIMHUKDIS.sp_Satker_Konseptor_Delete";
@@ -146,7 +146,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "SIMHUKDIS.sp_Satker_Konseptor_Upd";
@@ -166,7 +166,7 @@ namespace SIMHUKDIS.Models
         }
         public bool GetDataExist(string KODE_SATUAN_KERJA, string UserID)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 con.Open();

@@ -19,7 +19,7 @@ namespace SIMHUKDIS.Controllers
     {
         // GET: Disposisi
         clsDisposisi3DB db = new clsDisposisi3DB();
-        string strToken = "vhTYPWC5jyz72sK4VDcjR2re7xPNYnEa516ysMJlpUlKvMgTKNHvdSW9wUDlnTay";
+        string strToken = "oaRYeMTcOSI4SM81dsSaos6oSPIltIwxJhybwi2Zd5d26RdmqGghELJQgnDn32K1";
         string baseAddress = "https://kudus.wablas.com/";
         public ActionResult Index()
         {
@@ -367,7 +367,7 @@ namespace SIMHUKDIS.Controllers
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                     
                     HttpResponseMessage resp = client.GetAsync(baseAddress + "api/send-message?source=postman&phone=" 
-                        + WebUtility.UrlEncode(Msg.PhoneNo) + "&message=" + WebUtility.UrlEncode(Msg.Pesan)
+                        + WebUtility.UrlEncode(Msg.PhoneNo) + "&message=" + Msg.Pesan
                         + "&token=" + WebUtility.UrlEncode(strToken)).GetAwaiter().GetResult();
                     if (resp.IsSuccessStatusCode)
                     {

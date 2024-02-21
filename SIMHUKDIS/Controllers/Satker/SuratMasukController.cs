@@ -20,7 +20,7 @@ namespace SIMHUKDIS.Controllers
     public class SuratMasukController : Controller
     {
         clsSuratMasukDB db = new clsSuratMasukDB();
-        string strToken = "vhTYPWC5jyz72sK4VDcjR2re7xPNYnEa516ysMJlpUlKvMgTKNHvdSW9wUDlnTay";
+        string strToken = "oaRYeMTcOSI4SM81dsSaos6oSPIltIwxJhybwi2Zd5d26RdmqGghELJQgnDn32K1";
         string baseAddress = "https://kudus.wablas.com/";
         // GET: SuratMasuk
         public ActionResult Index(int Status, string DateFrom, string DateTo)
@@ -118,6 +118,10 @@ namespace SIMHUKDIS.Controllers
             string GetDateTime = DateTime.Now.ToString("ddMMyyyy_hhmmss");
             string strFileNameDoc = "SPTJM Atasan" + NIP + "_" + GetDateTime + ".docx";
             string strFileNamePDF = "SPTJM Atasan" + NIP + "_" + GetDateTime + ".pdf";
+
+            strFileNameDoc = strFileNameDoc.Replace(" ", "_");
+            strFileNamePDF = strFileNamePDF.Replace(" ", "_");
+
             string strMsg = "";
             try
             {
@@ -193,6 +197,7 @@ namespace SIMHUKDIS.Controllers
                 ViewBag.UserGroup = UserGroup;
                 ClsSatkerDB x = new ClsSatkerDB();
                 ViewBag.SatuanKerjaName = x.GetName(SatuanKerja);
+                ViewBag.Pimpinan = x.getPimpinan(SatuanKerja);
                 clsSuratMasuk sm = new clsSuratMasuk();
                 ViewBag.Satker = new SelectList(db.GetListSatker(), "KODE_SATUAN_KERJA", "SATUAN_KERJA", SatuanKerja);
                 return View();
@@ -251,6 +256,7 @@ namespace SIMHUKDIS.Controllers
             ViewBag.UserGroup = UserGroup;
             ClsSatkerDB x = new ClsSatkerDB();
             ViewBag.SatuanKerjaName = x.GetName(SatuanKerja);
+            ViewBag.Pimpinan = x.getPimpinan(SatuanKerja);
             clsSuratMasuk sm = new clsSuratMasuk();
             ViewBag.Satker = new SelectList(db.GetListSatker(), "KODE_SATUAN_KERJA", "SATUAN_KERJA", SatuanKerja);
             ViewBag.Unit_Kerja = new SelectList(db.GetUnit(SatuanKerja), "Kode_Unit_Kerja", "Unit_Kerja");
@@ -1233,7 +1239,7 @@ namespace SIMHUKDIS.Controllers
             try
             {
                 //Build the File Path.
-                string path = Server.MapPath("/Files/Result/SPTJM/") + fileName;
+                string path = Server.MapPath("/Files/Upload/Surat Masuk/9.SPTJM/") + fileName;
 
                 //Read the File data into Byte Array.
                 byte[] bytes = System.IO.File.ReadAllBytes(path);
@@ -1474,7 +1480,8 @@ namespace SIMHUKDIS.Controllers
                 db.Proses(a);
 
                 clsSuratMasuk xx = db.GetList(ID);
-                SendWaBlas(ID);
+                SendWaBlas(ID,0);
+                SendWaBlas(ID,1);
 
                 strMsg = "Success";
                 return Json(strMsg, JsonRequestBehavior.AllowGet);
@@ -1536,6 +1543,10 @@ namespace SIMHUKDIS.Controllers
             string GetDateTime = DateTime.Now.ToString("ddMMyyyy_hhmmss");
             string strFileNameDoc = "Detail_Surat_Masuk_" + GetDateTime + ".docx";
             string strFileNamePDF = "Detail_Surat_Masuk_"+ GetDateTime + ".pdf";
+
+            strFileNameDoc = strFileNameDoc.Replace(" ", "_");
+            strFileNamePDF = strFileNamePDF.Replace(" ", "_");
+
             string strMsg = "";
             try
             {
@@ -1826,20 +1837,20 @@ namespace SIMHUKDIS.Controllers
 
             return replaceDict;
         }
-        public ActionResult SendWaBlas(int ID)
+        public ActionResult SendWaBlas(int ID, int Tipe)
         {
             try
             {
                 clsSuratMasukMsgInfo Msg = new clsSuratMasukMsgInfo();
-                int StatusSM = 1;
-                Msg = db.GetMsgInfo(ID, StatusSM);
+                //int StatusSM = 1;
+                Msg = db.GetMsgInfo(ID, Tipe);
                 if (Msg.PhoneNo != "" || Msg.PhoneNo != null)
                 {
                     var client = new HttpClient();
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                     HttpResponseMessage resp = client.GetAsync(baseAddress + "api/send-message?source=postman&phone=" 
-                        + WebUtility.UrlEncode(Msg.PhoneNo) + "&message=" + WebUtility.UrlEncode(Msg.Pesan)
+                        + WebUtility.UrlEncode(Msg.PhoneNo) + "&message=" + Msg.Pesan
                         + "&token=" + WebUtility.UrlEncode(strToken)).GetAwaiter().GetResult();
                     if (resp.IsSuccessStatusCode)
                     {

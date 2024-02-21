@@ -226,7 +226,7 @@ namespace SIMHUKDIS.Models
         public List<clsHasilSidang> ListAll(string UserID)
         {
             int a = 0;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             List<clsHasilSidang> DP = new List<clsHasilSidang>();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -307,12 +307,47 @@ namespace SIMHUKDIS.Models
                 return DP;
             }
         }
-        
+        public int Selesai(clsSKHukdisTanpaSidang a)
+        {
+            int i;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                SqlCommand cmd = new SqlCommand("sp_HasilSidangSelesai", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ID", a.ID);
+                cmd.Parameters.AddWithValue("@FileSK", a.FILE_SK);
+                cmd.Parameters.AddWithValue("@UserLogin", a.Create_User);
+                cmd.Parameters.AddWithValue("@NIP", a.NIP);
+                cmd.Parameters.AddWithValue("@NO_SK", a.NO_SK);
+                cmd.Parameters.AddWithValue("@Tanggal_SK", Convert.ToDateTime(a.Tanggal_SK).ToString("yyyy-MM-dd"));
+                
+                con.Open();
+                i = cmd.ExecuteNonQuery();
+            }
+            return i;
+        }
+        public int Update(clsSKHukdisTanpaSidang a)
+        {
+            int i;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                SqlCommand cmd = new SqlCommand("sp_HasilSidangSendToMenag", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ID", a.ID);
+                cmd.Parameters.AddWithValue("@NIP", a.NIP);
+                cmd.Parameters.AddWithValue("@UserLogin", a.Create_User);
+                con.Open();
+                i = cmd.ExecuteNonQuery();
+            }
+            return i;
+        }
         public string GetPasalPelanggaran()
         {
             int a = 0;
             string pasalpelanggaran = "";
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 string q = "SIMHUKDIS.sp_PasalPelanggaran_Sel";
@@ -337,7 +372,7 @@ namespace SIMHUKDIS.Models
         }
         public HasilSidangDtl GetListCreate(int ID, string NIP)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             HasilSidangDtl data = new HasilSidangDtl();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -468,7 +503,7 @@ namespace SIMHUKDIS.Models
         public clsHasilSidang DBList(int ID, string NIP)
         {
             int a = 1;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             clsHasilSidang DP = new clsHasilSidang();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -562,7 +597,7 @@ namespace SIMHUKDIS.Models
         {
             int a = 1;
             string k = "";
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             clsHasilSidang DP = new clsHasilSidang();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -687,7 +722,7 @@ namespace SIMHUKDIS.Models
         public List<clsKirimSurat> GetSuratNo(String UserID)
         {
             List<clsKirimSurat> SuratNo = new List<clsKirimSurat>();
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("sp_GetNoSurat_Sel", con);
@@ -708,7 +743,7 @@ namespace SIMHUKDIS.Models
         }
         public string GetTembusan(string KodeSatker, string Satker3)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             HasilSidangDtl data = new HasilSidangDtl();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -854,7 +889,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "sp_DPK_Ins";
@@ -887,7 +922,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "SIMHUKDIS.sp_HasilSidang_Ins";
@@ -921,13 +956,12 @@ namespace SIMHUKDIS.Models
                 throw ex;
             }
         }
-
         public int KirimSKS(clsKirimSurat SKS)
         {
             try
             {
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "SP_HASILSIDANG_INS";
@@ -951,10 +985,9 @@ namespace SIMHUKDIS.Models
                 throw ex;
             }
         }
-
         public bool GetDataExist(string ID, string NIP)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 con.Open();
@@ -980,7 +1013,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "SIMHUKDIS.sp_HasilSidang_Upd";
@@ -1019,7 +1052,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "SP_SK_TanpaSidangDPK_Ins";
@@ -1051,7 +1084,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "SIMHUKDIS.sp_DPK_Upd";
@@ -1082,7 +1115,7 @@ namespace SIMHUKDIS.Models
         }
         public bool cek(string ID, string NIP)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 con.Open();

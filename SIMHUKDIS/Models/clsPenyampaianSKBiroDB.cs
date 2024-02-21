@@ -12,7 +12,7 @@ namespace SIMHUKDIS.Models
     {
         public List<clsKumpulanSK> PS(string userid, string groupID, string SATKER)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             List<clsKumpulanSK> PemberhentianSementara = new List<clsKumpulanSK>();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -53,7 +53,7 @@ namespace SIMHUKDIS.Models
         public int Insert(clsKumpulanSK PS)
         {
             int i;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 //DateTime TANGGAL_SK = DateTime.ParseExact(PS.TANGGAL_SK, "dd-MM-yyyy", null);
@@ -79,11 +79,11 @@ namespace SIMHUKDIS.Models
         public int Update(clsKumpulanSK PS)
         {
             int i;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 DateTime TANGGAL_SK = DateTime.ParseExact(PS.TANGGAL_SK, "dd-MM-yyyy", null);
-                DateTime TMT_SK = DateTime.ParseExact(PS.TMT_SK, "dd-MM-yyyy", null);
+                DateTime TMT_SK = DateTime.ParseExact(PS.TMT_SK, "dd MMMM yyyy", null);
                 SqlCommand cmd = new SqlCommand("SP_KUMPULANHUKDIS_UPD", con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@ID", PS.ID);
@@ -106,7 +106,7 @@ namespace SIMHUKDIS.Models
         public int Delete(int ID)
         {
             int i;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SP_KUMPULANSK_DEL", con);
@@ -119,7 +119,7 @@ namespace SIMHUKDIS.Models
         }
         public clsKumpulanSK GetList(string ID)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             clsKumpulanSK data = new clsKumpulanSK();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -153,5 +153,28 @@ namespace SIMHUKDIS.Models
                 return data;
             }
         }
+        public clsSuratMasukMsgInfo GetMsgInfo(string ID, string NIP,int status)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
+            clsSuratMasukMsgInfo data = new clsSuratMasukMsgInfo();
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                string q = "SP_MESSAGEINFO_PenyampaianSurat";
+                SqlCommand cmd = new SqlCommand(q, con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@STATUS", status);
+                cmd.Parameters.AddWithValue("@NIP", NIP ?? "");
+                cmd.Parameters.AddWithValue("@NO_SK", ID);
+                con.Open();
+                SqlDataReader rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    data.PhoneNo = rd["PhoneNo"].ToString();
+                    data.Pesan = rd["Pesan"].ToString();
+                }
+                return data;
+            }
+        }
+
     }
 }

@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<SIMHUKDIS.Models.clsHasilSidang>
 
 @{
-    ViewBag.Title = "Data Hasil Sidang";
+    ViewBag.Title = "Data Tanpa SIdang DPK";
     Layout = "/Views/Shared/_Layout.cshtml";
 }
 
@@ -9,15 +9,18 @@
 <div class="card-box mb-30">
     <div class="pd-20">
         <p style="text-align:right;">
-                <button id="GridLoad" class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal" value="New" onclick="location.href='@Url.Action("BuatSK", "SKHukdisTanpaSidang")'">
-                    Tambah Data
-                </button>
-            </p>
+            <button id="GridLoad" class="btn btn-primary" type="button" data-toggle="modal" data-target="#myModal" value="New" onclick="location.href='@Url.Action("BuatSK", "SKHukdisTanpaSidang")'">
+                Tambah Data
+            </button>
+        </p>
         <table class="table hover data-table-export">
             <thead class="table table-primary" style="white-space:nowrap;">
                 <tr>
                     <th>
                         Aksi
+                    </th>
+                    <th>
+                        Kirim
                     </th>
                     <th>
                         Identitas
@@ -34,14 +37,27 @@
                 @foreach (var item in Model)
                 {
 
-                <tr>
-                    <td><a class="btn btn-primary" href="@Url.Action("Edit", "SKHukdisTanpaSidang", new { ID = item.ID, NIP = item.NIP })">Ubah</a>
-                        <a class="btn btn-danger" onclick="Hapus('@item.ID','@item.NIP')">Hapus</a>
-                    </td>
-                    <td>@item.NIP</td>
-                    <td>@item.DasarBukti</td>
-                    <td>@item.hukuman</td>
-                </tr>
+                    <tr>
+                        <td>
+                            <a class="btn btn-primary" href="@Url.Action("Edit", "SKHukdisTanpaSidang", new { ID = item.ID, NIP = item.NIP })">Ubah</a>
+                            <a class="btn btn-danger" onclick="Hapus('@item.ID','@item.NIP')">Hapus</a>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Kirim
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" onclick="ProsesSendtoMenag('@item.ID','@item.NIP')">Kirim Ke Menteri</a>
+                                    <a class="dropdown-item" onclick="ProsesSelesai('@item.ID','@item.NIP')">Kirim Ke Satker</a>
+                                    @*<a class="dropdown-item" >Kirim Ke Satker</a>*@
+                                </div>
+                            </div>
+                        </td>
+                        <td>@item.NIP</td>
+                        <td>@item.DasarBukti</td>
+                        <td>@item.hukuman</td>
+                    </tr>
                 }
             </tbody>
 
@@ -72,7 +88,7 @@
                         </div>
                         <div class="col-sm-6">
                             <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">NIP</label>
-                            @Html.TextBox("NIP", "", new { @id = "NIPs", @class = "form-control", required = "required" })
+                            @Html.TextBox("NIP", "", new { @id = "NIPm", @class = "form-control", required = "required" })
                             @Html.ValidationMessage("NIP", "", new { @class = "text-danger" })
                         </div>
                     </div>
@@ -128,6 +144,103 @@
         </div>
     </div>
 </div>
+
+<div class="modal fade" id="KirimSKHukdisTanpaSidang" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Konfirmasi</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">Apakah Anda yakin untuk mengirim data ini ke Menteri Agama RI ?</div>
+            <div class="form-group" style="display:none;">
+                <div class="col">
+                    <label for="ID">ID</label>
+                    <input type="text" class="form-control" id="IDX" name="ID" placeholder="ID" disabled="disabled" />
+                </div>
+            </div>
+            <div class="form-group" style="display:none;">
+                <div class="col">
+                    <label for="ID">NIP</label>
+                    <input type="text" class="form-control" id="NIPX" name="NIPX" placeholder="NIPX" disabled="disabled" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <label id="ID" name="ID"></label>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Batal</button>
+                <input class="btn btn-primary" onclick="SendtoMenag()" value="Kirim" type="button" />
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ProsesSelesaiSK" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Kirim Ke Satuan KerjaK</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="modal-body" style="margin-left:20px;">
+                <form id="Form">
+                    <div class="form-group row" style="display:none;">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">ID</label>
+                            @Html.TextBox("IDm", "", new { @id = "IDm", @class = "form-control", required = "required" })
+                            @Html.ValidationMessage("IDm", "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                    <div class="form-group row" style="display:none;">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">NIP</label>
+                            @Html.TextBox("IDm", "", new { @id = "NIPm", @class = "form-control", required = "required" })
+                            @Html.ValidationMessage("NIPm", "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                    <div class="form-group row">
+                        <div class="col mb-3 mb-sm-0">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">No. SK</label>
+                            @Html.TextBox("NO_SK", "", new { @id = "NO_SK", @class = "form-control", required = "required" })
+                            @Html.ValidationMessage("NO_SK", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col mb-3 mb-sm-0">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">No. SK</label>
+                            @Html.TextBox("Tanggal_SK", "", new { @type = "text", @id = "Tanggal_SK", @class = "form-control date-picker", required = "required" })
+                            @Html.ValidationMessage("Tanggal_SK", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">File SK</label>
+                            @Html.TextBox("FileSK", "", new { @id = "FileSK", @class = "form-control", required = "required", Type = "file", accept = "application/pdf" })
+                            @Html.ValidationMessage("FileSK", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                <input type="submit" value="Proses" class="btn btn-primary" style="width:100px;" onclick="Selesai()" />
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 <script type="text/javascript">
     $(document).ready(function () {
         $(function () {
@@ -141,6 +254,126 @@
             })
         });
     });
+    function ProsesSelesai(ID, NIP) {
+        $('#IDm').val(ID);
+        $('#NIPm').val(NIP);
+        $('#ProsesSelesaiSK').modal('show');
+    }
+    function ProsesSendtoMenag(ID, NIP) {
+        $('#IDX').val(ID);
+        $('#NIPX').val(NIP);
+        $('#KirimSKHukdisTanpaSidang').modal('show');
+    }
+    function Selesai() {
+        var InputID = '@ViewBag.ID';
+        var fileUpload = $("#FileSK").get(0);
+        var files = fileUpload.files;
+        var fileData = new FormData();
+        for (var i = 0; i < files.length; i++) {
+            fileData.append(files[i].name, files[i]);
+        }
+        $.ajax({
+            url: '/SKHukdisTanpaSidang/UploadFiles',
+            type: "POST",
+            contentType: false,
+            processData: false,
+            data: fileData,
+            success: function (result) {
+                alert(result);
+                var dpObj = {
+                    ID: $('#IDm').val(),
+                    FileSK: result,
+                    NIP: $('#NIPm').val(),
+                    NO_SK: $('#NO_SK').val(),
+                    Tanggal_SK: $('#Tanggal_SK').val()
+                };
+                $.ajax({
+                    url: "/SKHukdisTanpaSidang/Selesai",
+                    data: JSON.stringify(dpObj),
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.toString() == "Success") {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Proses berhasil !',
+                                showConfirmButton: false,
+                                timer: 3000
+                            })
+                            window.location.href = '@Url.Action("Index", "SKHukdisTanpaSidang")';
+                        }
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: result.toString(),
+                                showConfirmButton: false,
+                                timer: 3000
+                            })
+                        }
+                    },
+                    error: function (errormessage) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: result.toString(),
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                    }
+                });
+            },
+            error: function (err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: result.toString(),
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        });
+    }
+    function SendtoMenag() {
+        var dpObj = {
+            ID: $('#IDX').val(),
+            NIP: $('#NIPX').val()
+        };
+        $.ajax({
+            url: "/SKHukdisTanpaSidang/SendtoMenag",
+            data: JSON.stringify(dpObj),
+            type: "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType: "json",
+            success: function (result) {
+                if (result.toString() == "Success") {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Kirim Data berhasil !',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    window.location.href = '@Url.Action("Index", "SKHukdisTanpaSidang")'
+                }
+                else {
+                    Swal.fire({
+                        icon: 'error',
+                        title: result.toString(),
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
+            },
+            error: function (errormessage) {
+                Swal.fire({
+                    icon: 'error',
+                    title: result.toString(),
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+                window.location.href = '@Url.Action("Index", "SKHukdisTanpaSidang")'
+            }
+        });
+    }
+
     function BuatSK() {
         window.location = '@Url.Action("Create", "HasilSidang")?fileName=' + fileName1;
     }
@@ -152,7 +385,7 @@
     function KirimA(ID, NIP) {
         alert(ID);
         $('#IDs').val(ID);
-        $('#NIPs').val(NIP);
+        $('#NIPm').val(NIP);
         $('#KirimSuratKS').modal('show');
     }
     function HapusDataSK() {
@@ -216,7 +449,7 @@
             success: function (result) {
                 var dpObj = {
                     ID: $('#IDs').val(),
-                    NIP: $('#NIPs').val(),
+                    NIP: $('#NIPm').val(),
                     NoSurat: $('#NoSurat').val(),
                     TanggalSurat: $('#TanggalSurat').val(),
                     FileSKS: result

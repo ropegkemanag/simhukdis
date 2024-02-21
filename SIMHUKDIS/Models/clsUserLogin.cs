@@ -45,12 +45,13 @@ namespace SIMHUKDIS.Models
         public string KodeStatusAdmin { get; set; }
         public string PhoneNo { get; set; }
         public string Email { get; set; }
+        public string StatusUser { get; set; }
     }
     public class clsUserLoginDB
     {
         public List<clsUserLogin> Users()
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             List<clsUserLogin> Users = new List<clsUserLogin>();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -94,7 +95,7 @@ namespace SIMHUKDIS.Models
         {
             clsSatkerKonseptorDB db = new clsSatkerKonseptorDB();
             List<clsSatkerKonseptor> SK = new List<clsSatkerKonseptor>();
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Satker_Sel", con);
@@ -116,7 +117,7 @@ namespace SIMHUKDIS.Models
         {
             clsUserLoginDB db = new clsUserLoginDB();
             List<clsUserLogin> User = new List<clsUserLogin>();
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_UserGroup_Sel", con);
@@ -136,7 +137,7 @@ namespace SIMHUKDIS.Models
         }
         public bool GetDataExist(string NIP)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 con.Open();
@@ -158,7 +159,7 @@ namespace SIMHUKDIS.Models
         }
         public bool GetAlreadyUse(string UserID)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 con.Open();
@@ -180,7 +181,7 @@ namespace SIMHUKDIS.Models
         }
         public int CheckUserLogin(clsUserLogin User)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 string q = "[sp_User_Check]";
@@ -195,7 +196,7 @@ namespace SIMHUKDIS.Models
         }
         public clsUserLogin GetData(string NIP)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 string q = "sp_UserLogin_CheckData";
@@ -230,7 +231,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "sp_User_Ins";
@@ -264,7 +265,7 @@ namespace SIMHUKDIS.Models
             {
                 int i = 0;
                 
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "sp_User_Upd";
@@ -282,6 +283,7 @@ namespace SIMHUKDIS.Models
                     cmd.Parameters.AddWithValue("@iNIP", User.NIP);
                     cmd.Parameters.AddWithValue("@iSatker", User.Satker);
                     cmd.Parameters.AddWithValue("@iLevelJabatan", User.LEVEL_JABATAN);
+                    cmd.Parameters.AddWithValue("@iStatusUser", User.StatusUser);
                     con.Open();
                     i = cmd.ExecuteNonQuery();
                 }
@@ -298,7 +300,7 @@ namespace SIMHUKDIS.Models
             {
                 int i = 0;
                 
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "sp_User_ChangePassword";
@@ -323,7 +325,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "sp_UserLogin_Upd_LastLogin";
@@ -346,7 +348,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "SIMHUKDIS.sp_User_Del";
@@ -367,7 +369,7 @@ namespace SIMHUKDIS.Models
         }
         public clsUserLogin UbahData(string NIP)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 string q = "sp_User_byuser_sel";
@@ -395,6 +397,7 @@ namespace SIMHUKDIS.Models
                     user.LEVEL_JABATAN = dt.Rows[0]["Jabatan"].ToString();
                     user.PhoneNo = dt.Rows[0]["PhoneNo"].ToString();
                     user.Email = dt.Rows[0]["Email"].ToString();
+                    user.StatusUser = dt.Rows[0]["StatusUser"].ToString();
                     return user;
                 }
             }

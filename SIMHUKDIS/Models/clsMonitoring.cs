@@ -46,6 +46,8 @@ namespace SIMHUKDIS.Models
         public string TanggalSurat { get; set; }
         public string Tanggal_Telaah { get; set; }
         public string Tanggal_PraDPK { get; set; }
+        public string Tanggal_SendtoMenag { get; set; }
+        public string Tanggal_SendToSatker { get; set; }
         public string Tanggal_DPK { get; set; }
         public string tipe { get; set; }
         public string Tanggal_SK { get; set; }
@@ -53,12 +55,13 @@ namespace SIMHUKDIS.Models
         public string NIP { get; set; }
         public string Konseptor { get; set; }
         public string TelaahNo { get; set; }
+        public string KETERANGAN_SATUAN_KERJA { get; set; }
     }
     public class clsMonitoringDB
     {
         public List<clsMonitoring> MonitoringList(string UserGroup, string userlogin)
         {
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 List<clsMonitoring> cm = new List<clsMonitoring>();
                 using (SqlConnection con = new SqlConnection(constr))
                 {
@@ -73,6 +76,7 @@ namespace SIMHUKDIS.Models
                     {
                         clsMonitoring data = new clsMonitoring();
                         data.ID = Convert.ToInt32(rd["id"].ToString());
+                        data.KETERANGAN_SATUAN_KERJA = rd["keterangan_satuan_kerja"].ToString();
                         data.Status = rd["Status"].ToString();
                         data.NoSurat = rd["nomor_surat"].ToString();
                         data.Perihal = rd["Perihal"].ToString();
@@ -86,8 +90,8 @@ namespace SIMHUKDIS.Models
                         data.DisposisiDate1 = rd["Disposisi1_Date"].ToString();
                         data.DisposisiDate2 = rd["Disposisi2_Date"].ToString();
                         data.DisposisiDate3 = rd["Disposisi3_Date"].ToString();
-                    data.Konseptor = rd["KONSEPTOR"].ToString();
-                    data.DisposisiStatus1 = rd["Disposisi1_Status"].ToString();
+                        data.Konseptor = rd["KONSEPTOR"].ToString();
+                        data.DisposisiStatus1 = rd["Disposisi1_Status"].ToString();
                         data.DisposisiStatus2 = rd["Disposisi2_Status"].ToString();
                         data.DisposisiStatus3 = rd["Disposisi3_Status"].ToString();
                         data.tipe = rd["TIPE"].ToString();
@@ -95,11 +99,12 @@ namespace SIMHUKDIS.Models
                         data.NIP = rd["NIP"].ToString();
                         data.Tanggal_Input = rd["Tanggal_Input"].ToString();
                         data.TelaahNo = rd["TelaahNo"].ToString();
-                    cm.Add(data);
+                        data.Tanggal_SendtoMenag = rd["SendToMenag"].ToString();
+                        data.Tanggal_SendToSatker = rd["SendToSatker"].ToString();
+                        cm.Add(data);
                     }
                     return cm;
                 }
             }
         }
-
     }

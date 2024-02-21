@@ -1,6 +1,4 @@
 ﻿using SIMHUKDIS.Models;
-using SIMHUKDIS.Models;
-using Syncfusion.XlsIO;
 using System;
 using System.Collections.Generic;
 using System.Data;

@@ -121,7 +121,7 @@ namespace SIMHUKDIS.Controllers
         }
         [HttpPost]
         public ActionResult Create(string UserName, string Fullname, string Password, string PhoneNo,string Email,
-            string StatusAdmin, string GroupID, string NIP, string satker, string LEVEL_JABATAN)
+            string StatusAdmin, string GroupID, string NIP, string satker, string LEVEL_JABATAN, string StatusUser)
         {
             string strMsg = "";
             try
@@ -139,6 +139,7 @@ namespace SIMHUKDIS.Controllers
                 users.StatusAdmin = StatusAdmin;
                 users.Satker = satker;
                 users.LEVEL_JABATAN = LEVEL_JABATAN;
+                users.StatusUser = StatusUser;
                 if (db.GetDataExist(NIP) == true)
                 {
                     strMsg = "NIP sudah ada !";
@@ -196,7 +197,7 @@ namespace SIMHUKDIS.Controllers
 
         [HttpPost]
         public ActionResult Ubah(string UserID, string UserName, string Fullname, string Password, string PhoneNo, string Email
-            ,string StatusAdmin, string GroupID, string NIP, string LEVEL_JABATAN, string satker)
+            ,string StatusAdmin, string GroupID, string NIP, string LEVEL_JABATAN, string satker, string StatusUser)
         {
             string strMsg = "";
             string UserLogin = "";
@@ -217,6 +218,7 @@ namespace SIMHUKDIS.Controllers
                 users.LastUser = UserIDx;
                 users.LEVEL_JABATAN = LEVEL_JABATAN;
                 users.Satker = satker;
+                users.StatusUser = StatusUser;
                 db.Edit(users);
                 strMsg = "Success";
                 return Json(strMsg, JsonRequestBehavior.AllowGet);

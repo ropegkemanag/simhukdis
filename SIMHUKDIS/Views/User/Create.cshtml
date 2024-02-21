@@ -92,7 +92,22 @@
                 @Html.ValidationMessage("StatusAdmin", "", new { @class = "text-danger" })
             </div>
         </div>
+        <div class="form-group row">
+            <div class="col-md-3">
+                <label class="control-label col">Status User *</label>
+            </div>
 
+            <div class="col">
+                @Html.DropDownList("StatusUser", new List<SelectListItem>
+                                                                    {
+
+                                                                        new SelectListItem{ Text = "Aktif", Value = "1" },
+                                                                        new SelectListItem{ Text = "Tidak Aktif", Value = "0" }
+                                                                    }, htmlAttributes: new { @class = "custom-select2 form-control", @id = "StatusUser", required = "required" }
+                                                                )
+                @Html.ValidationMessage("StatusUser", "", new { @class = "text-danger" })
+            </div>
+        </div>
         <div class="form-group row">
             <div class="col-md-3">
                 <label class="control-label col">Group ID *</label>
@@ -129,16 +144,16 @@
             var NIP = $('#NIP').val();
             $.ajax({
                 type: "GET",
-                url: "/Telaah/GetPegawai?",
+                url: "/SKHukdisTanpaSidang/GetDataPegawai?",
                 cache: false,
                 data: ({ NIP: NIP }),
                 contentType: "application/json;charset=UTF-8",
                 dataType: "json",
                 success: function (result) {
-                    $('#Fullname').val(result.NAMA_LENGKAP);
-                    $('#LEVEL_JABATAN').val(result.TAMPIL_JABATAN);
-                    $('#PhoneNo').val(result.NO_HP);
-                    $('#Email').val(result.EMAIL);
+                    $('#Fullname').val(result[0].NAMA_LENGKAP);
+                    $('#LEVEL_JABATAN').val(result[0].TAMPIL_JABATAN);
+                    $('#PhoneNo').val(result[0].NO_HP);
+                    $('#Email').val(result[0].TAMPIL_JABATAN);
                 },
                 error: function (errormessage) {
                     Swal.fire({
@@ -163,7 +178,8 @@
             GroupID: $('#GroupID').val(),
             NIP: $('#NIP').val(),
             satker: $('#KODE_SATUAN_KERJA').val(),
-            LEVEL_JABATAN: $('#LEVEL_JABATAN').val()
+            LEVEL_JABATAN: $('#LEVEL_JABATAN').val(),
+            StatusUser: $('#StatusUser').val()
         };
         $.ajax({
             url: "/User/Create",

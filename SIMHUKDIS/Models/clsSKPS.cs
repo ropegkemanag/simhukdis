@@ -55,6 +55,7 @@ namespace SIMHUKDIS.Models
         public string Disposisi1_Date { get; set; }
         public string Disposisi2_Date { get; set; }
         public string Disposisi3_Date { get; set; }
+        public string FileSK { get; set; }
 
         public string NIP { get; set; }
         public string NAMA_LENGKAP { get; set; }
@@ -92,17 +93,23 @@ namespace SIMHUKDIS.Models
         public string TEMBUSAN2 { get; set; }
         public string TASPEN { get; set; }
         public string KPPN { get; set; }
+        public string NO_SK { get; set; }
+        public string Tanggal_SK { get; set; }
+        public string DasarPS { get; set; }
+        public string PERTEKBKN { get; set; }
+        public string KanregBKN { get; set; }
+
     }
     public class clsSKPSDB
     {
         public List<clsSKPS> PSList(string UserID)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             List<clsSKPS> PS = new List<clsSKPS>();
             using (SqlConnection con = new SqlConnection(constr))
             {
                 Int32 pNom = 0;
-                string q = "[sp_PS_Create]";
+                string q = "sp_PS_Create";
                 SqlCommand cmd = new SqlCommand(q, con);
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@iUserID", UserID);
@@ -156,7 +163,7 @@ namespace SIMHUKDIS.Models
         }
         public clsSKPS GetList(int ID)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             clsSKPS data = new clsSKPS();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -173,6 +180,9 @@ namespace SIMHUKDIS.Models
                     pNom = pNom + 1;
                     data.ID = Convert.ToInt32(rd["id"].ToString());
                     data.NoSurat = rd["nomor_surat"].ToString();
+                    data.DasarPS = rd["DasarPS"].ToString();
+                    data.PERTEKBKN = rd["PERTEKBKN"].ToString();
+                    data.KanregBKN = rd["Kanreg_BKN"].ToString();
                     data.AsalSurat = rd["asal_surat"].ToString();
                     data.TanggalSurat = rd["tanggal_surat"].ToString();
                     data.Perihal = rd["perihal"].ToString();
@@ -213,11 +223,50 @@ namespace SIMHUKDIS.Models
                 return data;
             }
         }
-        
+        public int Selesai(clsSKPS a)
+        {
+            int i;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                SqlCommand cmd = new SqlCommand("[sp_tbl_PemberhentianSementara_SK_Selesai]", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ID", a.ID);
+                cmd.Parameters.AddWithValue("@FileSK", a.FileSK);
+                cmd.Parameters.AddWithValue("@UserLogin", a.Create_User);
+                cmd.Parameters.AddWithValue("@NO_SK", a.NO_SK);
+                cmd.Parameters.AddWithValue("@Tanggal_SK", Convert.ToDateTime(a.Tanggal_SK).ToString("yyyy-MM-dd"));
+                con.Open();
+                i = cmd.ExecuteNonQuery();
+            }
+            return i;
+        }
+        public clsSuratMasukMsgInfo GetMsgInfo(int ID, int status)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
+            clsSuratMasukMsgInfo data = new clsSuratMasukMsgInfo();
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                string q = "SP_MESSAGEINFO_PS_SELESAI";
+                SqlCommand cmd = new SqlCommand(q, con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@STATUS", status);
+                cmd.Parameters.AddWithValue("@ID", ID);
+                con.Open();
+                SqlDataReader rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    data.PhoneNo = rd["PhoneNo"].ToString();
+                    data.Pesan = rd["Pesan"].ToString();
+                }
+                return data;
+            }
+        }
+
         public int Update (clsSKPS a)
         {
             int i;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("sp_tbl_PemberhentianSementara_SK_Upd", con);
@@ -231,7 +280,7 @@ namespace SIMHUKDIS.Models
         public int Insert(clsSKPS t)
         {
             int i;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("sp_tbl_PemberhentianSementara_SK_Insert", con);
@@ -257,6 +306,7 @@ namespace SIMHUKDIS.Models
                 cmd.Parameters.AddWithValue("@Created_User", t.Create_User);
                 cmd.Parameters.AddWithValue("@JenisUsul", t.JenisUsul);
                 cmd.Parameters.AddWithValue("@DASAR_PS", t.DasarPemberhentian);
+                cmd.Parameters.AddWithValue("@PERTEKBKN", t.PERTEKBKN);
                 con.Open();
                 i = cmd.ExecuteNonQuery();
             }

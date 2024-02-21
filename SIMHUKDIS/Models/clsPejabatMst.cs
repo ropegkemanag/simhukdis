@@ -51,7 +51,7 @@ namespace SIMHUKDIS.Models
     {
         public clsPejabatMst GetList()
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             clsPejabatMst data = new clsPejabatMst();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -88,7 +88,7 @@ namespace SIMHUKDIS.Models
         public int Insert(clsPejabatMst t)
         {
             int i;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_PejabatMst_Ins", con);
@@ -107,7 +107,7 @@ namespace SIMHUKDIS.Models
         public int Update(clsPejabatMst t)
         {
             int i;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_PejabatMst_Upd", con);
@@ -125,7 +125,7 @@ namespace SIMHUKDIS.Models
         }
         public bool GetDataExist()
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 con.Open();
@@ -147,7 +147,7 @@ namespace SIMHUKDIS.Models
         public List<clsPejabatName> GetKaropegList()
         {
             List<clsPejabatName> SK = new List<clsPejabatName>();
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Karopeg_Sel", con);
@@ -169,7 +169,7 @@ namespace SIMHUKDIS.Models
         public List<clsPejabatName> GetKoordinatorList()
         {
             List<clsPejabatName> SK = new List<clsPejabatName>();
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Koordinator_Sel", con);
@@ -191,7 +191,7 @@ namespace SIMHUKDIS.Models
         public List<clsPejabatName> GeSubKoordinatorList()
         {
             List<clsPejabatName> SK = new List<clsPejabatName>();
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_SubKoordinator_Sel", con);

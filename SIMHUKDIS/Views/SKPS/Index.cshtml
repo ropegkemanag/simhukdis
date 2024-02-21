@@ -49,6 +49,7 @@
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                         <a class="dropdown-item" onclick="ProsesSendtoMenag('@item.ID')">Kirim Ke Menteri</a>
+                                        <a class="dropdown-item" onclick="ProsesSelesai('@item.ID')">Kirim Ke Satker</a>
                                         @*<a class="dropdown-item" >Kirim Ke Satker</a>*@
                                     </div>
                                 </div>
@@ -72,50 +73,6 @@
         </table>
     </div>
 </div>
-@*<div class="modal fade" id="KirimSKPS" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Kirim Ke Satker</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                </button>
-            </div>
-
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-            <div class="modal-body" style="margin-left:20px;">
-                <form id="Form">
-                    <div class="form-group row" style="display:none;">
-                        <div class="col-sm-6 mb-3 mb-sm-0">
-                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">ID</label>
-                            @Html.TextBox("ID", "", new { @id = "ID", @class = "form-control", required = "required" })
-                            @Html.ValidationMessage("ID", "", new { @class = "text-danger" })
-                        </div>
-                        <div class="col-sm-6">
-                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">NIP</label>
-                            @Html.TextBox("NIP", "", new { @id = "NIPx", @class = "form-control", required = "required" })
-                            @Html.ValidationMessage("NIP", "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <div class="col">
-                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">File Telaah</label>
-                            @Html.TextBox("FileSKPS", "", new { @id = "FileSKPS", @class = "form-control", required = "required", Type = "file", accept = "application/pdf" })
-                            @Html.ValidationMessage("FileTelaah", "", new { @class = "text-danger" })
-                        </div>
-                    </div>
-                </form>
-            </div>
-
-            <div class="modal-footer">
-                <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
-                <input type="submit" value="Proses" class="btn btn-primary" style="width:100px;" onclick="KirimSKJadi()" />
-            </div>
-        </div>
-    </div>
-</div>*@
 <div class="modal fade" id="KirimSKPS" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -141,12 +98,138 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="ProsesSelesaiSK" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Kirim Ke Satuan Kerja</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
 
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="modal-body" style="margin-left:20px;">
+                <form id="Form">
+                    <div class="form-group row" style="display:none;">
+                        <div class="col-sm-6 mb-3 mb-sm-0">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">ID</label>
+                            @Html.TextBox("IDm", "", new { @id = "IDm", @class = "form-control", required = "required" })
+                            @Html.ValidationMessage("IDm", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">No. SK</label>
+                            @Html.TextBox("NO_SK", "", new { @id = "NO_SK", @class = "form-control", required = "required" })
+                            @Html.ValidationMessage("NO_SK", "", new { @class = "text-danger" })
+                        </div>
 
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">Tanggal SK</label>
+                            @Html.TextBox("Tanggal_SK", "", new { @type = "text", @id = "Tanggal_SK", @class = "form-control date-picker", required = "required" })
+                            @Html.ValidationMessage("Tanggal_SK", "", new { @class = "text-danger" })
+                        </div>
+
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label style="font-weight: bold;color:cornflowerblue;" class="control-label ">File SK</label>
+                            @Html.TextBox("FileSK", "", new { @id = "FileSK", @class = "form-control", required = "required", Type = "file", accept = "application/pdf" })
+                            @Html.ValidationMessage("FileSK", "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-danger" type="button" data-dismiss="modal">Cancel</button>
+                <input type="submit" value="Proses" class="btn btn-primary" style="width:100px;" onclick="Selesai()" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="/Scripts/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
+    function ProsesSelesai(ID) {
+        $('#IDm').val(ID);
+        $('#ProsesSelesaiSK').modal('show');
+    }
     function ProsesSendtoMenag(ID) {
         $('#IDX').val(ID);
         $('#KirimSKPS').modal('show');
+    }
+    function Selesai() {
+        var InputID = '@ViewBag.ID';
+        var fileUpload = $("#FileSK").get(0);
+        var files = fileUpload.files;
+        var fileData = new FormData();
+        for (var i = 0; i < files.length; i++) {
+            fileData.append(files[i].name, files[i]);
+        }
+        $.ajax({
+            url: '/SKPS/UploadFiles',
+            type: "POST",
+            contentType: false,
+            processData: false,
+            data: fileData,
+            success: function (result) {
+                alert(result);
+                var dpObj = {
+                    ID: $('#IDm').val(),
+                    FileSK: result,
+                    NO_SK: $('#NO_SK').val(),
+                    Tanggal_SK: $('#Tanggal_SK').val()
+                };
+                $.ajax({
+                    url: "/SKPS/Selesai",
+                    data: JSON.stringify(dpObj),
+                    type: "POST",
+                    contentType: "application/json;charset=utf-8",
+                    dataType: "json",
+                    success: function (result) {
+                        if (result.toString() == "Success") {
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Proses berhasil !',
+                                showConfirmButton: false,
+                                timer: 3000
+                            })
+                            window.location.href = '@Url.Action("Index", "SKPS")';
+                        }
+                        else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: result.toString(),
+                                showConfirmButton: false,
+                                timer: 3000
+                            })
+                        }
+                    },
+                    error: function (errormessage) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: result.toString(),
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                    }
+                });
+            },
+            error: function (err) {
+                Swal.fire({
+                    icon: 'error',
+                    title: result.toString(),
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }
+        });
     }
     function SendtoMenag() {
         var dpObj = {
@@ -175,7 +258,7 @@
                         showConfirmButton: false,
                         timer: 3000
                     })
-                }                
+                }
             },
             error: function (errormessage) {
                 Swal.fire({
@@ -187,5 +270,5 @@
                 window.location.href = '@Url.Action("Index", "SKPS")'
             }
         });
-    }
+    }    
 </script>

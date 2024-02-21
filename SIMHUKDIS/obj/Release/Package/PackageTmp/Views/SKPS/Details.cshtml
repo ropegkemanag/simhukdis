@@ -1,10 +1,8 @@
 ﻿@model SIMHUKDIS.Models.clsSKPS
-
 @{
     ViewBag.Title = "Detail Usulan";
     Layout = "/Views/Shared/_Layout.cshtml";
 }
-
 <div class="pd-20 card-box mb-30">
     <div class="card-header py-3">
         <h6 class="m-0 font-weight-bold text-primary">1. DETAIL SURAT MASUK</h6>
@@ -17,7 +15,9 @@
                 </div>
                 <div class="col">
                     @Html.TextBoxFor(model => model.ID, "", new { @type = "text", @id = "ID", @class = "form-control" })
-                    @*<text class="form-control" disabled id="NoSurat">@Html.DisplayFor(model => model.NoSurat)</text>*@
+                    @*
+                        <text class="form-control" disabled id="NoSurat">@Html.DisplayFor(model => model.NoSurat)</text>
+                    *@
                 </div>
             </div>
             <div class="form-group row">
@@ -26,7 +26,9 @@
                 </div>
                 <div class="col">
                     @Html.TextBoxFor(model => model.NoSurat, "", new { @type = "text", @id = "NoSurat", @class = "form-control", disabled = "disabled" })
-                    @*<text class="form-control" disabled id="NoSurat">@Html.DisplayFor(model => model.NoSurat)</text>*@
+                    @*
+                        <text class="form-control" disabled id="NoSurat">@Html.DisplayFor(model => model.NoSurat)</text>
+                    *@
                 </div>
             </div>
             <div class="form-group row">
@@ -61,7 +63,6 @@
                     @Html.TextBoxFor(model => model.Kode_Satuan_Kerja, "", new { @type = "text", @id = "Kode_Satuan_Kerja", @class = "form-control", disabled = "disabled" })
                 </div>
             </div>
-
             <div class="form-group row" style="display:none;">
                 <div class="col-md-3">
                     <label class="control-label ">Konseptor</label>
@@ -78,7 +79,6 @@
                     @Html.TextBoxFor(model => model.Jabatan_Konseptor, "", new { @type = "text", @id = "Jabatan_Konseptor", @class = "form-control", disabled = "disabled" })
                 </div>
             </div>
-
             <div class="form-group row">
                 <div class="col-md-3">
                     <label class="control-label "> Satuan Kerja</label>
@@ -95,7 +95,6 @@
                     @Html.TextBoxFor(model => model.Unit_Kerja, "", new { @type = "text", @id = "Unit_Kerja", @class = "form-control", disabled = "disabled" })
                 </div>
             </div>
-
             <div class="form-group row" style="display:none;">
                 <div class="col-md-3">
                     <label class="control-label">Kode Unit Kerja</label>
@@ -104,7 +103,6 @@
                     @Html.TextBoxFor(model => model.Kode_Unit_Kerja, "", new { @type = "text", @id = "Kode_Unit_Kerja", @class = "form-control", disabled = "disabled" })
                 </div>
             </div>
-
             <div class="form-group row">
                 <div class="col-md-3">
                     <label class="control-label "> @Html.DisplayNameFor(model => model.Lampiran_SuratPengantar)</label>
@@ -116,11 +114,11 @@
                     else
                     {
                         @Html.ActionLink(
-                                    "Lihat",
-                                    "DownloadFile1",                         // controller action
-                                    "PemberhentianSementara",        // controller
-                                    new { fileName =  Model.Lampiran_SuratPengantar },         // action parameters aka route values
-                                    new { @class = "btn btn-primary" })// html attributes
+                        "Lihat",
+                        "DownloadFile1",                         // controller action
+                        "PemberhentianSementara",        // controller
+                        new { fileName =  Model.Lampiran_SuratPengantar },         // action parameters aka route values
+                        new { @class = "btn btn-primary" })// html attributes
                     }
                 </div>
             </div>
@@ -135,11 +133,11 @@
                     else
                     {
                         @Html.ActionLink(
-                                    "Lihat",
-                                    "DownloadFile2",                         // controller action
-                                    "PemberhentianSementara",        // controller
-                                    new { fileName =  Model.Lampiran_DokumenPendukung },         // action parameters aka route values
-                                    new { @class = "btn btn-primary" })// html attributes
+                        "Lihat",
+                        "DownloadFile2",                         // controller action
+                        "PemberhentianSementara",        // controller
+                        new { fileName =  Model.Lampiran_DokumenPendukung },         // action parameters aka route values
+                        new { @class = "btn btn-primary" })// html attributes
                     }
                 </div>
             </div>
@@ -164,7 +162,6 @@
                     @Html.ValidationMessage("NAMA_LENGKAP", "", new { @class = "text-danger" })
                 </div>
             </div>
-
             <div class="form-group row">
                 <div class="col-sm-6 mb-3 mb-sm-0">
                     <label class="control-label ">Pangkat, Golongan Ruang</label>
@@ -181,8 +178,6 @@
                 <div class="col">
                     <label class="control-label">Satuan Kerja</label>
                     @Html.TextBox("Satker", "", new { @id = "Satker", @class = "form-control", required = "required", @readonly = "True" })
-                    @*<textarea class="form-control" id="Satker" rows="5" name="Satker" readonly="readonly"></textarea>*@
-                    @*@Html.TextArea("Satker", new { htmlAttributes = new { @class = "form-control", @id = "Satker" } })*@
                     @Html.ValidationMessage("Satker", "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -195,7 +190,6 @@
                     @Html.ValidationMessage("Satker", "", new { @class = "text-danger" })
                 </div>
             </div>
-
             <div class="form-group row">
                 <div class="col-sm-6 mb-3 mb-sm-0">
                     <label class="control-label ">Tempat Lahir</label>
@@ -220,6 +214,12 @@
                     @Html.ValidationMessage("TMT_PENSIUN", "", new { @class = "text-danger" })
                 </div>
             </div>
+            <div class="form-group row">
+                <div class="col">
+                    <label class="control-label ">Kantor Regional BKN</label>
+                    @Html.TextBoxFor(model => model.KanregBKN, "", new { @type = "text", @id = "KanregBKN", @class = "form-control", required = "required", @readonly = "True" })
+                </div>
+            </div>
         </form>
     </div>
 </div>
@@ -231,20 +231,23 @@
         <form>
             <div class="form-group row">
                 <div class="col">
-                    <label class="control-label ">A.JENIS USUL</label>
-                    @Html.DropDownListFor(model => model.JenisUsul, new List<SelectListItem>
-                                                                        {
-                                                                            new SelectListItem{ Text = "PS KARENA TINDAK PIDANA", Value = "2" },
-                                                                            new SelectListItem{ Text = "PS KARENA MENJADI ANGGOTA LEMBAGA NON STRUKTURAL", Value = "1" },                                                                            
-                                                                            new SelectListItem{ Text = "PK KARENA SELESAI MENJADI ANGGOTA LEMBAGA NON STRUKTURAL", Value = "3" },
-                                                                            new SelectListItem{ Text = "PK KARENA TINDAK PIDANA", Value = "4" }
-                                                                        }, htmlAttributes: new { @class = "custom-select2 form-control", @id = "JenisUsul", required = "required" }
-                                                                    )
+                    <label class="control-label ">JENIS USUL</label>
+                    @Html.DropDownListFor(model => model.JenisUsul, new List
+                    <SelectListItem>
+                    {
+                    new SelectListItem{ Text = "Pemberhentian Sementara Tindak Pidana", Value = "2" },
+                    new SelectListItem{ Text = "Pemberhentian Sementara sbg Anggota Struktural", Value = "1" },
+                    new SelectListItem{ Text = "Pemberhentian Sementara sbg KaDes", Value = "5" },
+                    new SelectListItem{ Text = "Pengaktifan Kembali sbg Anggota Struktural", Value = "3" },
+                    new SelectListItem{ Text = "Pengaktifan Kembali Tindak Pidana", Value = "4" },
+                    new SelectListItem{ Text = "Pengaktifan Kembali sbg KaDes", Value = "6" }
+                    }, htmlAttributes: new { @class = "custom-select2 form-control", @id = "JenisUsul", required = "required", onchange = "JenisChange()" }
+                    )
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col">
-                    <label class="control-label">B. TANGGAL SK </label>
+                    <label class="control-label">TANGGAL SK </label>
                     @Html.TextBoxFor(model => model.SKDate, "{0:dd MM yyyy}", new { @type = "text", @id = "SKDate", @class = "form-control date-picker", required = "required" })
                     @*@Html.TextBoxFor(model => model.SKDate, "{0:dd-MM-yyyy}", new { @type = "text", @id = "SKDate", @class = "form-control date-picker", required = "required" })*@
                     @Html.ValidationMessage("SKDate", "", new { @class = "text-danger" })
@@ -252,31 +255,33 @@
             </div>
             <div class="form-group row">
                 <div class="col">
-                    <label class="control-label">C. DASAR DAN BUKTI PENUNJANG </label>
-                    @Html.TextAreaFor(model => model.DasarBukti, 10, 40, new { @type = "text", @id = "DasarBukti", @class = "form-control", required = "required" });
-                    @*<textarea class="form-control" id="DasarBukti" rows="5" name="DasarBukti"></textarea>*@
-                    @*@Html.ValidationMessage("DasarBukti", "Dipisahkan oleh ; dan enter apabila lebih dari satu dasar bukti.", new { @class = "text-danger" })*@
+                    <label class="control-label">DASAR DAN BUKTI PENDUKUNG </label>
+                    @Html.TextAreaFor(model => model.DasarBukti, 10, 40, new { @type = "text", @id = "DasarBukti", @class = "form-control", required = "required" })
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row" id="DasarPertekBKN">
                 <div class="col">
-                    <label class="control-label">D. ALASAN PEMBERHENTIAN SEMENTARA / PENGAKTIFAN KEMBALI</label>
+                    <label class="control-label">DASAR PERTIMBANGAN TEKNIS BKN</label>
+                    @Html.TextAreaFor(model => model.PERTEKBKN, 10, 40, new { @type = "text", @id = "PERTEKBKN", @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group row" id="AlasanPK">
+                <div class="col">
+                    <label class="control-label">ALASAN PEMBERHENTIAN SEMENTARA / PENGAKTIFAN KEMBALI</label>
                     @Html.TextAreaFor(model => model.PSReason, 10, 40, new { @type = "text", @id = "PSReason", @class = "form-control", required = "required" });
                     @*<textarea class="form-control input-lg textarea-editor" id="PSReason" rows="5" name="PSReason"></textarea>*@
                     @Html.ValidationMessage("PSReason", "Dipisahkan oleh ; dan enter apabila lebih dari satu pelanggaran.", new { @class = "text-danger" })
                 </div>
             </div>
-
             <div class="form-group row">
                 <div class="col">
-                    <label class="control-label">E.	TMT PEMBERHENTIAN SEMENTARA / PENGAKTIFAN KEMBALI</label>
-                   @* @Html.TextBoxFor(model => model.TMTDate, "{0:dd-MM-yyyy}", new { @type = "text", @id = "TMTDate", @class = "form-control date-picker", required = "required" })*@
+                    <label class="control-label">TMT PEMBERHENTIAN SEMENTARA / PENGAKTIFAN KEMBALI</label>
+                    @* @Html.TextBoxFor(model => model.TMTDate, "{0:dd-MM-yyyy}", new { @type = "text", @id = "TMTDate", @class = "form-control date-picker", required = "required" })*@
                     @Html.TextBoxFor(model => model.TMTDate, "{0:dd MM yyyy}", new { @type = "text", @id = "TMTDate", @class = "form-control date-picker", required = "required" })
-
                     @Html.ValidationMessage("TMTDate", "", new { @class = "text-danger" })
                 </div>
             </div>
-            <div class="form-group row">
+            <div class="form-group row" style="display:none;">
                 <div class="col">
                     <label class="control-label">F. TEMBUSAN </label>
                     @Html.TextAreaFor(model => model.tembusan, 10, 40, new { @type = "text", @id = "tembusan", @class = "form-control", required = "required" });
@@ -293,194 +298,226 @@
         </form>
     </div>
 </div>
-
-
 <script src="~/Scripts/jquery-3.6.0.min.js"></script>
 <script type="text/javascript">
-    $(document).ready(function () {
-        //$("#PasalPelanggaran").val("Yang bersangkutan melanggar ketentuan ...");
-        var No_Surat = $("#NoSurat").val();
-        var AsalSurat = $("#AsalSurat").val();
-        if ($('#DasarBukti').val() == "") {
-            var DasarBukti = "Surat " + AsalSurat + " Nomor " + No_Surat + " tanggal " + $("#TanggalSurat").val() + " Perihal " + $("#perihal").val() + ";";
-            $("#DasarBukti").val(DasarBukti);
-        }
-        
+   $(document).ready(function () {
+       //$("#PasalPelanggaran").val("Yang bersangkutan melanggar ketentuan ...");
+       var Asal_Surat = $("#AsalSurat").val()
+       var No_Surat = $("#NoSurat").val();
+       var Tipe = $("#NoSurat").val();
+       JenisChange();
 
-        var SuratNo = $("#NoSurat").val();
-        if ($('#NIP').val() != "") {
-            getPegawai();
-        }
-       
-        //getData();
+       if ($('#DasarBukti').val() == "") {
+           var DasarBukti = "Surat " + Asal_Surat + " Nomor " + No_Surat + " tanggal " + $("#TanggalSurat").val() + " Perihal " + $("#perihal").val() + ";";
+           $("#DasarBukti").val(DasarBukti);
+       }
+       var SuratNo = $("#NoSurat").val();
+       if ($('#NIP').val() != "") {
+           getPegawai();
+       }
+   });
+   function JenisChange() {
+       var JenisUsul = $("#JenisUsul").val();
+       //PS KARENA MENJADI ANGGOTA LEMBAGA NON STRUKTURAL
+       if (JenisUsul == "1") {
+           $("#DasarPertekBKN").hide();
+           $("#AlasanPK").show();
+           //$("#PSReason").prop('disabled', false);
+       }
+       //PS KARENA TINDAK PIDANA
+       if (JenisUsul == "2") {
+           $("#DasarPertekBKN").hide();
+           $("#AlasanPK").show();
+           //$("#PSReason").prop('disabled', false);
+       }
+       //PS KARENA MENJADI KEPALA DESA
+       if (JenisUsul == "5") {
+           $("#DasarPertekBKN").hide();
+           $("#AlasanPK").show();
+       }
+       //PK KARENA SELESAI MENJADI ANGGOTA LEMBAGA NON STRUKTURAL
+       if (JenisUsul == "3") {
+           $("#DasarPertekBKN").show();
+           $("#AlasanPK").hide();
+       }
+       //PK KARENA TINDAK PIDANA
+       if (JenisUsul == "4") {
+           $("#DasarPertekBKN").show();
+           $("#AlasanPK").hide();
+       }
+       //PK KARENA MENJADI KEPALA DESA
+       if (JenisUsul == "6") {
+           $("#DasarPertekBKN").show();
+           $("#AlasanPK").hide();
+       }
+   }
+   //function JenisChange() {
+   //    var JenisUsul = $("#JenisUsul").val();
+   //    alert(JenisUsul);
+   //    if (JenisUsul == "1") {
+   //        $("#DasarPemberhentian").val('');
+   //        $("#DasarPemberhentian").prop('disabled', true);
+   //    }
+   //    if (JenisUsul == "2") {
+   //        $("#DasarPemberhentian").val('');
+   //        $("#DasarPemberhentian").prop('disabled', true);
+   //    }
+   //    if (JenisUsul == "3") {
+   //        $("#DasarPemberhentian").val('');
+   //        $("#DasarPemberhentian").prop('disabled', false);
+   //    }
+   //    if (JenisUsul == "4") {
+   //        $("#DasarPemberhentian").val('');
+   //        $("#DasarPemberhentian").prop('disabled', false);
+   //    }
+   //});
+   function AllowOnlyNumbers(e) {
 
-        //$(function () {
-        //    $("#SKDate").datepicker({
-        //        setDate: new Date(),
-        //        format: 'dd-mm-yyyy',
-        //        autoclose: true,
-        //        calendarWeeks: true,
-        //        clearBtn: true,
-        //        disableTouchKeyboard: true
-        //    })
-        //});
+       e = (e) ? e : window.event;
+       var clipboardData = e.clipboardData ? e.clipboardData : window.clipboardData;
+       var key = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
+       var str = (e.type && e.type == "paste") ? clipboardData.getData('Text') : String.fromCharCode(key);
 
-        //$(function () {
-        //    $("#TMTDate").datepicker({
-        //        setDate: new Date(),
-        //        format: 'dd-mm-yyyy',
-        //        autoclose: true,
-        //        calendarWeeks: true,
-        //        clearBtn: true,
-        //        disableTouchKeyboard: true
-        //    })
-        //});
+       return (/^\d+$/.test(str));
+   }
+   function getPegawai() {
+       var x = $('#NIP').val();
 
-    });
-    function AllowOnlyNumbers(e) {
-
-        e = (e) ? e : window.event;
-        var clipboardData = e.clipboardData ? e.clipboardData : window.clipboardData;
-        var key = e.keyCode ? e.keyCode : e.which ? e.which : e.charCode;
-        var str = (e.type && e.type == "paste") ? clipboardData.getData('Text') : String.fromCharCode(key);
-
-        return (/^\d+$/.test(str));
-    }
-    function getPegawai() {
-        var x = $('#NIP').val();
-
-        $.ajax({
-            url: "/SKHukdisTanpaSidang/GetDataPegawai?",
-            cache: false,
-            data: ({ NIP: x }),
-            type: "GET",
-            contentType: "application/json;charset=UTF-8",
-            dataType: "json",
-            success: function (result) {
-                $('#NAMA_LENGKAP').val(result[0].NAMA_LENGKAP);
-                $('#GOL_RUANG').val(result[0].GOL_RUANG);
-                $('#LEVEL_JABATAN').val(result[0].TAMPIL_JABATAN);
-                $('#Satker').val(result[0].SATKER_4);
-                $('#UnitKerja').val(result[0].KETERANGAN_SATUAN_KERJA);
-                $('#TEMPAT_LAHIR').val(result[0].TEMPAT_LAHIR);
-                $('#TANGGAL_LAHIR').val(result[0].TANGGAL_LAHIR);
-                $('#MK_TAHUN').val(result[0].MK_TAHUN);
-                $('#TMT_PENSIUN').val(result[0].TMT_PENSIUN);
+       $.ajax({
+           url: "/SKHukdisTanpaSidang/GetDataPegawai?",
+           cache: false,
+           data: ({ NIP: x }),
+           type: "GET",
+           contentType: "application/json;charset=UTF-8",
+           dataType: "json",
+           success: function (result) {
+               $('#NAMA_LENGKAP').val(result[0].NAMA_LENGKAP);
+               $('#GOL_RUANG').val(result[0].GOL_RUANG);
+               $('#LEVEL_JABATAN').val(result[0].TAMPIL_JABATAN);
+               $('#Satker').val(result[0].SATKER_4);
+               $('#UnitKerja').val(result[0].KETERANGAN_SATUAN_KERJA);
+               $('#TEMPAT_LAHIR').val(result[0].TEMPAT_LAHIR);
+               $('#TANGGAL_LAHIR').val(result[0].TANGGAL_LAHIR);
+               $('#MK_TAHUN').val(result[0].MK_TAHUN);
+               $('#TMT_PENSIUN').val(result[0].TMT_PENSIUN);
 
 
-            },
-            error: function (errormessage) {
-                Swal.fire({
-                    icon: 'error',
-                    title: errormessage.toString(),
-                    showConfirmButton: false,
-                    timer: 3000
-                })
-            }
-        });
-        return false;
-    }
-    function getData() {
-        var NIP = $('#NIP').val();
-        $.ajax({
-            type: "GET",
-            url: "/SKHukdisTanpaSidang/GetDataPegawai?",
-            cache: false,
-            data: ({ NIP: NIP }),
-            contentType: "application/json;charset=UTF-8",
-            dataType: "json",
-            success: function (result) {
-                $('#NAMA_LENGKAP').val(result.NAMA_LENGKAP);
-                $('#GOL_RUANG').val(result.GOL_RUANG);
-                $('#LEVEL_JABATAN').val(result.TAMPIL_JABATAN);
-                $('#Satker').val(result.SATKER_4);
-                $('#UnitKerja').val(result.SATKER_3);
-                $('#TEMPAT_LAHIR').val(result.TEMPAT_LAHIR);
-                $('#TANGGAL_LAHIR').val(result.TANGGAL_LAHIR);
-                $('#MK_TAHUN').val(result.MK_TAHUN);
-                $('#TMT_PENSIUN').val(result.TMT_PENSIUN);
-            },
-            error: function (errormessage) {
-                Swal.fire({
-                    icon: 'error',
-                    title: "NIP tidak ditemukan",
-                    showConfirmButton: false,
-                    timer: 3000
-                })
-            }
-        });
-        return false;
-    }
-    function Simpan() {
-        var InputID = $('#ID').val();
-        GenerateWord()
-        window.location.href = '@Url.Action("Details", "SKPS")?ID=' + $('#ID').val();
-    }
-    function GenerateWord()
-    {
-        var dpObj = {
-            ID: $('#ID').val(),
-            NIP: $('#NIP').val(),
-            NAMA_LENGKAP: $('#NAMA_LENGKAP').val(),
-            GOL_RUANG: $('#GOL_RUANG').val(),
-            LEVEL_JABATAN: $('#LEVEL_JABATAN').val(),
-            SATUAN_KERJA: $('#UnitKerja').val(),
-            TEMPAT_LAHIR: $('#TEMPAT_LAHIR').val(),
-            TANGGAL_LAHIR: $('#TANGGAL_LAHIR').val(),
-            MK_TAHUN: $('#MK_TAHUN').val(),
-            TANGGAL_LAHIR: $('#TANGGAL_LAHIR').val(),
-            TMT_PENSIUN: $('#TMT_PENSIUN').val(),
-            DasarBukti: $('#DasarBukti').val(),
-            SKDate: $('#SKDate').val(),
-            PSReason: $('#PSReason').val(),
-            TMTDate: $('#TMTDate').val(),
-            tembusan: $('#tembusan').val(), 
-            JenisUsul: $('#JenisUsul').val(),
-            Konseptor: $('#Konseptor').val()
-        };
-        $.ajax({
-            url: "/SKPS/GenerateWord",
-            data: JSON.stringify(dpObj),
-            type: "POST",
-            contentType: "application/json;charset=utf-8",
-            dataType: "json",
-            success: function (result) {
+           },
+           error: function (errormessage) {
+               Swal.fire({
+                   icon: 'error',
+                   title: errormessage.toString(),
+                   showConfirmButton: false,
+                   timer: 3000
+               })
+           }
+       });
+       return false;
+   }
+   function getData() {
+       var NIP = $('#NIP').val();
+       $.ajax({
+           type: "GET",
+           url: "/SKHukdisTanpaSidang/GetDataPegawai?",
+           cache: false,
+           data: ({ NIP: NIP }),
+           contentType: "application/json;charset=UTF-8",
+           dataType: "json",
+           success: function (result) {
+               $('#NAMA_LENGKAP').val(result.NAMA_LENGKAP);
+               $('#GOL_RUANG').val(result.GOL_RUANG);
+               $('#LEVEL_JABATAN').val(result.TAMPIL_JABATAN);
+               $('#Satker').val(result.SATKER_4);
+               $('#UnitKerja').val(result.SATKER_3);
+               $('#TEMPAT_LAHIR').val(result.TEMPAT_LAHIR);
+               $('#TANGGAL_LAHIR').val(result.TANGGAL_LAHIR);
+               $('#MK_TAHUN').val(result.MK_TAHUN);
+               $('#TMT_PENSIUN').val(result.TMT_PENSIUN);
+           },
+           error: function (errormessage) {
+               Swal.fire({
+                   icon: 'error',
+                   title: "NIP tidak ditemukan",
+                   showConfirmButton: false,
+                   timer: 3000
+               })
+           }
+       });
+       return false;
+   }
+   function Simpan() {
+       var InputID = $('#ID').val();
+       GenerateWord()
+       window.location.href = '@Url.Action("Details", "SKPS")?ID=' + $('#ID').val();
+   }
+   function GenerateWord()
+   {
+       var dpObj = {
+           ID: $('#ID').val(),
+           NIP: $('#NIP').val(),
+           NAMA_LENGKAP: $('#NAMA_LENGKAP').val(),
+           GOL_RUANG: $('#GOL_RUANG').val(),
+           LEVEL_JABATAN: $('#LEVEL_JABATAN').val(),
+           SATUAN_KERJA: $('#UnitKerja').val(),
+           TEMPAT_LAHIR: $('#TEMPAT_LAHIR').val(),
+           TANGGAL_LAHIR: $('#TANGGAL_LAHIR').val(),
+           MK_TAHUN: $('#MK_TAHUN').val(),
+           TANGGAL_LAHIR: $('#TANGGAL_LAHIR').val(),
+           TMT_PENSIUN: $('#TMT_PENSIUN').val(),
+           DasarBukti: $('#DasarBukti').val(),
+           SKDate: $('#SKDate').val(),
+           PSReason: $('#PSReason').val(),
+           TMTDate: $('#TMTDate').val(),
+           tembusan: $('#tembusan').val(),
+           JenisUsul: $('#JenisUsul').val(),
+           Konseptor: $('#Konseptor').val(),
+           DasarPemberhentian: $('#DasarPemberhentian').val(),
+           KanregBKN: $('#KanregBKN').val(),
+           PertekBKN: $('#PERTEKBKN').val()
+       };
+       $.ajax({
+           url: "/SKPS/GenerateWord",
+           data: JSON.stringify(dpObj),
+           type: "POST",
+           contentType: "application/json;charset=utf-8",
+           dataType: "json",
+           success: function (result) {
 
-                DownloadPDF(result.DocPDF, result.DocWord);
-                //DownloadPDF(result.DocWord);
-                if (result.Msg.toString() == "Success") {
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'SK berhasil !',
-                        showConfirmButton: false,
-                        timer: 3000
-                    })
-                    
-                }
-                else {
-                    Swal.fire({
-                        icon: 'error',
-                        title: result.Msg.toString(),
-                        showConfirmButton: false,
-                        timer: 3000
-                    })
-                }
-                
-            },
-            error: function (errormessage) {
-                Swal.fire({
-                    icon: 'error',
-                    title: result.toString(),
-                    showConfirmButton: false,
-                    timer: 3000
-                })
-                window.location.href = '@Url.Action("Details", "SKPS")?ID=' + $('#ID').val();
-            }
-        });
-    }
-     function DownloadPDF(fileName1, fileName2) {
-        window.location = '@Url.Action("DownloadFile", "SKPS")?fileName=' + fileName1;
-        window.location = '@Url.Action("DownloadFile", "SKPS")?fileName=' + fileName2;
+               DownloadPDF(result.DocPDF, result.DocWord);
+               //DownloadPDF(result.DocWord);
+               if (result.Msg.toString() == "Success") {
+                   Swal.fire({
+                       icon: 'success',
+                       title: 'SK berhasil !',
+                       showConfirmButton: false,
+                       timer: 3000
+                   })
 
-    }
+               }
+               else {
+                   Swal.fire({
+                       icon: 'error',
+                       title: result.Msg.toString(),
+                       showConfirmButton: false,
+                       timer: 3000
+                   })
+               }
+
+           },
+           error: function (errormessage) {
+               Swal.fire({
+                   icon: 'error',
+                   title: result.toString(),
+                   showConfirmButton: false,
+                   timer: 3000
+               })
+               window.location.href = '@Url.Action("Details", "SKPS")?ID=' + $('#ID').val();
+           }
+       });
+   }
+    function DownloadPDF(fileName1, fileName2) {
+       window.location = '@Url.Action("DownloadFile", "SKPS")?fileName=' + fileName1;
+       window.location = '@Url.Action("DownloadFile", "SKPS")?fileName=' + fileName2;
+
+   }
 </script>

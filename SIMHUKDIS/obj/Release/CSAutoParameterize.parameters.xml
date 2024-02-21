@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <parameters>
-  <parameter name="DBCS-Web.config Connection String" description="DBCS Connection String used in web.config by the application to access the database." defaultValue="Data Source=localhost;Initial Catalog=simhukdis;User ID=root;Password=;Convert Zero Datetime=True;" tags="SqlConnectionString">
-    <parameterEntry kind="XmlFile" scope="C:\\Users\\User\\ownCloud\ -\ debby@ropegdrive3\.kemenag\.go\.id\\Source\ Code\\simhukdis\\SIMHUKDIS\\obj\\Release\\Package\\PackageTmp\\bin\\Release\\Publish\\Web\.config$" match="/configuration/connectionStrings/add[@name='DBCS']/@connectionString" />
-    <parameterEntry kind="XmlFile" scope="C:\\Users\\User\\ownCloud\ -\ debby@ropegdrive3\.kemenag\.go\.id\\Source\ Code\\simhukdis\\SIMHUKDIS\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='DBCS']/@connectionString" />
+  <parameter name="dbHukdis-Web.config Connection String" description="dbHukdis Connection String used in web.config by the application to access the database." defaultValue="Data Source=localhost;Initial Catalog=simhukdis;User ID=root;Password=;Convert Zero Datetime=True;" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\User\\ownCloud\ -\ debby@ropegdrive3\.kemenag\.go\.id\\Source\ Code\\simhukdis\\SIMHUKDIS\\obj\\Release\\Package\\PackageTmp\\bin\\Release\\Publish\\Web\.config$" match="/configuration/connectionStrings/add[@name='dbHukdis']/@connectionString" />
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\User\\ownCloud\ -\ debby@ropegdrive3\.kemenag\.go\.id\\Source\ Code\\simhukdis\\SIMHUKDIS\\obj\\Release\\Package\\PackageTmp\\Web\.config$" match="/configuration/connectionStrings/add[@name='dbHukdis']/@connectionString" />
   </parameter>
 </parameters>

@@ -153,47 +153,54 @@
                 </div>
                 <div class="form-group row">
                     <div class="col">
-                        <label class="control-label">C. TERBUKTI MELAKUKAN PELANGGARAN</label>
+                        <label class="control-label">C. PELANGGARAN</label>
                         @Html.TextAreaFor(model => model.PelanggaranDisiplin, new { @type = "text", @id = "PelanggaranDisiplin", @class = "form-control", required = "required", rows = 5 })
                         @Html.ValidationMessageFor(model => model.PelanggaranDisiplin, "", new { @class = "text-danger" })
                     </div>
                 </div>
+                <div class="form-group row">
+                    <div class="col">
+                        <label class="control-label">D. PASAL PELANGGARAN</label>
+                        @Html.TextAreaFor(model => model.PasalPelanggaran, new { @type = "text", @id = "PasalPelanggaran", @class = "form-control", required = "required", rows = 2 })
+                        @Html.ValidationMessageFor(model => model.PasalPelanggaran, "", new { @class = "text-danger" })
+                    </div>
+                </div>
                 @*<div class="form-group row">
                     <div class="col">
-                        <label class="control-label">D. TERBUKTI MELANGGAR PASAL</label>
-                        @Html.TextAreaFor(model => model.PasalPelanggaran, new { @type = "text", @id = "PasalPelanggaran", @class = "form-control", required = "required", rows = 5 })
-                        @Html.ValidationMessageFor(model => model.PasalPelanggaran, "", new { @class = "text-danger" })
+                        <label class="control-label">E. TMT SK</label>
+                        @Html.TextBoxFor(model => model.TMTDate, "", new { @type = "text", @id = "Tanggal_Sidang_DPK", @class = "form-control", required = "required" })
+                        @Html.ValidationMessage("Tanggal_Sidang_DPK", "", new { @class = "text-danger" })
                     </div>
                 </div>*@
                 <div class="form-group row">
                     <div class="col">
-                        <label class="control-label">D. KEPUTUSAN</label>
+                        <label class="control-label">E. KEPUTUSAN</label>
                         @Html.DropDownListFor(model => model.KeputusanSidang, ViewBag.Hukdis as SelectList, new { @class = "mdb-select form-control", required = "required", @id = "KeputusanSidang", rows = 5 })
                         @Html.ValidationMessageFor(model => model.KeputusanSidang, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 <div class="form-group row">
                     <div class="col">
-                        <label class="control-label">E. CATATAN SIDANG</label>
+                        <label class="control-label">F. CATATAN SIDANG</label>
                         @*<textarea class="form-control" id="Catatan_Sidang" rows="5" name="Catatan_Sidang"></textarea>*@
                         @Html.TextAreaFor(model => model.Catatan_Sidang, new { @type = "text", @id = "Catatan_Sidang", @class = "form-control", @readonly = true, rows = 5 })
                         @Html.ValidationMessageFor(model => model.Catatan_Sidang, "", new { @class = "text-danger" })
                     </div>
                 </div>
                 @*<div class="form-group row">
-                    <div class="col">
-                        <label class="control-label">G. MENGINGAT</label>
-                        @Html.TextAreaFor(model => model.Mengingat, new { @class = "mdb-select form-control", required = "required", @id = "Mengingat", rows = 10 })
-                        @Html.ValidationMessageFor(model => model.Mengingat, "", new { @class = "text-danger" })
-                    </div>
-                </div>*@
-                @*<div class="form-group row" style="display:none;">
+            <div class="col">
+                <label class="control-label">G. MENGINGAT</label>
+                @Html.TextAreaFor(model => model.Mengingat, new { @class = "mdb-select form-control", required = "required", @id = "Mengingat", rows = 10 })
+                @Html.ValidationMessageFor(model => model.Mengingat, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+                <div class="form-group row" style="display:none;">
                     <div class="col">
                         <label class="control-label">H. TEMBUSAN</label>
                         @Html.TextAreaFor(model => model.Tembusan, new { @class = "mdb-select form-control", required = "required", @id = "Tembusan", rows = 10 })
                         @Html.ValidationMessageFor(model => model.Tembusan, "", new { @class = "text-danger" })
                     </div>
-                </div>*@
+                </div>
             </form>
             <div class="form-group row">
                 <div class="col">

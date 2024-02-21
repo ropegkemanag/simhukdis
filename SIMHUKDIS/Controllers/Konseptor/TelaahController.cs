@@ -24,7 +24,7 @@ namespace SIMHUKDIS.Controllers
         string Username = "agus@kemenag.go.id";
         string Password = "12345678";
         string baseAddress = "https://api.kemenag.go.id/v1/";
-        string strTokenWA = "vhTYPWC5jyz72sK4VDcjR2re7xPNYnEa516ysMJlpUlKvMgTKNHvdSW9wUDlnTay";
+        string strTokenWA = "oaRYeMTcOSI4SM81dsSaos6oSPIltIwxJhybwi2Zd5d26RdmqGghELJQgnDn32K1";
         string baseAddressWA = "https://kudus.wablas.com/";
         public ActionResult Index()
         {
@@ -608,6 +608,10 @@ namespace SIMHUKDIS.Controllers
             string GetDateTime = DateTime.Now.ToString("ddMMyyyy_hhmmss");
             string strFileNameDoc = "Telaah a.n "+ NAMA_LENGKAP + " NIP " + NIP + "_" + GetDateTime+ ".docx";
             string strFileNamePDF = "Telaah a.n " + NAMA_LENGKAP + " NIP " + NIP + "_" + GetDateTime + ".pdf";
+
+            strFileNameDoc = strFileNameDoc.Replace(" ", "_");
+            strFileNamePDF = strFileNamePDF.Replace(" ", "_");
+
             string strMsg = "";
             try
             {
@@ -712,6 +716,10 @@ namespace SIMHUKDIS.Controllers
             string GetDateTime = DateTime.Now.ToString("ddMMyyyy_hhmmss");
             string strFileNameDoc = "Telaah a.n " + NAMA_LENGKAP + " NIP " + NIP + "_" + GetDateTime + ".docx";
             string strFileNamePDF = "Telaah a.n " + NAMA_LENGKAP + " NIP " + NIP + "_" + GetDateTime + ".PDF";
+
+            strFileNameDoc = strFileNameDoc.Replace(" ", "_");
+            strFileNamePDF = strFileNamePDF.Replace(" ", "_");
+
             string strMsg = "";
             try
             {
@@ -1056,7 +1064,7 @@ namespace SIMHUKDIS.Controllers
 
                     
                     HttpResponseMessage resp = client.GetAsync(baseAddressWA + "api/send-message?source=postman&phone=" 
-                        + WebUtility.UrlEncode(Msg.PhoneNo) + "&message=" + WebUtility.UrlEncode(Msg.Pesan)
+                        + WebUtility.UrlEncode(Msg.PhoneNo) + "&message=" + Msg.Pesan
                         + "&token=" + WebUtility.UrlEncode(strTokenWA)).GetAwaiter().GetResult();
                     if (resp.IsSuccessStatusCode)
                     {

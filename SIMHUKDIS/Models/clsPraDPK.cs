@@ -62,7 +62,7 @@ namespace SIMHUKDIS.Models
         {
             int a = 0;
             DataTable table = new DataTable();
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             List<clsPraDPK> DP = new List<clsPraDPK>();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -89,7 +89,7 @@ namespace SIMHUKDIS.Models
         public List<clsPraDPK> ListAll()
         {
             int a = 0;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             List<clsPraDPK> DP = new List<clsPraDPK>();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -141,7 +141,7 @@ namespace SIMHUKDIS.Models
         public List<clsPraDPK> ListFilter(string TanggalSidang)
         {
             int a = 0;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             List<clsPraDPK> DP = new List<clsPraDPK>();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -194,7 +194,7 @@ namespace SIMHUKDIS.Models
         public clsPraDPK ListByID(string id, string nip)
         {
             int a = 0;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             clsPraDPK DP = new clsPraDPK();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -230,7 +230,7 @@ namespace SIMHUKDIS.Models
         }
         public string GetPejabatPenandatangan()
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             HasilSidangDtl data = new HasilSidangDtl();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -249,7 +249,7 @@ namespace SIMHUKDIS.Models
         }
         public clsPejabat GetKaropegSel(string ID)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             clsPejabat x = new clsPejabat();
             HasilSidangDtl data = new HasilSidangDtl();
             using (SqlConnection con = new SqlConnection(constr))
@@ -275,7 +275,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "sp_PraDPK_Ins";
@@ -303,7 +303,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "SIMHUKDIS.sp_PraDPK_Upd";
@@ -334,7 +334,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "SIMHUKDIS.sp_PraDPK_Upd_Status";
@@ -358,7 +358,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "SIMHUKDIS.sp_PraDPK_Upd_Status2";
@@ -378,7 +378,7 @@ namespace SIMHUKDIS.Models
         }
         public bool GetDataExist(string ID,string NIP)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 con.Open();
@@ -402,7 +402,7 @@ namespace SIMHUKDIS.Models
         public List<clsJenisPelanggaran> GetListJenisPelanggaran()
         {
             List<clsJenisPelanggaran> JP = new List<clsJenisPelanggaran>();
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_JenisPelanggaran_Sel", con);

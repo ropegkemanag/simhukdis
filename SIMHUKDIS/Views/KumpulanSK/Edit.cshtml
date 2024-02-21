@@ -132,10 +132,10 @@
             var file1 = $(this).get(0).files[i].size;
             if (file1) {
                 var file_size = $(this).get(0).files[i].size;
-                if (file_size > 1000000) {
+                if (file_size > 5500000) {
                     Swal.fire({
                         icon: 'error',
-                        title: "File lebih dari 1MB!",
+                        title: "File lebih dari 5MB!",
                         showConfirmButton: false,
                         timer: 3000
                     })

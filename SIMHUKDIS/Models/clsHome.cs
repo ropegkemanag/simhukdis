@@ -49,7 +49,7 @@ namespace SIMHUKDIS.Models
         public List<clsHome> GetDashboard()
         {
             List<clsHome> JP = new List<clsHome>();
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Grafik_Dashboard", con);
@@ -71,7 +71,7 @@ namespace SIMHUKDIS.Models
         {
             get
             {
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 List<DashboardChart> Disp = new List<DashboardChart>();
                 using (SqlConnection con = new SqlConnection(constr))
                 {
@@ -98,7 +98,7 @@ namespace SIMHUKDIS.Models
         public clsHome GetNilaiGrafik(string Satker, string GroupUser)
         {
             int a = 0;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             clsHome DP = new clsHome();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -119,7 +119,7 @@ namespace SIMHUKDIS.Models
         }
         public int GetGrafik1 (string UserGroup, string SatuanKerja, string UserID)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             int a = 0;
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -140,7 +140,7 @@ namespace SIMHUKDIS.Models
         }
         public int GetGrafik2(string UserGroup, string SatuanKerja, string UserID)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             int a = 0;
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -160,7 +160,7 @@ namespace SIMHUKDIS.Models
         }
         public int GetGrafik3(string UserGroup, string SatuanKerja, string UserID)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             int a = 0;
             using (SqlConnection con = new SqlConnection(constr))
             {

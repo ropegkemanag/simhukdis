@@ -18,7 +18,7 @@ namespace SIMHUKDIS.Controllers
     public class UsulHukdisController : Controller
     {
         clsSuratMasukDB db = new clsSuratMasukDB();
-        string strToken = "vhTYPWC5jyz72sK4VDcjR2re7xPNYnEa516ysMJlpUlKvMgTKNHvdSW9wUDlnTay";
+        string strToken = "oaRYeMTcOSI4SM81dsSaos6oSPIltIwxJhybwi2Zd5d26RdmqGghELJQgnDn32K1";
         string baseAddress = "https://kudus.wablas.com/";
         // GET: SuratMasuk
         public ActionResult Index(int Status, string DateFrom, string DateTo)
@@ -734,7 +734,7 @@ namespace SIMHUKDIS.Controllers
                 a.ID = ID;
                 a.UpdatUser = UserID;
                 db.Proses(a);
-                SendWaBlas(ID);
+                SendWaBlas(Convert.ToInt16(ID));
                 strMsg = "Success";
                 return Json(strMsg, JsonRequestBehavior.AllowGet);
             }
@@ -761,7 +761,7 @@ namespace SIMHUKDIS.Controllers
                     client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                    HttpResponseMessage resp = client.GetAsync(baseAddress + "api/send-message?source=postman&phone=" 
-                       + WebUtility.UrlEncode(Msg.PhoneNo) + "&message=" + WebUtility.UrlEncode(Msg.Pesan)
+                       + WebUtility.UrlEncode(Msg.PhoneNo) + "&message=" + Msg.Pesan
                         + "&token=" + WebUtility.UrlEncode(strToken)).GetAwaiter().GetResult();
                     if (resp.IsSuccessStatusCode)
                     {
@@ -837,6 +837,10 @@ namespace SIMHUKDIS.Controllers
             string GetDateTime = DateTime.Now.ToString("ddMMyyyy_hhmmss");
             string strFileNameDoc = "Detail_Surat_Masuk_" + GetDateTime + ".docx";
             string strFileNamePDF = "Detail_Surat_Masuk_" + GetDateTime + ".pdf";
+
+            strFileNameDoc = strFileNameDoc.Replace(" ", "_");
+            strFileNamePDF = strFileNamePDF.Replace(" ", "_");
+
             string strMsg = "";
             try
             {

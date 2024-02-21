@@ -142,7 +142,7 @@ namespace SIMHUKDIS.Models
     {
         public List<clsSuratMasuk> TelaahList(string UserID)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             List<clsSuratMasuk> SuratMasuks = new List<clsSuratMasuk>();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -213,7 +213,7 @@ namespace SIMHUKDIS.Models
         public List<clsTelaah> ListAll(int ID)
         {
             List<clsTelaah> lst = new List<clsTelaah>();
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 con.Open();
@@ -245,7 +245,7 @@ namespace SIMHUKDIS.Models
         public List<clsTelaah> ListAtasan()
         {
             List<clsTelaah> lst = new List<clsTelaah>();
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 con.Open();
@@ -277,7 +277,7 @@ namespace SIMHUKDIS.Models
         public List<clsTelaah> ListByNIP(int ID, string NIP)
         {
             List<clsTelaah> lst = new List<clsTelaah>();
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 con.Open();
@@ -311,7 +311,7 @@ namespace SIMHUKDIS.Models
         public int Insert(clsTelaah t)
         {
             int i;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("sp_Telaah_Ins", con);
@@ -328,9 +328,6 @@ namespace SIMHUKDIS.Models
                 cmd.Parameters.AddWithValue("iFullname", t.NAMA_LENGKAP);
                 cmd.Parameters.AddWithValue("iTelaahNo", t.TelaahNo);
 
-                DateTime dParse = DateTime.ParseExact(t.Tanggal_Telaah, "dd MMMM yyyy", null); //Convert.ToDateTime(Data.EstimateDate); 
-                t.Tanggal_Telaah = dParse.ToString();
-
                 cmd.Parameters.AddWithValue("iTanggalTelaah", t.Tanggal_Telaah);
 
                 con.Open();
@@ -341,7 +338,7 @@ namespace SIMHUKDIS.Models
         public int InsertTelaahNo(int No, int Bulan, int Tahun)
         {
             int i;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_TelaahNo_Insert", con);
@@ -357,7 +354,7 @@ namespace SIMHUKDIS.Models
         public int Update(clsTelaah t)
         {
             int i;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Telaah_Upd", con);
@@ -386,7 +383,7 @@ namespace SIMHUKDIS.Models
         public int UpdateStatus(int ID, string NIP,string CreatedUser)
         {
             int i;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Telaah_UpdStatus", con);
@@ -402,7 +399,7 @@ namespace SIMHUKDIS.Models
         public int UpdateTelaahStatus(clsTelaah t)
         {
             int i;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Telaah_UpdTelaahStatus", con);
@@ -422,7 +419,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "SIMHUKDIS.sp_Telaah_Del";
@@ -443,7 +440,7 @@ namespace SIMHUKDIS.Models
         }
         public suratmasuk GetList(int ID)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             suratmasuk data = new suratmasuk();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -512,7 +509,7 @@ namespace SIMHUKDIS.Models
             get
             {
 
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 List<clsSuratMasuk> SuratMasuks = new List<clsSuratMasuk>();
                 using (SqlConnection con = new SqlConnection(constr))
                 {
@@ -585,7 +582,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 List<clsSuratMasuk> sm = new List<clsSuratMasuk>();
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string q = "SIMHUKDIS.sp_SuratMasuk_ByID_Sel";
@@ -656,7 +653,7 @@ namespace SIMHUKDIS.Models
         public int GetLastTelaahNo (int Bulan, int Tahun)
         {
             int TelaahNo = 0;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_TelaahNo_GetNo", con);
@@ -682,7 +679,7 @@ namespace SIMHUKDIS.Models
         public int Verifikasi(clsTelaahVerifikasi t)
         {
             int i;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("sp_Telaah_Verifikasi", con);

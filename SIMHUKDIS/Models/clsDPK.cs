@@ -59,7 +59,7 @@ namespace SIMHUKDIS.Models
         public List<clsDPK> ListAll()
         {
             int a = 0;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             List<clsDPK> DP = new List<clsDPK>();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -116,7 +116,7 @@ namespace SIMHUKDIS.Models
         public List<clsDPK> ListFilter(string TanggalSidang)
         {
             int a = 0;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             List<clsDPK> DP = new List<clsDPK>();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -170,7 +170,7 @@ namespace SIMHUKDIS.Models
         }
         public bool GetDataExist(string ID, string NIP)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 con.Open();
@@ -196,7 +196,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "SIMHUKDIS.sp_DPK_Upd_Status";
@@ -220,7 +220,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "SIMHUKDIS.sp_DPK_Upd_Status2";
@@ -243,7 +243,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "sp_DPK_Ins";
@@ -278,7 +278,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "SIMHUKDIS.sp_DPK_Upd";
@@ -312,7 +312,7 @@ namespace SIMHUKDIS.Models
         public clsDPK ListByID(string ID, string NIP)
         {
             int a = 0;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             clsDPK DP = new clsDPK();
             using (SqlConnection con = new SqlConnection(constr))
             {

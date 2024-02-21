@@ -16,60 +16,72 @@
         <table class="table data-table-export" id="TableID">
             <thead class="table table-primary">
                 <tr>
-                    <th style="white-space: nowrap; text-align: center;">
+                    <th style="white-space: nowrap; text-align: center; width:5%;">
                         No Surat
                     </th>
-                    <th style="white-space: nowrap; text-align: center;">
+                    <th style="white-space: nowrap; text-align: center;width:5%;">
                         Perihal
                     </th>
-                    <th style="white-space: nowrap; text-align: center;">
+                    <th style="white-space: nowrap; text-align: center;width:5%;">
+                        Satuan Kerja
+                    </th>
+                    <th style="white-space: nowrap; text-align: center;width:5%;">
                         NIP
                     </th>
-                    <th style="white-space: nowrap; text-align: center;">
+                    <th style="white-space: nowrap; text-align: center;width:5%;">
                         Tanggal Input
                     </th>
-                    <th style="white-space: nowrap; text-align: center;">
+                    <th style="white-space: nowrap; text-align: center;width:5%;">
+                        Konseptor
+                    </th>
+                    <th style="white-space: nowrap; text-align: center;width:5%;">
                         Surat Masuk
                     </th>
 
-                    <th style="white-space: nowrap; text-align: center;">
+                    <th style="white-space: nowrap; text-align: center;width:5%;">
                         Disposisi Kepala Biro
                     </th>
-                    <th style="white-space: nowrap; text-align: center;">
+                    <th style="white-space: nowrap; text-align: center;width:5%;">
                         Disposisi Koordinator
                     </th>
-                    <th style="white-space: nowrap; text-align: center;">
+                    <th style="white-space: nowrap; text-align: center;width:5%;">
                         Disposisi Sub Koordinator
                     </th>
-                    <th style="white-space: nowrap; text-align: center;">
+                    <th style="white-space: nowrap; text-align: center;width:5%;">
                         Telaah
                     </th>
-                    <th style="white-space: nowrap; text-align: center;">
+                    <th style="white-space: nowrap; text-align: center;width:5%;">
                         Pra DPK
                     </th>
-                    <th style="white-space: nowrap; text-align: center;">
+                    <th style="white-space: nowrap; text-align: center;width:5%;">
                         Sidang DPK
                     </th>
-                    <th style="white-space: nowrap; text-align: center;">
+                    <th style="white-space: nowrap; text-align: center;width:5%;">
                         Hasil Sidang / Surat Keputusan
                     </th>
-                    <th style="white-space: nowrap; text-align: center;">
+                    <th style="white-space: nowrap; text-align: center;width:5%;">
+                        Tgl Kirim ke Menag
+                    </th>
+                    <th style="white-space: nowrap; text-align: center;width:5%;">
                         Penyampaian Hasil Sidang
                     </th>
                 </tr>
             </thead>
 
-            <tbody class="widget-icon">
+            <tbody>
                 @foreach (var r in Model)
                 {
                     if (@r.Status == "0")
                     {
                 <tr>
                     <td>
-                        @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
+                        @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID, r.NIP })
                     </td>
                     <td>
                         @r.Perihal
+                    </td>
+                    <td>
+                        @r.KETERANGAN_SATUAN_KERJA
                     </td>
                     <td>
                         @r.NIP
@@ -77,10 +89,16 @@
                     <td>
                         @r.Tanggal_Input
                     </td>
+                    <td>
+                        @r.Konseptor
+                    </td>
                     <td style="text-align:center;color:red;" class="icon">
                         <i class="icon-copy ion-close-round"></i>
                     </td>
 
+                    <td style="text-align:center;color:red;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
+                    </td>
                     <td style="text-align:center;color:red;" class="icon">
                         <i class="icon-copy ion-close-round"></i>
                     </td>
@@ -111,10 +129,13 @@
                     {
                 <tr>
                     <td>
-                        @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
+                        @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID, r.NIP })
                     </td>
                     <td>
                         @r.Perihal
+                    </td>
+                    <td>
+                        @r.KETERANGAN_SATUAN_KERJA
                     </td>
                     <td>
                         @r.NIP
@@ -122,7 +143,10 @@
                     <td>
                         @r.Tanggal_Input
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td>
+                        @r.Konseptor
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.TanggalSurat
@@ -132,6 +156,9 @@
                         <i class="icon-copy ion-close-round"></i>
                         <br /><label></label>
                         @r.DisposisiDate1
+                    </td>
+                    <td style="text-align:center;color:red;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
                     </td>
                     <td style="text-align:center;color:red;" class="icon">
                         <i class="icon-copy ion-close-round"></i>
@@ -160,10 +187,13 @@
                     {
                 <tr>
                     <td>
-                        @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
+                        @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID, r.NIP })
                     </td>
                     <td>
                         @r.Perihal
+                    </td>
+                    <td>
+                        @r.KETERANGAN_SATUAN_KERJA
                     </td>
                     <td>
                         @r.NIP
@@ -171,16 +201,20 @@
                     <td>
                         @r.Tanggal_Input
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td>@r.Konseptor</td>
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.TanggalSurat
                     </td>
 
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.DisposisiDate1
+                    </td>
+                    <td style="text-align:center;color:red;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
                     </td>
                     <td style="text-align:center;color:red;" class="icon">
                         <i class="icon-copy ion-close-round"></i>
@@ -209,10 +243,13 @@
                     {
                 <tr>
                     <td>
-                        @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
+                        @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID, r.NIP })
                     </td>
                     <td>
                         @r.Perihal
+                    </td>
+                    <td>
+                        @r.KETERANGAN_SATUAN_KERJA
                     </td>
                     <td>
                         @r.NIP
@@ -220,21 +257,25 @@
                     <td>
                         @r.Tanggal_Input
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td>@r.Konseptor</td>
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.TanggalSurat
                     </td>
 
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.DisposisiDate1
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.DisposisiDate2
+                    </td>
+                    <td style="text-align:center;color:red;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
                     </td>
                     <td style="text-align:center;color:red;" class="icon">
                         <i class="icon-copy ion-close-round"></i>
@@ -260,10 +301,13 @@
                     {
                 <tr>
                     <td>
-                        @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
+                        @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID, r.NIP })
                     </td>
                     <td>
                         @r.Perihal
+                    </td>
+                    <td>
+                        @r.KETERANGAN_SATUAN_KERJA
                     </td>
                     <td>
                         @r.NIP
@@ -271,31 +315,36 @@
                     <td>
                         @r.Tanggal_Input
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td>@r.Konseptor</td>
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.TanggalSurat
                     </td>
 
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.DisposisiDate1
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.DisposisiDate2
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.DisposisiDate3
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.Tanggal_Telaah
+                        @r.TelaahNo
+                    </td>
+                    <td style="text-align:center;color:red;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
                     </td>
                     <td style="text-align:center;color:red;" class="icon">
                         <i class="icon-copy ion-close-round"></i>
@@ -315,10 +364,13 @@
                     {
                 <tr>
                     <td>
-                        @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
+                        @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID, r.NIP })
                     </td>
                     <td>
                         @r.Perihal
+                    </td>
+                    <td>
+                        @r.KETERANGAN_SATUAN_KERJA
                     </td>
                     <td>
                         @r.NIP
@@ -326,31 +378,36 @@
                     <td>
                         @r.Tanggal_Input
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td>@r.Konseptor</td>
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.TanggalSurat
                     </td>
 
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.DisposisiDate1
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.DisposisiDate2
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.DisposisiDate3
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.Tanggal_Telaah
+                        @r.TelaahNo
+                    </td>
+                    <td style="text-align:center;color:red;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
                     </td>
                     <td style="text-align:center;color:red;" class="icon">
                         <i class="icon-copy ion-close-round"></i>
@@ -368,189 +425,15 @@
                     }
                     else if (@r.Status == "6")
                     {
-                        <tr>
-                            <td>
-                                @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
-                            </td>
-                            <td>
-                                @r.Perihal
-                            </td>
-                            <td>
-                                @r.NIP
-                            </td>
-                            <td>
-                                @r.Tanggal_Input
-                            </td>
-                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
-                                <i class="icon-copy ion-checkmark-round"></i>
-                                <br /><label></label>
-                                @r.TanggalSurat
-                            </td>
-
-                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
-                                <i class="icon-copy ion-checkmark-round"></i>
-                                <br /><label></label>
-                                @r.DisposisiDate1
-                            </td>
-                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
-                                <i class="icon-copy ion-checkmark-round"></i>
-                                <br /><label></label>
-                                @r.DisposisiDate2
-                            </td>
-                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
-                                <i class="icon-copy ion-checkmark-round"></i>
-                                <br /><label></label>
-                                @r.DisposisiDate3
-                            </td>
-                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
-                                <i class="icon-copy ion-checkmark-round"></i>
-                                <br /><label></label>
-                                @r.Tanggal_Telaah
-                            </td>
-                            <td style="text-align:center;color:mediumspringgreen;" class="icon">
-                                <i class="icon-copy ion-checkmark-round"></i>
-                                <br /><label></label>
-                                @r.Tanggal_PraDPK
-                            </td>
-                            <td style="text-align:center;color:red;" class="icon">
-                                <i class="icon-copy ion-close-round"></i>
-                            </td>
-                            <td style="text-align:center;color:red;" class="icon">
-                                <i class="icon-copy ion-close-round"></i>
-                            </td>
-                            <td style="text-align:center;color:red;" class="icon">
-                                <i class="icon-copy ion-close-round"></i>
-                            </td>
-                        </tr>
-                    }
-                    else if (@r.Status == "7")
-                    {
-                        if (r.Tanggal_Telaah == "01 January 1900")
-                        {
-                            <tr>
-                                <td>
-                                    @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
-                                </td>
-                                <td>
-                                    @r.Perihal
-                                </td>
-                                <td>
-                                    @r.NIP
-                                </td>
-                                <td>
-                                    @r.Tanggal_Input
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;" class="icon">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.TanggalSurat
-                                </td>
-
-                                <td style="text-align:center;color:mediumspringgreen;" class="icon">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.DisposisiDate1
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;" class="icon">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.DisposisiDate2
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;" class="icon">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.DisposisiDate3
-                                </td>
-                                <td style="text-align:center;color:red;" class="icon">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;" class="icon">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;" class="icon">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;" class="icon">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.Tanggal_SK
-                                </td>
-                                <td style="text-align:center;color:red;" class="icon">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                            </tr>
-                        }
-                        else
-                        {
-                            <tr>
-                                <td>
-                                    @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
-                                </td>
-                                <td>
-                                    @r.Perihal
-                                </td>
-                                <td>
-                                    @r.NIP
-                                </td>
-                                <td>
-                                    @r.Tanggal_Input
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;" class="icon">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.TanggalSurat
-                                </td>
-
-                                <td style="text-align:center;color:mediumspringgreen;" class="icon">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.DisposisiDate1
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;" class="icon">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.DisposisiDate2
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;" class="icon">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.DisposisiDate3
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;" class="icon">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.Tanggal_Telaah
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;" class="icon">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.Tanggal_PraDPK
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;" class="icon">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.Tanggal_DPK
-                                </td>
-                                <td style="text-align:center;color:red;" class="icon">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.Tanggal_SK
-                                </td>
-                                <td style="text-align:center;color:red;" class="icon">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                            </tr>
-                        }
-
-                    }
-                    else if (@r.Status == "8")
-                    {
                 <tr>
                     <td>
-                        @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
+                        @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID, r.NIP })
                     </td>
                     <td>
                         @r.Perihal
+                    </td>
+                    <td>
+                        @r.KETERANGAN_SATUAN_KERJA
                     </td>
                     <td>
                         @r.NIP
@@ -558,44 +441,249 @@
                     <td>
                         @r.Tanggal_Input
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td>@r.Konseptor</td>
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.TanggalSurat
                     </td>
 
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.DisposisiDate1
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.DisposisiDate2
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.DisposisiDate3
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.Tanggal_Telaah
+                        @r.TelaahNo
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.Tanggal_PraDPK
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td style="text-align:center;color:red;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
+                    </td>
+                    <td style="text-align:center;color:red;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
+                    </td>
+                    <td style="text-align:center;color:red;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
+                    </td>
+                    <td style="text-align:center;color:red;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
+                    </td>
+                </tr>
+                    }
+                    else if (@r.Status == "7")
+                    {
+                        if (r.Tanggal_Telaah == "01 January 1900")
+                        {
+                <tr>
+                    <td>
+                        @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID, r.NIP })
+                    </td>
+                    <td>
+                        @r.Perihal
+                    </td>
+                    <td>
+                        @r.KETERANGAN_SATUAN_KERJA
+                    </td>
+                    <td>
+                        @r.NIP
+                    </td>
+                    <td>
+                        @r.Tanggal_Input
+                    </td>
+                    <td>@r.Konseptor</td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.TanggalSurat
+                    </td>
+
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.DisposisiDate1
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.DisposisiDate2
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.DisposisiDate3
+                    </td>
+                    <td style="text-align:center;color:red;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
+                    </td>
+                    <td style="text-align:center;color:red;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
+                    </td>
+                    <td style="text-align:center;color:red;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
+                    </td>
+                    <td style="text-align:center;color:red;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.Tanggal_SK
+                    </td>
+                    <td style="text-align:center;color:red;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
+                    </td>
+                    <td style="text-align:center;color:red;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
+                    </td>
+                </tr>
+                        }
+                        else
+                        {
+                <tr>
+                    <td>
+                        @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID, r.NIP })
+                    </td>
+                    <td>
+                        @r.Perihal
+                    </td>
+                    <td>
+                        @r.KETERANGAN_SATUAN_KERJA
+                    </td>
+                    <td>
+                        @r.NIP
+                    </td>
+                    <td>
+                        @r.Tanggal_Input
+                    </td>
+                    <td>@r.Konseptor</td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.TanggalSurat
+                    </td>
+
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.DisposisiDate1
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.DisposisiDate2
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.DisposisiDate3
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.Tanggal_Telaah
+                        @r.TelaahNo
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.Tanggal_PraDPK
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.Tanggal_DPK
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td style="text-align:center;color:red;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.Tanggal_SK
+                    </td>
+                    <td style="text-align:center;color:red;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
+                    </td>
+                    <td style="text-align:center;color:red;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
+                    </td>
+                </tr>
+                        }
+
+                    }
+                    else if (@r.Status == "8")
+                    {
+                <tr>
+                    <td>
+                        @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID, r.NIP })
+                    </td>
+                    <td>
+                        @r.Perihal
+                    </td>
+                    <td>
+                        @r.KETERANGAN_SATUAN_KERJA
+                    </td>
+                    <td>
+                        @r.NIP
+                    </td>
+                    <td>
+                        @r.Tanggal_Input
+                    </td>
+                    <td>@r.Konseptor</td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.TanggalSurat
+                    </td>
+
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.DisposisiDate1
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.DisposisiDate2
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.DisposisiDate3
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.Tanggal_Telaah
+                        @r.TelaahNo
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.Tanggal_PraDPK
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.Tanggal_DPK
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                    </td>
+                    <td style="text-align:center;color:red;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
                     </td>
                     <td style="text-align:center;color:red;" class="icon">
                         <i class="icon-copy ion-close-round"></i>
@@ -606,10 +694,13 @@
                     {
                 <tr>
                     <td>
-                        @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID })
+                        @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID, r.NIP })
                     </td>
                     <td>
                         @r.Perihal
+                    </td>
+                    <td>
+                        @r.KETERANGAN_SATUAN_KERJA
                     </td>
                     <td>
                         @r.NIP
@@ -617,51 +708,333 @@
                     <td>
                         @r.Tanggal_Input
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td>@r.Konseptor</td>
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.TanggalSurat
                     </td>
 
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.DisposisiDate1
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.DisposisiDate2
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.DisposisiDate3
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.Tanggal_Telaah
+                        @r.TelaahNo
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.Tanggal_PraDPK
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                         <br /><label></label>
                         @r.Tanggal_DPK
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
                     </td>
-                    <td style="text-align:center;color:mediumspringgreen;" class="icon">
+                    <td style="text-align:center;color:blue;" class="icon">
                         <i class="icon-copy ion-checkmark-round"></i>
+                    </td>
+                    <td style="text-align:center;color:red;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
                     </td>
                 </tr>
                     }
+                    else if (@r.Status == "88")
+                    {
+                        if (r.Tanggal_Telaah == "01 January 1900")
+                        {
+                <tr>
+                    <td>
+                        @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID, r.NIP })
+                    </td>
+                    <td>
+                        @r.Perihal
+                    </td>
+                    <td>
+                        @r.KETERANGAN_SATUAN_KERJA
+                    </td>
+                    <td>
+                        @r.NIP
+                    </td>
+                    <td>
+                        @r.Tanggal_Input
+                    </td>
+                    <td>@r.Konseptor</td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.TanggalSurat
+                    </td>
 
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.DisposisiDate1
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.DisposisiDate2
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.DisposisiDate3
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.Tanggal_SendtoMenag
+                    </td>
+
+                    <td style="text-align:center;color:red;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
+                    </td>
+                </tr>
+                        }
+                        else
+                        {
+                <tr>
+                    <td>
+                        @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID, r.NIP })
+                    </td>
+                    <td>
+                        @r.Perihal
+                    </td>
+                    <td>
+                        @r.KETERANGAN_SATUAN_KERJA
+                    </td>
+                    <td>
+                        @r.NIP
+                    </td>
+                    <td>
+                        @r.Tanggal_Input
+                    </td>
+                    <td>@r.Konseptor</td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.TanggalSurat
+                    </td>
+
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.DisposisiDate1
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.DisposisiDate2
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.DisposisiDate3
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.Tanggal_Telaah
+                        @r.TelaahNo
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.Tanggal_PraDPK
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.Tanggal_DPK
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.Tanggal_SendtoMenag
+                    </td>
+
+                    <td style="text-align:center;color:red;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
+                    </td>
+                </tr>
+                        }
+
+
+                    }
+                    else if (@r.Status == "99")
+                    {
+                        if (r.Tanggal_Telaah == "01 January 1900")
+                        {
+                <tr>
+                    <td>
+                        @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID, r.NIP })
+                    </td>
+                    <td>
+                        @r.Perihal
+                    </td>
+                    <td>
+                        @r.KETERANGAN_SATUAN_KERJA
+                    </td>
+                    <td>
+                        @r.NIP
+                    </td>
+                    <td>
+                        @r.Tanggal_Input
+                    </td>
+                    <td>@r.Konseptor</td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.TanggalSurat
+                    </td>
+
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.DisposisiDate1
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.DisposisiDate2
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.DisposisiDate3
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-close-round"></i>
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.Tanggal_SendtoMenag
+                    </td>
+
+                    <td style="text-align:center;color:red;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.Tanggal_SendToSatker
+                    </td>
+                </tr>
+                        }
+                        else
+                        {
+                <tr>
+                    <td>
+                        @Html.ActionLink(r.NoSurat, "Details", new { ID = r.ID, r.NIP })
+                    </td>
+                    <td>
+                        @r.Perihal
+                    </td>
+                    <td>
+                        @r.KETERANGAN_SATUAN_KERJA
+                    </td>
+                    <td>
+                        @r.NIP
+                    </td>
+                    <td>
+                        @r.Tanggal_Input
+                    </td>
+                    <td>@r.Konseptor</td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.TanggalSurat
+                    </td>
+
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.DisposisiDate1
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.DisposisiDate2
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.DisposisiDate3
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.Tanggal_Telaah
+                        @r.TelaahNo
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.Tanggal_PraDPK
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.Tanggal_DPK
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                    </td>
+                    <td style="text-align:center;color:blue;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.Tanggal_SendtoMenag
+                    </td>
+
+                    <td style="text-align:center;color:red;" class="icon">
+                        <i class="icon-copy ion-checkmark-round"></i>
+                        <br /><label></label>
+                        @r.Tanggal_SendToSatker
+                    </td>
+                </tr>
+                        }
+                    }
                 }
             </tbody>
         </table>

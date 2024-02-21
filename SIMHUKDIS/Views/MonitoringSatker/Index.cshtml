@@ -26,17 +26,20 @@
                             Perihal
                         </th>
                         <th style="white-space: nowrap; text-align: center;">
+                            Tanggal Input/Submit
+                        </th>
+                        <th style="white-space: nowrap; text-align: center;">
                             Surat Masuk
                         </th>
                         @*<th style="white-space: nowrap; text-align: center;">
-                            Disposisi Kepala Biro
-                        </th>
-                        <th style="white-space: nowrap; text-align: center;">
-                            Disposisi Koordinator
-                        </th>
-                        <th style="white-space: nowrap; text-align: center;">
-                            Disposisi Sub Koordinator
-                        </th>*@
+            Disposisi Kepala Biro
+        </th>
+        <th style="white-space: nowrap; text-align: center;">
+            Disposisi Koordinator
+        </th>
+        <th style="white-space: nowrap; text-align: center;">
+            Disposisi Sub Koordinator
+        </th>*@
                         <th style="white-space: nowrap; text-align: center;">
                             Telaah
                         </th>
@@ -61,533 +64,566 @@
 
                         if (@r.Status == "0")
                         {
-                            <tr class="table-bordered table-hover my-3">
-                                <td>
-                                    @r.NoSurat
-                                </td>
-                                <td>
-                                    @r.Perihal
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
+                    <tr class="table-bordered table-hover my-3">
+                        <td>
+                            @r.NoSurat
+                        </td>
+                        <td>
+                            @r.Perihal
+                        </td>
+                        <td>
+                            @r.Tanggal_Input
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
 
-                                @*<td style="text-align:center;color:red;">
-                        <i class="icon-copy ion-close-round"></i>
-                    </td>
-                    <td style="text-align:center;color:red;">
-                        <i class="icon-copy ion-close-round"></i>
-                    </td>
-                    <td style="text-align:center;color:red;">
-                        <i class="icon-copy ion-close-round"></i>
-                    </td>*@
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                            </tr>
+                        @*<td style="text-align:center;color:red;">
+            <i class="icon-copy ion-close-round"></i>
+        </td>
+        <td style="text-align:center;color:red;">
+            <i class="icon-copy ion-close-round"></i>
+        </td>
+        <td style="text-align:center;color:red;">
+            <i class="icon-copy ion-close-round"></i>
+        </td>*@
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                    </tr>
                         }
                         else if (@r.Status == "1")
                         {
-                            <tr class="table-bordered table-hover my-3">
-                                <td>
-                                    @r.NoSurat
-                                </td>
-                                <td>
-                                    @r.Perihal
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.TanggalSurat
-                                </td>
+                    <tr class="table-bordered table-hover my-3">
+                        <td>
+                            @r.NoSurat
+                        </td>
+                        <td>
+                            @r.Perihal
+                        </td>
+                        <td>
+                            @r.Tanggal_Input
+                        </td>
+                        <td style="text-align:center;color:mediumspringgreen;">
+                            <i class="icon-copy ion-checkmark-round"></i>
+                            <br /><label></label>
+                            @r.TanggalSurat
+                        </td>
 
-                                @*<td style="text-align:center;color:red;">
-                        <i class="icon-copy ion-close-round"></i>
-                        <br /><label ></label>
-                        @r.DisposisiDate1
-                    </td>
-                    <td style="text-align:center;color:red;">
-                        <i class="icon-copy ion-close-round"></i>
-                    </td>
-                    <td style="text-align:center;color:red;">
-                        <i class="icon-copy ion-close-round"></i>
-                    </td>*@
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                            </tr>
+                        @*<td style="text-align:center;color:red;">
+            <i class="icon-copy ion-close-round"></i>
+            <br /><label ></label>
+            @r.DisposisiDate1
+        </td>
+        <td style="text-align:center;color:red;">
+            <i class="icon-copy ion-close-round"></i>
+        </td>
+        <td style="text-align:center;color:red;">
+            <i class="icon-copy ion-close-round"></i>
+        </td>*@
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                    </tr>
                         }
                         else if (@r.Status == "2")
                         {
-                            <tr class="table-bordered table-hover my-3">
-                                <td>
-                                    @r.NoSurat
-                                </td>
-                                <td>
-                                    @r.Perihal
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.TanggalSurat
-                                </td>
+                    <tr class="table-bordered table-hover my-3">
+                        <td>
+                            @r.NoSurat
+                        </td>
+                        <td>
+                            @r.Perihal
+                        </td>
+                        <td>
+                            @r.Tanggal_Input
+                        </td>
+                        <td style="text-align:center;color:mediumspringgreen;">
+                            <i class="icon-copy ion-checkmark-round"></i>
+                            <br /><label></label>
+                            @r.TanggalSurat
+                        </td>
 
-                                @*<td style="text-align:center;color:mediumspringgreen;">
-                        <i class="icon-copy ion-checkmark-round"></i>
-                        <br /><label ></label>
-                        @r.DisposisiDate1
-                    </td>
-                    <td style="text-align:center;color:red;">
-                        <i class="icon-copy ion-close-round"></i>
-                    </td>
-                    <td style="text-align:center;color:red;">
-                        <i class="icon-copy ion-close-round"></i>
-                    </td>*@
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                            </tr>
+                        @*<td style="text-align:center;color:mediumspringgreen;">
+            <i class="icon-copy ion-checkmark-round"></i>
+            <br /><label ></label>
+            @r.DisposisiDate1
+        </td>
+        <td style="text-align:center;color:red;">
+            <i class="icon-copy ion-close-round"></i>
+        </td>
+        <td style="text-align:center;color:red;">
+            <i class="icon-copy ion-close-round"></i>
+        </td>*@
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                    </tr>
                         }
                         else if (@r.Status == "3")
                         {
-                            <tr class="table-bordered table-hover my-3">
-                                <td>
-                                    @r.NoSurat
-                                </td>
-                                <td>
-                                    @r.Perihal
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.TanggalSurat
-                                </td>
+                    <tr class="table-bordered table-hover my-3">
+                        <td>
+                            @r.NoSurat
+                        </td>
+                        <td>
+                            @r.Perihal
+                        </td>
+                        <td>
+                            @r.Tanggal_Input
+                        </td>
+                        <td style="text-align:center;color:mediumspringgreen;">
+                            <i class="icon-copy ion-checkmark-round"></i>
+                            <br /><label></label>
+                            @r.TanggalSurat
+                        </td>
 
-                                @*<td style="text-align:center;color:mediumspringgreen;">
-                        <i class="icon-copy ion-checkmark-round"></i>
-                        <br /><label ></label>
-                        @r.DisposisiDate1
-                    </td>
-                    <td style="text-align:center;color:mediumspringgreen;">
-                        <i class="icon-copy ion-checkmark-round"></i>
-                        <br /><label ></label>
-                        @r.DisposisiDate2
-                    </td>
-                    <td style="text-align:center;color:red;">
-                        <i class="icon-copy ion-close-round"></i>
-                    </td>*@
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                            </tr>
+                        @*<td style="text-align:center;color:mediumspringgreen;">
+            <i class="icon-copy ion-checkmark-round"></i>
+            <br /><label ></label>
+            @r.DisposisiDate1
+        </td>
+        <td style="text-align:center;color:mediumspringgreen;">
+            <i class="icon-copy ion-checkmark-round"></i>
+            <br /><label ></label>
+            @r.DisposisiDate2
+        </td>
+        <td style="text-align:center;color:red;">
+            <i class="icon-copy ion-close-round"></i>
+        </td>*@
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                    </tr>
                         }
                         else if (@r.Status == "4")
                         {
-                            <tr class="table-bordered table-hover my-3">
-                                <td>
-                                    @r.NoSurat
-                                </td>
-                                <td>
-                                    @r.Perihal
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.TanggalSurat
-                                </td>
+                    <tr class="table-bordered table-hover my-3">
+                        <td>
+                            @r.NoSurat
+                        </td>
+                        <td>
+                            @r.Perihal
+                        </td>
+                        <td>
+                            @r.Tanggal_Input
+                        </td>
+                        <td style="text-align:center;color:mediumspringgreen;">
+                            <i class="icon-copy ion-checkmark-round"></i>
+                            <br /><label></label>
+                            @r.TanggalSurat
+                        </td>
 
-                                @*<td style="text-align:center;color:mediumspringgreen;">
-                        <i class="icon-copy ion-checkmark-round"></i>
-                        <br /><label ></label>
-                        @r.DisposisiDate1
-                    </td>
-                    <td style="text-align:center;color:mediumspringgreen;">
-                        <i class="icon-copy ion-checkmark-round"></i>
-                        <br /><label ></label>
-                        @r.DisposisiDate2
-                    </td>
-                    <td style="text-align:center;color:mediumspringgreen;">
-                        <i class="icon-copy ion-checkmark-round"></i>
-                        <br /><label ></label>
-                        @r.DisposisiDate3
-                    </td>*@
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                            </tr>
+                        @*<td style="text-align:center;color:mediumspringgreen;">
+            <i class="icon-copy ion-checkmark-round"></i>
+            <br /><label ></label>
+            @r.DisposisiDate1
+        </td>
+        <td style="text-align:center;color:mediumspringgreen;">
+            <i class="icon-copy ion-checkmark-round"></i>
+            <br /><label ></label>
+            @r.DisposisiDate2
+        </td>
+        <td style="text-align:center;color:mediumspringgreen;">
+            <i class="icon-copy ion-checkmark-round"></i>
+            <br /><label ></label>
+            @r.DisposisiDate3
+        </td>*@
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                    </tr>
                         }
                         else if (@r.Status == "5")
                         {
-                            <tr class="table-bordered table-hover my-3">
-                                <td>
-                                    @r.NoSurat
-                                </td>
-                                <td>
-                                    @r.Perihal
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.TanggalSurat
-                                </td>
+                    <tr class="table-bordered table-hover my-3">
+                        <td>
+                            @r.NoSurat
+                        </td>
+                        <td>
+                            @r.Perihal
+                        </td>
+                        <td>
+                            @r.Tanggal_Input
+                        </td>
+                        <td style="text-align:center;color:mediumspringgreen;">
+                            <i class="icon-copy ion-checkmark-round"></i>
+                            <br /><label></label>
+                            @r.TanggalSurat
+                        </td>
 
-                                @*<td style="text-align:center;color:mediumspringgreen;">
-                        <i class="icon-copy ion-checkmark-round"></i>
-                        <br /><label ></label>
-                        @r.DisposisiDate1
-                    </td>
-                    <td style="text-align:center;color:mediumspringgreen;">
-                        <i class="icon-copy ion-checkmark-round"></i>
-                        <br /><label ></label>
-                        @r.DisposisiDate2
-                    </td>
-                    <td style="text-align:center;color:mediumspringgreen;">
-                        <i class="icon-copy ion-checkmark-round"></i>
-                        <br /><label ></label>
-                        @r.DisposisiDate3
-                    </td>*@
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.Tanggal_Telaah
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                            </tr>
+                        @*<td style="text-align:center;color:mediumspringgreen;">
+            <i class="icon-copy ion-checkmark-round"></i>
+            <br /><label ></label>
+            @r.DisposisiDate1
+        </td>
+        <td style="text-align:center;color:mediumspringgreen;">
+            <i class="icon-copy ion-checkmark-round"></i>
+            <br /><label ></label>
+            @r.DisposisiDate2
+        </td>
+        <td style="text-align:center;color:mediumspringgreen;">
+            <i class="icon-copy ion-checkmark-round"></i>
+            <br /><label ></label>
+            @r.DisposisiDate3
+        </td>*@
+                        <td style="text-align:center;color:mediumspringgreen;">
+                            <i class="icon-copy ion-checkmark-round"></i>
+                            <br /><label></label>
+                            @r.Tanggal_Telaah
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                    </tr>
                         }
                         else if (@r.Status == "6")
                         {
-                            <tr class="table-bordered table-hover my-3">
-                                <td>
-                                    @r.NoSurat
-                                </td>
-                                <td>
-                                    @r.Perihal
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.TanggalSurat
-                                </td>
+                    <tr class="table-bordered table-hover my-3">
+                        <td>
+                            @r.NoSurat
+                        </td>
+                        <td>
+                            @r.Perihal
+                        </td>
+                        <td>
+                            @r.Tanggal_Input
+                        </td>
+                        <td style="text-align:center;color:mediumspringgreen;">
+                            <i class="icon-copy ion-checkmark-round"></i>
+                            <br /><label></label>
+                            @r.TanggalSurat
+                        </td>
 
-                                @*<td style="text-align:center;color:mediumspringgreen;">
-                        <i class="icon-copy ion-checkmark-round"></i>
-                        <br /><label ></label>
-                        @r.DisposisiDate1
-                    </td>
-                    <td style="text-align:center;color:mediumspringgreen;">
-                        <i class="icon-copy ion-checkmark-round"></i>
-                        <br /><label ></label>
-                        @r.DisposisiDate2
-                    </td>
-                    <td style="text-align:center;color:mediumspringgreen;">
-                        <i class="icon-copy ion-checkmark-round"></i>
-                        <br /><label ></label>
-                        @r.DisposisiDate3
-                    </td>*@
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.Tanggal_Telaah
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.Tanggal_PraDPK
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                            </tr>
+                        @*<td style="text-align:center;color:mediumspringgreen;">
+            <i class="icon-copy ion-checkmark-round"></i>
+            <br /><label ></label>
+            @r.DisposisiDate1
+        </td>
+        <td style="text-align:center;color:mediumspringgreen;">
+            <i class="icon-copy ion-checkmark-round"></i>
+            <br /><label ></label>
+            @r.DisposisiDate2
+        </td>
+        <td style="text-align:center;color:mediumspringgreen;">
+            <i class="icon-copy ion-checkmark-round"></i>
+            <br /><label ></label>
+            @r.DisposisiDate3
+        </td>*@
+                        <td style="text-align:center;color:mediumspringgreen;">
+                            <i class="icon-copy ion-checkmark-round"></i>
+                            <br /><label></label>
+                            @r.Tanggal_Telaah
+                        </td>
+                        <td style="text-align:center;color:mediumspringgreen;">
+                            <i class="icon-copy ion-checkmark-round"></i>
+                            <br /><label></label>
+                            @r.Tanggal_PraDPK
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                    </tr>
                         }
                         else if (@r.Status == "7")
                         {
                             if (@r.tipe == "1")
                             {
-                                <tr class="table-bordered table-hover my-3">
-                                    <td>
-                                        @r.NoSurat
-                                    </td>
-                                    <td>
-                                        @r.Perihal
-                                    </td>
-                                    <td style="text-align:center;color:mediumspringgreen;">
-                                        <i class="icon-copy ion-checkmark-round"></i>
-                                        <br /><label></label>
-                                        @r.TanggalSurat
-                                    </td>
+                    <tr class="table-bordered table-hover my-3">
+                        <td>
+                            @r.NoSurat
+                        </td>
+                        <td>
+                            @r.Perihal
+                        </td>
+                        <td>
+                            @r.Tanggal_Input
+                        </td>
+                        <td style="text-align:center;color:mediumspringgreen;">
+                            <i class="icon-copy ion-checkmark-round"></i>
+                            <br /><label></label>
+                            @r.TanggalSurat
+                        </td>
 
-                                    @*<td style="text-align:center;color:mediumspringgreen;">
+                        @*<td style="text-align:center;color:mediumspringgreen;">
+            <i class="icon-copy ion-checkmark-round"></i>
+            <br /><label ></label>
+            @r.DisposisiDate1
+        </td>
+        <td style="text-align:center;color:mediumspringgreen;">
+            <i class="icon-copy ion-checkmark-round"></i>
+            <br /><label ></label>
+            @r.DisposisiDate2
+        </td>
+        <td style="text-align:center;color:mediumspringgreen;">
+            <i class="icon-copy ion-checkmark-round"></i>
+            <br /><label ></label>
+            @r.DisposisiDate3
+        </td>*@
+                        <td style="text-align:center;color:mediumspringgreen;">
                             <i class="icon-copy ion-checkmark-round"></i>
-                            <br /><label ></label>
-                            @r.DisposisiDate1
+                            <br /><label></label>
+                            @r.Tanggal_Telaah
                         </td>
                         <td style="text-align:center;color:mediumspringgreen;">
                             <i class="icon-copy ion-checkmark-round"></i>
-                            <br /><label ></label>
-                            @r.DisposisiDate2
+                            <br /><label></label>
+                            @r.Tanggal_PraDPK
                         </td>
                         <td style="text-align:center;color:mediumspringgreen;">
                             <i class="icon-copy ion-checkmark-round"></i>
-                            <br /><label ></label>
-                            @r.DisposisiDate3
-                        </td>*@
-                                    <td style="text-align:center;color:mediumspringgreen;">
-                                        <i class="icon-copy ion-checkmark-round"></i>
-                                        <br /><label></label>
-                                        @r.Tanggal_Telaah
-                                    </td>
-                                    <td style="text-align:center;color:mediumspringgreen;">
-                                        <i class="icon-copy ion-checkmark-round"></i>
-                                        <br /><label></label>
-                                        @r.Tanggal_PraDPK
-                                    </td>
-                                    <td style="text-align:center;color:mediumspringgreen;">
-                                        <i class="icon-copy ion-checkmark-round"></i>
-                                        <br /><label></label>
-                                        @r.Tanggal_DPK
-                                    </td>
-                                    <td style="text-align:center;color:red;">
-                                        <i class="icon-copy ion-close-round"></i>
-                                    </td>
-                                    <td style="text-align:center;color:red;">
-                                        <i class="icon-copy ion-close-round"></i>
-                                    </td>
-                                </tr>
+                            <br /><label></label>
+                            @r.Tanggal_DPK
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                    </tr>
                             }
                             else
                             {
-                                <tr class="table-bordered table-hover my-3">
-                                    <td>
-                                        @r.NoSurat
-                                    </td>
-                                    <td>
-                                        @r.Perihal
-                                    </td>
-                                    <td style="text-align:center;color:mediumspringgreen;">
-                                        <i class="icon-copy ion-checkmark-round"></i>
-                                        <br /><label></label>
-                                        @r.TanggalSurat
-                                    </td>
-
-                                    @*<td style="text-align:center;color:mediumspringgreen;">
-                            <i class="icon-copy ion-checkmark-round"></i>
-                            <br /><label ></label>
-                            @r.DisposisiDate1
+                    <tr class="table-bordered table-hover my-3">
+                        <td>
+                            @r.NoSurat
+                        </td>
+                        <td>
+                            @r.Perihal
+                        </td>
+                        <td>
+                            @r.Tanggal_Input
                         </td>
                         <td style="text-align:center;color:mediumspringgreen;">
                             <i class="icon-copy ion-checkmark-round"></i>
-                            <br /><label ></label>
-                            @r.DisposisiDate2
+                            <br /><label></label>
+                            @r.TanggalSurat
                         </td>
-                        <td style="text-align:center;color:mediumspringgreen;">
-                            <i class="icon-copy ion-checkmark-round"></i>
-                            <br /><label ></label>
-                            @r.DisposisiDate3
-                        </td>*@
-                                    <td style="text-align:center;color:red;">
-                                        <i class="icon-copy ion-close-round"></i>
-                                        <br /><label></label>
-                                    </td>
-                                    <td style="text-align:center;color:red;">
-                                        <i class="icon-copy ion-close-round"></i>
-                                        <br /><label></label>
-                                    </td>
-                                    <td style="text-align:center;color:red;">
-                                        <i class="icon-copy ion-close-round"></i>
-                                        <br /><label></label>
 
-                                    </td>
-                                    <td style="text-align:center;color:blue;">
-                                        <i class="icon-copy fa fa-spinner"></i>
-                                    </td>
-                                    <td style="text-align:center;color:red;">
-                                        <i class="icon-copy ion-close-round"></i>
-                                    </td>
-                                </tr>
+                        @*<td style="text-align:center;color:mediumspringgreen;">
+            <i class="icon-copy ion-checkmark-round"></i>
+            <br /><label ></label>
+            @r.DisposisiDate1
+        </td>
+        <td style="text-align:center;color:mediumspringgreen;">
+            <i class="icon-copy ion-checkmark-round"></i>
+            <br /><label ></label>
+            @r.DisposisiDate2
+        </td>
+        <td style="text-align:center;color:mediumspringgreen;">
+            <i class="icon-copy ion-checkmark-round"></i>
+            <br /><label ></label>
+            @r.DisposisiDate3
+        </td>*@
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                            <br /><label></label>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                            <br /><label></label>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                            <br /><label></label>
+
+                        </td>
+                        <td style="text-align:center;color:blue;">
+                            <i class="icon-copy fa fa-spinner"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                    </tr>
                             }
                         }
                         else if (@r.Status == "8")
                         {
-                            <tr class="table-bordered table-hover my-3">
-                                <td>
-                                    @r.NoSurat
-                                </td>
-                                <td>
-                                    @r.Perihal
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.TanggalSurat
-                                </td>
+                    <tr class="table-bordered table-hover my-3">
+                        <td>
+                            @r.NoSurat
+                        </td>
+                        <td>
+                            @r.Perihal
+                        </td>
+                        <td>
+                            @r.Tanggal_Input
+                        </td>
+                        <td style="text-align:center;color:mediumspringgreen;">
+                            <i class="icon-copy ion-checkmark-round"></i>
+                            <br /><label></label>
+                            @r.TanggalSurat
+                        </td>
 
-                                @*<td style="text-align:center;color:mediumspringgreen;">
-                        <i class="icon-copy ion-checkmark-round"></i>
-                        <br /><label ></label>
-                        @r.DisposisiDate1
-                    </td>
-                    <td style="text-align:center;color:mediumspringgreen;">
-                        <i class="icon-copy ion-checkmark-round"></i>
-                        <br /><label ></label>
-                        @r.DisposisiDate2
-                    </td>
-                    <td style="text-align:center;color:mediumspringgreen;">
-                        <i class="icon-copy ion-checkmark-round"></i>
-                        <br /><label ></label>
-                        @r.DisposisiDate3
-                    </td>*@
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.Tanggal_Telaah
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.Tanggal_PraDPK
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.Tanggal_DPK
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                </td>
-                                <td style="text-align:center;color:red;">
-                                    <i class="icon-copy ion-close-round"></i>
-                                </td>
-                            </tr>
+                        @*<td style="text-align:center;color:mediumspringgreen;">
+            <i class="icon-copy ion-checkmark-round"></i>
+            <br /><label ></label>
+            @r.DisposisiDate1
+        </td>
+        <td style="text-align:center;color:mediumspringgreen;">
+            <i class="icon-copy ion-checkmark-round"></i>
+            <br /><label ></label>
+            @r.DisposisiDate2
+        </td>
+        <td style="text-align:center;color:mediumspringgreen;">
+            <i class="icon-copy ion-checkmark-round"></i>
+            <br /><label ></label>
+            @r.DisposisiDate3
+        </td>*@
+                        <td style="text-align:center;color:mediumspringgreen;">
+                            <i class="icon-copy ion-checkmark-round"></i>
+                            <br /><label></label>
+                            @r.Tanggal_Telaah
+                        </td>
+                        <td style="text-align:center;color:mediumspringgreen;">
+                            <i class="icon-copy ion-checkmark-round"></i>
+                            <br /><label></label>
+                            @r.Tanggal_PraDPK
+                        </td>
+                        <td style="text-align:center;color:mediumspringgreen;">
+                            <i class="icon-copy ion-checkmark-round"></i>
+                            <br /><label></label>
+                            @r.Tanggal_DPK
+                        </td>
+                        <td style="text-align:center;color:mediumspringgreen;">
+                            <i class="icon-copy ion-checkmark-round"></i>
+                        </td>
+                        <td style="text-align:center;color:red;">
+                            <i class="icon-copy ion-close-round"></i>
+                        </td>
+                    </tr>
                         }
                         else if (@r.Status == "9")
                         {
-                            <tr class="table-bordered table-hover my-3">
-                                <td>
-                                    @r.NoSurat
-                                </td>
-                                <td>
-                                    @r.Perihal
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.TanggalSurat
-                                </td>
+                    <tr class="table-bordered table-hover my-3">
+                        <td>
+                            @r.NoSurat
+                        </td>
+                        <td>
+                            @r.Perihal
+                        </td>
+                        <td>
+                            @r.Tanggal_Input
+                        </td>
+                        <td style="text-align:center;color:mediumspringgreen;">
+                            <i class="icon-copy ion-checkmark-round"></i>
+                            <br /><label></label>
+                            @r.TanggalSurat
+                        </td>
 
-                                @*<td style="text-align:center;color:mediumspringgreen;">
-                        <i class="icon-copy ion-checkmark-round"></i>
-                        <br /><label ></label>
-                        @r.DisposisiDate1
-                    </td>
-                    <td style="text-align:center;color:mediumspringgreen;">
-                        <i class="icon-copy ion-checkmark-round"></i>
-                        <br /><label ></label>
-                        @r.DisposisiDate2
-                    </td>
-                    <td style="text-align:center;color:mediumspringgreen;">
-                        <i class="icon-copy ion-checkmark-round"></i>
-                        <br /><label ></label>
-                        @r.DisposisiDate3
-                    </td>*@
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.Tanggal_Telaah
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.Tanggal_PraDPK
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                    <br /><label></label>
-                                    @r.Tanggal_DPK
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                </td>
-                                <td style="text-align:center;color:mediumspringgreen;">
-                                    <i class="icon-copy ion-checkmark-round"></i>
-                                </td>
-                            </tr>
+                        @*<td style="text-align:center;color:mediumspringgreen;">
+            <i class="icon-copy ion-checkmark-round"></i>
+            <br /><label ></label>
+            @r.DisposisiDate1
+        </td>
+        <td style="text-align:center;color:mediumspringgreen;">
+            <i class="icon-copy ion-checkmark-round"></i>
+            <br /><label ></label>
+            @r.DisposisiDate2
+        </td>
+        <td style="text-align:center;color:mediumspringgreen;">
+            <i class="icon-copy ion-checkmark-round"></i>
+            <br /><label ></label>
+            @r.DisposisiDate3
+        </td>*@
+                        <td style="text-align:center;color:mediumspringgreen;">
+                            <i class="icon-copy ion-checkmark-round"></i>
+                            <br /><label></label>
+                            @r.Tanggal_Telaah
+                        </td>
+                        <td style="text-align:center;color:mediumspringgreen;">
+                            <i class="icon-copy ion-checkmark-round"></i>
+                            <br /><label></label>
+                            @r.Tanggal_PraDPK
+                        </td>
+                        <td style="text-align:center;color:mediumspringgreen;">
+                            <i class="icon-copy ion-checkmark-round"></i>
+                            <br /><label></label>
+                            @r.Tanggal_DPK
+                        </td>
+                        <td style="text-align:center;color:mediumspringgreen;">
+                            <i class="icon-copy ion-checkmark-round"></i>
+                        </td>
+                        <td style="text-align:center;color:mediumspringgreen;">
+                            <i class="icon-copy ion-checkmark-round"></i>
+                        </td>
+                    </tr>
                         }
 
                     }

@@ -3,6 +3,7 @@ using SIMHUKDIS.Models;
 using Spire.Doc;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -16,10 +17,8 @@ namespace SIMHUKDIS.Controllers.Konseptor
     {
         // GET: SKPS
         clsSKPSDB db = new clsSKPSDB();
-        string Username = "agus@kemenag.go.id";
-        string Password = "12345678";
-        string strToken = "";
-        string baseAddress = "https://api.kemenag.go.id/v1/";
+        string strToken = "oaRYeMTcOSI4SM81dsSaos6oSPIltIwxJhybwi2Zd5d26RdmqGghELJQgnDn32K1";
+        string baseAddress = "https://kudus.wablas.com/";
         public ActionResult Index()
         {
             if (Session["Fullname"] == null)
@@ -43,6 +42,65 @@ namespace SIMHUKDIS.Controllers.Konseptor
             {
                 var Error_Message = "Error Catch ! (" + ex.Message + ")";
                 return RedirectToAction("Error500", "Home", new { Error_Message });
+            }
+        }
+        [HttpPost]
+        public ActionResult UploadFiles()
+        {
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            string userlogin = Session["Fullname"].ToString();
+            string UserID = Session["UserID"].ToString();
+            string SatuanKerja = Session["Satker"].ToString();
+            string StatusAdmin = Session["StatusAdmin"].ToString();
+            string UserGroup = Session["UserGroup"].ToString();
+            ViewBag.UserID = userlogin;
+            ViewBag.SatuanKerja = SatuanKerja;
+            ViewBag.UserGroup = UserGroup;
+            ViewBag.UserID = userlogin;
+
+            if (Request.Files.Count > 0)
+            {
+                try
+                {
+                    string FilePath = "";
+                    string FileExt = "";
+                    string GetDateTime = "";
+                    string Ext = "";
+                    string FileNameWithoutExtension = "";
+                    string fname, FileName = "";
+                    GetDateTime = DateTime.Now.ToString("ddMMyyyy_hhmmss");
+                    HttpFileCollectionBase files = Request.Files;
+                    for (int i = 0; i < files.Count; i++)
+                    {
+                        string path = AppDomain.CurrentDomain.BaseDirectory + "Uploads/";
+                        string filename = Path.GetFileName(Request.Files[i].FileName);
+
+                        HttpPostedFileBase file = files[i];
+
+                        fname = file.FileName;
+                        FileExt = Path.GetExtension(fname);
+                        FileNameWithoutExtension = Path.GetFileNameWithoutExtension(fname);
+                        FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                        fname = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+
+                        FileName = fname;
+                        fname = Path.Combine(Server.MapPath("/Files/Upload/SK/"), fname);
+                        file.SaveAs(fname);
+                    }
+
+                    return Json(FileName, JsonRequestBehavior.AllowGet);
+                }
+                catch (Exception ex)
+                {
+                    return Json("Error occurred. Error details: " + ex.Message);
+                }
+            }
+            else
+            {
+                return Json("No files selected.");
             }
         }
         public ActionResult Details(int ID)
@@ -98,8 +156,62 @@ namespace SIMHUKDIS.Controllers.Konseptor
                 return RedirectToAction("Error500", "Home", new { Error_Message });
             }
         }
+        public ActionResult Selesai(string ID, string FileSK, string NO_SK, string Tanggal_SK)
+        {
+            if (Session["Fullname"] == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            string strMsg;
+            try
+            {
+                string userlogin = Session["Fullname"].ToString();
+                string UserID = Session["UserID"].ToString();
+                string SatuanKerja = Session["Satker"].ToString();
+                string StatusAdmin = Session["StatusAdmin"].ToString();
+                string UserGroup = Session["UserGroup"].ToString();
+                ViewBag.UserID = userlogin;
+                ViewBag.SatuanKerja = SatuanKerja;
+                ViewBag.UserGroup = UserGroup;
+                ViewBag.UserID = userlogin;
+                string GetDateTime = "";
+                GetDateTime = DateTime.Now.ToString("ddMMyyyy_hhmmss");
 
+                clsSKPS PS = new clsSKPS();
+                string UserLogin = Session["Fullname"].ToString();
+                PS.Create_User = UserID;
+                PS.ID = Convert.ToInt16(ID);
+                PS.Tanggal_SK = Tanggal_SK;
+                PS.NO_SK = NO_SK;
+                if (FileSK == null)
+                {
+                    PS.FileSK = "";
+                }
+                else
+                {
+                    PS.FileSK = FileSK;
+                }
 
+                clsSKPSDB db = new clsSKPSDB();
+                //db.Update(telaah);
+                db.Selesai(PS);
+
+                SendWaBlas(PS.ID,0);
+                SendWaBlas(PS.ID, 1);
+                SendWaBlas(PS.ID, 2);
+                SendWaBlas(PS.ID, 3);
+                SendWaBlas(PS.ID, 4);
+
+                strMsg = "Success";
+                return Json(strMsg, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                var Error_Message = "Error Catch ! (" + ex.Message + ")";
+                strMsg = Error_Message;
+                return Json(strMsg, JsonRequestBehavior.AllowGet);
+            }
+        }
         public ActionResult SendtoMenag(string ID)
         {
             string strMsg = "";
@@ -119,13 +231,12 @@ namespace SIMHUKDIS.Controllers.Konseptor
                 return RedirectToAction("Error500", "Home", new { Error_Message });
             }
         }
-
         public ActionResult GenerateWord(int ID, string NIP,
         string NAMA_LENGKAP, string GOL_RUANG, string LEVEL_JABATAN,
         string SATUAN_KERJA, string TEMPAT_LAHIR, string TANGGAL_LAHIR,
         string MK_TAHUN, string TMT_Pensiun, string DasarBukti,
         string SKDate, string PSReason, string TMTDate, string tembusan, 
-        int JenisUsul, string Konseptor, string DasarPemberhentian)
+        int JenisUsul, string Konseptor, string DasarPemberhentian, string KanregBKN, string PertekBKN)
         {
             string filepath = HttpContext.Request.PhysicalApplicationPath;
             string strTemplate = "";
@@ -148,8 +259,12 @@ namespace SIMHUKDIS.Controllers.Konseptor
             }
             string OutputPath = filepath + "Files/Result/PS/";
             string GetDateTime = DateTime.Now.ToString("dd MMMM yyyy");
-            string strFileNameDoc = "SK a.n " + NAMA_LENGKAP + "_NIP " + NIP+ "_" + GetDateTime + ".docx";
-            string strFileNamePDF = "SK Pemberhentian Sementara a.n " + NAMA_LENGKAP + "_NIP_" + NIP + "_" + GetDateTime + ".pdf";
+            string strFileNameDoc = "SK_a.n_" + NAMA_LENGKAP + "_NIP " + NIP + ".docx";
+            string strFileNamePDF = "SK_a.n_" + NAMA_LENGKAP + "_NIP_" + NIP + ".pdf";
+
+            strFileNameDoc = strFileNameDoc.Replace(" ", "_");
+            strFileNamePDF = strFileNamePDF.Replace(" ", "_");
+
             string strMsg = "";
             try
             {
@@ -216,7 +331,8 @@ namespace SIMHUKDIS.Controllers.Konseptor
                 PS.Jabatan_Koordinator = pejabatMst.Jabatan_Koordinator;
                 PS.SubKoordinator = pejabatMst.Nama_SubKoordinator;
                 PS.Jabatan_SubKoordinator = pejabatMst.Jabatan_SubKoordinator;
-
+                PS.KanregBKN = KanregBKN;
+                PS.PERTEKBKN = PertekBKN;
                 p = q.GetList(Konseptor);
 
                 PS.Konseptor = p.NAMA_LENGKAP;
@@ -271,103 +387,6 @@ namespace SIMHUKDIS.Controllers.Konseptor
             }
             return t;
         }
-
-        public JsonResult GetPegawai(string NIP)
-        {
-            try
-            {
-                var client = new HttpClient();
-                clsDataPegawaiDtl dtl = new clsDataPegawaiDtl();
-                clsToken db = new clsToken();
-                strToken = db.GetAccessToken(Username, Password);
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", strToken);
-                HttpResponseMessage resp = client.GetAsync(baseAddress + "pegawai/profil/" + WebUtility.UrlEncode(NIP)).GetAwaiter().GetResult();
-                if (resp.IsSuccessStatusCode)
-                {
-                    clsDataPegawai clsDataPegawai = new clsDataPegawai();
-                    var JsonContent = resp.Content.ReadAsStringAsync().Result;
-                    clsDataPegawai = JsonConvert.DeserializeObject<clsDataPegawai>(JsonContent);
-                    int x = 0;
-                    dtl.NIP = clsDataPegawai.data.NIP;
-                    dtl.NIP_BARU = clsDataPegawai.data.NIP_BARU;
-                    dtl.NAMA = clsDataPegawai.data.NAMA;
-                    dtl.NAMA_LENGKAP = clsDataPegawai.data.NAMA_LENGKAP;
-                    dtl.AGAMA = clsDataPegawai.data.AGAMA;
-                    dtl.TEMPAT_LAHIR = clsDataPegawai.data.TEMPAT_LAHIR;
-                    dtl.TANGGAL_LAHIR = clsDataPegawai.data.TANGGAL_LAHIR.Substring(0, 10);
-                    dtl.TANGGAL_LAHIR = Convert.ToDateTime(dtl.TANGGAL_LAHIR).ToString("d MMMM yyyy", new System.Globalization.CultureInfo("id-ID"));
-                    dtl.JENIS_KELAMIN = clsDataPegawai.data.JENIS_KELAMIN;
-                    dtl.PENDIDIKAN = clsDataPegawai.data.PENDIDIKAN;
-                    dtl.KODE_LEVEL_JABATAN = clsDataPegawai.data.KODE_LEVEL_JABATAN;
-                    dtl.LEVEL_JABATAN = clsDataPegawai.data.LEVEL_JABATAN;
-
-                    string Jabatan = clsDataPegawai.data.LEVEL_JABATAN;
-                    string dtl_Satker = clsDataPegawai.data.KETERANGAN_SATUAN_KERJA;
-
-                    string strPangkat = clsDataPegawai.data.PANGKAT;
-                    string strGolRuang = clsDataPegawai.data.GOL_RUANG;
-                    string strPangkatGolRuang = strPangkat + ", " + strGolRuang;
-
-
-                    dtl.PANGKAT = strPangkatGolRuang;
-                    dtl.GOL_RUANG = strPangkatGolRuang;
-
-                    dtl.TMT_CPNS = clsDataPegawai.data.TMT_CPNS;
-                    dtl.TMT_PANGKAT = clsDataPegawai.data.TMT_PANGKAT;
-
-                    string strMasaKerjaThn = clsDataPegawai.data.MK_TAHUN.ToString();
-                    string strMasaKerjaBln = clsDataPegawai.data.MK_BULAN.ToString();
-                    string strMasaKerja = strMasaKerjaThn + " Tahun " + strMasaKerjaBln + " Bulan";
-                    dtl.KETERANGAN_SATUAN_KERJA = clsDataPegawai.data.KETERANGAN_SATUAN_KERJA;
-                    dtl.MK_TAHUN = strMasaKerja;
-                    dtl.MK_BULAN = strMasaKerja;
-                    dtl.TIPE_JABATAN = clsDataPegawai.data.TIPE_JABATAN;
-                    dtl.KODE_JABATAN = clsDataPegawai.data.KODE_JABATAN;
-                    dtl.TAMPIL_JABATAN = clsDataPegawai.data.TAMPIL_JABATAN + " " + clsDataPegawai.data.SATKER_1;
-                    dtl.KETERANGAN = clsDataPegawai.data.KETERANGAN;
-                    dtl.TMT_JABATAN = clsDataPegawai.data.TMT_JABATAN;
-                    dtl.KODE_SATUAN_KERJA = clsDataPegawai.data.KODE_SATUAN_KERJA;
-                    dtl.SATKER_1 = clsDataPegawai.data.SATKER_1;
-                    dtl.KODE_SATKER_2 = clsDataPegawai.data.KODE_SATKER_2;
-                    dtl.SATKER_2 = clsDataPegawai.data.SATKER_2;
-                    dtl.KODE_SATKER_3 = clsDataPegawai.data.KODE_SATKER_3;
-                    dtl.SATKER_3 = clsDataPegawai.data.SATKER_3;
-                    dtl.KODE_SATKER_4 = clsDataPegawai.data.KODE_SATKER_4;
-                    dtl.SATKER_4 = clsDataPegawai.data.SATKER_4;
-                    dtl.KODE_SATKER_5 = clsDataPegawai.data.KODE_SATKER_5;
-                    dtl.SATKER_5 = clsDataPegawai.data.SATKER_5;
-
-                    dtl.STATUS_KAWIN = clsDataPegawai.data.STATUS_KAWIN;
-                    dtl.ALAMAT_1 = clsDataPegawai.data.ALAMAT_1;
-                    dtl.ALAMAT_2 = clsDataPegawai.data.ALAMAT_2;
-                    dtl.TELEPON = clsDataPegawai.data.TELEPON;
-                    dtl.KAB_KOTA = clsDataPegawai.data.KAB_KOTA;
-                    dtl.PROVINSI = clsDataPegawai.data.PROVINSI;
-                    dtl.KODE_POS = clsDataPegawai.data.KODE_POS;
-                    dtl.KODE_LOKASI = clsDataPegawai.data.KODE_LOKASI;
-                    dtl.KODE_PANGKAT = clsDataPegawai.data.KODE_PANGKAT;
-                    dtl.TMT_PENSIUN = clsDataPegawai.data.TMT_PENSIUN.Substring(0, 10);
-                    dtl.TMT_PENSIUN = Convert.ToDateTime(dtl.TMT_PENSIUN).ToString("d MMMM yyyy", new System.Globalization.CultureInfo("id-ID"));
-                    dtl.NO_HP = clsDataPegawai.data.NO_HP;
-                    dtl.EMAIL = clsDataPegawai.data.EMAIL;
-                    return Json(dtl, JsonRequestBehavior.AllowGet);
-                }
-                else
-                {
-                    return Json(null, JsonRequestBehavior.AllowGet);
-                }
-            }
-            catch (Exception ex)
-            {
-                return new JsonResult
-                {
-                    Data = new { ErrorMessage = ex.Message, Success = false },
-                    ContentEncoding = System.Text.Encoding.UTF8,
-                    JsonRequestBehavior = JsonRequestBehavior.DenyGet
-                };
-            }
-        }
         Dictionary<string, string> GetReplaceDictionary(clsSKPS PS)
         {
             Dictionary<string, string> replaceDict = new Dictionary<string, string>();
@@ -393,13 +412,14 @@ namespace SIMHUKDIS.Controllers.Konseptor
             replaceDict.Add("*Kasubag*", PS.SubKoordinator);
             replaceDict.Add("*Jabatan_Koordinator*", PS.Jabatan_Koordinator);
             replaceDict.Add("*Koordinator*", PS.Koordinator);
-
-            replaceDict.Add("*DasarPS*", PS.DasarPemberhentian);
+            replaceDict.Add("*DasarPS*", PS.DasarPemberhentian?? "");
+            replaceDict.Add("*DasarPertimbanganTeknis*", PS.DasarPemberhentian ?? "");
             replaceDict.Add("*TEMBUSAN_1*", PS.TEMBUSAN1);
             replaceDict.Add("*TEMBUSAN_2*", PS.TEMBUSAN2);
             replaceDict.Add("*TASPEN*", PS.TASPEN);
             replaceDict.Add("*KPPN*", PS.KPPN);
-
+            replaceDict.Add("*KanregBKN*", PS.KanregBKN);
+            replaceDict.Add("*Nomor_Pertek*", PS.PERTEKBKN);
             return replaceDict;
         }
         public FileResult DownloadFile(string fileName)
@@ -423,5 +443,83 @@ namespace SIMHUKDIS.Controllers.Konseptor
             }
 
         }
+        public ActionResult SendWaBlas(int ID, int StatusSM)
+        {
+            try
+            {
+                clsSuratMasukMsgInfo Msg = new clsSuratMasukMsgInfo();
+                string path = Server.MapPath("/Files/Upload/SK/");
+                Msg = db.GetMsgInfo(ID, StatusSM);
+                if (Msg.PhoneNo != "" || Msg.PhoneNo != null)
+                {
+                    //Msg.PhoneNo = "082172999095";
+
+                    var client = new HttpClient();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    HttpResponseMessage resp = client.GetAsync(baseAddress + "api/send-message?source=postman&phone="
+                        + WebUtility.UrlEncode(Msg.PhoneNo) + "&message=" + Msg.Pesan
+                        + "&token=" + WebUtility.UrlEncode(strToken)).GetAwaiter().GetResult();
+                    if (resp.IsSuccessStatusCode)
+                    {
+                        return Json(null, JsonRequestBehavior.AllowGet);
+
+                    }
+                    else
+                    {
+                        return Json(null, JsonRequestBehavior.AllowGet);
+                    }
+
+                }
+                return Json(null, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult
+                {
+                    Data = new { ErrorMessage = ex.Message, Success = false },
+                    ContentEncoding = System.Text.Encoding.UTF8,
+                    JsonRequestBehavior = JsonRequestBehavior.DenyGet
+                };
+            }
+        }
+        //public ActionResult SendWaBlas(int ID)
+        //{
+        //    try
+        //    {
+        //        clsSuratMasukMsgInfo Msg = new clsSuratMasukMsgInfo();
+        //        int StatusSM = 1;
+        //        Msg = db.GetMsgInfo(ID, StatusSM);
+        //        if (Msg.PhoneNo != "" || Msg.PhoneNo != null)
+        //        {
+        //            var client = new HttpClient();
+        //            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+        //            HttpResponseMessage resp = client.GetAsync(baseAddress + "api/send-message?source=postman&phone="
+        //                + WebUtility.UrlEncode(Msg.PhoneNo) + "&message=" + WebUtility.UrlEncode(Msg.Pesan)
+        //                + "&token=" + WebUtility.UrlEncode(strToken)).GetAwaiter().GetResult();
+        //            if (resp.IsSuccessStatusCode)
+        //            {
+        //                return Json(null, JsonRequestBehavior.AllowGet);
+
+        //            }
+        //            else
+        //            {
+        //                return Json(null, JsonRequestBehavior.AllowGet);
+        //            }
+
+        //        }
+        //        return Json(null, JsonRequestBehavior.AllowGet);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return new JsonResult
+        //        {
+        //            Data = new { ErrorMessage = ex.Message, Success = false },
+        //            ContentEncoding = System.Text.Encoding.UTF8,
+        //            JsonRequestBehavior = JsonRequestBehavior.DenyGet
+        //        };
+        //    }
+        //}
     }
 }

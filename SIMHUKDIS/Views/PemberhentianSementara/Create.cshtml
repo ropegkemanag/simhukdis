@@ -57,7 +57,7 @@
                                                                     {
                                                                         new SelectListItem{ Text = "Pemberhentian Sementara", Value = "1" },
                                                                         new SelectListItem{ Text = "Pengaktifan Kembali", Value = "2" }
-                                                                    }, htmlAttributes: new { @class = "custom-select2 form-control", @id = "UsulStatus", required = "required" }
+                                                                    }, htmlAttributes: new { @class = "custom-select2 form-control", @id = "UsulStatus", required = "required", onchange = "JenisChange()" }
                                                                 )
             </div>
         </div>
@@ -75,6 +75,13 @@
                 @Html.ValidationMessageFor(model => model.Lampiran_DokumenPendukung, "Max : 5MB & Format File : PDF", new { @class = "text-danger" })
             </div>
         </div>
+        <div class="form-group row" id="iLampiranSKPS">
+            <div class="col">
+                <label class="control-label ">Lampiran SK Pemberhentian *</label>
+                @Html.TextBox("Lampiran_SKPemberhentian", "", new { @type = "file", @id = "Lampiran_SKPemberhentian", @class = "form-control", accept = "application/pdf", required = "required" })
+                @Html.ValidationMessageFor(model => model.Lampiran_SKPemberhentian, "Max : 1MB & Format File : PDF", new { @class = "text-danger" })
+            </div>
+        </div>
         <div class="form-group row">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Simpan" class="btn btn-primary" style="width:100px;" />
@@ -88,10 +95,11 @@
 <script type="text/javascript">
     $(document).ready(function () {
         var SatuanKerja = '@ViewBag.SatuanKerja';
-        var SatkerName = '@ViewBag.SatuanKerjaName';
+        var SatkerName = '@ViewBag.Pimpinan';
         $('#AsalSurat').val(SatkerName);
         $('#Kode_Satuan_Kerja').val(SatuanKerja);
         GetUnit(SatuanKerja);
+        JenisChange();
         $(function () {
             $("#TanggalSurat").datepicker({
                 setDate: new Date(),
@@ -122,8 +130,7 @@
                 }
             }
         }
-    });
-    
+    });    
     $('#Lampiran_DokumenPendukung').on('change', function () {
         for (var i = 0; i < $(this).get(0).files.length; ++i) {
             var file1 = $(this).get(0).files[i].size;
@@ -143,7 +150,25 @@
             }
         }
     });
+    $('#Lampiran_SKPemberhentian').on('change', function () {
+        for (var i = 0; i < $(this).get(0).files.length; ++i) {
+            var file1 = $(this).get(0).files[i].size;
+            if (file1) {
+                var file_size = $(this).get(0).files[i].size;
+                if (file_size > 1000000) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: "File upload size is larger than 1MB!",
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                    $('#Lampiran_SKPemberhentian').val('');
+                } else {
 
+                }
+            }
+        }
+    });
     function GetUnit() {
         var SatuanKerja = $('#Kode_Satuan_Kerja').val();
         $.ajax({
@@ -176,5 +201,13 @@
             }
         });
     }
-
+    function JenisChange() {
+        var JenisUsul = $("#UsulStatus").val();
+        if (JenisUsul == "1") {
+            $("#iLampiranSKPS").hide();
+        }
+        if (JenisUsul == "2") {
+            $("#iLampiranSKPS").show();
+        }
+    }
 </script>

@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web;
 using System.Web.Mvc;
 
@@ -11,6 +14,8 @@ namespace SIMHUKDIS.Controllers.Konseptor
     public class PenyampaianSKBiroController : Controller
     {
         clsPenyampaianSKBiroDB db = new clsPenyampaianSKBiroDB();
+        string strToken = "oaRYeMTcOSI4SM81dsSaos6oSPIltIwxJhybwi2Zd5d26RdmqGghELJQgnDn32K1";
+        string baseAddress = "https://kudus.wablas.com/";
         // GET: PenyampaianSKBiro
         public ActionResult Index()
         {
@@ -120,12 +125,14 @@ namespace SIMHUKDIS.Controllers.Konseptor
                     if (FILE_SK != null)
                     {
                         a = FILE_SK.FileName;
+                        a = a.Replace(" ", "_");
                         FileExt = Path.GetExtension(a);
-                        Ext = Server.MapPath("/Files/Upload/INVENTARIS SURAT/");
+                        Ext = Server.MapPath("/Files/Upload/INVENTARIS_SURAT/");
                         FileNameWithoutExtension = Path.GetFileNameWithoutExtension(a);
                         FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                         Request.Files[0].SaveAs(FilePath);
                         PS.FILE_SK = FileNameWithoutExtension + "_" + GetDateTime + FileExt;
+                        //PS.FILE_SK = PS.FILE_SK.Replace(" ","_");
                     }
                     else
                     {
@@ -135,7 +142,10 @@ namespace SIMHUKDIS.Controllers.Konseptor
                     PS.CREATED_USER = UserID;
                     PS.KETERANGAN = KETERANGAN;
                     db.Insert(PS);
-
+                    SendWaBlas(NO_SK, NIP, 0);
+                    SendWaBlas(NO_SK, NIP, 1);
+                    SendWaBlas(NO_SK, NIP, 2);
+                    SendWaBlas(NO_SK, NIP, 3);
                     return RedirectToAction("Index", "PenyampaianSKBiro");
                 }
             }
@@ -144,6 +154,44 @@ namespace SIMHUKDIS.Controllers.Konseptor
                 var Error_Message = "Error Catch ! (" + ex.Message + ")";
                 return RedirectToAction("Error500", "Home", new { Error_Message });
 
+            }
+        }
+        public ActionResult SendWaBlas(string NO_SK, string NIP,int Tipe)
+        {
+            try
+            {
+                clsSuratMasukMsgInfo Msg = new clsSuratMasukMsgInfo();
+                //int StatusSM = 1;
+                Msg = db.GetMsgInfo(NO_SK, NIP,Tipe);
+                if (Msg.PhoneNo != "" || Msg.PhoneNo != null)
+                {
+                    var client = new HttpClient();
+                    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                    HttpResponseMessage resp = client.GetAsync(baseAddress + "api/send-message?source=postman&phone="
+                        + WebUtility.UrlEncode(Msg.PhoneNo) + "&message=" + Msg.Pesan
+                        + "&token=" + WebUtility.UrlEncode(strToken)).GetAwaiter().GetResult();
+                    if (resp.IsSuccessStatusCode)
+                    {
+                        return Json(null, JsonRequestBehavior.AllowGet);
+
+                    }
+                    else
+                    {
+                        return Json(null, JsonRequestBehavior.AllowGet);
+                    }
+
+                }
+                return Json(null, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return new JsonResult
+                {
+                    Data = new { ErrorMessage = ex.Message, Success = false },
+                    ContentEncoding = System.Text.Encoding.UTF8,
+                    JsonRequestBehavior = JsonRequestBehavior.DenyGet
+                };
             }
         }
         [HttpGet]
@@ -245,7 +293,7 @@ namespace SIMHUKDIS.Controllers.Konseptor
                 {
                     a = FILE_SK.FileName;
                     FileExt = Path.GetExtension(a);
-                    Ext = Server.MapPath("/Files/Upload/INVENTARIS SURAT/");
+                    Ext = Server.MapPath("/Files/Upload/INVENTARIS_SURAT/");
                     FileNameWithoutExtension = Path.GetFileNameWithoutExtension(a);
                     FilePath = Ext + FileNameWithoutExtension + "_" + GetDateTime + FileExt;
                     Request.Files[0].SaveAs(FilePath);
@@ -265,6 +313,10 @@ namespace SIMHUKDIS.Controllers.Konseptor
                 PS.CREATED_USER = UserID;
                 PS.KETERANGAN = KETERANGAN;
                 db.Update(PS);
+                SendWaBlas(NO_SK, NIP, 0);
+                SendWaBlas(NO_SK, NIP, 1);
+                SendWaBlas(NO_SK, NIP, 2);
+                SendWaBlas(NO_SK, NIP, 3);
                 return RedirectToAction("Index", "PenyampaianSKBiro");
             }
             catch (Exception ex)
@@ -313,7 +365,7 @@ namespace SIMHUKDIS.Controllers.Konseptor
             try
             {
                 //Build the File Path.
-                string path = Server.MapPath("/Files/Upload/INVENTARIS SURAT/") + fileName;
+                string path = Server.MapPath("/Files/Upload/INVENTARIS_SURAT/") + fileName;
 
                 //Read the File data into Byte Array.
                 byte[] bytes = System.IO.File.ReadAllBytes(path);

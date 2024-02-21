@@ -103,6 +103,11 @@ namespace SIMHUKDIS.Models
         public string FileTelaah { get; set; }
         public string Konseptor { get; set; }
 
+        public string PRADPK_DATE { get; set; }
+        public string DPK_DATE { get; set; }
+        public string NO_SK { get; set; }
+        public string SK_DATE { get; set; }
+        public string FILE_SK { get; set; }
     }
     public class clsSPTMJ
     {
@@ -166,7 +171,7 @@ namespace SIMHUKDIS.Models
         {
             get
             {
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 List<clsSuratMasuk> SuratMasuks = new List<clsSuratMasuk>();
                 using (SqlConnection con = new SqlConnection(constr))
                 {
@@ -237,7 +242,7 @@ namespace SIMHUKDIS.Models
         }
         public List<clsSuratMasuk> SuratMasukFilter(clsSuratMasukFilter filter)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             List<clsSuratMasuk> SuratMasuks = new List<clsSuratMasuk>();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -314,7 +319,7 @@ namespace SIMHUKDIS.Models
         }
         public List<clsSuratMasuk> SuratMasukItjenFilter(clsSuratMasukFilter filter)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             List<clsSuratMasuk> SuratMasuks = new List<clsSuratMasuk>();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -390,7 +395,7 @@ namespace SIMHUKDIS.Models
         }
         public clsSuratMasuk GetList(int ID)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             clsSuratMasuk data = new clsSuratMasuk();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -467,7 +472,7 @@ namespace SIMHUKDIS.Models
         public int Insert(clsSuratMasuk suratMasuk)
         {
             int i;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_SuratMasuk_Ins", con);
@@ -500,7 +505,7 @@ namespace SIMHUKDIS.Models
         public int InsertSPTJM(clsSPTMJ s)
         {
             int i;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("sp_SuratMasuk_SPTJM_Ins", con);
@@ -522,7 +527,7 @@ namespace SIMHUKDIS.Models
         public int Edit(clsSuratMasuk suratMasuk)
         {
             int i;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_SuratMasuk_Upd", con);
@@ -556,7 +561,7 @@ namespace SIMHUKDIS.Models
         public int Update(clsSuratMasuk suratMasuk)
         {
             int i;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_SuratMasuk_Upd", con);
@@ -591,7 +596,7 @@ namespace SIMHUKDIS.Models
         public int Delete(int ID)
         {
             int i;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_SuratMasuk_Del", con);
@@ -605,7 +610,7 @@ namespace SIMHUKDIS.Models
         public int Proses(clsSuratMasuk suratMasuk)
         {
             int i;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_SuratMasuk_Proses", con);
@@ -621,7 +626,7 @@ namespace SIMHUKDIS.Models
         {
             clsSuratMasukDB db = new clsSuratMasukDB();
             List<clsSuratMasuk> User = new List<clsSuratMasuk>();
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Satker_Sel", con);
@@ -643,7 +648,7 @@ namespace SIMHUKDIS.Models
         {
             clsSuratMasukDB db = new clsSuratMasukDB();
             List<clsUnitKerja> User = new List<clsUnitKerja>();
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_UnitKerja_Sel", con);
@@ -665,7 +670,7 @@ namespace SIMHUKDIS.Models
         public clsUnitKerja GetListUnitker(string KodeSatker)
         {
             clsUnitKerja s = new clsUnitKerja();
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_UnitKerja_Sel", con);
@@ -684,7 +689,7 @@ namespace SIMHUKDIS.Models
         }
         public clsSuratMasukMsgInfo GetMsgInfo(int ID, int status)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             clsSuratMasukMsgInfo data = new clsSuratMasukMsgInfo();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -705,7 +710,7 @@ namespace SIMHUKDIS.Models
         }
         public clsSuratMasukMsgInfo GetPSMsgInfo(int ID, int status)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             clsSuratMasukMsgInfo data = new clsSuratMasukMsgInfo();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -720,6 +725,164 @@ namespace SIMHUKDIS.Models
                 {
                     data.PhoneNo = rd["PhoneNo"].ToString();
                     data.Pesan = rd["Pesan"].ToString();
+                }
+                return data;
+            }
+        }
+        public clsSuratMasuk GetDetailList(int ID)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
+            clsSuratMasuk data = new clsSuratMasuk();
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                Int32 pNom = 0;
+                string q = "SP_MONITORING_DTL";
+                SqlCommand cmd = new SqlCommand(q, con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("iid", ID);
+                //cmd.Parameters.AddWithValue("NIP", NIP);
+                con.Open();
+                SqlDataReader rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    pNom = pNom + 1;
+                    data.No = pNom;
+                    data.ID = Convert.ToInt32(rd["id"].ToString());
+                    data.NoAgenda = rd["nomor_agenda"].ToString();
+                    data.NoSurat = rd["nomor_surat"].ToString();
+                    data.AsalSurat = rd["asal_surat"].ToString();
+                    data.TanggalSurat = rd["tanggal_surat"].ToString();
+                    //if (!Convert.IsDBNull(rd["tanggal_surat"]))
+                    //{
+                    //    data.TanggalSurat = Convert.ToDateTime(rd["tanggal_surat"].ToString());
+                    //}
+                    data.perihal = rd["perihal"].ToString();
+                    data.SATUAN_KERJA = rd["SatuanKerja"].ToString();
+                    data.KODE_SATUAN_KERJA = rd["KODE_SATUAN_KERJA"].ToString();
+                    data.LampiranSurat1 = rd["LampiranSurat1"].ToString();
+                    data.LampiranSurat2 = rd["LampiranSurat2"].ToString();
+                    data.LampiranSurat3 = rd["LampiranSurat3"].ToString();
+                    data.LampiranSurat4 = rd["LampiranSurat4"].ToString();
+                    data.LampiranSurat5 = rd["LampiranSurat5"].ToString();
+                    data.LampiranSurat_LHA = rd["Lampiran_LHA"].ToString();
+                    data.LampiranSurat6 = rd["LampiranSurat6"].ToString();
+                    data.LampiranLHP = rd["LampiranLHP"].ToString();
+                    data.LampiranSPTJM = rd["LampiranSPTJM"].ToString();
+
+                    data.CreateDate = rd["created_date"].ToString();
+                    //if (!Convert.IsDBNull(rd["created_date"]))
+                    //{
+                    //    data.CreateDate = Convert.ToDateTime(rd["created_date"].ToString());
+                    //}
+                    data.CreateUser = rd["create_user"].ToString();
+                    data.UpdateDate = rd["update_date"].ToString();
+                    data.UpdatUser = rd["update_user"].ToString();
+                    data.Catatan1 = rd["Disposisi1_Notes"].ToString();
+                    data.Catatan2 = rd["Disposisi2_Notes"].ToString();
+                    data.Catatan3 = rd["Disposisi3_Notes"].ToString();
+                    data.DisposisiStatus1 = rd["Disposisi1_Status"].ToString();
+                    data.DisposisiStatus2 = rd["Disposisi2_Status"].ToString();
+                    data.DisposisiStatus3 = rd["Disposisi3_Status"].ToString();
+                    data.DisposisiBy1 = rd["Disposisi1_By"].ToString();
+                    data.DisposisiBy2 = rd["Disposisi2_By"].ToString();
+                    data.DisposisiBy3 = rd["Disposisi3_By"].ToString();
+                    data.DisposisiDate1 = rd["Disposisi1_Date"].ToString();
+                    data.DisposisiDate2 = rd["Disposisi2_Date"].ToString();
+                    data.DisposisiDate3 = rd["Disposisi3_Date"].ToString();
+                    data.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
+                    data.Unit_Kerja = rd["Unit_Kerja"].ToString();
+                    data.UsulStatus = rd["UsulStatus"].ToString();
+                    data.Tipe = rd["TIPE"].ToString();
+
+                    data.TelaahNo = rd["TelaahNo"].ToString();
+                    data.TelaahDate = rd["TelaahDate"].ToString();
+                    data.FileTelaah = rd["FileTelaah"].ToString();
+                    data.Konseptor = rd["konseptor"].ToString();
+
+                    data.PRADPK_DATE = rd["PRADPK_DATE"].ToString();
+                    data.DPK_DATE = rd["DPK_DATE"].ToString();
+                    data.NO_SK = rd["NO_SK"].ToString();
+                    data.SK_DATE = rd["SK_DATE"].ToString();
+                    data.FILE_SK = rd["FILE_SK"].ToString();
+                }
+                return data;
+            }
+        }
+        public clsSuratMasuk GetDetailList2(int ID, string NIP)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
+            clsSuratMasuk data = new clsSuratMasuk();
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                Int32 pNom = 0;
+                string q = "[SP_MONITORING_DTL_BYNIP]";
+                SqlCommand cmd = new SqlCommand(q, con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("iid", ID);
+                cmd.Parameters.AddWithValue("NIP", NIP);
+                con.Open();
+                SqlDataReader rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    pNom = pNom + 1;
+                    data.No = pNom;
+                    data.ID = Convert.ToInt32(rd["id"].ToString());
+                    data.NoAgenda = rd["nomor_agenda"].ToString();
+                    data.NoSurat = rd["nomor_surat"].ToString();
+                    data.AsalSurat = rd["asal_surat"].ToString();
+                    data.TanggalSurat = rd["tanggal_surat"].ToString();
+                    //if (!Convert.IsDBNull(rd["tanggal_surat"]))
+                    //{
+                    //    data.TanggalSurat = Convert.ToDateTime(rd["tanggal_surat"].ToString());
+                    //}
+                    data.perihal = rd["perihal"].ToString();
+                    data.SATUAN_KERJA = rd["SatuanKerja"].ToString();
+                    data.KODE_SATUAN_KERJA = rd["KODE_SATUAN_KERJA"].ToString();
+                    data.LampiranSurat1 = rd["LampiranSurat1"].ToString();
+                    data.LampiranSurat2 = rd["LampiranSurat2"].ToString();
+                    data.LampiranSurat3 = rd["LampiranSurat3"].ToString();
+                    data.LampiranSurat4 = rd["LampiranSurat4"].ToString();
+                    data.LampiranSurat5 = rd["LampiranSurat5"].ToString();
+                    data.LampiranSurat_LHA = rd["Lampiran_LHA"].ToString();
+                    data.LampiranSurat6 = rd["LampiranSurat6"].ToString();
+                    data.LampiranLHP = rd["LampiranLHP"].ToString();
+                    data.LampiranSPTJM = rd["LampiranSPTJM"].ToString();
+
+                    data.CreateDate = rd["created_date"].ToString();
+                    //if (!Convert.IsDBNull(rd["created_date"]))
+                    //{
+                    //    data.CreateDate = Convert.ToDateTime(rd["created_date"].ToString());
+                    //}
+                    data.CreateUser = rd["create_user"].ToString();
+                    data.UpdateDate = rd["update_date"].ToString();
+                    data.UpdatUser = rd["update_user"].ToString();
+                    data.Catatan1 = rd["Disposisi1_Notes"].ToString();
+                    data.Catatan2 = rd["Disposisi2_Notes"].ToString();
+                    data.Catatan3 = rd["Disposisi3_Notes"].ToString();
+                    data.DisposisiStatus1 = rd["Disposisi1_Status"].ToString();
+                    data.DisposisiStatus2 = rd["Disposisi2_Status"].ToString();
+                    data.DisposisiStatus3 = rd["Disposisi3_Status"].ToString();
+                    data.DisposisiBy1 = rd["Disposisi1_By"].ToString();
+                    data.DisposisiBy2 = rd["Disposisi2_By"].ToString();
+                    data.DisposisiBy3 = rd["Disposisi3_By"].ToString();
+                    data.DisposisiDate1 = rd["Disposisi1_Date"].ToString();
+                    data.DisposisiDate2 = rd["Disposisi2_Date"].ToString();
+                    data.DisposisiDate3 = rd["Disposisi3_Date"].ToString();
+                    data.Kode_Unit_Kerja = rd["Kode_Unit_Kerja"].ToString();
+                    data.Unit_Kerja = rd["Unit_Kerja"].ToString();
+                    data.UsulStatus = rd["UsulStatus"].ToString();
+                    data.Tipe = rd["TIPE"].ToString();
+
+                    data.TelaahNo = rd["TelaahNo"].ToString();
+                    data.TelaahDate = rd["TelaahDate"].ToString();
+                    data.FileTelaah = rd["FileTelaah"].ToString();
+                    data.Konseptor = rd["konseptor"].ToString();
+
+                    data.PRADPK_DATE = rd["PRADPK_DATE"].ToString();
+                    data.DPK_DATE = rd["DPK_DATE"].ToString();
+                    data.NO_SK = rd["NO_SK"].ToString();
+                    data.SK_DATE = rd["SK_DATE"].ToString();
+                    data.FILE_SK = rd["FILE_SK"].ToString();
                 }
                 return data;
             }

@@ -1,15 +1,7 @@
-﻿using Newtonsoft.Json;
-using SIMHUKDIS.Models;
-using SIMHUKDIS.Models;
+﻿using SIMHUKDIS.Models;
 using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Dynamic;
-using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Web;
 using System.Web.Mvc;
 
 namespace SIMHUKDIS.Controllers
@@ -46,7 +38,7 @@ namespace SIMHUKDIS.Controllers
                 return RedirectToAction("Error500", "Home", new { Error_Message });
             }            
         }
-        public ActionResult Details(int ID)
+        public ActionResult Details(int ID, string NIP)
         {
             if (Session["Fullname"] == null)
             {
@@ -64,7 +56,16 @@ namespace SIMHUKDIS.Controllers
                 ViewBag.ID = ID;
 
                 clsSuratMasukDB db = new clsSuratMasukDB();
-                clsSuratMasuk sm = db.GetList(ID);
+                clsSuratMasuk sm = new clsSuratMasuk();
+                if (NIP == null)
+                {
+                    sm = db.GetDetailList(ID);
+                }
+                else
+                {
+                     sm = db.GetDetailList2(ID, NIP);
+                }
+                
                 return View(sm);
             }
             catch (Exception ex)
@@ -73,6 +74,26 @@ namespace SIMHUKDIS.Controllers
                 return RedirectToAction("Error500", "Home", new { Error_Message });
 
             }
+        }
+        public FileResult DownloadSK(string fileName)
+        {
+            try
+            {
+                //Build the File Path.
+                string path = Server.MapPath("/Files/Upload/SK/") + fileName;
+
+                //Read the File data into Byte Array.
+                byte[] bytes = System.IO.File.ReadAllBytes(path);
+
+                //Send the File to Download.
+                return File(bytes, "application/octet-stream", fileName);
+            }
+            catch (Exception ex)
+            {
+                string strMsg = ex.Message.ToString();
+                return null;
+            }
+
         }
         public FileResult DownloadFile1(string fileName)
         {

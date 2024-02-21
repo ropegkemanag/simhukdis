@@ -22,7 +22,7 @@ namespace SIMHUKDIS.Models
             get
             {
 
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 List<ClsSatker> Satker = new List<ClsSatker>();
                 using (SqlConnection con = new SqlConnection(constr))
                 {
@@ -50,7 +50,7 @@ namespace SIMHUKDIS.Models
             {
                 int i = 0;
 
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "SIMHUKDIS.sp_Satker_Ins";
@@ -70,7 +70,7 @@ namespace SIMHUKDIS.Models
         }
         public bool GetDataExist(string SATUAN_KERJA)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 con.Open();
@@ -95,7 +95,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "SIMHUKDIS.sp_Satker_Upd";
@@ -119,7 +119,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "SIMHUKDIS.sp_Satker_Del";
@@ -141,7 +141,7 @@ namespace SIMHUKDIS.Models
         {
             try
             {
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 string Satker = "";
                 int i = 0;
                 using (SqlConnection con = new SqlConnection(constr))
@@ -168,5 +168,37 @@ namespace SIMHUKDIS.Models
                 throw ex;
             }
         }
+        public string getPimpinan(string id)
+        {
+            try
+            {
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
+                string Satker = "";
+                int i = 0;
+                using (SqlConnection con = new SqlConnection(constr))
+                {
+                    SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Satker_GetName", con);
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("IID", id);
+                    con.Open();
+                    SqlDataReader rd = cmd.ExecuteReader();
+                    while (rd.Read())
+                    {
+                        if (i == 0)
+                        {
+                            Satker = rd["Pimpinan"].ToString();
+                        }
+                        i = i + 1;
+                    }
+                    rd.Close();
+                }
+                return Satker;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
     }
 }

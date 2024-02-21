@@ -41,13 +41,14 @@
                 <tr>
                     @if (@ViewBag.UserID == item.Create_User && (item.Status == 0))
                     {
-                        <td class="table-plus">
-                            @Html.ActionLink("Ubah", "Edit", new { ID = item.ID, KODE_SATUAN_KERJA = item.Kode_Satuan_Kerja, Kode_Unit_Kerja = item.Kode_Unit_Kerja, UsulStatus = item.UsulStatus, @class="btn btn-primary" })
-                            <br />
-                            <a class="btn btn-danger" onclick="Hapus('@item.ID')">Hapus</a>
-                            <br />
-                            <a class="btn btn-success" onclick="Proses('@item.ID')">Proses</a>
-                        </td>
+                    <td class="table-plus">
+                        <a  onclick="Edit('@item.ID','@item.Kode_Satuan_Kerja','@item.Kode_Unit_Kerja','@item.UsulStatus')">Ubah</a>
+                        @*@Html.ActionLink("Ubah", "Edit", new { ID = item.ID, KODE_SATUAN_KERJA = item.Kode_Satuan_Kerja, Kode_Unit_Kerja = item.Kode_Unit_Kerja, UsulStatus = item.UsulStatus })*@
+                        <br />
+                        <a  onclick="Hapus('@item.ID')">Hapus</a>
+                        <br />
+                        <a  onclick="Proses('@item.ID')">Proses</a>
+                    </td>
                     }
 
                     else
@@ -65,8 +66,7 @@
                                        item.NoSurat,
                                        "Details",                         // controller action
                                        "SuratMasuk",        // controller
-                                       new { ID = item.ID },         // action parameters aka route values
-                                       new { @class = "btn btn-primary" })
+                                       new { ID = item.ID })
                         </td>
                     
                     @*<td>@Html.ActionLink(item.NoSurat, "Details", new { ID = item.ID })</td>*@

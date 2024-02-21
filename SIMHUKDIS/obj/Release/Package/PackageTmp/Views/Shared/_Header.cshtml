@@ -470,6 +470,11 @@
                 @if (ViewBag.UserGroup == "02")
                 {
                     <li>
+                        <a href="@Url.Action("Index","UploadTelaah")" class="dropdown-toggle no-arrow">
+                            <span class="micon bi bi-pencil-square"></span><span class="mtext">Upload Telaah</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="@Url.Action("Index","Telaah")" class="dropdown-toggle no-arrow">
                             <span class="micon bi bi-pencil-square"></span><span class="mtext">Telaah</span>
                         </a>

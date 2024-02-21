@@ -68,15 +68,21 @@
       <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.1.4.1\lib\net46\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
-    <Reference Include="Spire.Doc, Version=10.4.6.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+    <Reference Include="Spire.Doc, Version=10.2.5.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>C:\Program Files (x86)\e-iceblue\Spire.Doc-Fe\Bin\NET4.0\Spire.Doc.dll</HintPath>
+      <HintPath>..\..\CUTIPEGAWAI\CUTIPEGAWAI\bin\Spire.Doc.dll</HintPath>
     </Reference>
     <Reference Include="Spire.License, Version=1.4.0.40, Culture=neutral, PublicKeyToken=b1144360237c8b3f, processorArchitecture=MSIL">
-      <HintPath>..\packages\FreeSpire.Doc.10.2.0\lib\net40\Spire.License.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\CUTIPEGAWAI\CUTIPEGAWAI\bin\Spire.License.dll</HintPath>
     </Reference>
-    <Reference Include="Spire.XLS">
-      <HintPath>C:\Program Files (x86)\e-iceblue\Spire.Xls-Fe\Bin\NET4.0\Spire.XLS.dll</HintPath>
+    <Reference Include="Spire.Pdf, Version=8.2.2.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\CUTIPEGAWAI\CUTIPEGAWAI\bin\Spire.Pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.XLS, Version=12.2.0.0, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\CUTIPEGAWAI\CUTIPEGAWAI\bin\Spire.XLS.dll</HintPath>
     </Reference>
     <Reference Include="Syncfusion.Compression.Base, Version=20.1450.0.55, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\packages\Syncfusion.XlsIO.AspNet.Mvc5.20.1.0.55\lib\net45\Syncfusion.Compression.Base.dll</HintPath>
@@ -187,6 +193,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\Admin\MonitoringAdminController.cs" />
+    <Compile Include="Controllers\Admin\UploadTelaahController.cs" />
     <Compile Include="Controllers\Disposisi3Controller.cs" />
     <Compile Include="Controllers\Konseptor\DPKController.cs" />
     <Compile Include="Controllers\Admin\ErrorController.cs" />
@@ -206,10 +213,12 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Admin\HukdisController.cs" />
     <Compile Include="Controllers\Admin\SatkerKonseptorController.cs" />
+    <Compile Include="Controllers\Konseptor\UploadTelaahController.cs" />
     <Compile Include="Controllers\Satker\KumpulanSKController.cs" />
     <Compile Include="Controllers\Satker\MonitoringSatkerController.cs" />
     <Compile Include="Controllers\Satker\PemberhentianSementaraController.cs" />
     <Compile Include="Controllers\Satker\PembuatanSKController.cs" />
+    <Compile Include="Controllers\Satker\PSController.cs" />
     <Compile Include="Controllers\Satker\SuratMasukController.cs" />
     <Compile Include="Controllers\Konseptor\TelaahController.cs" />
     <Compile Include="Controllers\Admin\UserController.cs" />
@@ -226,6 +235,8 @@
     <Compile Include="Models\clsHome.cs" />
     <Compile Include="Models\clsHukdis.cs" />
     <Compile Include="Models\clsKumpulanSK.cs" />
+    <Compile Include="Models\clsUploadTelaah.cs" />
+    <Compile Include="Models\clsView.cs" />
     <Compile Include="Models\clsPekerjaan.cs" />
     <Compile Include="Models\clsMonitoring.cs" />
     <Compile Include="Models\clsFormatPenomoran.cs" />
@@ -2758,11 +2769,27 @@
     <Content Include="Content\dist\sweetalert2.min.js" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\fonts\lato\OFL.txt" />
+    <Content Include="Content\fonts\material-design-iconic-font\css\material-design-iconic-font.css" />
+    <Content Include="Content\fonts\material-design-iconic-font\css\material-design-iconic-font.min.css" />
+    <Content Include="Content\fonts\material-design-iconic-font\fonts\Material-Design-Iconic-Font.svg" />
     <Content Include="Content\Gambar\Background_Simhukdis.jpg" />
     <Content Include="Content\Gambar\Background_Simhukdis.png" />
+    <Content Include="Content\Gambar\form-wizard-bg.jpg" />
     <Content Include="Content\Gambar\Header Simhukdis.png" />
+    <Content Include="Content\Gambar\item-1.jpg" />
+    <Content Include="Content\Gambar\item-2.jpg" />
     <Content Include="Content\Gambar\Logo Simhukdis.png" />
     <Content Include="Content\Gambar\Logo.png" />
+    <Content Include="Content\Gambar\step-1-active.png" />
+    <Content Include="Content\Gambar\step-1.png" />
+    <Content Include="Content\Gambar\step-2-active.png" />
+    <Content Include="Content\Gambar\step-2.png" />
+    <Content Include="Content\Gambar\step-3-active.png" />
+    <Content Include="Content\Gambar\step-3.png" />
+    <Content Include="Content\Gambar\step-4-active.png" />
+    <Content Include="Content\Gambar\step-4.png" />
+    <Content Include="Content\Gambar\step-arrow.png" />
     <Content Include="Content\img\Logo.png" />
     <Content Include="Content\img\undraw_posting_photo.svg" />
     <Content Include="Content\img\undraw_profile.svg" />
@@ -3039,6 +3066,7 @@
     <Content Include="Content\summernote\summernote.min.js.LICENSE.txt" />
     <Content Include="Content\toastr.css" />
     <Content Include="Content\toastr.min.css" />
+    <Content Include="Content\Wizard\style.css" />
     <Content Include="Content\zebra_datepicker.css" />
     <Content Include="Content\zebra_datepicker.min.css" />
     <Content Include="favicon.ico" />
@@ -3453,6 +3481,22 @@
     <Content Include="bin\roslyn\vbc.rsp" />
     <Content Include="bin\roslyn\VBCSCompiler.exe.config" />
     <Content Include="bin\SIMHUKDIS.dll.config" />
+    <Content Include="Content\Wizard\style.css.map" />
+    <Content Include="Content\Wizard\style.scss" />
+    <Content Include="Content\fonts\lato\Lato-Black.ttf" />
+    <Content Include="Content\fonts\lato\Lato-BlackItalic.ttf" />
+    <Content Include="Content\fonts\lato\Lato-Bold.ttf" />
+    <Content Include="Content\fonts\lato\Lato-BoldItalic.ttf" />
+    <Content Include="Content\fonts\lato\Lato-Hairline.ttf" />
+    <Content Include="Content\fonts\lato\Lato-HairlineItalic.ttf" />
+    <Content Include="Content\fonts\lato\Lato-Italic.ttf" />
+    <Content Include="Content\fonts\lato\Lato-Light.ttf" />
+    <Content Include="Content\fonts\lato\Lato-LightItalic.ttf" />
+    <Content Include="Content\fonts\lato\Lato-Regular.ttf" />
+    <Content Include="Content\fonts\material-design-iconic-font\fonts\Material-Design-Iconic-Font.eot" />
+    <Content Include="Content\fonts\material-design-iconic-font\fonts\Material-Design-Iconic-Font.ttf" />
+    <Content Include="Content\fonts\material-design-iconic-font\fonts\Material-Design-Iconic-Font.woff" />
+    <Content Include="Content\fonts\material-design-iconic-font\fonts\Material-Design-Iconic-Font.woff2" />
     <None Include="Properties\PublishProfiles\CustomProfile.pubxml" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\datatable-responsive\datatables.responsive.min.js" />
@@ -3564,6 +3608,9 @@
     <Content Include="Scripts\summernote.min.js" />
     <Content Include="Scripts\toastr.js" />
     <Content Include="Scripts\toastr.min.js" />
+    <Content Include="Scripts\Wizard\jquery-3.3.1.min.js" />
+    <Content Include="Scripts\Wizard\jquery.steps.js" />
+    <Content Include="Scripts\Wizard\main.js" />
     <Content Include="Scripts\zebra_datepicker.min.js" />
     <Content Include="Scripts\zebra_datepicker.src.js" />
     <Content Include="Web.config">
@@ -3674,6 +3721,8 @@
     <Content Include="Views\PenyampaianSKBiro\Edit.cshtml" />
     <Content Include="Views\SKHukdisTanpaSidang\BuatSK.cshtml" />
     <Content Include="Views\SKHukdisTanpaSidang\Edit.cshtml" />
+    <Content Include="Views\UploadTelaah\Index.cshtml" />
+    <Content Include="Views\PS\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

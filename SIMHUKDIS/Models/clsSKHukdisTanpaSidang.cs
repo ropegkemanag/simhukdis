@@ -80,13 +80,14 @@ namespace SIMHUKDIS.Models
         public string Penerima_YBS { get; set; }
         public string BAP_Penerima { get; set; }
         public string Keterangan_Penerima { get; set; }
+        public string Create_User { get; set; }
     }
     public class clsSKHukdisTanpaSidangDB
     {
         public List<clsHasilSidang> ListTanpaSidang(string UserID)
         {
             int a = 0;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             List<clsHasilSidang> DP = new List<clsHasilSidang>();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -172,7 +173,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "SP_SKTANPASIDANGDPK_DEL";
@@ -191,11 +192,25 @@ namespace SIMHUKDIS.Models
                 throw ex;
             }
         }
-
+        public int Update(clsSKHukdisTanpaSidang a)
+        {
+            int i;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                SqlCommand cmd = new SqlCommand("sp_SKTanpaSidang_SendToMenag", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ID", a.ID);
+                cmd.Parameters.AddWithValue("@NIP", a.NIP);
+                con.Open();
+                i = cmd.ExecuteNonQuery();
+            }
+            return i;
+        }
         public clsHasilSidang ListTanpaSidangByID(string UserID, int ID, string NIP)
         {
             int a = 0;
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             clsHasilSidang data = new clsHasilSidang();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -247,6 +262,47 @@ namespace SIMHUKDIS.Models
                     data.BAP_Penerima = rd["BAP_Penerima"].ToString();
                     data.Keterangan_Penerima = rd["Keterangan_Penerima"].ToString();  
                     data.TMTDate = rd["TMTDate"].ToString();
+                }
+                return data;
+            }
+        }
+        public int Selesai(clsSKHukdisTanpaSidang a)
+        {
+            int i;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                SqlCommand cmd = new SqlCommand("sp_TanpaSidangDPKSelesai", con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@ID", a.ID);
+                cmd.Parameters.AddWithValue("@FileSK", a.FILE_SK);
+                cmd.Parameters.AddWithValue("@UserLogin", a.Create_User);
+                cmd.Parameters.AddWithValue("@NIP", a.NIP);
+                cmd.Parameters.AddWithValue("@NO_SK", a.NO_SK);
+                cmd.Parameters.AddWithValue("@Tanggal_SK", Convert.ToDateTime(a.Tanggal_SK).ToString("yyyy-MM-dd"));
+                con.Open();
+                i = cmd.ExecuteNonQuery();
+            }
+            return i;
+        }
+        public clsSuratMasukMsgInfo GetMsgInfo(int ID, int status, string NIP)
+        {
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
+            clsSuratMasukMsgInfo data = new clsSuratMasukMsgInfo();
+            using (SqlConnection con = new SqlConnection(constr))
+            {
+                string q = "SP_MESSAGEINFO_HUKDIS_SELESAI";
+                SqlCommand cmd = new SqlCommand(q, con);
+                cmd.CommandType = CommandType.StoredProcedure;
+                cmd.Parameters.AddWithValue("@STATUS", status);
+                cmd.Parameters.AddWithValue("@ID", ID);
+                cmd.Parameters.AddWithValue("@NIP", NIP);
+                con.Open();
+                SqlDataReader rd = cmd.ExecuteReader();
+                while (rd.Read())
+                {
+                    data.PhoneNo = rd["PhoneNo"].ToString();
+                    data.Pesan = rd["Pesan"].ToString();
                 }
                 return data;
             }

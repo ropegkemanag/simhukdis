@@ -75,7 +75,7 @@ namespace SIMHUKDIS.Models
     {
         public List<clsDisposisi> ListAll()
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             List<clsDisposisi> DP = new List<clsDisposisi>();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -140,7 +140,7 @@ namespace SIMHUKDIS.Models
             get
             {
 
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 List<clsDisposisi> DP = new List<clsDisposisi>();
                 using (SqlConnection con = new SqlConnection(constr))
                 {
@@ -175,7 +175,7 @@ namespace SIMHUKDIS.Models
         {
             clsDisposisiDB db = new clsDisposisiDB();
             List<clsDisposisi> User = new List<clsDisposisi>();
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Konseptor_Sel", con);
@@ -198,7 +198,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "sp_Disposisi1_Upd";
@@ -225,7 +225,7 @@ namespace SIMHUKDIS.Models
     {
         public List<clsDisposisi> ListAll()
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             List<clsDisposisi> DP = new List<clsDisposisi>();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -278,7 +278,7 @@ namespace SIMHUKDIS.Models
             get
             {
 
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 List<clsDisposisi> DP = new List<clsDisposisi>();
                 using (SqlConnection con = new SqlConnection(constr))
                 {
@@ -325,7 +325,7 @@ namespace SIMHUKDIS.Models
         {
             clsDisposisi2DB db = new clsDisposisi2DB();
             List<clsDisposisi> User = new List<clsDisposisi>();
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Konseptor_Sel", con);
@@ -348,7 +348,7 @@ namespace SIMHUKDIS.Models
             try
             {
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "sp_Disposisi2_Upd";
@@ -375,7 +375,7 @@ namespace SIMHUKDIS.Models
     {
         public string GetKonseptor(string Satker)
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             string konseptor = "";
             List<clsDisposisi> DP = new List<clsDisposisi>();
             using (SqlConnection con = new SqlConnection(constr))
@@ -395,7 +395,7 @@ namespace SIMHUKDIS.Models
         }
         public List<clsDisposisi> ListAll()
         {
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             List<clsDisposisi> DP = new List<clsDisposisi>();
             using (SqlConnection con = new SqlConnection(constr))
             {
@@ -460,7 +460,7 @@ namespace SIMHUKDIS.Models
             get
             {
 
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 List<clsDisposisi> DP = new List<clsDisposisi>();
                 using (SqlConnection con = new SqlConnection(constr))
                 {
@@ -524,7 +524,7 @@ namespace SIMHUKDIS.Models
                     iStatus = 4;
                 }
                 int i = 0;
-                string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+                string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
                 using (SqlConnection con = new SqlConnection(constr))
                 {
                     string MySql = "sp_Disposisi3_Upd";
@@ -552,7 +552,7 @@ namespace SIMHUKDIS.Models
         {
             clsDisposisi3DB db = new clsDisposisi3DB();
             List<clsDisposisi> SK = new List<clsDisposisi>();
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Satker_Sel", con);
@@ -574,7 +574,7 @@ namespace SIMHUKDIS.Models
         {
             clsDisposisi3DB db = new clsDisposisi3DB();
             List<clsDisposisi> SK = new List<clsDisposisi>();
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("SIMHUKDIS.sp_Konseptor_Sel", con);

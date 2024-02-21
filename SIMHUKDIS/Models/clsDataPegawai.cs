@@ -92,7 +92,7 @@ namespace SIMHUKDIS.Models
         public clsDataPegawaiDtl GetList(string NIP)
         {
             clsDataPegawaiDtl data = new clsDataPegawaiDtl();
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 Int32 pNom = 0;
@@ -141,6 +141,10 @@ namespace SIMHUKDIS.Models
                     data.KETERANGAN_SATUAN_KERJA = rd["KETERANGAN_SATUAN_KERJA"].ToString();
                     data.KETERANGAN = rd["KETERANGAN"].ToString();
                     data.TMT_PENSIUN = rd["TMT_PENSIUN"].ToString();
+
+                    data.NO_HP = rd["NO_HP"].ToString();
+                    data.EMAIL = rd["EMAIL"].ToString();
+
                     string TMT_PENSIUN = Convert.ToDateTime(data.TMT_PENSIUN).ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("id-ID"));
                     data.TMT_PENSIUN = TMT_PENSIUN;
                 }
@@ -150,7 +154,7 @@ namespace SIMHUKDIS.Models
         public List<clsDataPegawaiDtl> ListPegawai (string NIP)
         {
             List<clsDataPegawaiDtl> lst = new List<clsDataPegawaiDtl>();
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 con.Open();
@@ -194,6 +198,9 @@ namespace SIMHUKDIS.Models
                     data.TEMBUSAN1 = rd["TEMBUSAN_1"].ToString();
                     data.TASPEN = rd["TASPEN"].ToString();
                     data.KPPN = rd["NAMA_KPPN"].ToString();
+
+                    data.NO_HP = rd["NO_HP"].ToString();
+                    data.EMAIL = rd["EMAIL"].ToString();
 
                     data.KETERANGAN_SATUAN_KERJA = rd["KETERANGAN_SATUAN_KERJA"].ToString();
                     data.KETERANGAN = rd["KETERANGAN"].ToString();

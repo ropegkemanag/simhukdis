@@ -131,7 +131,7 @@ namespace SIMHUKDIS.Controllers
         public ContentResult AjaxMethod(string country)
         {
             StringBuilder sb = new StringBuilder();
-            string constr = ConfigurationManager.ConnectionStrings["DBCS"].ConnectionString;
+            string constr = ConfigurationManager.ConnectionStrings["dbHukdis"].ConnectionString;
             using (SqlConnection con = new SqlConnection(constr))
             {
                 SqlCommand cmd = new SqlCommand("sp_Grafik_Dashboard", con);
